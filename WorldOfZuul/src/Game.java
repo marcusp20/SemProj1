@@ -45,6 +45,10 @@ public class Game
         boolean finished = false;
         while (! finished) {
             Command command = parser.getCommand();
+            //Why does processCommand return a boolean? -rhetorical, obviously it returns false if the given command is "quit"
+            //Is it benifical to make the return type void, and simply give the method more power?
+            //The method already calls other methods that change the attribute "currentRoom".
+            //This change would have to make the "running" variable into a field.
             finished = processCommand(command);
         }
         System.out.println("Thank you for playing.  Good bye.");
