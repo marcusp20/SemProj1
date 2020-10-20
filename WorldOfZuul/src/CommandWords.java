@@ -7,9 +7,8 @@ public class CommandWords
 
     // I don't see the use, of calling this constructor more than once...
     // Consider the use of a singleton pattern. - Marcus
-    public CommandWords()
-    {
-        validCommands = new HashMap<String, CommandWord>();
+    public CommandWords() {
+        validCommands = new HashMap<>();
         for(CommandWord command : CommandWord.values()) {
             if(command != CommandWord.UNKNOWN) {
                 validCommands.put(command.toString(), command);
@@ -17,8 +16,7 @@ public class CommandWords
         }
     }
 
-    public CommandWord getCommandWord(String commandWord)
-    {
+    public CommandWord getCommandWord(String commandWord) {
         CommandWord command = validCommands.get(commandWord);
         if(command != null) {
             return command;
@@ -33,8 +31,7 @@ public class CommandWords
         return validCommands.containsKey(aString);
     }
 
-    public void showAll() 
-    {
+    public void showAll() {
         for(String command : validCommands.keySet()) {
             System.out.print(command + "  ");
         }
