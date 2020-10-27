@@ -10,28 +10,33 @@ public class Game {
 
 
     private void createRooms() {
-        Room outside, theatre, pub, lab, office;
-      
-        outside = new Room("outside the main entrance of the university");
-        theatre = new Room("in a lecture theatre");
-        pub = new Room("in the campus pub");
-        lab = new Room("in a computing lab");
-        office = new Room("in the computing admin office");
+        Room headquarter, shed , field , stables, garden, store;
+
+        headquarter = new Room("In the headquarter"); //update description and add hashmap.
+        shed = new Room("in your shed");
+        field = new Room("in the field");
+        stables = new Room("in the stable, smells nice in here");
+        garden = new Room("in the beautiful garden");
+        store = new Room("in the store, smells like flower seeds in here");
         
-        outside.setExit("east", theatre);
-        outside.setExit("south", lab);
-        outside.setExit("west", pub);
+        headquarter.setExit("east", shed);
+        headquarter.setExit("south", field);
 
-        theatre.setExit("west", outside);
+        headquarter.setExit("north", store);
 
-        pub.setExit("east", outside);
 
-        lab.setExit("north", outside);
-        lab.setExit("east", office);
+        shed.setExit("west", headquarter);
 
-        office.setExit("west", lab);
+        field.setExit("north", headquarter);
+        field.setExit("south", stables);
+        field.setExit("west", garden);
 
-        currentRoom = outside;
+        stables.setExit("north", headquarter);
+        stables.setExit("east", garden);
+
+        garden.setExit("west", stables);
+
+        currentRoom = headquarter;
     }
 
     public void play() {
