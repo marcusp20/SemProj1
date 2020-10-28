@@ -5,7 +5,6 @@ public class Game {
     private CommandWords fieldCommandWords;
 
 
-
     public Game() {
         initCommandWords();
         createRooms();
@@ -25,9 +24,6 @@ public class Game {
         fieldCommandWords.addCommandWord(CommandWord.FIELD_SOW);
         fieldCommandWords.addCommandWord(CommandWord.FIELD_HARVEST);
         fieldCommandWords.addCommandWord(CommandWord.FIELD_USE_PESTICIDES);
-
-
-
 
     }
 
