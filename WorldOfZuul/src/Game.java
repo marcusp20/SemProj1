@@ -23,6 +23,11 @@ public class Game {
 
         fieldCommandWords = new CommandWords();
         fieldCommandWords.addCommandWord(CommandWord.FIELD_SOW);
+        fieldCommandWords.addCommandWord(CommandWord.FIELD_HARVEST);
+        fieldCommandWords.addCommandWord(CommandWord.FIELD_USE_PESTICIDES);
+
+
+
 
     }
 
@@ -114,7 +119,16 @@ public class Game {
             //Hvis BagOfSeeds == True i playerinventory
             //Set isReadyToHarvest til True
             //hvis pesticudesInUse = True, set harvestQuality to 2
-            System.out.print("test");
+            System.out.println("sow");
+        } else if (commandWord == CommandWord.FIELD_USE_PESTICIDES) {
+            //Soil quality - 1.
+            //Harvest quality + 1 hvis
+            //Hvis quality allerede er 3, skal den ikke lægge mere sammen.
+            System.out.println("pesticies");
+        } else if (commandWord == CommandWord.FIELD_HARVEST) {
+            //If isReadyToHarvest is True, proceed
+            //Afhængeigt af hvilke værdi'er vores harvestQuality er (1/3) bestemmes vores udbetalte monetos.
+            System.out.println("harvest");
         }
         return wantToQuit;
     }
