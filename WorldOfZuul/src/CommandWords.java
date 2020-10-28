@@ -9,11 +9,10 @@ public class CommandWords
     // Consider the use of a singleton pattern. - Marcus
     public CommandWords() {
         validCommands = new HashMap<>();
-        for(CommandWord command : CommandWord.values()) {
-            if(command != CommandWord.UNKNOWN) {
-                validCommands.put(command.toString(), command);
-            }
-        }
+    }
+
+    public void addCommandWord(CommandWord commandWord) {
+        this.validCommands.put(commandWord.toString(), commandWord);
     }
 
     public CommandWord getCommandWord(String commandWord) {

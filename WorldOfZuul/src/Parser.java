@@ -6,9 +6,9 @@ public class Parser
     private CommandWords commands;
     private Scanner reader;
 
-    public Parser() 
+    public Parser(CommandWords commandWords)
     {
-        commands = new CommandWords();
+        commands = commandWords;
         reader = new Scanner(System.in);
     }
 
