@@ -2,12 +2,16 @@ public class Game {
     private Parser parser;
     private Room currentRoom;
     private CommandWords gameCommandWords;
+    private CommandWords fieldCommandWords;
+
 
 
     public Game() {
         initCommandWords();
         createRooms();
         parser = new Parser(gameCommandWords);
+        createField();
+
     }
 
     private void initCommandWords() {
@@ -16,6 +20,14 @@ public class Game {
         gameCommandWords.addCommandWord(CommandWord.HELP);
         gameCommandWords.addCommandWord(CommandWord.QUIT);
         gameCommandWords.addCommandWord(CommandWord.USE);
+
+        fieldCommandWords = new CommandWords();
+        fieldCommandWords.addCommandWord(CommandWord.FIELD_SOW);
+
+    }
+
+    private void createField() {
+        Field test = new Field(fieldCommandWords);
 
     }
 
@@ -98,6 +110,11 @@ public class Game {
             //Tjekke Current. Hvis Currentroom == field {}
             System.out.println("This command is used to interact with our fields, PC's, NPC's and all interactebles. ");
 
+        } else if (commandWord == CommandWord.FIELD_SOW) {
+            //Hvis BagOfSeeds == True i playerinventory
+            //Set isReadyToHarvest til True
+            //hvis pesticudesInUse = True, set harvestQuality to 2
+            System.out.print("test");
         }
         return wantToQuit;
     }

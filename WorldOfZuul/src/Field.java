@@ -1,4 +1,4 @@
-public class Field {
+public class Field extends Interactable {
     //Attributes
     private Boolean isReadyToHarvest;
     private int harvestValue;
@@ -6,18 +6,11 @@ public class Field {
 
 
 
-    public Field() {
-        int soilQuality;
+    public Field(CommandWords commandWords) {
+        super(commandWords);
 
     }
 
-    //Methods
-    public void sowSeeds() {
-        //Hvis BagOfSeeds == True i playerinventory
-        //Set isReadyToHarvest til True
-        //hvis pesticudesInUse = True, set harvestQuality to 2
-
-    }
 
     public void usePesticides() {
 
