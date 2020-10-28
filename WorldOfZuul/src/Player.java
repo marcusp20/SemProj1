@@ -2,9 +2,9 @@ import java.util.HashMap;
 
 public class Player {
     //Attributes
-    String name;
-    int wallet;
-    HashMap<String, Boolean> playerInventory;
+    private String name;
+    private int wallet;
+    private HashMap<String, Boolean> playerInventory;
 
     //Constructor
     public Player() {
