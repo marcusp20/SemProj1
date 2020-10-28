@@ -9,7 +9,7 @@ public class Game {
         initCommandWords();
         createRooms();
         parser = new Parser(gameCommandWords);
-        createField();
+
 
     }
 
@@ -24,6 +24,7 @@ public class Game {
         fieldCommandWords.addCommandWord(CommandWord.FIELD_SOW);
         fieldCommandWords.addCommandWord(CommandWord.FIELD_HARVEST);
         fieldCommandWords.addCommandWord(CommandWord.FIELD_USE_PESTICIDES);
+        fieldCommandWords.addCommandWord(CommandWord.FIELD_SOIL_SAMPLE);
 
     }
 
@@ -112,7 +113,7 @@ public class Game {
             System.out.println("This command is used to interact with our fields, PC's, NPC's and all interactebles. ");
 
         } else if (commandWord == CommandWord.FIELD_SOW) {
-            //Hvis BagOfSeeds == True i playerinventory
+
             //Set isReadyToHarvest til True
             //hvis pesticudesInUse = True, set harvestQuality to 2
             System.out.println("sow");
@@ -125,7 +126,12 @@ public class Game {
             //If isReadyToHarvest is True, proceed
             //Afhængeigt af hvilke værdi'er vores harvestQuality er (1/3) bestemmes vores udbetalte monetos.
             System.out.println("harvest");
+        } else if (commandWord == CommandWord.FIELD_SOIL_SAMPLE) {
+
+
         }
+
+
         return wantToQuit;
     }
 
