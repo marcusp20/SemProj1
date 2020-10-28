@@ -12,6 +12,10 @@ public class Parser
         reader = new Scanner(System.in);
     }
 
+    public void setCommands(CommandWords commands) {
+        this.commands = commands;
+    }
+
     public Command getCommand() 
     {
         String inputLine;
