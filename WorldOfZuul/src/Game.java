@@ -1,11 +1,22 @@
 public class Game {
     private Parser parser;
     private Room currentRoom;
+    private CommandWords gameCommandWords;
         
 
     public Game() {
+        initCommandWords();
         createRooms();
-        parser = new Parser();
+        parser = new Parser(gameCommandWords);
+    }
+
+    private void initCommandWords() {
+        gameCommandWords = new CommandWords();
+        gameCommandWords.addCommandWord(CommandWord.GO);
+        gameCommandWords.addCommandWord(CommandWord.HELP);
+        gameCommandWords.addCommandWord(CommandWord.QUIT);
+        gameCommandWords.addCommandWord(CommandWord.USE);
+
     }
 
 
