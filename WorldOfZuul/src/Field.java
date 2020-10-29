@@ -54,6 +54,9 @@ public class Field extends Interactable {
     //Method for harvesting the field.
     public void harvestField() {
 
+    }
+
+    public void useFertilizer() {
 
     }
 

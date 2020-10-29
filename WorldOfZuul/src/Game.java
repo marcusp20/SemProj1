@@ -1,5 +1,3 @@
-import java.util.Scanner;
-
 public class Game {
     private Parser parser;
     private Room currentRoom;
@@ -15,8 +13,6 @@ public class Game {
         parser = new Parser(gameCommandWords);
         createField();
         createPlayer();
-
-
 
     }
 

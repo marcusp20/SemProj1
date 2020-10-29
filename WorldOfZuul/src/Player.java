@@ -13,10 +13,12 @@ public class Player {
         playerInventory.put("shovel", true);
         playerInventory.put("bagofseeds", false);
         playerInventory.put("watering can", false);
-        playerInventory.put("tractor", true);
+        playerInventory.put("tractor", false);
         playerInventory.put("harvester", false);
         playerInventory.put("bagoffertilizer", false);
         playerInventory.put("pesticides", false);
+        playerInventory.put("scythe", false);
+
 
         //add all items
     }
