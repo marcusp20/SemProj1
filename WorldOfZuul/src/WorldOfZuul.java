@@ -13,7 +13,7 @@ public class WorldOfZuul {
         File mayorBobDialog = new File("C:\\Users\\olive\\Documents\\Programming\\Java\\SemProj1\\WorldOfZuul\\src\\majorBobDialog.txt");
         NPC mayorBob = new NPC(mayorBobDialog);
 
-        mayorBob.firstMeeting();
+        mayorBob.converse();
         //mayorBob.test();
         /*
         Game game = new Game();
