@@ -5,7 +5,7 @@ public class Game {
     private Parser parser;
     private Room currentRoom;
     private CommandWords gameCommandWords;
-    private CommandWords storeCommandwords;
+    private CommandWords storeCommandWords;
     private List<Item> storeItemList;
 
     public void initStoreItemlist() {
@@ -32,7 +32,7 @@ public class Game {
 
     private void createNPC() {
         NPC storeNPC;
-        storeNPC = new NPC("Slimcognito", storeCommandwords);
+        storeNPC = new NPC("Slimcognito", storeCommandWords);
 
     }
 
@@ -44,9 +44,10 @@ public class Game {
         gameCommandWords.addCommandWord(CommandWord.USE);
 
         // Adding additional commands
-        storeCommandwords = new CommandWords();
-        storeCommandwords.addCommandWord(CommandWord.STORE_BUY);
-        storeCommandwords.addCommandWord(CommandWord.STORE_BROWSE);
+        storeCommandWords = new CommandWords();
+        storeCommandWords.addCommandWord(CommandWord.STORE_BUY);
+        storeCommandWords.addCommandWord(CommandWord.STORE_BROWSE);
+        storeCommandWords.addCommandWord(CommandWord.HELP);
 
     }
 
@@ -121,6 +122,8 @@ public class Game {
             printStoreItemList();
         } else if (commandWord == CommandWord.STORE_BUY) {
             // add functionality
+
+            //parser.setCommandWords(storeCommandWords);
         }
         return wantToQuit;
     }
