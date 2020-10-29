@@ -125,30 +125,20 @@ public class Game {
             //Tjekke Current. Hvis Currentroom == field {}
             System.out.println("This command is used to interact with our fields, PC's, NPC's and all interactebles. ");
 
-        } else if (commandWord == CommandWord.FIELD_SOW) {
-            //Check if harvest already is ready
-            if (!testField.getIsReadyToHarvest()) {
-
-                //Check for which item to sow field
-                if (player.itemOwned("shovel") && player.itemOwned("tractor")) {
-                    Scanner scan = new Scanner(System.in);
-                    System.out.println("Would you like to use your tractor?");
-                    String answer = scan.nextLine();
-                    if (answer.equals("yes") || answer.equals("Yes")) {
-                        System.out.println("You used the tractor to sow");
-                        testField.sowFieldTractor();
-                    } else {
-                        System.out.println("Using shovel to sow");
-                        testField.sowFieldShovel();
-                    }
+        } else if (commandWord == CommandWord.FIELD_SOW) { //Note; Horrorcode ahead...
+            if (!testField.getIsReadyToHarvest()) { //Check if field is ready to be harvested
+                if (player.itemOwned("tractor")) {  //Check for tractor, shovel, or no item.
+                    testField.sowFieldTractor();
+                    System.out.println(testField.showInfo()); //Delete this later
+                } else if (player.itemOwned("shovel")) {
+                    testField.sowFieldShovel();
+                    System.out.println(testField.showInfo()); //delete this later
                 } else {
-                    System.out.println("You don't have a shovel or a tractor, go buy it from the store!");
+                    System.out.println("Hmm... you don't have a shovel, or a tractor yet, better go shopping");
                 }
-
             } else {
                 System.out.println("The field has already been sowed, try harvesting it");
             }
-            System.out.println(testField.showInfo());
 
         } else if (commandWord == CommandWord.FIELD_USE_PESTICIDES) {
             //Soil quality - 1.

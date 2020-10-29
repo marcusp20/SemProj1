@@ -15,10 +15,14 @@ public class Field extends Interactable {
 
     }
 
+    //Method used to showInfo after Sow methods has been called. Used to check if we get the expected values.
     public String showInfo() {
-        return (isPesticidesUsed + " " + harvestValue + " " + soilQuality + " " + isReadyToHarvest);
+        return ("Pest: " + isPesticidesUsed + ", HarvVal: " + harvestValue + ", SoilQual: " + soilQuality + ", IsReadyToHarv? " + isReadyToHarvest);
     }
 
+
+
+    //Sow Methods. Sets i
     public void sowFieldTractor() {
 
         isReadyToHarvest = true;
@@ -30,6 +34,7 @@ public class Field extends Interactable {
             }
         }
         harvestValue += 2;
+        System.out.println("Field has been sowed with the tractor and is soon ready to be harvested UwU");
     }
 
     public void sowFieldShovel() {
@@ -42,6 +47,8 @@ public class Field extends Interactable {
             }
         }
         harvestValue += 1;
+        System.out.println("Field has been sowed with the shovel and is soon ready to be harvested UwU");
+
     }
 
 
