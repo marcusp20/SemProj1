@@ -10,7 +10,7 @@ public class Game {
     public Game() {
         initCommandWords();
         createRooms();
-        parser = new Parser(gameCommandWords);
+        parser = new Parser(fieldCommandWords);
         createField();
         createPlayer();
 
@@ -119,20 +119,9 @@ public class Game {
             //Tjekke Current. Hvis Currentroom == field {}
             System.out.println("This command is used to interact with our fields, PC's, NPC's and all interactebles. ");
 
-        } else if (commandWord == CommandWord.FIELD_SOW) {                  //Note; Horrorcode ahead...
-            if (!testField.getIsReadyToHarvest()) {                         //Check if field is ready to be harvested
-                if (player.itemOwned("tractor")) {                          //Check for tractor, shovel, or no item.
-                    testField.sowFieldTractor();
-                    System.out.println(testField.showInfo());               //Delete this later
-                } else if (player.itemOwned("shovel")) {
-                    testField.sowFieldShovel();
-                    System.out.println(testField.showInfo());               //delete this later
-                } else {
-                    System.out.println("Hmm... you don't have a shovel, or a tractor yet, better go shopping");
-                }
-            } else {
-                System.out.println("The field has already been sowed, try harvesting it");
-            }
+        } else if (commandWord == CommandWord.FIELD_SOW) {
+            sowField();
+
 
         } else if (commandWord == CommandWord.FIELD_USE_PESTICIDES) {
             //Soil quality - 1.
@@ -141,9 +130,7 @@ public class Game {
             System.out.println("pesticies");
 
         } else if (commandWord == CommandWord.FIELD_HARVEST) {
-            //If isReadyToHarvest is True, proceed
-            //Afhængeigt af hvilke værdi'er vores harvestQuality er (1/3) bestemmes vores udbetalte monetos.
-            System.out.println("harvest");
+            harvestField();
 
         } else if (commandWord == CommandWord.FIELD_SOIL_SAMPLE) {
             System.out.println(" ");
@@ -160,6 +147,44 @@ public class Game {
         System.out.println("Your command words are:");
         parser.showCommands();
     }
+
+    //Methods for Field
+    public void sowField() {
+        if (!testField.getIsReadyToHarvest()) {                             //Check if field is ready to be harvested
+            if (!player.itemOwned("bagofseeds")) {                          //Check for bagOfSeeds, add more seeds the further we get.
+                System.out.println("No seeds in inventory, go buy some");
+            } else if (player.itemOwned("tractor")) {                       //Check for tractor, shovel, or no item.
+                testField.sowFieldTractor();
+                //System.out.println(testField.showInfo());                 //Delete this later
+            } else if (player.itemOwned("shovel")) {
+                testField.sowFieldShovel();
+                //System.out.println(testField.showInfo());                  //delete this later
+            } else {
+                System.out.println("Hmm... you don't have a shovel, or a tractor yet, better go shopping");
+            }
+        } else {
+            System.out.println("The field has already been sowed, try harvesting it");
+        }
+    }
+
+    public void harvestField() {
+
+        if (testField.getIsReadyToHarvest()) {
+            if (player.itemOwned("harvester")) {
+                System.out.println("Used harvester to harvest field");
+            } else if (player.itemOwned("scythe")) {
+                System.out.println("Used the slow scythe to harvest field");
+            } else {
+                System.out.println("Hmm... you don't have a scythe, or a harvester yet, better go shopping");
+            }
+        } else {
+            System.out.println("Field not ready to harvest. Try to sow some seeds first.");
+        }
+        testField.harvestDone();
+    }
+
+
+
 
     private void goRoom(Command command) {
         if(!command.hasSecondWord()) {

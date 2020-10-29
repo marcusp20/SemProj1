@@ -10,11 +10,11 @@ public class Player {
     public Player(String name) {
         this.name = name;
         playerInventory = new HashMap<>();
-        playerInventory.put("shovel", true);
-        playerInventory.put("bagofseeds", false);
+        playerInventory.put("shovel", false);
+        playerInventory.put("bagofseeds", true);
         playerInventory.put("watering can", false);
-        playerInventory.put("tractor", false);
-        playerInventory.put("harvester", false);
+        playerInventory.put("tractor", true);
+        playerInventory.put("harvester", true);
         playerInventory.put("bagoffertilizer", false);
         playerInventory.put("pesticides", false);
         playerInventory.put("scythe", false);
@@ -26,6 +26,9 @@ public class Player {
     //Method to return value of hashmap.
     public Boolean itemOwned(String item) {
         return playerInventory.get(item);
+    }
+    public int checkwallet() {
+        return wallet;
     }
 
 

@@ -16,7 +16,7 @@ public class Field extends Interactable {
     }
 
 
-    //Sow Methods. Maybe the isPesticidesUsed checker ought to be in the harvestFieldMethod, as we can still use pests after sowing...
+    //Sow Methods. Maybe the isPesticidesU sed checker ought to be in the harvestFieldMethod, as we can still use pests after sowing...
     public void sowFieldTractor() {
         isReadyToHarvest = true;
         if (isPesticidesUsed) {
@@ -27,7 +27,7 @@ public class Field extends Interactable {
             }
         }
         harvestValue += 2;
-        System.out.println("Field has been sowed with the tractor and is soon ready to be harvested UwU");
+        System.out.println("You used the Tractor to sow");
     }
 
     public void sowFieldShovel() {
@@ -40,10 +40,12 @@ public class Field extends Interactable {
             }
         }
         harvestValue += 1;
-        System.out.println("Field has been sowed with the shovel and is soon ready to be harvested UwU");
+        System.out.println("You used the shovel to sow");
     }
 
     //Method for harvesting the field.
+    /*
+
     public void harvestField() {
     }
 
@@ -53,12 +55,18 @@ public class Field extends Interactable {
 
     //Method for measuring the soil quality
     public void measureSoil() {
-
     }
+
+     */
 
 
     //method to return value of isReadyToHarvest
     public Boolean getIsReadyToHarvest() {
         return isReadyToHarvest;
+    }
+    public void harvestDone() {
+        isReadyToHarvest = false;
+        isPesticidesUsed = false;
+        soilQuality -= 1;
     }
 }
