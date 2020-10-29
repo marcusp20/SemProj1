@@ -3,13 +3,14 @@ import java.util.HashMap;
 public class Player {
     //Attributes
     private String name;
-    private int wallet;
+    private int wallet = 0;
     private HashMap<String, Boolean> playerInventory;
 
     //Constructor
-    public Player() {
+    public Player(String name) {
+        this.name = name;
         playerInventory = new HashMap<>();
-        playerInventory.put("shovel", false);
+        playerInventory.put("shovel", true);
         playerInventory.put("bagofseeds", false);
         playerInventory.put("watering can", false);
         playerInventory.put("tractor", false);
@@ -20,8 +21,10 @@ public class Player {
         //add all items
     }
 
-    //Methods
-
+    //Method to return value of hashmap.
+    public Boolean itemOwned(String item) {
+        return playerInventory.get(item);
+    }
 
 
 }

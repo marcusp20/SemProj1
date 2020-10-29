@@ -1,14 +1,21 @@
+import java.util.Scanner;
+
 public class Game {
     private Parser parser;
     private Room currentRoom;
     private CommandWords gameCommandWords;
     private CommandWords fieldCommandWords;
+    private Field testField;
+    private Player player;
 
 
     public Game() {
         initCommandWords();
         createRooms();
         parser = new Parser(gameCommandWords);
+        createField();
+        createPlayer();
+
 
 
     }
@@ -21,7 +28,7 @@ public class Game {
         gameCommandWords.addCommandWord(CommandWord.USE);
 
         fieldCommandWords = new CommandWords();
-        fieldCommandWords.addCommandWord(CommandWord.FIELD_SOW);
+        gameCommandWords.addCommandWord(CommandWord.FIELD_SOW);
         fieldCommandWords.addCommandWord(CommandWord.FIELD_HARVEST);
         fieldCommandWords.addCommandWord(CommandWord.FIELD_USE_PESTICIDES);
         fieldCommandWords.addCommandWord(CommandWord.FIELD_SOIL_SAMPLE);
@@ -29,7 +36,12 @@ public class Game {
     }
 
     private void createField() {
-        Field test = new Field(fieldCommandWords);
+        testField = new Field(fieldCommandWords);
+
+    }
+
+    private void createPlayer() {
+        player = new Player("Name");
 
     }
 
@@ -104,6 +116,7 @@ public class Game {
         }
         else if (commandWord == CommandWord.GO) {
             goRoom(command);
+
         }
         else if (commandWord == CommandWord.QUIT) {
             wantToQuit = quit(command);
@@ -113,22 +126,44 @@ public class Game {
             System.out.println("This command is used to interact with our fields, PC's, NPC's and all interactebles. ");
 
         } else if (commandWord == CommandWord.FIELD_SOW) {
+            //Check if harvest already is ready
+            if (!testField.getIsReadyToHarvest()) {
 
-            //Set isReadyToHarvest til True
-            //hvis pesticudesInUse = True, set harvestQuality to 2
-            System.out.println("sow");
+                //Check for which item to sow field
+                if (player.itemOwned("shovel") && player.itemOwned("tractor")) {
+                    Scanner scan = new Scanner(System.in);
+                    System.out.println("Would you like to use your tractor?");
+                    String answer = scan.nextLine();
+                    if (answer.equals("yes") || answer.equals("Yes")) {
+                        System.out.println("You used the tractor to sow");
+                        testField.sowFieldTractor();
+                    } else {
+                        System.out.println("Using shovel to sow");
+                        testField.sowFieldShovel();
+                    }
+                } else {
+                    System.out.println("You don't have a shovel or a tractor, go buy it from the store!");
+                }
+
+            } else {
+                System.out.println("The field has already been sowed, try harvesting it");
+            }
+            System.out.println(testField.showInfo());
+
         } else if (commandWord == CommandWord.FIELD_USE_PESTICIDES) {
             //Soil quality - 1.
             //Harvest quality + 1 hvis
             //Hvis quality allerede er 3, skal den ikke lægge mere sammen.
             System.out.println("pesticies");
+
         } else if (commandWord == CommandWord.FIELD_HARVEST) {
+
+
             //If isReadyToHarvest is True, proceed
             //Afhængeigt af hvilke værdi'er vores harvestQuality er (1/3) bestemmes vores udbetalte monetos.
             System.out.println("harvest");
         } else if (commandWord == CommandWord.FIELD_SOIL_SAMPLE) {
-
-
+            System.out.println(" ");
         }
 
 
