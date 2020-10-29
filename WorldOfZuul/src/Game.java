@@ -24,14 +24,14 @@ public class Game {
         gameCommandWords.addCommandWord(CommandWord.USE);
 
         fieldCommandWords = new CommandWords();
-        gameCommandWords.addCommandWord(CommandWord.FIELD_SOW);
+        fieldCommandWords.addCommandWord(CommandWord.FIELD_SOW);
         fieldCommandWords.addCommandWord(CommandWord.FIELD_HARVEST);
         fieldCommandWords.addCommandWord(CommandWord.FIELD_USE_PESTICIDES);
         fieldCommandWords.addCommandWord(CommandWord.FIELD_SOIL_SAMPLE);
 
     }
 
-    //Used for testing Field methods in ProcesCommand.
+    //Used for testing Field methods
     private void createField() {
         testField = new Field(fieldCommandWords);
 
@@ -136,7 +136,7 @@ public class Game {
 
         } else if (commandWord == CommandWord.FIELD_USE_PESTICIDES) {
             //Soil quality - 1.
-            //Harvest quality + 1 hvis
+            //Harvest quality + 1 
             //Hvis quality allerede er 3, skal den ikke lægge mere sammen.
             System.out.println("pesticies");
 
