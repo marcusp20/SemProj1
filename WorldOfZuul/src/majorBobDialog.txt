@@ -1,0 +1,12 @@
+nn  Mayor bob
+dd  Mayor of town
+*0  HELLO THERE
+*1  This is test dialog
+*2  This is line 2
+*3  This is line 3
+*4  This if the last line
+q0  How do i get a shovel
+a00 An age old question
+a01 One i have been asked many a time
+a02 IDK, ask someone else :)
+
