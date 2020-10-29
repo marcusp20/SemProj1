@@ -35,14 +35,13 @@ public class Game {
 
     }
 
+    //Used for testing Field methods in ProcesCommand.
     private void createField() {
         testField = new Field(fieldCommandWords);
 
     }
-
     private void createPlayer() {
-        player = new Player("Name");
-
+        player = new Player("Lars TyndSkid");
     }
 
 
@@ -116,7 +115,6 @@ public class Game {
         }
         else if (commandWord == CommandWord.GO) {
             goRoom(command);
-
         }
         else if (commandWord == CommandWord.QUIT) {
             wantToQuit = quit(command);
@@ -125,14 +123,14 @@ public class Game {
             //Tjekke Current. Hvis Currentroom == field {}
             System.out.println("This command is used to interact with our fields, PC's, NPC's and all interactebles. ");
 
-        } else if (commandWord == CommandWord.FIELD_SOW) { //Note; Horrorcode ahead...
-            if (!testField.getIsReadyToHarvest()) { //Check if field is ready to be harvested
-                if (player.itemOwned("tractor")) {  //Check for tractor, shovel, or no item.
+        } else if (commandWord == CommandWord.FIELD_SOW) {                  //Note; Horrorcode ahead...
+            if (!testField.getIsReadyToHarvest()) {                         //Check if field is ready to be harvested
+                if (player.itemOwned("tractor")) {                          //Check for tractor, shovel, or no item.
                     testField.sowFieldTractor();
-                    System.out.println(testField.showInfo()); //Delete this later
+                    System.out.println(testField.showInfo());               //Delete this later
                 } else if (player.itemOwned("shovel")) {
                     testField.sowFieldShovel();
-                    System.out.println(testField.showInfo()); //delete this later
+                    System.out.println(testField.showInfo());               //delete this later
                 } else {
                     System.out.println("Hmm... you don't have a shovel, or a tractor yet, better go shopping");
                 }
@@ -147,11 +145,10 @@ public class Game {
             System.out.println("pesticies");
 
         } else if (commandWord == CommandWord.FIELD_HARVEST) {
-
-
             //If isReadyToHarvest is True, proceed
             //Afhængeigt af hvilke værdi'er vores harvestQuality er (1/3) bestemmes vores udbetalte monetos.
             System.out.println("harvest");
+
         } else if (commandWord == CommandWord.FIELD_SOIL_SAMPLE) {
             System.out.println(" ");
         }

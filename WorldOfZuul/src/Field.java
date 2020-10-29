@@ -22,7 +22,7 @@ public class Field extends Interactable {
 
 
 
-    //Sow Methods. Sets i
+    //Sow Methods. Maybe the isPesticidesUsed checker ought to be in the harvestFieldMethod, as we can still use pests after sowing...
     public void sowFieldTractor() {
 
         isReadyToHarvest = true;
@@ -48,6 +48,12 @@ public class Field extends Interactable {
         }
         harvestValue += 1;
         System.out.println("Field has been sowed with the shovel and is soon ready to be harvested UwU");
+
+    }
+
+    //Method for harvesting the field.
+    public void harvestField() {
+
 
     }
 
