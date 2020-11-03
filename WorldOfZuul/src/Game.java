@@ -11,6 +11,10 @@ public class Game {
 
     public void initStoreItemlist() {
         storeItemList = new ArrayList<Item>();
+    private CommandWords fieldCommandWords;
+    private Field testField;
+    private Player player;
+
 
         storeItemList.add(new Item("Watering can", "Water crops"));
         storeItemList.add(new Item("Shovel", "Used for digging"));
@@ -27,6 +31,9 @@ public class Game {
         initCommandWords();
         createRooms();
         parser = new Parser(gameCommandWords);
+        createField();
+        createPlayer();
+
         createNPC();
         initStoreItemlist();
     }
@@ -52,6 +59,21 @@ public class Game {
         storeCommandWords.addCommandWord(CommandWord.STORE_BROWSE);
         storeCommandWords.addCommandWord(CommandWord.HELP);
 
+        fieldCommandWords = new CommandWords();
+        fieldCommandWords.addCommandWord(CommandWord.FIELD_SOW);
+        fieldCommandWords.addCommandWord(CommandWord.FIELD_HARVEST);
+        fieldCommandWords.addCommandWord(CommandWord.FIELD_USE_PESTICIDES);
+        fieldCommandWords.addCommandWord(CommandWord.FIELD_SOIL_SAMPLE);
+
+    }
+
+    //Used for testing Field methods
+    private void createField() {
+        testField = new Field(fieldCommandWords);
+
+    }
+    private void createPlayer() {
+        player = new Player("Lars TyndSkid");
     }
 
 
@@ -64,7 +86,7 @@ public class Game {
         stables = new Room("in the stable, smells nice in here");
         garden = new Room("in the beautiful garden");
         store = new Room("in the store, smells like flower seeds in here");
-
+        
         headquarter.setExit("east", shed);
         headquarter.setExit("south", field);
 
@@ -133,6 +155,41 @@ public class Game {
 
             //parser.setCommandWords(storeCommandWords);
         }
+        else if (commandWord == CommandWord.USE) {
+            //Tjekke Current. Hvis Currentroom == field {}
+            System.out.println("This command is used to interact with our fields, PC's, NPC's and all interactebles. ");
+
+        } else if (commandWord == CommandWord.FIELD_SOW) {                  //Note; Horrorcode ahead...
+            if (!testField.getIsReadyToHarvest()) {                         //Check if field is ready to be harvested
+                if (player.itemOwned("tractor")) {                          //Check for tractor, shovel, or no item.
+                    testField.sowFieldTractor();
+                    System.out.println(testField.showInfo());               //Delete this later
+                } else if (player.itemOwned("shovel")) {
+                    testField.sowFieldShovel();
+                    System.out.println(testField.showInfo());               //delete this later
+                } else {
+                    System.out.println("Hmm... you don't have a shovel, or a tractor yet, better go shopping");
+                }
+            } else {
+                System.out.println("The field has already been sowed, try harvesting it");
+            }
+
+        } else if (commandWord == CommandWord.FIELD_USE_PESTICIDES) {
+            //Soil quality - 1.
+            //Harvest quality + 1
+            //Hvis quality allerede er 3, skal den ikke lægge mere sammen.
+            System.out.println("pesticies");
+
+        } else if (commandWord == CommandWord.FIELD_HARVEST) {
+            //If isReadyToHarvest is True, proceed
+            //Afhængeigt af hvilke værdi'er vores harvestQuality er (1/3) bestemmes vores udbetalte monetos.
+            System.out.println("harvest");
+
+        } else if (commandWord == CommandWord.FIELD_SOIL_SAMPLE) {
+            System.out.println(" ");
+        }
+
+
         return wantToQuit;
     }
 

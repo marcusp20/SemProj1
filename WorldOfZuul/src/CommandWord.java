@@ -4,7 +4,9 @@ public enum CommandWord
     GO("go"), QUIT("quit"), HELP("help"), UNKNOWN("?"), USE("use"),
     //Interactable command words
     //Field
-    //StoreNPC
+    FIELD_SOW("sow"), FIELD_HARVEST("harvest"), FIELD_USE_PESTICIDES("pesticides"),
+    FIELD_SOIL_SAMPLE("sample");
+    //StureNPC
     STORE_BUY("buy"),
     STORE_BROWSE("browse");
 
