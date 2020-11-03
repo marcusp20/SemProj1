@@ -7,13 +7,14 @@ public class Game {
     private Room currentRoom;
     private CommandWords gameCommandWords;
     private CommandWords storeCommandWords;
+    private CommandWords fieldCommandWords;
+    private Field testField;
+    private Player player;
     private List<Item> storeItemList;
 
     public void initStoreItemlist() {
         storeItemList = new ArrayList<Item>();
-    private CommandWords fieldCommandWords;
-    private Field testField;
-    private Player player;
+
 
 
         storeItemList.add(new Item("Watering can", "Water crops"));
