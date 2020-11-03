@@ -1,10 +1,12 @@
 public enum CommandWord
 {
     //Game command words
-    GO("go"), QUIT("quit"), HELP("help"), UNKNOWN("?"), USE("use");
+    GO("go"), QUIT("quit"), HELP("help"), UNKNOWN("?"), USE("use"),
     //Interactable command words
     //Field
-    //StureNPC
+    //StoreNPC
+    STORE_BUY("buy"),
+    STORE_BROWSE("browse");
 
     private String commandString;
     

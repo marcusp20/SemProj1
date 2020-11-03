@@ -1,13 +1,39 @@
+import java.util.ArrayList;
+import java.util.List;
+
 public class Game {
     private Parser parser;
     private Room currentRoom;
     private CommandWords gameCommandWords;
-        
+    private CommandWords storeCommandWords;
+    private List<Item> storeItemList;
+
+    public void initStoreItemlist() {
+        storeItemList = new ArrayList<Item>();
+
+        storeItemList.add(new Item("Watering can", "Water crops"));
+        storeItemList.add(new Item("Shovel", "Used for digging"));
+        storeItemList.add(new Item("Soil Sample collector", "Collects soils"));
+        storeItemList.add(new Item("Tractor", "Used for harvesting"));
+        storeItemList.add(new Item("Bag of Seeds", "holds seeds for planting"));
+        storeItemList.add(new Item("Bag of fertilizer", "used for fertilizing"));
+        storeItemList.add(new Item("Pesticides", "used for destroying water-collection"));
+        storeItemList.add(new Item("Mobile Phone", "used for Weather info"));
+
+    }
 
     public Game() {
         initCommandWords();
         createRooms();
         parser = new Parser(gameCommandWords);
+        createNPC();
+        initStoreItemlist();
+    }
+
+    private void createNPC() {
+        NPC storeNPC;
+        storeNPC = new NPC("Slimcognito", storeCommandWords);
+
     }
 
     private void initCommandWords() {
@@ -16,6 +42,12 @@ public class Game {
         gameCommandWords.addCommandWord(CommandWord.HELP);
         gameCommandWords.addCommandWord(CommandWord.QUIT);
         gameCommandWords.addCommandWord(CommandWord.USE);
+
+        // Adding additional commands
+        storeCommandWords = new CommandWords();
+        storeCommandWords.addCommandWord(CommandWord.STORE_BUY);
+        storeCommandWords.addCommandWord(CommandWord.STORE_BROWSE);
+        storeCommandWords.addCommandWord(CommandWord.HELP);
 
     }
 
@@ -29,7 +61,7 @@ public class Game {
         stables = new Room("in the stable, smells nice in here");
         garden = new Room("in the beautiful garden");
         store = new Room("in the store, smells like flower seeds in here");
-        
+
         headquarter.setExit("east", shed);
         headquarter.setExit("south", field);
 
@@ -53,9 +85,9 @@ public class Game {
     public void play() {
         printWelcome();
 
-                
+
         boolean finished = false;
-        while (! finished) {
+        while (!finished) {
             Command command = parser.getCommand();
             //Why does processCommand return a boolean? -rhetorical, obviously it returns false if the given command is "quit"
             //Is it benifical to make the return type void, and simply give the method more power?
@@ -87,14 +119,25 @@ public class Game {
 
         if (commandWord == CommandWord.HELP) {
             printHelp();
-        }
-        else if (commandWord == CommandWord.GO) {
+        } else if (commandWord == CommandWord.GO) {
             goRoom(command);
-        }
-        else if (commandWord == CommandWord.QUIT) {
+        } else if (commandWord == CommandWord.QUIT) {
             wantToQuit = quit(command);
+        } else if (commandWord == CommandWord.STORE_BROWSE) {
+            printStoreItemList();
+        } else if (commandWord == CommandWord.STORE_BUY) {
+            // add functionality
+
+            //parser.setCommandWords(storeCommandWords);
         }
         return wantToQuit;
+    }
+
+    private void printStoreItemList() {
+        System.out.println("The Itmes we have for sale are:");
+        for (Item item : storeItemList) {
+            System.out.println(item.getName() + ", " + item.getDescription());
+        }
     }
 
     private void printHelp() {
@@ -117,8 +160,7 @@ public class Game {
 
         if (nextRoom == null) {
             System.out.println("There is no door!");
-        }
-        else {
+        } else {
             currentRoom = nextRoom;
             System.out.println(currentRoom.getLongDescription());
         }
@@ -128,8 +170,7 @@ public class Game {
         if(command.hasSecondWord()) {
             System.out.println("Quit what?");
             return false;
-        }
-        else {
+        } else {
             return true;
         }
     }
