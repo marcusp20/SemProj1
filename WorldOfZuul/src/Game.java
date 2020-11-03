@@ -1,3 +1,4 @@
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -32,7 +33,9 @@ public class Game {
 
     private void createNPC() {
         NPC storeNPC;
-        storeNPC = new NPC("Slimcognito", storeCommandWords);
+        //File storeNPC = new File("storeNPCDialog.txt");
+        //storeNPC = new NPC(storeNPC, storeCommandWords);
+        File major = new File("majorBobDialog.txt");
 
     }
 
