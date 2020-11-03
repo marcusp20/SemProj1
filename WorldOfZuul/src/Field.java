@@ -43,11 +43,6 @@ public class Field extends Interactable {
         System.out.println("You used the shovel to sow");
     }
 
-    //Method for harvesting the field.
-    /*
-
-    public void harvestField() {
-    }
 
     //Method for increasing harvestQual
     public void useFertilizer() {
@@ -57,7 +52,7 @@ public class Field extends Interactable {
     public void measureSoil() {
     }
 
-     */
+
 
 
     //method to return value of isReadyToHarvest

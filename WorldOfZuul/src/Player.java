@@ -11,10 +11,10 @@ public class Player {
         this.name = name;
         playerInventory = new HashMap<>();
         playerInventory.put("shovel", false);
-        playerInventory.put("bagofseeds", true);
+        playerInventory.put("bagofseeds", false);
         playerInventory.put("watering can", false);
-        playerInventory.put("tractor", true);
-        playerInventory.put("harvester", true);
+        playerInventory.put("tractor", false);
+        playerInventory.put("harvester", false);
         playerInventory.put("bagoffertilizer", false);
         playerInventory.put("pesticides", false);
         playerInventory.put("scythe", false);

@@ -168,8 +168,7 @@ public class Game {
     }
 
     public void harvestField() {
-
-        if (testField.getIsReadyToHarvest()) {
+        if (testField.getIsReadyToHarvest()) {                            //Checks if ready to harvest is True
             if (player.itemOwned("harvester")) {
                 System.out.println("Used harvester to harvest field");
             } else if (player.itemOwned("scythe")) {
