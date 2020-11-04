@@ -12,20 +12,12 @@ public class Game {
     private Player player;
     private List<Item> storeItemList;
 
-    public void initStoreItemlist() {
+    public void initStoreItemList() {
         storeItemList = new ArrayList<Item>();
 
-
-
-        storeItemList.add(new Item("Watering can", "Water crops"));
-        storeItemList.add(new Item("Shovel", "Used for digging"));
-        storeItemList.add(new Item("Soil Sample collector", "Collects soils"));
-        storeItemList.add(new Item("Tractor", "Used for harvesting"));
-        storeItemList.add(new Item("Bag of Seeds", "holds seeds for planting"));
-        storeItemList.add(new Item("Bag of fertilizer", "used for fertilizing"));
-        storeItemList.add(new Item("Pesticides", "used for destroying water-collection"));
-        storeItemList.add(new Item("Mobile Phone", "used for Weather info"));
-
+        for (ItemName itemName : ItemName.values()) {
+            storeItemList.add(new Item(itemName));
+        }
     }
 
     public Game() {
@@ -36,7 +28,7 @@ public class Game {
         createPlayer();
 
         createNPC();
-        initStoreItemlist();
+        initStoreItemList();
     }
 
     private void createNPC() {
