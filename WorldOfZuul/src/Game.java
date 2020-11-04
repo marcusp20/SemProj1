@@ -43,7 +43,10 @@ public class Game {
         NPC storeNPC;
         //File storeNPC = new File("storeNPCDialog.txt");
         //storeNPC = new NPC(storeNPC, storeCommandWords);
-        File major = new File("majorBobDialog.txt");
+        String path = System.getProperty("user.dir");               //Get path to directory (path to SemProj1)
+        File dialog = new File(path + "\\WorldOfZuul\\src\\majorBobDialog.txt");    //Add remaining path to dialog text file
+        NPC majorBob = new NPC(dialog,storeCommandWords);
+        //majorBob.converse();
 
     }
 
@@ -157,6 +160,8 @@ public class Game {
             //parser.setCommandWords(storeCommandWords);
         }
         else if (commandWord == CommandWord.USE) {
+            if(command.getSecondWord().equals("field")) parser.setCommands(fieldCommandWords);
+            //System.out.println(command.getSecondWord());
             //Tjekke Current. Hvis Currentroom == field {}
             System.out.println("This command is used to interact with our fields, PC's, NPC's and all interactebles. ");
 

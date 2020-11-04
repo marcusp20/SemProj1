@@ -91,7 +91,7 @@ public class NPC extends Interactable{
         while(true) {
             writePatternLines("q0");
             write("Enter 0 to exit...");
-            ArrayList<String> lines = getPatternLines("q0");
+            ArrayList<String> lines = getPatternLines("q0"); //??
 
             int input = scan();
             if(input == 0)  {
@@ -104,7 +104,6 @@ public class NPC extends Interactable{
                     writePatternLines("a" + (q - 1));
                 }
             }
-
         }
     }
 

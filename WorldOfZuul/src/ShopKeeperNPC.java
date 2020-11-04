@@ -1,6 +1,8 @@
+import java.io.File;
+
 public class ShopKeeperNPC extends NPC {
 
-    public ShopKeeperNPC(String name, CommandWords commandWords) {
-        super(name, commandWords);
+    public ShopKeeperNPC(File dialog, CommandWords commandWords) {
+        super(dialog, commandWords);
     }
 }
