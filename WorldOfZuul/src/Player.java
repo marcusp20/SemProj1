@@ -4,23 +4,20 @@ public class Player {
     //Attributes
     private String name;
     private int wallet = 0;
-    private HashMap<String, Boolean> playerInventory;
+    private HashMap<ItemNames, Boolean> playerInventory;
 
     //Constructor
     public Player(String name) {
         this.name = name;
+
+        //Initialize the players inventory to hold no items.
         playerInventory = new HashMap<>();
-        playerInventory.put("shovel", true);
-        playerInventory.put("bagofseeds", false);
-        playerInventory.put("watering can", false);
-        playerInventory.put("tractor", false);
-        playerInventory.put("harvester", false);
-        playerInventory.put("bagoffertilizer", false);
-        playerInventory.put("pesticides", false);
-        playerInventory.put("scythe", false);
+        for(ItemNames itemName: ItemNames.values()) {
+            playerInventory.put(itemName, false);
+        }
 
-
-        //add all items
+        //Player starts with a shovel
+        playerInventory.put(ItemNames.SHOVEL, true);
     }
 
     //Method to return value of hashmap.
@@ -28,6 +25,9 @@ public class Player {
         return playerInventory.get(item);
     }
 
+    public HashMap<ItemNames, Boolean> getPlayerInventory() {
+        return playerInventory;
+    }
     public int getWallet() {
         return wallet;
     }
