@@ -25,28 +25,11 @@ public class Field extends Interactable {
 
     //Sow Methods. Maybe the isPesticidesU sed checker ought to be in the harvestFieldMethod, as we can still use pests after sowing...
     public void sowFieldTractor() {
-        isSowed = true;
-        if (isPesticidesUsed) {
-            if (soilQuality <= 0) {
-                System.out.println("You're using a lot of pesticides...");
-            } else {
-                soilQuality -= 1;
-            }
-        }
-        //harvestValue += 2;
         System.out.println("You used the Tractor to sow");
     }
 
     public void sowFieldShovel() {
         isSowed = true;
-        if (isPesticidesUsed) {
-            if (soilQuality <= 0) {
-                System.out.println("You're using a lot of pesticides...");
-            } else {
-                soilQuality -= 1;
-            }
-        }
-        //harvestValue += 1;
         System.out.println("You used the shovel to sow");
     }
 
@@ -97,7 +80,9 @@ public class Field extends Interactable {
 
     public void harvestDone() {
         isReadyToHarvest = false;
-        isPesticidesUsed = false;
-        soilQuality -= 1;
+        waterCounter = 0;
+        yields = 10;
     }
+
+
 }

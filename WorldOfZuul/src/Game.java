@@ -13,7 +13,6 @@ public class Game {
         parser = new Parser(fieldCommandWords);
         createField();
         createPlayer();
-
     }
 
     private void initCommandWords() {
@@ -30,7 +29,6 @@ public class Game {
         fieldCommandWords.addCommandWord(CommandWord.FIELD_SOIL_SAMPLE);
         fieldCommandWords.addCommandWord(CommandWord.FIELD_WATER);
         fieldCommandWords.addCommandWord(CommandWord.FIELD_FERTILIZE);
-
 
     }
 
@@ -58,7 +56,6 @@ public class Game {
         headquarter.setExit("south", field);
 
         headquarter.setExit("north", store);
-
 
         shed.setExit("west", headquarter);
 
@@ -125,19 +122,12 @@ public class Game {
         } else if (commandWord == CommandWord.FIELD_SOW) {
             sowField();
 
-
         } else if (commandWord == CommandWord.FIELD_USE_PESTICIDES) {
-            //Soil quality - 1.
-            //Harvest quality + 1 
-            //Hvis quality allerede er 3, skal den ikke lægge mere sammen.
             System.out.println("pesticies");
-
         } else if (commandWord == CommandWord.FIELD_HARVEST) {
             harvestField();
-
         } else if (commandWord == CommandWord.FIELD_SOIL_SAMPLE) {
             System.out.println(" ");
-
         } else if (commandWord == CommandWord.FIELD_WATER) {
             waterField();
         } else if (commandWord == CommandWord.FIELD_FERTILIZE) {
