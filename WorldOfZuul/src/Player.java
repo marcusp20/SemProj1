@@ -28,5 +28,20 @@ public class Player {
         return playerInventory.get(item);
     }
 
+    public int getWallet() {
+        return wallet;
+    }
 
+
+    /**
+     * @param wallet Adds money to wallet (Use negative for subtraction)
+     * @return false if balance would become negative.
+     */
+    public boolean addWallet(int wallet) {
+        if (this.wallet + wallet < 0) {
+            return false;
+        }
+        this.wallet += wallet;
+        return true;
+    }
 }
