@@ -1,20 +1,22 @@
 public class Item {
 
     private ItemName name;
-    private String description;
 
     // Item Constructor
-    public Item(ItemName name, String description) {
+    public Item(ItemName name) {
         this.name = name;
-        this.description = description;
 
     }
 
-    public ItemName getName() {
-        return name;
+    public String getName() {
+        return name.getItemNameString();
     }
 
     public String getDescription() {
-        return description;
+        return name.getDescription();
+    }
+
+    public int getPrice() {
+        return name.getPrice();
     }
 }
