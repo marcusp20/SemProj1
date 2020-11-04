@@ -1,4 +1,5 @@
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -11,6 +12,7 @@ public class Game {
     private Field testField;
     private Player player;
     private List<Item> storeItemList;
+    private NPC storeNPC;
 
     public void initStoreItemList() {
         storeItemList = new ArrayList<Item>();
@@ -32,13 +34,25 @@ public class Game {
     }
 
     private void createNPC() {
-        NPC storeNPC;
-        //File storeNPC = new File("storeNPCDialog.txt");
-        //storeNPC = new NPC(storeNPC, storeCommandWords);
-        String path = System.getProperty("user.dir");               //Get path to directory (path to SemProj1)
-        File dialog = new File(path + "\\WorldOfZuul\\src\\majorBobDialog.txt");    //Add remaining path to dialog text file
-        NPC majorBob = new NPC(dialog, storeCommandWords);
+        File majorBobDialog = load("majorBobDialog.txt");
+        NPC majorBob = new NPC(majorBobDialog, gameCommandWords);
+
+        File storeNPCDialog = load("SlimcognitoStoreNPC.txt");
+        storeNPC = new NPC(storeNPCDialog, storeCommandWords);
+
         //majorBob.converse();
+        storeNPC.converse();
+    }
+
+    private File load(String fileName) {
+        String path = System.getProperty("user.dir");
+        if(path.endsWith("SemProj1")) {
+            return new File(path + "\\WorldOfZuul\\src\\"+fileName);    //Add remaining path to dialog text file
+        } else if(path.endsWith("WorldOfZuul")) {
+            return new File(path + "\\src\\"+fileName);
+        }
+        //Default - probably not gonna work
+            return new File(path + "\\"+fileName);
 
     }
 
