@@ -16,8 +16,6 @@ public class Player {
             playerInventory.put(itemName, false);
         }
 
-        //Player starts with a shovel
-        playerInventory.put(ItemName.SHOVEL, true);
     }
 
     //Method to return value of hashmap.
@@ -31,6 +29,8 @@ public class Player {
     public int getWallet() {
         return wallet;
     }
+
+
 
 
     /**

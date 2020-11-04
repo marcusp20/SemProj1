@@ -19,4 +19,7 @@ public class Item {
     public int getPrice() {
         return name.getPrice();
     }
+    public ItemName getEnum() {
+        return this.name;
+    }
 }

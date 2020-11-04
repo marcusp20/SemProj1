@@ -23,7 +23,7 @@ public class Game {
     public Game() {
         initCommandWords();
         createRooms();
-        parser = new Parser(gameCommandWords);
+        parser = new Parser(storeCommandWords);
         createField();
         createPlayer();
 
@@ -37,7 +37,7 @@ public class Game {
         //storeNPC = new NPC(storeNPC, storeCommandWords);
         String path = System.getProperty("user.dir");               //Get path to directory (path to SemProj1)
         File dialog = new File(path + "\\WorldOfZuul\\src\\majorBobDialog.txt");    //Add remaining path to dialog text file
-        NPC majorBob = new NPC(dialog,storeCommandWords);
+        NPC majorBob = new NPC(dialog, storeCommandWords);
         //majorBob.converse();
 
     }
@@ -68,13 +68,14 @@ public class Game {
         testField = new Field(fieldCommandWords);
 
     }
+
     private void createPlayer() {
         player = new Player("Lars TyndSkid");
     }
 
 
     private void createRooms() {
-        Room headquarter, shed , field , stables, garden, store;
+        Room headquarter, shed, field, stables, garden, store;
 
         headquarter = new Room("In the headquarter"); //update description and add hashmap.
         shed = new Room("in your shed");
@@ -82,7 +83,7 @@ public class Game {
         stables = new Room("in the stable, smells nice in here");
         garden = new Room("in the beautiful garden");
         store = new Room("in the store, smells like flower seeds in here");
-        
+
         headquarter.setExit("east", shed);
         headquarter.setExit("south", field);
 
@@ -133,7 +134,7 @@ public class Game {
 
         CommandWord commandWord = command.getCommandWord();
 
-        if(commandWord == CommandWord.UNKNOWN) {
+        if (commandWord == CommandWord.UNKNOWN) {
             System.out.println("I don't know what you mean...");
             return false;
         }
@@ -147,12 +148,37 @@ public class Game {
         } else if (commandWord == CommandWord.STORE_BROWSE) {
             printStoreItemList();
         } else if (commandWord == CommandWord.STORE_BUY) {
-            // add functionality
+            // add functionality for buying item.
+            // 1. check if you can afford it.
+            if (!command.hasSecondWord()) {
+                System.out.println("Please specify the item you want to buy.");
+                return false;
+
+            }
+            Item item = null;
+            try {
+                int itemindex = Integer.parseInt(command.getSecondWord());
+                item = storeItemList.get(itemindex);
+
+            } catch (NumberFormatException nfe) {
+                System.out.println("Give me the index of the item you wish to buy.");
+                return false;
+            } catch (IndexOutOfBoundsException eobe) {
+                System.out.println("Please give me a number between 0 & " + (storeItemList.size()-1));
+                return false;
+            }
+            if (!player.addWallet(-item.getPrice())) {
+                System.out.println("You cannot afford it.");
+            } else {
+                storeItemList.remove(item);                             // remove item from StoreItemList.
+                player.getPlayerInventory().put(item.getEnum(), true);  // change item hashmap value to true.
+                System.out.println("you brought a " + item.getName());
+            }
+            return false;
 
             //parser.setCommandWords(storeCommandWords);
-        }
-        else if (commandWord == CommandWord.USE) {
-            if(command.getSecondWord().equals("field")) parser.setCommands(fieldCommandWords);
+        } else if (commandWord == CommandWord.USE) {
+            if (command.getSecondWord().equals("field")) parser.setCommands(fieldCommandWords);
             //System.out.println(command.getSecondWord());
             //Tjekke Current. Hvis Currentroom == field {}
             System.out.println("This command is used to interact with our fields, PC's, NPC's and all interactebles. ");
@@ -194,7 +220,7 @@ public class Game {
     private void printStoreItemList() {
         System.out.println("The Itmes we have for sale are:");
         for (Item item : storeItemList) {
-            System.out.println(item.getName() + ", " + item.getDescription());
+            System.out.println(storeItemList.indexOf(item) + " ) $" + item.getPrice() + "  \t" + item.getName() + ", " + item.getDescription());
         }
     }
 
@@ -207,7 +233,7 @@ public class Game {
     }
 
     private void goRoom(Command command) {
-        if(!command.hasSecondWord()) {
+        if (!command.hasSecondWord()) {
             System.out.println("Go where?");
             return;
         }
@@ -225,7 +251,7 @@ public class Game {
     }
 
     private boolean quit(Command command) {
-        if(command.hasSecondWord()) {
+        if (command.hasSecondWord()) {
             System.out.println("Quit what?");
             return false;
         } else {
