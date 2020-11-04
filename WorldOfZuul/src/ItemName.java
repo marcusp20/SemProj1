@@ -1,4 +1,4 @@
-public enum ItemNames {
+public enum ItemName {
     SHOVEL("Shovel"),
     BAG_OF_SEEDS("Bag of seeds"),
     WATER_CAN("Watering can"),
@@ -10,7 +10,7 @@ public enum ItemNames {
 
     private String itemNameString;
 
-    ItemNames(String commandString)
+    ItemName(String commandString)
     {
         this.itemNameString = commandString;
     }
