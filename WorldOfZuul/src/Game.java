@@ -162,7 +162,6 @@ public class Game {
             }
         } else {
             System.out.println("The field has already been sowed... Try watering or harvesting");
-            System.out.println(testField.getIsSowed());
         }
     }
 
@@ -175,6 +174,7 @@ public class Game {
                 testField.harvestDone();
             } else if (testPlayer.itemOwned("scythe")) {
                 System.out.println("Used the slow scythe to harvest field");
+                testPlayer.sellYields(testField.getYield());
                 testField.harvestDone();
 
             } else {

@@ -10,18 +10,17 @@ public class Player {
     public Player(String name) {
         this.name = name;
         playerInventory = new HashMap<>();
-        playerInventory.put("shovel", true);
+        playerInventory.put("shovel", false);
         playerInventory.put("bagOfGrain", true);
         playerInventory.put("bagof", true);
         playerInventory.put("bagof", true);
         playerInventory.put("bagof", true);
 
-        playerInventory.put("watering hose", false);
-        playerInventory.put("tractor", false);
-        playerInventory.put("harvester", true);
-        playerInventory.put("bagoffertilizer", true);
+        playerInventory.put("tractor", true);
+        playerInventory.put("harvester", false);
+        playerInventory.put("bagoffertilizer", false);
         playerInventory.put("pesticides", false);
-        playerInventory.put("scythe", false);
+        playerInventory.put("scythe", true);
 
 
         //add all items
