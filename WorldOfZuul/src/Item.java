@@ -1,16 +1,16 @@
 public class Item {
 
-    private String name;
+    private ItemName name;
     private String description;
 
     // Item Constructor
-    public Item(String name, String description) {
+    public Item(ItemName name, String description) {
         this.name = name;
         this.description = description;
 
     }
 
-    public String getName() {
+    public ItemName getName() {
         return name;
     }
 
