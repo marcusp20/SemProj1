@@ -4,7 +4,7 @@ public class Game {
     private CommandWords gameCommandWords;
     private CommandWords fieldCommandWords;
     private Field testField;
-    private Player player;
+    private Player testPlayer;
 
 
     public Game() {
@@ -30,6 +30,7 @@ public class Game {
         fieldCommandWords.addCommandWord(CommandWord.FIELD_WATER);
         fieldCommandWords.addCommandWord(CommandWord.FIELD_FERTILIZE);
 
+
     }
 
     //Used for testing Field methods
@@ -38,7 +39,7 @@ public class Game {
 
     }
     private void createPlayer() {
-        player = new Player("Lars TyndSkid");
+        testPlayer = new Player("Lars TyndSkid");
     }
 
 
@@ -116,9 +117,7 @@ public class Game {
             wantToQuit = quit(command);
         }
         else if (commandWord == CommandWord.USE) {
-            //Tjekke Current. Hvis Currentroom == field {}
             System.out.println("This command is used to interact with our fields, PC's, NPC's and all interactebles. ");
-
         } else if (commandWord == CommandWord.FIELD_SOW) {
             sowField();
 
@@ -150,19 +149,19 @@ public class Game {
     //Methods for Field
     public void sowField() {
         if (!testField.getIsSowed()) {                             //Check if field is ready to be harvested
-            if (!player.itemOwned("bagOfGrain")) {                          //Check for bagOfSeeds, add more seeds the further we get.
+            if (!testPlayer.itemOwned("bagOfGrain")) {                          //Check for bagOfSeeds, add more seeds the further we get.
                 System.out.println("No seeds in inventory, go buy some");
-            } else if (player.itemOwned("tractor")) {                       //Check for tractor, shovel, or no item.
+            } else if (testPlayer.itemOwned("tractor")) {                       //Check for tractor, shovel, or no item.
                 testField.sowFieldTractor();
                 //System.out.println(testField.showInfo());                 //Delete this later
-            } else if (player.itemOwned("shovel")) {
+            } else if (testPlayer.itemOwned("shovel")) {
                 testField.sowFieldShovel();
                 //System.out.println(testField.showInfo());                  //delete this later
             } else {
                 System.out.println("Hmm... you don't have a shovel, or a tractor yet, better go shopping");
             }
         } else {
-            System.out.println("The field has already been sowed, try harvesting it");
+            System.out.println("The field has already been sowed... Try watering or harvesting");
             System.out.println(testField.getIsSowed());
         }
     }
@@ -170,26 +169,26 @@ public class Game {
 
     public void harvestField() {
         if (testField.getIsReadyToHarvest()) {                            //Checks if ready to harvest is True
-            if (player.itemOwned("harvester")) {
+            if (testPlayer.itemOwned("harvester")) {
                 System.out.println("Used harvester to harvest field");
-
-            } else if (player.itemOwned("scythe")) {
+                testPlayer.sellYields(testField.getYield());  //REMEMBER TO MULTIPLY MONEYS F
+                testField.harvestDone();
+            } else if (testPlayer.itemOwned("scythe")) {
                 System.out.println("Used the slow scythe to harvest field");
+                testField.harvestDone();
+
             } else {
                 System.out.println("Hmm... you don't have a scythe, or a harvester yet, better go shopping");
             }
         } else {
             System.out.println("Field not ready to harvest. Try to sow some seeds or watering first");
         }
-        testField.harvestDone();
         System.out.println(testField.getYield());
-
-
-
+        System.out.println("Wallet " + testPlayer.checkwallet());
     }
 
     public void fertilizeField() {
-        if (player.itemOwned("bagoffertilizer")) {
+        if (testPlayer.itemOwned("bagoffertilizer")) {
             if (testField.getIsSowed()) {
                 testField.useFertilizerAfterSow();
                 System.out.println(testField.getYield());
@@ -210,7 +209,7 @@ public class Game {
             testField.waterField();
 
         } else {
-            System.out.println("Try sowing something");
+            System.out.println("You have nothing to water...");
         }
         System.out.println(testField.getYield());
     }

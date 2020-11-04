@@ -5,12 +5,11 @@ public class Field extends Interactable {
     private int soilQuality = 50; //Decides the wield
     private Boolean isPesticidesUsed = false; //Bool to check for pesticides, Value is reset everytime a new harvest is done.'
     private Boolean insects = false;
-    private Boolean water = false;
     private int fertilizerCounter;
     private int pesticidesCounter;
     private int waterCounter;
     private int harvestCounter;
-    private int yields;
+    private double yields;
 
 
     public Field(CommandWords commandWords) {
@@ -35,14 +34,19 @@ public class Field extends Interactable {
 
 
     public void useFertilizerBeforeSow() {
-        if (fertilizerCounter < 5) {
-            yields += 20;
+        if (fertilizerCounter < 2) {
+            yields += 15;
             fertilizerCounter += 1;
+            System.out.println("Used fertilizer, the soil is MOIST and fresh, ready for sowing!");
+
         } else {
             yields -= 10;
             fertilizerCounter += 1;
+            if (fertilizerCounter >= 3) {
+                System.out.println("Too much fertilizer used, try sowing other crops after harvest...");
+            }
+
         }
-        System.out.println("Used fertilizer, the soil is MOIST and fresh!");
 
     }
 
@@ -53,17 +57,32 @@ public class Field extends Interactable {
 
     public void waterField() {
         isReadyToHarvest = true;
-        if (waterCounter < 3) {
+        if (waterCounter < 1) {
             yields += 10;
             waterCounter++;
+            System.out.println("Your field has been watered, and is ready for harvest");
         } else {
             yields -= 10;
             waterCounter++;
+            System.out.println("Are you trying to make your field into a pool?");
+            if (waterCounter >= 3) {
+                System.out.println("You're watering too much!");
+                if (yields < -100) {
+                    //TSUNAMI
+                    System.out.println("Tsunami");
+                    //quit game.
+                }
+            }
         }
-        System.out.println("Field has been watered, your wield migt increase, or not...");
     }
 
 
+    public void usePesticides() {
+        if (isPesticidesUsed) {
+            insects = false;
+           // ()
+        }
+    }
 
     //method to return value of isReadyToHarvest
     public Boolean getIsReadyToHarvest() {
@@ -74,14 +93,15 @@ public class Field extends Interactable {
         return isSowed;
     }
 
-    public int getYield() {
+    public double getYield() {
         return yields;
     }
 
     public void harvestDone() {
         isReadyToHarvest = false;
+        isSowed = false;
         waterCounter = 0;
-        yields = 10;
+        yields = 0;
     }
 
 

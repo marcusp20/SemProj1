@@ -3,7 +3,7 @@ import java.util.HashMap;
 public class Player {
     //Attributes
     private String name;
-    private int wallet = 0;
+    private double wallet = 0;
     private HashMap<String, Boolean> playerInventory;
 
     //Constructor
@@ -31,7 +31,13 @@ public class Player {
     public Boolean itemOwned(String item) {
         return playerInventory.get(item);
     }
-    public int checkwallet() {
+
+    public void sellYields(double yields) {
+        wallet += yields;
+
+    }
+
+    public double checkwallet() {
         return wallet;
     }
 
