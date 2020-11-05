@@ -38,7 +38,7 @@ public class Game {
         File majorBobDialog = load("majorBobDialog.txt");
         NPC majorBob = new NPC(majorBobDialog, gameCommandWords);
 
-        File storeNPCDialog = load("SlimcognitoStoreNPC.txt");
+        File storeNPCDialog = load("SlimCognitoStoreNPC.txt");
         storeNPC = new NPC(storeNPCDialog, storeCommandWords);
 
         //majorBob.converse();
