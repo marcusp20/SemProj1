@@ -11,6 +11,8 @@ public class Game {
     private Field testField;
     private Player player;
     private List<Item> storeItemList;
+    private NPC majorBob;
+    private NPC ShopkeeperLizzy;
 
     public void initStoreItemlist() {
         storeItemList = new ArrayList<Item>();
@@ -40,12 +42,14 @@ public class Game {
     }
 
     private void createNPC() {
-        NPC storeNPC;
-        //File storeNPC = new File("storeNPCDialog.txt");
-        //storeNPC = new NPC(storeNPC, storeCommandWords);
+
+
         String path = System.getProperty("user.dir");               //Get path to directory (path to SemProj1)
-        File dialog = new File(path + "\\WorldOfZuul\\src\\majorBobDialog.txt");    //Add remaining path to dialog text file
-        NPC majorBob = new NPC(dialog,storeCommandWords);
+        File dialog = new File(path + "\\WorldOfZuul\\src\\Dialog\\majorBobDialog.txt");    //Add remaining path to dialog text file
+        majorBob = new NPC(dialog,storeCommandWords);
+        dialog = new File(path + "\\WorldOfZuul\\src\\ShopkeeperLizzyDialog.txt");
+
+
         //majorBob.converse();
 
     }
@@ -62,12 +66,14 @@ public class Game {
         storeCommandWords.addCommandWord(CommandWord.STORE_BUY);
         storeCommandWords.addCommandWord(CommandWord.STORE_BROWSE);
         storeCommandWords.addCommandWord(CommandWord.HELP);
+        storeCommandWords.addCommandWord(CommandWord.LEAVE);
 
         fieldCommandWords = new CommandWords();
         fieldCommandWords.addCommandWord(CommandWord.FIELD_SOW);
         fieldCommandWords.addCommandWord(CommandWord.FIELD_HARVEST);
         fieldCommandWords.addCommandWord(CommandWord.FIELD_USE_PESTICIDES);
         fieldCommandWords.addCommandWord(CommandWord.FIELD_SOIL_SAMPLE);
+        fieldCommandWords.addCommandWord(CommandWord.LEAVE);
 
     }
 
@@ -95,7 +101,6 @@ public class Game {
         headquarter.setExit("south", field);
 
         headquarter.setExit("north", store);
-
 
         shed.setExit("west", headquarter);
 
@@ -146,6 +151,10 @@ public class Game {
             return false;
         }
 
+        if(commandWord == commandWord.LEAVE)    {
+            parser.setCommands(gameCommandWords);
+        }
+
         if (commandWord == CommandWord.HELP) {
             printHelp();
         } else if (commandWord == CommandWord.GO) {
@@ -160,10 +169,19 @@ public class Game {
             //parser.setCommandWords(storeCommandWords);
         }
         else if (commandWord == CommandWord.USE) {
-            if(command.getSecondWord().equals("field")) parser.setCommands(fieldCommandWords);
-            //System.out.println(command.getSecondWord());
-            //Tjekke Current. Hvis Currentroom == field {}
-            System.out.println("This command is used to interact with our fields, PC's, NPC's and all interactebles. ");
+            if(command.getSecondWord() != null) {           //If player is attempting to use something then...
+                                                            //Checks if player is in the right place to use intractable
+                if (command.getSecondWord().equals("field") && currentRoom.getShortDescription().equals("in the field")) {
+                    parser.setCommands(fieldCommandWords);
+                } else if (command.getSecondWord().equals("store") && currentRoom.getShortDescription().equals("in the store, smells like flower seeds in here")) {
+                    parser.setCommands(storeCommandWords);
+                } else if (command.getSecondWord().equals("npc") && currentRoom.getShortDescription().equals("In the headquarter")) {
+                    majorBob.converse();
+                }
+            }else   {
+                System.out.println("This command is used to interact with our fields, PC's, NPC's and all intractable. ");
+            }
+
 
         } else if (commandWord == CommandWord.FIELD_SOW) {                  //Note; Horrorcode ahead...
             if (!testField.getIsReadyToHarvest()) {                         //Check if field is ready to be harvested
