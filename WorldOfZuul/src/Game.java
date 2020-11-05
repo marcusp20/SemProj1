@@ -12,7 +12,7 @@ public class Game {
     private Player player;
     private List<Item> storeItemList;
     private NPC majorBob;
-    private NPC ShopkeeperLizzy;
+    private NPC shopkeeperLizzy;
 
     public void initStoreItemlist() {
         storeItemList = new ArrayList<Item>();
@@ -46,11 +46,11 @@ public class Game {
 
         String path = System.getProperty("user.dir");               //Get path to directory (path to SemProj1)
         File dialog = new File(path + "\\WorldOfZuul\\src\\Dialog\\majorBobDialog.txt");    //Add remaining path to dialog text file
-        majorBob = new NPC(dialog,storeCommandWords);
-        dialog = new File(path + "\\WorldOfZuul\\src\\ShopkeeperLizzyDialog.txt");
+        majorBob = new NPC(dialog, gameCommandWords);
+        dialog = new File(path + "\\WorldOfZuul\\src\\Dialog\\shopkeeperLizzyDialog.txt");
+        shopkeeperLizzy = new NPC(dialog, gameCommandWords);
 
 
-        //majorBob.converse();
 
     }
 
@@ -177,7 +177,10 @@ public class Game {
                     parser.setCommands(storeCommandWords);
                 } else if (command.getSecondWord().equals("npc") && currentRoom.getShortDescription().equals("In the headquarter")) {
                     majorBob.converse();
+                }else if (command.getSecondWord().equals("npc") && currentRoom.getShortDescription().equals("in the store, smells like flower seeds in here")) {
+                    shopkeeperLizzy.converse();
                 }
+
             }else   {
                 System.out.println("This command is used to interact with our fields, PC's, NPC's and all intractable. ");
             }

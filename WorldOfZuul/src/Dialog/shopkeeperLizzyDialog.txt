@@ -1,0 +1,13 @@
+.nn Shopkeeper Lizzy
+.dd The shopkeeper at the local store
+
+*0 Hello my friend, my name is Lizzy.
+*1 Im the owner of the only shop in town.
+*2 If you need anything just let me know.
+
+q00 1.How do i buy items?
+a00 Just use the "buy" command along with the item you want
+
+q01 2.How do i see what items i can buy?
+a10 Oh that's easy darling.
+a11 Just use the "browse" command.

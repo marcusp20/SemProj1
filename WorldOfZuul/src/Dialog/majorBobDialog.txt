@@ -1,5 +1,6 @@
 .nn Mayor bob
 .dd Mayor of town
+
 *0 Greetings my good fellow.
 *1 Welcome to our farm stead.
 *2 My name is bob.
