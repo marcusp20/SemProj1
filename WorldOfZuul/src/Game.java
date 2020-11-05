@@ -109,31 +109,25 @@ public class Game {
 
         if (commandWord == CommandWord.HELP) {
             printHelp();
-        }
-        else if (commandWord == CommandWord.GO) {
+        } else if (commandWord == CommandWord.GO) {
             goRoom(command);
-        }
-        else if (commandWord == CommandWord.QUIT) {
+        } else if (commandWord == CommandWord.QUIT) {
             wantToQuit = quit(command);
-        }
-        else if (commandWord == CommandWord.USE) {
+        } else if (commandWord == CommandWord.USE) {
             System.out.println("This command is used to interact with our fields, PC's, NPC's and all interactebles. ");
         } else if (commandWord == CommandWord.FIELD_SOW) {
             sowField();
-
         } else if (commandWord == CommandWord.FIELD_USE_PESTICIDES) {
-            System.out.println("pesticies");
+            System.out.println("Implement pesticides");
         } else if (commandWord == CommandWord.FIELD_HARVEST) {
             harvestField();
         } else if (commandWord == CommandWord.FIELD_SOIL_SAMPLE) {
-            System.out.println(" ");
+            getFieldSample();
         } else if (commandWord == CommandWord.FIELD_WATER) {
             waterField();
         } else if (commandWord == CommandWord.FIELD_FERTILIZE) {
             fertilizeField();
         }
-
-
         return wantToQuit;
     }
 
@@ -165,16 +159,16 @@ public class Game {
         }
     }
 
-
     public void harvestField() {
         if (testField.getIsReadyToHarvest()) {                            //Checks if ready to harvest is True
             if (testPlayer.itemOwned("harvester")) {
                 System.out.println("Used harvester to harvest field");
-                testPlayer.sellYields(testField.getYield());  //REMEMBER TO MULTIPLY MONEYS F
+                testPlayer.sellYields(testField.getYield() * 1.1);  //REMEMBER TO MULTIPLY MONEYS F
                 testField.harvestDone();
+
             } else if (testPlayer.itemOwned("scythe")) {
                 System.out.println("Used the slow scythe to harvest field");
-                testPlayer.sellYields(testField.getYield());
+                testPlayer.sellYields(testField.getYield() * 0.9);
                 testField.harvestDone();
 
             } else {
@@ -212,6 +206,16 @@ public class Game {
             System.out.println("You have nothing to water...");
         }
         System.out.println(testField.getYield());
+    }
+
+    public void getFieldSample() {
+        if (testField.getYield() < 25) {
+            System.out.println("Your soil is not too great");
+        } else if (testField.getYield() >= 25) {
+            System.out.println("your soil is in good condition");
+        } else if (testField.getYield() >= 50 ) {
+            System.out.println("Your soil is in excellent condition!");
+        }
     }
 
 

@@ -2,7 +2,6 @@ public class Field extends Interactable {
     //Attributes
     private Boolean isReadyToHarvest = false;
     private Boolean isSowed = false;
-    private int soilQuality = 50; //Decides the wield
     private Boolean isPesticidesUsed = false; //Bool to check for pesticides, Value is reset everytime a new harvest is done.'
     private Boolean pests = false;
     private int grainFieldCounter;
@@ -18,23 +17,18 @@ public class Field extends Interactable {
         super(commandWords);
     }
 
-    //Method used to showInfo after Sow methods has been called. Used to check if we get the expected values.
-    public String showInfo() {
-        return ("Pest: " + isPesticidesUsed + ", HarvVal: "  + ", SoilQual: " + soilQuality + ", IsReadyToHarv? " + isReadyToHarvest);
-    }
 
-
-    //Sow Methods. Maybe the isPesticidesU sed checker ought to be in the harvestFieldMethod, as we can still use pests after sowing...
     public void sowFieldTractor() {
         isSowed = true;
         System.out.println("You used the Tractor to sow");
+        yields += 15;
     }
 
     public void sowFieldShovel() {
         isSowed = true;
         System.out.println("You used the shovel to sow");
+        yields += 5;
     }
-
 
     public void useFertilizerBeforeSow() {
         if (fertilizerCounter < 2) {
@@ -63,7 +57,7 @@ public class Field extends Interactable {
         if (waterCounter < 2) {
             yields += 10;
             waterCounter++;
-            System.out.println("Your field has been watered, and is ready for harvest");
+            System.out.println("The soil is getting moist and is ready for harvest");
         } else {
             yields -= 10;
             waterCounter++;
@@ -106,8 +100,6 @@ public class Field extends Interactable {
         waterCounter = 0;
         yields = 0;
         harvestCounter++;
-
     }
-
 
 }
