@@ -1,3 +1,5 @@
+import java.util.Scanner;
+
 public class Game {
     private Parser parser;
     private Room currentRoom;
@@ -140,57 +142,105 @@ public class Game {
     }
 
 
+
     //Methods for Field
+
+    /* FieldExplainer: To get most amount of money in wallet from Field:
+    Fertilize field twice.
+    Sow seeds with tractor
+    water crops twice
+    harvest using harvester
+    make sure to rotate crops at least every third time.
+    */
+
+    //Choose which crop will be planted. Changes currentHarvest to crop value.
+    public void chooseCrop() {
+        while (true) {
+            Scanner s = new Scanner(System.in);
+            System.out.println("Which crop would you like to use? Type 'options' for choices.");
+            String choice = s.nextLine();
+            if (choice.equals("wheat") && testPlayer.itemOwned("bagOfWheat")) {
+                testField.setCurrentHarvest("wheat");
+                System.out.println("Wheat was used");
+                break;
+            } else if (choice.equals("clover") && testPlayer.itemOwned("bagOfClover")) {
+                testField.setCurrentHarvest("clover");
+                System.out.println("Clover was used");
+                break;
+            } else if (choice.equals("corn") && testPlayer.itemOwned("bagOfCorn")) {
+                testField.setCurrentHarvest("corn");
+                System.out.println("Corn was used");
+                break;
+            } else if (choice.equals("cannabis") && testPlayer.itemOwned("bagOfCannabisSeeds")) {
+                testField.setCurrentHarvest("cannabis");
+                System.out.println("cannabis was sowed");
+                break;
+            } else if (choice.equals("options")) {
+                System.out.println("Corn, Wheat, Clover and illegal plant...");
+            }
+            else {
+                System.out.println("You don't have " + choice + " in inventory...");
+            }
+        }
+    }
+
+    //Sow Method
     public void sowField() {
-        if (!testField.getIsSowed()) {                             //Check if field is ready to be harvested
-            if (!testPlayer.itemOwned("bagOfGrain")) {                          //Check for bagOfSeeds, add more seeds the further we get.
-                System.out.println("No seeds in inventory, go buy some");
-            } else if (testPlayer.itemOwned("tractor")) {                       //Check for tractor, shovel, or no item.
+        if (!testField.getIsSowed()) {
+            if (testPlayer.checkForNoCrops()) {
+                System.out.println("No seeds or crops in inventory, go buy some");
+            } else if (testPlayer.itemOwned("tractor")) {
+                chooseCrop();
                 testField.sowFieldTractor();
-                //System.out.println(testField.showInfo());                 //Delete this later
             } else if (testPlayer.itemOwned("shovel")) {
+                chooseCrop();
                 testField.sowFieldShovel();
-                //System.out.println(testField.showInfo());                  //delete this later
             } else {
-                System.out.println("Hmm... you don't have a shovel, or a tractor yet, better go shopping");
+                System.out.println("You don't have a shovel, or a tractor yet, better go shopping...");
             }
         } else {
             System.out.println("The field has already been sowed... Try watering or harvesting");
         }
     }
 
+    //harvest method
     public void harvestField() {
-        if (testField.getIsReadyToHarvest()) {                            //Checks if ready to harvest is True
+        if (testField.getIsReadyToHarvest()) {
             if (testPlayer.itemOwned("harvester")) {
-                System.out.println("Used harvester to harvest field");
-                testPlayer.sellYields(testField.getYield() * 1.1);  //REMEMBER TO MULTIPLY MONEYS F
+                System.out.println("Used harvester on field.");
+
+                testField.useHarvester(testField.getYield());
+                testField.checkPreviousHarvest();
+                testPlayer.sellYields(testField.getYield()); //yields sold to money.
                 testField.harvestDone();
+
+                System.out.println("Wallet is now "  + testPlayer.checkWallet());
 
             } else if (testPlayer.itemOwned("scythe")) {
-                System.out.println("Used the slow scythe to harvest field");
-                testPlayer.sellYields(testField.getYield() * 0.9);
+                System.out.println("Used scythe to harvest field.");
+
+                testField.useScythe(testField.getYield());
+                testField.checkPreviousHarvest();
+                testPlayer.sellYields(testField.getYield()); //yields sold to money.
                 testField.harvestDone();
 
+                System.out.println("Wallet is now "  + testPlayer.checkWallet());
+
             } else {
-                System.out.println("Hmm... you don't have a scythe, or a harvester yet, better go shopping");
+                System.out.println("You don't have a scythe, or a harvester yet, better go shopping");
             }
         } else {
-            System.out.println("Field not ready to harvest. Try to sow some seeds or watering first");
+            System.out.println("Field not ready to harvest, try watering or sowing...");
         }
-        System.out.println(testField.getYield());
-        System.out.println("Wallet " + testPlayer.checkwallet());
+        System.out.println(" Harv count = " + testField.getHarvestCounter());
     }
 
     public void fertilizeField() {
         if (testPlayer.itemOwned("bagoffertilizer")) {
             if (testField.getIsSowed()) {
                 testField.useFertilizerAfterSow();
-                System.out.println(testField.getYield());
-
             } else {
                 testField.useFertilizerBeforeSow();
-                System.out.println(testField.getYield());
-
             }
         }
         else {
@@ -201,22 +251,21 @@ public class Game {
     public void waterField() {
         if (testField.getIsSowed()) {
             testField.waterField();
-
         } else {
             System.out.println("You have nothing to water...");
         }
-        System.out.println(testField.getYield());
     }
 
     public void getFieldSample() {
-        if (testField.getYield() < 25) {
-            System.out.println("Your soil is not too great");
-        } else if (testField.getYield() >= 25) {
-            System.out.println("your soil is in good condition");
-        } else if (testField.getYield() >= 50 ) {
+        if (testField.getYield() > 64) {
             System.out.println("Your soil is in excellent condition!");
+        } else if (testField.getYield() > 33  ) {
+            System.out.println("your soil is in good condition.");
+        } else  {
+            System.out.println("Your soil is not too great...");
         }
     }
+
 
 
 
