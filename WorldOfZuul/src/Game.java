@@ -143,22 +143,19 @@ public class Game {
 
 
 
-    //Methods for Field
+    //Methods for Field(s)
 
-    /* FieldExplainer: To get most amount of money in wallet from Field:
-    Fertilize field twice.
-    Sow seeds with tractor
-    water crops twice
-    harvest using harvester
-    make sure to rotate crops at least every third time.
-    */
-
-    //Choose which crop will be planted. Changes currentHarvest to crop value.
+    //Choose which crop will be planted with Scanner.
+    // Checks which crops owned to use.
+    // Updates currentHarvest to choice.
+    //Loops until a valid crop has been chosen
     public void chooseCrop() {
         while (true) {
+
             Scanner s = new Scanner(System.in);
             System.out.println("Which crop would you like to use? Last used crop was " + testField.getPreviousHarvest() +  ". Type 'options' for choices.");
             String choice = s.nextLine();
+
             if (choice.equals("wheat") && testPlayer.itemOwned("bagOfWheat")) {
                 testField.setCurrentHarvest("wheat");
                 System.out.println("Wheat was used");
@@ -184,7 +181,10 @@ public class Game {
         }
     }
 
-    //Sow Method
+
+    //SowField method
+    //Checks if field is sowed already. Checks for crops in inventory.
+    //Checks for tractor in inventory, if not, shovel is used. If no shovel, nothing happens.
     public void sowField() {
         if (!testField.getIsSowed()) {
             if (testPlayer.checkForNoCrops()) {
@@ -203,7 +203,11 @@ public class Game {
         }
     }
 
-    //harvest method
+    //harvestField method
+    //Checks if player has sowed and watered crops.
+    //Checks if player owns harvester, if not, check scythe instead.
+    //Calculates value yield, after scythe or harvester is used, and adds money to player wallet.
+    //Resets field.
     public void harvestField() {
         if (testField.getIsReadyToHarvest()) {
             if (testPlayer.itemOwned("harvester")) {
@@ -234,6 +238,10 @@ public class Game {
         }
     }
 
+
+    //FertilizeField method
+    //Checks for fertilizer and isSowed.
+    //Fertilizer strength depends on isSowed condition.
     public void fertilizeField() {
         if (testPlayer.itemOwned("bagoffertilizer")) {
             if (testField.getIsSowed()) {
@@ -247,25 +255,32 @@ public class Game {
         }
     }
 
+
+    //waterField method
+    //Check for isSowed
+    //See moistField method for further explanation.
     public void waterField() {
         if (testField.getIsSowed()) {
-            testField.waterField();
+            testField.moistField();
         } else {
             System.out.println("You have nothing to water...");
         }
     }
 
+
+    //getFieldSample method
+    //shows condition of field based on yield.
     public void getFieldSample() {
         if (testField.getYield() > 64) {
             System.out.println("Your soil is in excellent condition!");
         } else if (testField.getYield() > 33  ) {
             System.out.println("your soil is in good condition.");
-        } else  {
+        } else if (testField.getYield() > 15) {
+            System.out.println("Your soil could be worse...");
+        } else {
             System.out.println("Your soil is not too great...");
         }
     }
-
-
 
 
     private void goRoom(Command command) {

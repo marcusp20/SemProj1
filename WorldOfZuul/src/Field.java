@@ -1,6 +1,19 @@
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Scanner;
+/*
+    FieldExplainer
+    - To get MOST amount of money in wallet from Field:
+    Fertilize field twice.
+    Sow seeds with tractor
+    Water crops twice
+    Harvest using harvester
+    Use different crops every new harvest
+
+    To get LEAST amount of money in wallet from Field:
+    Fertilize too much
+    Saw seeds with shovel
+    Water too much
+    Harvest using Scythe
+    Use the same strain of crop every new harvest.
+*/
 
 public class Field extends Interactable {
     //Attributes
@@ -10,7 +23,7 @@ public class Field extends Interactable {
     private Boolean pests = false;
 
 
-    private String previousHarvest = "wheat";
+    private String previousHarvest = "big ass cannabis plants";
     private String currentHarvest;
 
 
@@ -67,7 +80,10 @@ public class Field extends Interactable {
         }
     }
 
-    public void waterField() {
+
+
+    //
+    public void moistField() {
         isReadyToHarvest = true;
         if (waterCounter < 2) {
             yields += 10;
@@ -79,7 +95,7 @@ public class Field extends Interactable {
             System.out.println("Are you trying to make your field into a pool?");
             if (waterCounter >= 3) {
                 System.out.println("You're watering too much!");
-                if (yields < -100) {
+                if (yields < -50) {
                     //TSUNAMI
                     System.out.println("Tsunami");
                     //quit game.
