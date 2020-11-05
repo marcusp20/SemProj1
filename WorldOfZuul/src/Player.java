@@ -3,7 +3,7 @@ import java.util.HashMap;
 public class Player {
     //Attributes
     private String name;
-    private int wallet = 0;
+    private double wallet = 0;
     private HashMap<ItemName, Boolean> playerInventory;
 
     //Constructor
@@ -26,7 +26,7 @@ public class Player {
     public HashMap<ItemName, Boolean> getPlayerInventory() {
         return playerInventory;
     }
-    public int getWallet() {
+    public double getWallet() {
         return wallet;
     }
 
@@ -34,14 +34,15 @@ public class Player {
 
 
     /**
-     * @param wallet Adds money to wallet (Use negative for subtraction)
+     * @param input Adds money to input (Use negative for subtraction)
      * @return false if balance would become negative.
      */
-    public boolean addWallet(int wallet) {
-        if (this.wallet + wallet < 0) {
+    public boolean addWallet(double input) {
+        if (this.wallet + input < 0) { // This does not allow a large negative
+                                       // balance to have a small positive input added
             return false;
         }
-        this.wallet += wallet;
+        this.wallet += input;
         return true;
     }
 }
