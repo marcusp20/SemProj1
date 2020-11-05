@@ -5,7 +5,7 @@ public class Player {
     private String name;
     private double wallet = 0;
     private HashMap<ItemName, Boolean> playerInventory;
-    private boolean noCropsOwned;
+    private Boolean noCropsOwned;
 
     //Constructor
     public Player(String name) {
@@ -20,7 +20,7 @@ public class Player {
     }
 
     //Method to return value of hashmap.
-    public Boolean itemOwned(String item) {
+    public Boolean itemOwned(String item) { //TODO change arg to ItemName (enum class)
         return playerInventory.get(item);
     }
 
@@ -31,7 +31,7 @@ public class Player {
         return wallet;
     }
 
-    public boolean checkForNoCrops() {
+    public boolean checkForNoCrops() { //TODO add items to enum class
         if (!itemOwned("bagOfWheat") && !itemOwned("bagOfClover") && !itemOwned("bagOfCorn") && !itemOwned("bagOfCannabisSeeds")) {
             noCropsOwned = true;
         } else {

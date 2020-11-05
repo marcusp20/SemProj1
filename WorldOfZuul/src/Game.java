@@ -110,6 +110,7 @@ public class Game {
 
         headquarter.setExit("north", store);
 
+        store.setExit("south", headquarter);
 
         shed.setExit("west", headquarter);
 
@@ -157,12 +158,9 @@ public class Game {
         if(commandWord == CommandWord.UNKNOWN) {
             System.out.println("I don't know what you mean...");
             return false;
-        }
-
-        if(commandWord == commandWord.LEAVE) {
+        } if(commandWord == commandWord.LEAVE) {
             parser.setCommands(gameCommandWords);
-        }
-        if (commandWord == CommandWord.HELP) {
+        } if (commandWord == CommandWord.HELP) {
             printHelp();
         } else if (commandWord == CommandWord.GO) {
             goRoom(command);
@@ -174,7 +172,7 @@ public class Game {
             return buyStore(command);
         } else if (commandWord == CommandWord.USE) {
             use(command);
-        } else if (commandWord == CommandWord.FIELD_SOW) {                  //Note; Horrorcode ahead...
+        } else if (commandWord == CommandWord.FIELD_SOW) {
             sowField();
         } else if (commandWord == CommandWord.FIELD_USE_PESTICIDES) {
             //TODO implement pesticides
@@ -213,7 +211,6 @@ public class Game {
         if (!command.hasSecondWord()) {
             System.out.println("Please specify the item you want to buy.");
             return false;
-
         }
         Item item = null;
         try {
@@ -244,15 +241,13 @@ public class Game {
         }
     }
 
-    private void printHelp() {
+    private void printHelp() { //TODO Fix the text response to user
         System.out.println("You are lost. You are alone. You wander");
         System.out.println("around at the university.");
         System.out.println();
         System.out.println("Your command words are:");
         parser.showCommands();
     }
-
-
 
     //Methods for Field(s)
 
@@ -262,7 +257,6 @@ public class Game {
     //Loops until a valid crop has been chosen
     public void chooseCrop() {
         while (true) {
-
             Scanner s = new Scanner(System.in);
             System.out.println("Which crop would you like to use? Last used crop was " + testField.getPreviousHarvest() +  ". Type 'options' for choices.");
             String choice = s.nextLine();
