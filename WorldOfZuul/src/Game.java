@@ -50,8 +50,6 @@ public class Game {
         dialog = new File(path + "\\WorldOfZuul\\src\\Dialog\\shopkeeperLizzyDialog.txt");
         shopkeeperLizzy = new NPC(dialog, gameCommandWords);
 
-
-
     }
 
     private void initCommandWords() {

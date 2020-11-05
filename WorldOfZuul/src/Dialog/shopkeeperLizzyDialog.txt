@@ -5,6 +5,10 @@
 *1 Im the owner of the only shop in town.
 *2 If you need anything just let me know.
 
+$$0 What do you want to know darling?
+
+##0 Bye dear, do come again.
+
 q00 1.How do i buy items?
 a00 Just use the "buy" command along with the item you want
 

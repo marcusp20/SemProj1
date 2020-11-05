@@ -9,7 +9,7 @@ public class NPC extends Interactable{
     private File dialog;                //File containing NPC dialog
     private ArrayList<String> lines = new ArrayList<>();        //Array list containing all dialog lines
     private boolean firstMeeting = true;        //Attribute is true if player has not met npc
-    private CommandWords commandWords;  //NPC commands
+    private CommandWords commandWords;  //NPC commands,, not used
 
     public NPC(File dialog, CommandWords commandWords)   {
         super(commandWords);
@@ -19,8 +19,8 @@ public class NPC extends Interactable{
             Scanner dialogReader= new Scanner(dialog);
 
             while(dialogReader.hasNextLine())   {
-                String line = dialogReader.nextLine();
-                lines.add(line);
+                String line = dialogReader.nextLine();      //Gets line from file
+                lines.add(line);                            //Adds lines to lines arraylist
             }
 
         } catch (FileNotFoundException e)  {
@@ -28,10 +28,10 @@ public class NPC extends Interactable{
         }
 
         this.name = findLine(".nn");
-        this.description = findLine(".nn");
+        this.description = findLine(".dd");
     }
 
-    private String findLine(String pattern)   {
+    private String findLine(String pattern)   {             //Find line with given patten
         for (int i = 0; i < lines.size(); i++) {
             if(lines.get(i).contains(pattern))  {
                 String line = lines.get(i);
@@ -47,11 +47,11 @@ public class NPC extends Interactable{
         return "Line not found";
     }
 
-    private void writePatternLines(String symbol)    {
+    private void writePatternLines(String oPattern)    {              //Write lines containing pattern in order (top down)
         int lineCount = 0;
 
         while(true) {
-            String pattern = symbol + lineCount;
+            String pattern = oPattern + lineCount;
             lineCount++;
             if (!findLine(pattern).equals("Line not found"))    {
                 write(findLine(pattern));
@@ -61,7 +61,7 @@ public class NPC extends Interactable{
         }
     }
 
-    private ArrayList<String> getPatternLines(String symbol)    {
+    private ArrayList<String> getPatternLines(String symbol)    {       //Return lies containing pattern, similar to writePatternLines
         ArrayList<String> lines = new ArrayList<>();
         int lineCount = 0;
 
@@ -77,31 +77,36 @@ public class NPC extends Interactable{
         return lines;
     }
 
-    public void firstMeeting()  {
+    public void firstMeeting()  {           //Write first meeting dialog
         writePatternLines("*");
     }
 
     public void converse()  {
-        if(firstMeeting)    {
+        if(firstMeeting)    {       //If it's players first meeting then give them introduction
             firstMeeting();
-            System.out.println("Enter number to continue.");
-            scan();
+            waitFor(1000);
+            System.out.println();
             firstMeeting = false;
+        }else {
+            writePatternLines("$$");
+            waitFor(1500);
         }
+
         while(true) {
             writePatternLines("q0");
-            write("Enter 0 to exit...");
-            ArrayList<String> lines = getPatternLines("q0"); //??
+            write("Enter 'leave' to exit...");
+            ArrayList<String> q0Lines = getPatternLines("q0");      //q0Lines is given lines containing q0 ie. the row of questions.
 
             int input = scan();
-            if(input == 0)  {
+            if(input == -1)  {
+                writePatternLines("##");            //Write farewell dialog
                 break;
             }
-            for (int i = 0; i < lines.size(); i++) {
+            for (int i = 0; i < q0Lines.size(); i++) {                                        //For loop through all q0 questions
+                int questionNum = Character.getNumericValue(q0Lines.get(i).charAt(0));        //Get the number at start of question, converted form char to int
 
-                int q = Character.getNumericValue(lines.get(i).charAt(0));
-                if (input == q) {
-                    writePatternLines("a" + (q - 1));
+                if (input == questionNum) {                                                 //If input equals question number
+                    writePatternLines("a" + (questionNum - 1));
                 }
             }
         }
@@ -113,30 +118,33 @@ public class NPC extends Interactable{
 
         int userInput = -1;
         try {
-            userInput = Integer.parseInt(user.nextLine());
-        } catch (NumberFormatException e)   {
-            System.out.println(("No question selected, please enter valid question number "));
+            String input = user.nextLine();              //Get user input
+            if(input.equals("leave"))    {
+                return -1;
+            } else  {
+                userInput = Integer.parseInt(input);
+            }
+        } catch (NumberFormatException e)   {                           //If no int given then try again
+            System.out.println(("No question selected, please enter valid question number"));
             scan();
         }
         return userInput;  // Read user input & return
     }
 
-    private void write(String text) {
+    private void write(String text) {               //Used to write test one char at a time
         for (int x = 0; x < text.length(); x++) {
-            System.out.print(text.charAt(x));
-            textW(20);
+            System.out.print(text.charAt(x));         //Write one char
+            waitFor(20);
         }
         System.out.println();
     }
 
-    private void textW(int time) {
-        try
-        {
-            Thread.sleep(time);
+    private void waitFor(int time)  {       //Program sleeps for x time millis
+        try {
+            Thread.sleep(time);               //Wait for x time(millis)
         }
-        catch(InterruptedException ex)
-        {
-            Thread.currentThread().interrupt();
+        catch(InterruptedException ex) {
+            Thread.currentThread().interrupt();     //Interrupts thread if there is an exception
         }
     }
 }
