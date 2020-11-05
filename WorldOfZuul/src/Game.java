@@ -171,51 +171,9 @@ public class Game {
         } else if (commandWord == CommandWord.STORE_BROWSE) {
             printStoreItemList();
         } else if (commandWord == CommandWord.STORE_BUY) {
-            // 1. check if you can afford it.
-            if (!command.hasSecondWord()) {
-                System.out.println("Please specify the item you want to buy.");
-                return false;
-
-            }
-            Item item = null;
-            try {
-                int itemindex = Integer.parseInt(command.getSecondWord());
-                item = storeItemList.get(itemindex);
-
-            } catch (NumberFormatException nfe) {
-                System.out.println("Give me the index of the item you wish to buy.");
-                return false;
-            } catch (IndexOutOfBoundsException eobe) {
-                System.out.println("Please give me a number between 0 & " + (storeItemList.size()-1));
-                return false;
-            }
-            if (!player.addWallet(-item.getPrice())) {
-                System.out.println("You cannot afford it.");
-            } else {
-                storeItemList.remove(item);                             // remove item from StoreItemList.
-                player.getPlayerInventory().put(item.getEnum(), true);  // change item hashmap value to true.
-                System.out.println("you brought a " + item.getName());
-            }
-            return false;
-        }
-        else if (commandWord == CommandWord.USE) {
-            if(command.getSecondWord() != null) {           //If player is attempting to use something then...
-                                                            //Checks if player is in the right place to use intractable
-                if (command.getSecondWord().equals("field") && currentRoom.getShortDescription().equals("in the field")) {
-                    parser.setCommands(fieldCommandWords);
-                } else if (command.getSecondWord().equals("store") && currentRoom.getShortDescription().equals("in the store, smells like flower seeds in here")) {
-                    parser.setCommands(storeCommandWords);
-                } else if (command.getSecondWord().equals("npc") && currentRoom.getShortDescription().equals("In the headquarter")) {
-                    majorBob.converse();
-                }else if (command.getSecondWord().equals("npc") && currentRoom.getShortDescription().equals("in the store, smells like flower seeds in here")) {
-                    shopkeeperLizzy.converse();
-                }
-
-            }else   {
-                System.out.println("This command is used to interact with our fields, PC's, NPC's and all intractable. ");
-            }
-
-
+            return buyStore(command);
+        } else if (commandWord == CommandWord.USE) {
+            use(command);
         } else if (commandWord == CommandWord.FIELD_SOW) {                  //Note; Horrorcode ahead...
             sowField();
         } else if (commandWord == CommandWord.FIELD_USE_PESTICIDES) {
@@ -230,6 +188,53 @@ public class Game {
             fertilizeField();
         }
         return wantToQuit;
+    }
+
+    private void use(Command command) {
+        if(command.getSecondWord() != null) {           //If player is attempting to use something then...
+                                                        //Checks if player is in the right place to use intractable
+            if (command.getSecondWord().equals("field") && currentRoom.getShortDescription().equals("in the field")) {
+                parser.setCommands(fieldCommandWords);
+            } else if (command.getSecondWord().equals("store") && currentRoom.getShortDescription().equals("in the store, smells like flower seeds in here")) {
+                parser.setCommands(storeCommandWords);
+            } else if (command.getSecondWord().equals("npc") && currentRoom.getShortDescription().equals("In the headquarter")) {
+                majorBob.converse();
+            }else if (command.getSecondWord().equals("npc") && currentRoom.getShortDescription().equals("in the store, smells like flower seeds in here")) {
+                shopkeeperLizzy.converse();
+            }
+
+        }else   {
+            System.out.println("This command is used to interact with our fields, PC's, NPC's and all intractable. ");
+        }
+    }
+
+    private boolean buyStore(Command command) {
+        // 1. check if you can afford it.
+        if (!command.hasSecondWord()) {
+            System.out.println("Please specify the item you want to buy.");
+            return false;
+
+        }
+        Item item = null;
+        try {
+            int itemindex = Integer.parseInt(command.getSecondWord());
+            item = storeItemList.get(itemindex);
+
+        } catch (NumberFormatException nfe) {
+            System.out.println("Give me the index of the item you wish to buy.");
+            return false;
+        } catch (IndexOutOfBoundsException eobe) {
+            System.out.println("Please give me a number between 0 & " + (storeItemList.size()-1));
+            return false;
+        }
+        if (!player.addWallet(-item.getPrice())) {
+            System.out.println("You cannot afford it.");
+        } else {
+            storeItemList.remove(item);                             // remove item from StoreItemList.
+            player.getPlayerInventory().put(item.getEnum(), true);  // change item hashmap value to true.
+            System.out.println("you brought a " + item.getName());
+        }
+        return false;
     }
 
     private void printStoreItemList() {
