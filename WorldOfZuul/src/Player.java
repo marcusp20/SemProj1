@@ -5,6 +5,7 @@ public class Player {
     private String name;
     private double wallet = 0;
     private HashMap<ItemName, Boolean> playerInventory;
+    private boolean noCropsOwned;
 
     //Constructor
     public Player(String name) {
@@ -30,8 +31,18 @@ public class Player {
         return wallet;
     }
 
+    public boolean checkForNoCrops() {
+        if (!itemOwned("bagOfWheat") && !itemOwned("bagOfClover") && !itemOwned("bagOfCorn") && !itemOwned("bagOfCannabisSeeds")) {
+            noCropsOwned = true;
+        } else {
+            noCropsOwned = false;
+        }
+        return noCropsOwned;
+    }
 
-
+    public double checkWallet() {
+        return wallet;
+    }
 
     /**
      * @param input Adds money to input (Use negative for subtraction)
@@ -44,5 +55,9 @@ public class Player {
         }
         this.wallet += input;
         return true;
+    }
+
+    public void sellYields(double yields) {
+        wallet += yields;
     }
 }

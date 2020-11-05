@@ -6,7 +6,7 @@ public enum CommandWord
     //Intractable command words
     //Field
     FIELD_SOW("sow"), FIELD_HARVEST("harvest"), FIELD_USE_PESTICIDES("pesticides"),
-    FIELD_SOIL_SAMPLE("sample"),
+    FIELD_SOIL_SAMPLE("sample"), FIELD_WATER("water"), FIELD_FERTILIZE("fertilize"),
     //StoreNPC
     STORE_BUY("buy"),
     STORE_BROWSE("browse");

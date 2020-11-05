@@ -1,64 +1,175 @@
+/*
+    FieldExplainer
+    - To get MOST amount of money in wallet from Field:
+    Fertilize field twice.
+    Sow seeds with tractor
+    Water crops twice
+    Harvest using harvester
+    Use different crops every new harvest
+
+    To get LEAST amount of money in wallet from Field:
+    Fertilize too much
+    Saw seeds with shovel
+    Water too much
+    Harvest using Scythe
+    Use the same strain of crop every new harvest.
+*/
+
 public class Field extends Interactable {
     //Attributes
     private Boolean isReadyToHarvest = false;
-    private int harvestValue = 0; //Value ranging from 1-5.
-    private int soilQuality = 2;
-    private Boolean isPesticidesUsed = true; //Bool to check for pesticides, Value is reset everytime a new harvest is done.
+    private Boolean isSowed = false;
+    private Boolean isPesticidesUsed = false; //Bool to check for pesticides, Value is reset everytime a new harvest is done.'
+    private Boolean pests = false;
+
+
+    private String previousHarvest = "big ass cannabis plants";
+    private String currentHarvest;
+
+
+    private int fertilizerCounter;
+    private int pesticidesCounter;
+    private int waterCounter;
+    private int harvestCounter;
+    private double yields;
 
 
     public Field(CommandWords commandWords) {
         super(commandWords);
     }
 
-    //Method used to showInfo after Sow methods has been called. Used to check if we get the expected values.
-    public String showInfo() {
-        return ("Pest: " + isPesticidesUsed + ", HarvVal: " + harvestValue + ", SoilQual: " + soilQuality + ", IsReadyToHarv? " + isReadyToHarvest);
+    public void setCurrentHarvest(String crop) {
+        currentHarvest = crop;
     }
 
-
-    //Sow Methods. Maybe the isPesticidesUsed checker ought to be in the harvestFieldMethod, as we can still use pests after sowing...
     public void sowFieldTractor() {
-        isReadyToHarvest = true;
-        if (isPesticidesUsed) {
-            if (soilQuality <= 0) {
-                System.out.println("You're using a lot of pesticides...");
-            } else {
-                soilQuality -= 1;
-            }
-        }
-        harvestValue += 2;
-        System.out.println("Field has been sowed with the tractor and is soon ready to be harvested UwU");
+        isSowed = true;
+        System.out.println("You used the Tractor to sow");
+        yields += 15;
     }
 
     public void sowFieldShovel() {
+        isSowed = true;
+        System.out.println("You used the shovel to sow");
+        yields += 5;
+    }
+
+    public void useFertilizerBeforeSow() {
+        if (fertilizerCounter < 2) {
+            yields += 15;
+            fertilizerCounter += 1;
+            System.out.println("Used fertilizer, soil condition is increasing");
+
+        } else {
+            yields -= 10;
+            fertilizerCounter += 1;
+            System.out.println("Too much fertilizer used, try sowing other crops after harvest...");
+        }
+    }
+
+    public void useFertilizerAfterSow() {
+        System.out.println("Fertilizer is most effective before sowing, used it anyway...");
+        if (fertilizerCounter < 2) {
+            fertilizerCounter += 1;
+            yields += 5;
+
+        } else {
+            yields -= 10;
+            fertilizerCounter += 1;
+            System.out.println("Too much fertilizer used, try sowing other crops after harvest...");
+        }
+    }
+
+
+
+    //
+    public void moistField() {
         isReadyToHarvest = true;
-        if (isPesticidesUsed) {
-            if (soilQuality <= 0) {
-                System.out.println("You're using a lot of pesticides...");
-            } else {
-                soilQuality -= 1;
+        if (waterCounter < 2) {
+            yields += 10;
+            waterCounter++;
+            System.out.println("Soil moistened, ready to harvest");
+        } else {
+            yields -= 10;
+            waterCounter++;
+            System.out.println("Are you trying to make your field into a pool?");
+            if (waterCounter >= 3) {
+                System.out.println("You're watering too much!");
+                if (yields < -50) {
+                    //TSUNAMI
+                    System.out.println("Tsunami");
+                    //quit game.
+                }
             }
         }
-        harvestValue += 1;
-        System.out.println("Field has been sowed with the shovel and is soon ready to be harvested UwU");
     }
 
-    //Method for harvesting the field.
-    public void harvestField() {
+    public void usePesticides() {
+        if (isPesticidesUsed) {
+            pests = false;
+           // ()
+        }
     }
 
-    //Method for increasing harvestQual
-    public void useFertilizer() {
+    public void useScythe(double currentYield) {
+        yields = currentYield*0.9;
     }
 
-    //Method for measuring the soil quality
-    public void measureSoil() {
-
+    public void useHarvester(double currentYield) {
+        yields = currentYield*1.3;
     }
 
-
-    //method to return value of isReadyToHarvest
     public Boolean getIsReadyToHarvest() {
         return isReadyToHarvest;
     }
+
+    public Boolean getIsSowed() {
+        return isSowed;
+    }
+
+    public double getYield() {
+        return yields;
+    }
+
+    public String getCurrentHarvest() {
+        return currentHarvest;
+    }
+
+    public String getPreviousHarvest() {
+        return previousHarvest;
+    }
+
+    public int getHarvestCounter() {
+        return harvestCounter;
+    }
+
+    public void checkPreviousHarvest() {
+        if (previousHarvest.equals(currentHarvest) && harvestCounter >= 2) {
+            yields -= 20;
+            System.out.println("Oh no! the fields nutrition levels are getting too high for crops, try sowing different types of crops.");
+            System.out.println(" ");
+        }
+        else if  (previousHarvest.equals(currentHarvest)) {
+            harvestCounter++;
+
+        } else {
+            harvestCounter = 1;
+            fertilizerCounter = 0;
+        }
+    }
+
+    public void harvestDone() {
+        isReadyToHarvest = false;
+        isSowed = false;
+        waterCounter = 0;
+        if (yields <= 0) {
+            System.out.println("The crops harvested has cost you " + yields + " to produce.");
+        } else {
+            System.out.println("The crops harvested was sold for a profit of: " + yields + ".");
+        }
+
+        yields = 0;
+        previousHarvest = currentHarvest;
+    }
+
 }
