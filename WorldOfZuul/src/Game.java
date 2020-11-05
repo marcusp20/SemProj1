@@ -14,14 +14,6 @@ public class Game {
     private List<Item> storeItemList;
     private NPC storeNPC;
 
-    public void initStoreItemList() {
-        storeItemList = new ArrayList<Item>();
-
-        for (ItemName itemName : ItemName.values()) {
-            storeItemList.add(new Item(itemName));
-        }
-    }
-
     public Game() {
         initCommandWords();
         createRooms();
@@ -33,6 +25,14 @@ public class Game {
         initStoreItemList();
     }
 
+    public void initStoreItemList() {
+        storeItemList = new ArrayList<Item>();
+
+        for (ItemName itemName : ItemName.values()) {
+            storeItemList.add(new Item(itemName));
+        }
+    }
+
     private void createNPC() {
         File majorBobDialog = load("majorBobDialog.txt");
         NPC majorBob = new NPC(majorBobDialog, gameCommandWords);
@@ -41,7 +41,7 @@ public class Game {
         storeNPC = new NPC(storeNPCDialog, storeCommandWords);
 
         //majorBob.converse();
-        storeNPC.converse();
+        //storeNPC.converse();
     }
 
     private File load(String fileName) {
