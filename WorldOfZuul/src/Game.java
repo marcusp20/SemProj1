@@ -13,22 +13,7 @@ public class Game {
     private List<Item> storeItemList;
     private NPC majorBob;
     private NPC shopkeeperLizzy;
-
-    public void initStoreItemlist() {
-        storeItemList = new ArrayList<Item>();
-
-
-
-        storeItemList.add(new Item("Watering can", "Water crops"));
-        storeItemList.add(new Item("Shovel", "Used for digging"));
-        storeItemList.add(new Item("Soil Sample collector", "Collects soils"));
-        storeItemList.add(new Item("Tractor", "Used for harvesting"));
-        storeItemList.add(new Item("Bag of Seeds", "holds seeds for planting"));
-        storeItemList.add(new Item("Bag of fertilizer", "used for fertilizing"));
-        storeItemList.add(new Item("Pesticides", "used for destroying water-collection"));
-        storeItemList.add(new Item("Mobile Phone", "used for Weather info"));
-
-    }
+    private NPC storeNPC;
 
     public Game() {
         initCommandWords();
@@ -38,17 +23,37 @@ public class Game {
         createPlayer();
 
         createNPC();
-        initStoreItemlist();
+        initStoreItemList();
+    }
+
+    public void initStoreItemList() {
+        storeItemList = new ArrayList<Item>();
+
+        for (ItemName itemName : ItemName.values()) {
+            storeItemList.add(new Item(itemName));
+        }
     }
 
     private void createNPC() {
+        File majorBobDialog = load("majorBobDialog.txt");
+        NPC majorBob = new NPC(majorBobDialog, gameCommandWords);
 
+        File storeNPCDialog = load("SlimcognitoStoreNPC.txt");
+        storeNPC = new NPC(storeNPCDialog, storeCommandWords);
 
-        String path = System.getProperty("user.dir");               //Get path to directory (path to SemProj1)
-        File dialog = new File(path + "\\WorldOfZuul\\src\\Dialog\\majorBobDialog.txt");    //Add remaining path to dialog text file
-        majorBob = new NPC(dialog, gameCommandWords);
-        dialog = new File(path + "\\WorldOfZuul\\src\\Dialog\\shopkeeperLizzyDialog.txt");
-        shopkeeperLizzy = new NPC(dialog, gameCommandWords);
+        //majorBob.converse();
+        //storeNPC.converse();
+    }
+
+    private File load(String fileName) {
+        String path = System.getProperty("user.dir");
+        if(path.endsWith("SemProj1")) {
+            return new File(path + "\\WorldOfZuul\\src\\"+fileName);    //Add remaining path to dialog text file
+        } else if(path.endsWith("WorldOfZuul")) {
+            return new File(path + "\\src\\"+fileName);
+        }
+        //Default - probably not gonna work
+            return new File(path + "\\"+fileName);
 
     }
 
@@ -80,13 +85,14 @@ public class Game {
         testField = new Field(fieldCommandWords);
 
     }
+
     private void createPlayer() {
         player = new Player("Lars TyndSkid");
     }
 
 
     private void createRooms() {
-        Room headquarter, shed , field , stables, garden, store;
+        Room headquarter, shed, field, stables, garden, store;
 
         headquarter = new Room("In the headquarter"); //update description and add hashmap.
         shed = new Room("in your shed");
@@ -99,6 +105,7 @@ public class Game {
         headquarter.setExit("south", field);
 
         headquarter.setExit("north", store);
+
 
         shed.setExit("west", headquarter);
 
@@ -149,10 +156,9 @@ public class Game {
             return false;
         }
 
-        if(commandWord == commandWord.LEAVE)    {
+        if(commandWord == commandWord.LEAVE) {
             parser.setCommands(gameCommandWords);
         }
-
         if (commandWord == CommandWord.HELP) {
             printHelp();
         } else if (commandWord == CommandWord.GO) {
@@ -162,9 +168,32 @@ public class Game {
         } else if (commandWord == CommandWord.STORE_BROWSE) {
             printStoreItemList();
         } else if (commandWord == CommandWord.STORE_BUY) {
-            // add functionality
+            // 1. check if you can afford it.
+            if (!command.hasSecondWord()) {
+                System.out.println("Please specify the item you want to buy.");
+                return false;
 
-            //parser.setCommandWords(storeCommandWords);
+            }
+            Item item = null;
+            try {
+                int itemindex = Integer.parseInt(command.getSecondWord());
+                item = storeItemList.get(itemindex);
+
+            } catch (NumberFormatException nfe) {
+                System.out.println("Give me the index of the item you wish to buy.");
+                return false;
+            } catch (IndexOutOfBoundsException eobe) {
+                System.out.println("Please give me a number between 0 & " + (storeItemList.size()-1));
+                return false;
+            }
+            if (!player.addWallet(-item.getPrice())) {
+                System.out.println("You cannot afford it.");
+            } else {
+                storeItemList.remove(item);                             // remove item from StoreItemList.
+                player.getPlayerInventory().put(item.getEnum(), true);  // change item hashmap value to true.
+                System.out.println("you brought a " + item.getName());
+            }
+            return false;
         }
         else if (commandWord == CommandWord.USE) {
             if(command.getSecondWord() != null) {           //If player is attempting to use something then...
@@ -221,7 +250,7 @@ public class Game {
     private void printStoreItemList() {
         System.out.println("The Itmes we have for sale are:");
         for (Item item : storeItemList) {
-            System.out.println(item.getName() + ", " + item.getDescription());
+            System.out.println(storeItemList.indexOf(item) + " ) $" + item.getPrice() + "  \t" + item.getName() + ", " + item.getDescription());
         }
     }
 
