@@ -31,8 +31,7 @@ public class Game {
         fieldCommandWords.addCommandWord(CommandWord.FIELD_SOIL_SAMPLE);
         fieldCommandWords.addCommandWord(CommandWord.FIELD_WATER);
         fieldCommandWords.addCommandWord(CommandWord.FIELD_FERTILIZE);
-
-
+        
     }
 
     //Used for testing Field methods
@@ -146,8 +145,8 @@ public class Game {
     //Methods for Field(s)
 
     //Choose which crop will be planted with Scanner.
-    // Checks which crops owned to use.
-    // Updates currentHarvest to choice.
+    //Checks which crops owned to use.
+    //Updates currentHarvest to choice.
     //Loops until a valid crop has been chosen
     public void chooseCrop() {
         while (true) {
