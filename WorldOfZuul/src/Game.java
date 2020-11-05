@@ -157,7 +157,7 @@ public class Game {
     public void chooseCrop() {
         while (true) {
             Scanner s = new Scanner(System.in);
-            System.out.println("Which crop would you like to use? Type 'options' for choices.");
+            System.out.println("Which crop would you like to use? Last used crop was " + testField.getPreviousHarvest() +  ". Type 'options' for choices.");
             String choice = s.nextLine();
             if (choice.equals("wheat") && testPlayer.itemOwned("bagOfWheat")) {
                 testField.setCurrentHarvest("wheat");
@@ -232,7 +232,6 @@ public class Game {
         } else {
             System.out.println("Field not ready to harvest, try watering or sowing...");
         }
-        System.out.println(" Harv count = " + testField.getHarvestCounter());
     }
 
     public void fertilizeField() {

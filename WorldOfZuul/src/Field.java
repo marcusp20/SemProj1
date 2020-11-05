@@ -10,7 +10,7 @@ public class Field extends Interactable {
     private Boolean pests = false;
 
 
-    private String previousHarvest = " ";
+    private String previousHarvest = "wheat";
     private String currentHarvest;
 
 
@@ -147,9 +147,9 @@ public class Field extends Interactable {
         isSowed = false;
         waterCounter = 0;
         if (yields <= 0) {
-            System.out.println("The crops harvested has cost you " + yields + " to produce");
+            System.out.println("The crops harvested has cost you " + yields + " to produce.");
         } else {
-            System.out.println("The crops harvested was sold for a profit of: " + yields);
+            System.out.println("The crops harvested was sold for a profit of: " + yields + ".");
         }
 
         yields = 0;

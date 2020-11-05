@@ -19,8 +19,8 @@ public class Player {
         playerInventory.put("bagOfCannabisSeeds", false);
 
 
-        playerInventory.put("tractor", false);
-        playerInventory.put("harvester", false);
+        playerInventory.put("tractor", true);
+        playerInventory.put("harvester", true);
         playerInventory.put("bagoffertilizer", true);
         playerInventory.put("pesticides", false);
         playerInventory.put("scythe", true);
