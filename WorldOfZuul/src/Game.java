@@ -267,19 +267,19 @@ public class Game {
             System.out.println("Which crop would you like to use? Last used crop was " + testField.getPreviousHarvest() +  ". Type 'options' for choices.");
             String choice = s.nextLine();
 
-            if (choice.equals("wheat") && player.itemOwned("bagOfWheat")) {
+            if (choice.equals("wheat") && player.itemOwned(ItemName.BAG_OF_WHEAT)) {
                 testField.setCurrentHarvest("wheat");
                 System.out.println("Wheat was used");
                 break;
-            } else if (choice.equals("clover") && player.itemOwned("bagOfClover")) {
+            } else if (choice.equals("clover") && player.itemOwned(ItemName.BAG_OF_CLOVER)) {
                 testField.setCurrentHarvest("clover");
                 System.out.println("Clover was used");
                 break;
-            } else if (choice.equals("corn") && player.itemOwned("bagOfCorn")) {
+            } else if (choice.equals("corn") && player.itemOwned(ItemName.BAG_OF_CORN)) {
                 testField.setCurrentHarvest("corn");
                 System.out.println("Corn was used");
                 break;
-            } else if (choice.equals("cannabis") && player.itemOwned("bagOfCannabisSeeds")) {
+            } else if (choice.equals("cannabis") && player.itemOwned(ItemName.BAG_OF_CANNABIS)) {
                 testField.setCurrentHarvest("cannabis");
                 System.out.println("cannabis was sowed");
                 break;
@@ -300,10 +300,10 @@ public class Game {
         if (!testField.getIsSowed()) {
             if (player.checkForNoCrops()) {
                 System.out.println("No seeds or crops in inventory, go buy some");
-            } else if (player.itemOwned("tractor")) {
+            } else if (player.itemOwned(ItemName.TRACTOR)) {
                 chooseCrop();
                 testField.sowFieldTractor();
-            } else if (player.itemOwned("shovel")) {
+            } else if (player.itemOwned(ItemName.SHOVEL)) {
                 chooseCrop();
                 testField.sowFieldShovel();
             } else {
@@ -321,7 +321,7 @@ public class Game {
     //Resets field.
     public void harvestField() {
         if (testField.getIsReadyToHarvest()) {
-            if (player.itemOwned("harvester")) {
+            if (player.itemOwned(ItemName.HARVESTER)) {
                 System.out.println("Used harvester on field.");
 
                 testField.useHarvester(testField.getYield());
@@ -331,7 +331,7 @@ public class Game {
 
                 System.out.println("Wallet is now "  + player.checkWallet());
 
-            } else if (player.itemOwned("scythe")) {
+            } else if (player.itemOwned(ItemName.SCYTHE)) {
                 System.out.println("Used scythe to harvest field.");
 
                 testField.useScythe(testField.getYield());
@@ -354,7 +354,7 @@ public class Game {
     //Checks for fertilizer and isSowed.
     //Fertilizer strength depends on isSowed condition.
     public void fertilizeField() {
-        if (player.itemOwned("bagoffertilizer")) {
+        if (player.itemOwned(ItemName.BAG_OF_FERTILIZER)) {
             if (testField.getIsSowed()) {
                 testField.useFertilizerAfterSow();
             } else {

@@ -20,7 +20,7 @@ public class Player {
     }
 
     //Method to return value of hashmap.
-    public Boolean itemOwned(String item) {
+    public Boolean itemOwned(ItemName item) {
         return playerInventory.get(item);
     }
 
@@ -32,7 +32,7 @@ public class Player {
     }
 
     public boolean checkForNoCrops() {
-        if (!itemOwned("bagOfWheat") && !itemOwned("bagOfClover") && !itemOwned("bagOfCorn") && !itemOwned("bagOfCannabisSeeds")) {
+        if (!itemOwned(ItemName.BAG_OF_WHEAT) && !itemOwned(ItemName.BAG_OF_CLOVER) && !itemOwned(ItemName.BAG_OF_CORN) && !itemOwned(ItemName.BAG_OF_CANNABIS)) {
             noCropsOwned = true;
         } else {
             noCropsOwned = false;
