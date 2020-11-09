@@ -38,10 +38,10 @@ public class Game {
 
     private void createNPC() {
         File majorBobDialog = load("majorBobDialog.txt");
-        NPC majorBob = new NPC(majorBobDialog, gameCommandWords);
+        majorBob = new NPC(majorBobDialog, gameCommandWords);
 
-        File storeNPCDialog = load("SlimCognitoStoreNPC.txt");
-        storeNPC = new NPC(storeNPCDialog, storeCommandWords);
+        File storeNPCDialog = load("shopKeeperLizzyDialog.txt");
+        shopkeeperLizzy = new NPC(storeNPCDialog, storeCommandWords);
 
         //majorBob.converse();
         //storeNPC.converse();
@@ -128,6 +128,7 @@ public class Game {
 
     public void play() {
         printWelcome();
+
 
         boolean finished = false;
         while (!finished) {
