@@ -313,7 +313,7 @@ public class Game {
     //Checks for tractor in inventory, if not, shovel is used. If no shovel, nothing happens.
     public void sowField(Command command) {
         if (!testField.getIsSowed()) {
-            if (player.checkForNoCrops()) {
+            if (player.checkForNoCrops()) { //TODO reconsidder how the chooseCrop method is used
                 System.out.println("No seeds or crops in inventory, go buy some");
             } else if (player.itemOwned(ItemName.TRACTOR) && chooseCrop(command)) {
                 testField.sowFieldTractor();//TODO remove crop when sown
