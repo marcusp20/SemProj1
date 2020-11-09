@@ -1,6 +1,6 @@
-public enum ItemName {
+public enum ItemName { //TODO update prices
     SHOVEL("Shovel", "for plowing the field.", 0),
-    WATER_CAN("Watering can", "to water crops.", 20),
+    WATER_CAN("Watering can", "to water crops.", 0),
     TRACTOR("Tractor", "for fertilizing, plowing, sowing, and more.", 5000),
     HARVESTER("Harvester", "Used for harvesting", 7000),
     BAG_OF_FERTILIZER("Bag of fertilizer", "used for fertilizing", 200),

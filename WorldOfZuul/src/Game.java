@@ -168,14 +168,21 @@ public class Game {
             goRoom(command);
         } else if (commandWord == CommandWord.QUIT) {
             wantToQuit = quit(command);
-        } else if (commandWord == CommandWord.STORE_BROWSE) {
+        } else if (commandWord == CommandWord.USE) {
+            use(command);
+        } else if (commandWord == CommandWord.MONEY) {
+            System.out.println("You have $" + player.getWallet());
+            return false;
+        }
+        // Store commands
+        else if (commandWord == CommandWord.STORE_BROWSE) {
             printStoreItemList();
         } else if (commandWord == CommandWord.STORE_BUY) {
             return buyStore(command);
-        } else if (commandWord == CommandWord.USE) {
-            use(command);
-        } else if (commandWord == CommandWord.FIELD_SOW) {
-            sowField();
+        }
+        // Field commands
+        else if (commandWord == CommandWord.FIELD_SOW) {
+            sowField(command);
         } else if (commandWord == CommandWord.FIELD_USE_PESTICIDES) {
             //TODO implement pesticides
         } else if (commandWord == CommandWord.FIELD_HARVEST) {
@@ -193,18 +200,21 @@ public class Game {
     private void use(Command command) {
         if(command.getSecondWord() != null) {           //If player is attempting to use something then...
                                                         //Checks if player is in the right place to use intractable
+            //TODO provide more feedback to the use
             String end = " used successfully";
             if (command.getSecondWord().equals("field") && currentRoom.getShortDescription().equals("in the field")) {
                 System.out.println("Field" + end);
                 parser.setCommands(fieldCommandWords);
+                parser.showCommands();
             } else if (command.getSecondWord().equals("store") && currentRoom.getShortDescription().equals("in the store, smells like flower seeds in here")) {
                 System.out.println("Store" + end);
                 parser.setCommands(storeCommandWords);
+                parser.showCommands();
             } else if (command.getSecondWord().equals("npc") && currentRoom.getShortDescription().equals("In the headquarter")) {
                 System.out.println("Major Bob" + end);
                 majorBob.converse();
             }else if (command.getSecondWord().equals("npc") && currentRoom.getShortDescription().equals("in the store, smells like flower seeds in here")) {
-                System.out.println("Shopkeeper Lizzy" + end);
+                System.out.println("Shopkeeper Lizzy" + end); //TODO fix npc dialogs
                 shopkeeperLizzy.converse();
             }
 
@@ -234,6 +244,7 @@ public class Game {
         if (!player.addWallet(-item.getPrice())) {
             System.out.println("You cannot afford it.");
         } else {
+            //TODO Don't remove items with prefix "BAG_OF_"
             storeItemList.remove(item);                             // remove item from StoreItemList.
             player.getPlayerInventory().put(item.getEnum(), true);  // change item hashmap value to true.
             System.out.println("you brought a " + item.getName());
@@ -242,15 +253,15 @@ public class Game {
     }
 
     private void printStoreItemList() {
-        System.out.println("The Itmes we have for sale are:");
+        System.out.println("The items we have for sale are:");
         for (Item item : storeItemList) {
             System.out.println(storeItemList.indexOf(item) + " ) $" + item.getPrice() + "  \t" + item.getName() + ", " + item.getDescription());
         }
     }
 
-    private void printHelp() { //TODO Fix the text response to user
+    private void printHelp() {
         System.out.println("You are lost. You are alone. You wander");
-        System.out.println("around at the university.");
+        System.out.println("around at your farm.");
         System.out.println();
         System.out.println("Your command words are:");
         parser.showCommands();
@@ -262,51 +273,52 @@ public class Game {
     //Checks which crops owned to use.
     //Updates currentHarvest to choice.
     //Loops until a valid crop has been chosen
-    public void chooseCrop() {
-        while (true) {
-            Scanner s = new Scanner(System.in);
-            System.out.println("Which crop would you like to use? Last used crop was " + testField.getPreviousHarvest() +  ". Type 'options' for choices.");
-            String choice = s.nextLine();
+    public boolean chooseCrop(Command command) {
+        //while (true) {
+            //Scanner s = new Scanner(System.in);
+            //System.out.println("Which crop would you like to use? Last used crop was " + testField.getPreviousHarvest() +  ". Type 'options' for choices.");
+            String choice = command.getSecondWord();//s.nextLine();
 
             if (choice.equals("wheat") && player.itemOwned(ItemName.BAG_OF_WHEAT)) {
                 testField.setCurrentHarvest("wheat");
                 System.out.println("Wheat was used");
-                break;
+                //break;
             } else if (choice.equals("clover") && player.itemOwned(ItemName.BAG_OF_CLOVER)) {
                 testField.setCurrentHarvest("clover");
                 System.out.println("Clover was used");
-                break;
+                //break;
             } else if (choice.equals("corn") && player.itemOwned(ItemName.BAG_OF_CORN)) {
                 testField.setCurrentHarvest("corn");
                 System.out.println("Corn was used");
-                break;
+                //break;
             } else if (choice.equals("cannabis") && player.itemOwned(ItemName.BAG_OF_CANNABIS)) {
                 testField.setCurrentHarvest("cannabis");
                 System.out.println("cannabis was sowed");
-                break;
+                //break;
             } else if (choice.equals("options")) {
                 System.out.println("Corn, Wheat, Clover and illegal plant...");
+                return false;
             }
             else {
-                System.out.println("You don't have " + choice + " in inventory...");
+                System.out.println("You don't have \"" + choice + "\" in inventory...");
+                return false;
             }
-        }
+            return true;
+        //}
     }
 
 
     //SowField method
     //Checks if field is sowed already. Checks for crops in inventory.
     //Checks for tractor in inventory, if not, shovel is used. If no shovel, nothing happens.
-    public void sowField() {
+    public void sowField(Command command) {
         if (!testField.getIsSowed()) {
             if (player.checkForNoCrops()) {
                 System.out.println("No seeds or crops in inventory, go buy some");
-            } else if (player.itemOwned(ItemName.TRACTOR)) {
-                chooseCrop();
-                testField.sowFieldTractor();
-            } else if (player.itemOwned(ItemName.SHOVEL)) {
-                chooseCrop();
-                testField.sowFieldShovel();
+            } else if (player.itemOwned(ItemName.TRACTOR) && chooseCrop(command)) {
+                testField.sowFieldTractor();//TODO remove crop when sown
+            } else if (player.itemOwned(ItemName.SHOVEL) && chooseCrop(command)) {
+                testField.sowFieldShovel();//TODO remove crop when sown
             } else {
                 System.out.println("You don't have a shovel, or a tractor yet, better go shopping...");
             }
