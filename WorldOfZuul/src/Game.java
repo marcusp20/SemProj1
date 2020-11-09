@@ -38,10 +38,10 @@ public class Game {
 
     private void createNPC() {
         File majorBobDialog = load("majorBobDialog.txt");
-        NPC majorBob = new NPC(majorBobDialog, gameCommandWords);
+        majorBob = new NPC(majorBobDialog, gameCommandWords);
 
-        File storeNPCDialog = load("SlimCognitoStoreNPC.txt");
-        storeNPC = new NPC(storeNPCDialog, storeCommandWords);
+        File storeNPCDialog = load("shopKeeperLizzyDialog.txt");
+        shopkeeperLizzy = new NPC(storeNPCDialog, storeCommandWords);
 
         //majorBob.converse();
         //storeNPC.converse();
@@ -110,6 +110,7 @@ public class Game {
 
         headquarter.setExit("north", store);
 
+        store.setExit("south", headquarter);
 
         shed.setExit("west", headquarter);
 
@@ -127,6 +128,7 @@ public class Game {
 
     public void play() {
         printWelcome();
+
 
         boolean finished = false;
         while (!finished) {
@@ -157,12 +159,10 @@ public class Game {
         if(commandWord == CommandWord.UNKNOWN) {
             System.out.println("I don't know what you mean...");
             return false;
-        }
-
-        if(commandWord == commandWord.LEAVE) {
+        } if(commandWord == commandWord.LEAVE) {
+            System.out.println("You leave...");
             parser.setCommands(gameCommandWords);
-        }
-        if (commandWord == CommandWord.HELP) {
+        } if (commandWord == CommandWord.HELP) {
             printHelp();
         } else if (commandWord == CommandWord.GO) {
             goRoom(command);
@@ -174,7 +174,7 @@ public class Game {
             return buyStore(command);
         } else if (commandWord == CommandWord.USE) {
             use(command);
-        } else if (commandWord == CommandWord.FIELD_SOW) {                  //Note; Horrorcode ahead...
+        } else if (commandWord == CommandWord.FIELD_SOW) {
             sowField();
         } else if (commandWord == CommandWord.FIELD_USE_PESTICIDES) {
             //TODO implement pesticides
@@ -193,13 +193,18 @@ public class Game {
     private void use(Command command) {
         if(command.getSecondWord() != null) {           //If player is attempting to use something then...
                                                         //Checks if player is in the right place to use intractable
+            String end = " used successfully";
             if (command.getSecondWord().equals("field") && currentRoom.getShortDescription().equals("in the field")) {
+                System.out.println("Field" + end);
                 parser.setCommands(fieldCommandWords);
             } else if (command.getSecondWord().equals("store") && currentRoom.getShortDescription().equals("in the store, smells like flower seeds in here")) {
+                System.out.println("Store" + end);
                 parser.setCommands(storeCommandWords);
             } else if (command.getSecondWord().equals("npc") && currentRoom.getShortDescription().equals("In the headquarter")) {
+                System.out.println("Major Bob" + end);
                 majorBob.converse();
             }else if (command.getSecondWord().equals("npc") && currentRoom.getShortDescription().equals("in the store, smells like flower seeds in here")) {
+                System.out.println("Shopkeeper Lizzy" + end);
                 shopkeeperLizzy.converse();
             }
 
@@ -213,7 +218,6 @@ public class Game {
         if (!command.hasSecondWord()) {
             System.out.println("Please specify the item you want to buy.");
             return false;
-
         }
         Item item = null;
         try {
@@ -244,15 +248,13 @@ public class Game {
         }
     }
 
-    private void printHelp() {
+    private void printHelp() { //TODO Fix the text response to user
         System.out.println("You are lost. You are alone. You wander");
         System.out.println("around at the university.");
         System.out.println();
         System.out.println("Your command words are:");
         parser.showCommands();
     }
-
-
 
     //Methods for Field(s)
 
@@ -262,7 +264,6 @@ public class Game {
     //Loops until a valid crop has been chosen
     public void chooseCrop() {
         while (true) {
-
             Scanner s = new Scanner(System.in);
             System.out.println("Which crop would you like to use? Last used crop was " + testField.getPreviousHarvest() +  ". Type 'options' for choices.");
             String choice = s.nextLine();

@@ -20,7 +20,7 @@ public class Player {
     }
 
     //Method to return value of hashmap.
-    public Boolean itemOwned(ItemName item) {
+    public boolean itemOwned(ItemName item) {
         return playerInventory.get(item);
     }
 
