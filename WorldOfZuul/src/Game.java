@@ -277,7 +277,10 @@ public class Game {
         //while (true) {
             //Scanner s = new Scanner(System.in);
             //System.out.println("Which crop would you like to use? Last used crop was " + testField.getPreviousHarvest() +  ". Type 'options' for choices.");
-            String choice = command.getSecondWord();//s.nextLine();
+            String choice = "";
+            if (command.hasSecondWord()) {
+                choice = command.getSecondWord();//s.nextLine();
+            }
 
             if (choice.equals("wheat") && player.itemOwned(ItemName.BAG_OF_WHEAT)) {
                 testField.setCurrentHarvest("wheat");
