@@ -19,12 +19,12 @@ public class Game {
 
     public Game() {
         initCommandWords();
+        createNPC();
         createRooms();
         parser = new Parser(gameCommandWords);
         createField();
         createPlayer();
 
-        createNPC();
         initStoreItemList();
     }
 
@@ -107,10 +107,12 @@ public class Game {
         
         headquarter.setExit("east", shed);
         headquarter.setExit("south", field);
+        headquarter.setNpc(majorBob);
 
         headquarter.setExit("north", store);
 
         store.setExit("south", headquarter);
+        store.setNpc(shopkeeperLizzy);
 
         shed.setExit("west", headquarter);
 

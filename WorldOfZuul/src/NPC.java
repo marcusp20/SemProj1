@@ -31,6 +31,10 @@ public class NPC extends Interactable{
         this.description = findLine(".dd");
     }
 
+    public String getName() {
+        return name;
+    }
+
     private String findLine(String pattern)   {             //Find line with given patten
         for (int i = 0; i < lines.size(); i++) {
             if(lines.get(i).contains(pattern))  {

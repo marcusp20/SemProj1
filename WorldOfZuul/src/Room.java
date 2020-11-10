@@ -7,6 +7,7 @@ public class Room
 {
     private String description;
     private HashMap<String, Room> exits;
+    private NPC npc;
 
     public Room(String description) 
     {
@@ -14,7 +15,15 @@ public class Room
         exits = new HashMap<String, Room>();
     }
 
-    public void setExit(String direction, Room neighbor) 
+    public NPC getNpc() {
+        return npc;
+    }
+
+    public void setNpc(NPC npc) {
+        this.npc = npc;
+    }
+
+    public void setExit(String direction, Room neighbor)
     {
         exits.put(direction, neighbor);
     }
@@ -32,12 +41,16 @@ public class Room
 
     private String getExitString()
     {
-        String returnString = "Exits:";
+        StringBuilder returnString = new StringBuilder("Exits:");
         Set<String> keys = exits.keySet();
         for(String exit : keys) {
-            returnString += " " + exit;
+            returnString.append(" ").append(exit);
         }
-        return returnString;
+        if(this.npc != null) {
+            returnString.append("\n");
+            returnString.append(npc.getName()).append(" stands in the room.");
+        }
+        return returnString.toString();
     }
 
     public Room getExit(String direction) 
