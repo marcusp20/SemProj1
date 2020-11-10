@@ -175,7 +175,7 @@ public class Game {
         } else if (commandWord == CommandWord.MONEY) {
             System.out.println("You have $" + player.getWallet());
             return false;
-        }
+        } //TODO print player inventory
         // Store commands
         else if (commandWord == CommandWord.STORE_BROWSE) {
             printStoreItemList();
@@ -325,7 +325,7 @@ public class Game {
                 testField.sowFieldTractor();//TODO remove crop when sown
             } else if (player.itemOwned(ItemName.SHOVEL) && chooseCrop(command)) {
                 testField.sowFieldShovel();//TODO remove crop when sown
-            } else {
+            } else { //TODO fix dialog
                 System.out.println("You don't have a shovel, or a tractor yet, better go shopping...");
             }
         } else {
