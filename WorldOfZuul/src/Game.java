@@ -221,7 +221,8 @@ public class Game {
             }
 
         }else   {
-            System.out.println("This command is used to interact with our fields, PC's, NPC's and all intractable. ");
+            System.out.println("This command is used to interact \n" +
+                    "with your injectables: npc, store, field...");
         }
     }
 

@@ -4,7 +4,7 @@ public class Player {
     //Attributes
     private String name;
     private double wallet = 0;
-    private HashMap<ItemName, Boolean> playerInventory;
+    private HashMap<ItemName, Boolean> playerInventory; //TODO can be a set
     private boolean noCropsOwned;
 
     //Constructor

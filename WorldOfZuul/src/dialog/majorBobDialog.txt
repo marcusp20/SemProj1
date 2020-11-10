@@ -12,9 +12,12 @@ $$0 If you need anything, just ask. :)
 ##0 Safe travels friend :)
 
 q00 1.How do i get a shovel?
-a00 An age old question
-a01 One i have been asked many a time
-a02 IDK, ask someone else :)
+a00 An age old question.
+a01 One i have been asked many a times.
+a02 Lizzy the shop keeper owes me a favor.
+a03 Ask her out, she'll help you
+a04 with all the things you need
+a05 to get settled :)
 
 q01 2.Where is the farm?
 a10 To the south my good boy.
