@@ -213,10 +213,10 @@ public class Game {
                 parser.setCommands(storeCommandWords);
                 parser.showCommands();
             } else if (command.getSecondWord().equals("npc") && currentRoom.getShortDescription().equals("In the headquarter")) {
-                System.out.println("Major Bob" + end);
+                //System.out.println("Major Bob" + end);
                 majorBob.converse();
             }else if (command.getSecondWord().equals("npc") && currentRoom.getShortDescription().equals("in the store, smells like flower seeds in here")) {
-                System.out.println("Shopkeeper Lizzy" + end); //TODO fix npc dialogs
+                //System.out.println("Shopkeeper Lizzy" + end);
                 shopkeeperLizzy.converse();
             }
 

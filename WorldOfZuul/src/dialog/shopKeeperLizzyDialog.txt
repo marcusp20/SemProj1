@@ -6,7 +6,7 @@
 *2 I' run a small business, selling everything you need to keep your farm running.
 *3 The mayer told me you were swinging by.
 *4 Told me to get you settled.
-*5 'browse' my wares, you can grab that shovel, scythe and seeds.
+*5 'browse' my wares, you can grab that shovel, scythe, seeds and watering can.
 
 $$0 What do you want to know darling?
 
