@@ -1,4 +1,4 @@
-package interactibles;/*
+package interactable;/*
     FieldExplainer
     - To get MOST amount of money in wallet from iInteractibles.Field:
     Fertilize field twice.

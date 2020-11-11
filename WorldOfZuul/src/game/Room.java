@@ -1,6 +1,6 @@
 package game;
 
-import interactibles.NPC;
+import interactable.NPC;
 
 import java.util.Set;
 import java.util.HashMap;

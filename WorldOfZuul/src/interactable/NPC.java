@@ -1,4 +1,4 @@
-package interactibles;
+package interactable;
 
 import game.CommandWords;
 

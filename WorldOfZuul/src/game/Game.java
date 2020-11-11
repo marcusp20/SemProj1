@@ -3,7 +3,7 @@ package game;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
-import interactibles.*;
+import interactable.*;
 
 public class Game {
     private Parser parser;
