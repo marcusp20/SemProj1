@@ -1,3 +1,7 @@
+package game;
+
+import game.ItemName;
+
 import java.util.HashMap;
 
 public class Player {

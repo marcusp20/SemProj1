@@ -1,3 +1,6 @@
+package game;
+
+import game.CommandWord;
 import java.util.HashMap;
 
 

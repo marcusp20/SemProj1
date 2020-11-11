@@ -1,8 +1,10 @@
+package game;
+
 public class Item {
 
     private ItemName name;
 
-    // Item Constructor
+    // game.Item Constructor
     public Item(ItemName name) {
         this.name = name;
 

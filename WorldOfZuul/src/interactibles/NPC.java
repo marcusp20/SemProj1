@@ -1,15 +1,20 @@
+package interactibles;
+
+import game.CommandWords;
+
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.Scanner;
 
-public class NPC extends Interactable{
-    private String name;                 //NPC name
-    private String description;         //NPC description
-    private File dialog;                //File containing NPC dialog
+
+public class NPC extends Interactable {
+    private String name;                 //iInteractibles.NPC name
+    private String description;         //iInteractibles.NPC description
+    private File dialog;                //File containing iInteractibles.NPC dialog
     private ArrayList<String> lines = new ArrayList<>();        //Array list containing all dialog lines
     private boolean firstMeeting = true;        //Attribute is true if player has not met npc
-    private CommandWords commandWords;  //NPC commands,, not used
+    private CommandWords commandWords;  //iInteractibles.NPC commands,, not used
 
     public NPC(File dialog, CommandWords commandWords)   {
         super(commandWords);

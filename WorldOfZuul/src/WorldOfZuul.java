@@ -1,4 +1,4 @@
-import java.io.File;
+import game.Game;
 
 /**
  * Class containing the main method, to launch the WorldOfZuul game.

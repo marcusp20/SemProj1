@@ -1,19 +1,21 @@
-/*
+package interactibles;/*
     FieldExplainer
-    - To get MOST amount of money in wallet from Field:
+    - To get MOST amount of money in wallet from iInteractibles.Field:
     Fertilize field twice.
     Sow seeds with tractor
     Water crops twice
     Harvest using harvester
     Use different crops every new harvest
 
-    To get LEAST amount of money in wallet from Field:
+    To get LEAST amount of money in wallet from iInteractibles.Field:
     Fertilize too much
     Saw seeds with shovel
     Water too much
     Harvest using Scythe
     Use the same strain of crop every new harvest.
 */
+
+import game.CommandWords;
 
 public class Field extends Interactable {
     //Attributes

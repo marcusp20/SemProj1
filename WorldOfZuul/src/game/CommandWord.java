@@ -1,10 +1,12 @@
+package game;
+
 public enum CommandWord
 {
-    //Game command words
+    //game.Game command words
     GO("go"), QUIT("quit"), HELP("help"), UNKNOWN("?"), USE("use"),
     LEAVE("leave"), MONEY("money"),
     //Intractable command words
-    //Field
+    //interactibles
     FIELD_SOW("sow"), FIELD_HARVEST("harvest"), FIELD_USE_PESTICIDES("pesticides"),
     FIELD_SOIL_SAMPLE("sample"), FIELD_WATER("water"), FIELD_FERTILIZE("fertilize"),
     //StoreNPC

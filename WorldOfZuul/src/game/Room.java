@@ -1,6 +1,9 @@
+package game;
+
+import interactibles.NPC;
+
 import java.util.Set;
 import java.util.HashMap;
-import java.util.Iterator;
 
 
 public class Room 

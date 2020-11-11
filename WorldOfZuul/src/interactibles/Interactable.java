@@ -1,3 +1,7 @@
+package interactibles;
+
+import game.CommandWords;
+
 public class Interactable {
     private CommandWords commandWords;
 

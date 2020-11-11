@@ -1,3 +1,5 @@
+package game;
+
 public enum ItemName { //TODO update prices
     SHOVEL("Shovel", "for plowing the field.", 0),
     WATER_CAN("Watering can", "to water crops.", 0),

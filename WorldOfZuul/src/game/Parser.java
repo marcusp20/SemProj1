@@ -1,5 +1,9 @@
+package game;
+
+import game.Command;
+import game.CommandWords;
+
 import java.util.Scanner;
-import java.util.StringTokenizer;
 
 public class Parser 
 {
@@ -16,7 +20,7 @@ public class Parser
         this.commands = commands;
     }
 
-    public Command getCommand() 
+    public Command getCommand()
     {
         String inputLine;
         String word1 = null;

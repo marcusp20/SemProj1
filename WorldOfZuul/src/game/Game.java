@@ -1,8 +1,9 @@
+package game;
+
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
-
-import java.util.Scanner;
+import interactibles.*;
 
 public class Game {
     private Parser parser;
@@ -59,6 +60,10 @@ public class Game {
 
     }
 
+    private void createGarden() {
+        //BeeHive
+    }
+
     private void initCommandWords() {
         gameCommandWords = new CommandWords();
         gameCommandWords.addCommandWord(CommandWord.GO);
@@ -84,7 +89,7 @@ public class Game {
 
     }
 
-    //Used for testing Field methods
+    //Used for testing iInteractibles.Field methods
     private void createField() {
         testField = new Field(fieldCommandWords);
 
@@ -182,7 +187,7 @@ public class Game {
         } else if (commandWord == CommandWord.STORE_BUY) {
             return buyStore(command);
         }
-        // Field commands
+        // iInteractibles.Field commands
         else if (commandWord == CommandWord.FIELD_SOW) {
             sowField(command);
         } else if (commandWord == CommandWord.FIELD_USE_PESTICIDES) {
@@ -205,7 +210,7 @@ public class Game {
             //TODO provide more feedback to the use
             String end = " used successfully";
             if (command.getSecondWord().equals("field") && currentRoom.getShortDescription().equals("in the field")) {
-                System.out.println("Field" + end);
+                System.out.println("iInteractibles.Field" + end);
                 parser.setCommands(fieldCommandWords);
                 parser.showCommands();
             } else if (command.getSecondWord().equals("store") && currentRoom.getShortDescription().equals("in the store, smells like flower seeds in here")) {
@@ -270,7 +275,7 @@ public class Game {
         parser.showCommands();
     }
 
-    //Methods for Field(s)
+    //Methods for iInteractibles.Field(s)
 
     //Choose which crop will be planted with Scanner.
     //Checks which crops owned to use.
@@ -364,7 +369,7 @@ public class Game {
                 System.out.println("You don't have a scythe, or a harvester yet, better go shopping");
             }
         } else {
-            System.out.println("Field not ready to harvest, try watering or sowing...");
+            System.out.println("iInteractibles.Field not ready to harvest, try watering or sowing...");
         }
     }
 
