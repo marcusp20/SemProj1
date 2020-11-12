@@ -7,7 +7,7 @@ package interactable;/*
     Harvest using harvester
     Use different crops every new harvest
 
-    To get LEAST amount of money in wallet from iInteractibles.Field:
+    To get LEAST amount of money in wallet from Field:
     Fertilize too much
     Saw seeds with shovel
     Water too much

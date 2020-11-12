@@ -27,3 +27,4 @@ q02 3.What is my goal?
 a20 To run a magnificent farm my good boy.
 a21 There is no greater goal in life.
 
+S
