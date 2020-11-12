@@ -1,0 +1,18 @@
+.nn Farmer Bob
+.dd An farmer so old, not even the mountains know when he was born.
+
+*0 Hello
+*1 There
+*2 General
+*3 Kenobi
+
+$$0 What brings you today young one...
+
+##0 May the heavens bless you with rain and sun
+
+q00 1.What do?!?!?!
+a00 DO FARM!!!
+
+q01 2.HOW MAKE FARM
+a01 JUST MAKE FARM
+a01 AM MONKE

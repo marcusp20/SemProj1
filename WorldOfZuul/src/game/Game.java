@@ -16,7 +16,7 @@ public class Game {
     private List<Item> storeItemList;
     private NPC majorBob;
     private NPC shopkeeperLizzy;
-    private NPC storeNPC;
+    private NPC farmerBob;
 
     public Game() {
         initCommandWords();
@@ -43,6 +43,9 @@ public class Game {
 
         File storeNPCDialog = load("shopKeeperLizzyDialog.txt");
         shopkeeperLizzy = new NPC(storeNPCDialog, storeCommandWords);
+
+        File fieldNPCDialog = load("fieldNPCDialog.txt");
+        farmerBob = new NPC(fieldNPCDialog, gameCommandWords);
 
         //majorBob.converse();
         //storeNPC.converse();
@@ -213,15 +216,15 @@ public class Game {
                 System.out.println("Field" + end);
                 parser.setCommands(fieldCommandWords);
                 parser.showCommands();
+            }else if(command.getSecondWord().equals("npc") && currentRoom.getShortDescription().equals("in the field")) {
+                farmerBob.converse();
             } else if (command.getSecondWord().equals("store") && currentRoom.getShortDescription().equals("in the store, smells like flower seeds in here")) {
                 System.out.println("Store" + end);
                 parser.setCommands(storeCommandWords);
                 parser.showCommands();
             } else if (command.getSecondWord().equals("npc") && currentRoom.getShortDescription().equals("In the headquarter")) {
-                //System.out.println("Major Bob" + end);
                 majorBob.converse();
             }else if (command.getSecondWord().equals("npc") && currentRoom.getShortDescription().equals("in the store, smells like flower seeds in here")) {
-                //System.out.println("Shopkeeper Lizzy" + end);
                 shopkeeperLizzy.converse();
             }
 
