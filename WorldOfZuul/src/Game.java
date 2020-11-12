@@ -16,6 +16,7 @@ public class Game {
     private NPC majorBob;
     private NPC shopkeeperLizzy;
     private NPC storeNPC;
+    private NPC beekeeperBetti;
 
     public Game() {
         initCommandWords();
@@ -43,8 +44,12 @@ public class Game {
         File storeNPCDialog = load("shopKeeperLizzyDialog.txt");
         shopkeeperLizzy = new NPC(storeNPCDialog, storeCommandWords);
 
+        File beekeeperDialog = load("beekeeperBetti.txt");
+        beekeeperBetti = new NPC(beekeeperDialog, gameCommandWords);
+
         //majorBob.converse();
         //storeNPC.converse();
+        //beekeeperBetti.converse();
     }
 
     private File load(String fileName) {
@@ -107,9 +112,11 @@ public class Game {
         
         headquarter.setExit("east", shed);
         headquarter.setExit("south", field);
+        headquarter.setExit("west", garden);
         headquarter.setNpc(majorBob);
 
         headquarter.setExit("north", store);
+        headquarter.setExit("west", garden);
 
         store.setExit("south", headquarter);
         store.setNpc(shopkeeperLizzy);
@@ -123,7 +130,9 @@ public class Game {
         stables.setExit("north", headquarter);
         stables.setExit("east", garden);
 
+        garden.setExit("east", headquarter);
         garden.setExit("west", stables);
+        garden.setNpc(beekeeperBetti);
 
         currentRoom = headquarter;
     }
@@ -218,6 +227,9 @@ public class Game {
             }else if (command.getSecondWord().equals("npc") && currentRoom.getShortDescription().equals("in the store, smells like flower seeds in here")) {
                 //System.out.println("Shopkeeper Lizzy" + end);
                 shopkeeperLizzy.converse();
+            }else if (command.getSecondWord().equals("npc") && currentRoom.getShortDescription().equals("in the beautiful garden")) {
+                // System.out.println("Beekeeper Betti" + end);
+                beekeeperBetti.converse();
             }
 
         }else   {
