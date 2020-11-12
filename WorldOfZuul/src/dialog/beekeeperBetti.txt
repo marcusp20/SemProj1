@@ -15,10 +15,10 @@ q00 1. Why do I need bees if I am to run a farm?
 a00 placeholder
 
 q01 2. How did you get to know so much about bees?
-a01 Ah you see, this is best answered through some sick rhymes.
-a02 My name is Beekeeper Betti and bees are one of my deals
-a03 I had to choosing a living to afford my meals
-a04 Bees are are the coolest if not the best
-a05 If you don't believe me, put it to a test.
-a06 There is no subject cooler, because without bees we die
-a07 so skimpin' on dem bees, don't you even try.
+a11 Ah you see, this is best answered through some sick rhymes.
+a12 My name is Beekeeper Betti and bees are one of my deals
+a13 I had to choosing a living to afford my meals
+a14 Bees are are the coolest if not the best
+a15 If you don't believe me, put it to a test.
+a16 There is no subject cooler, because without bees we die
+a17 so skimpin' on dem bees, don't you even try.
