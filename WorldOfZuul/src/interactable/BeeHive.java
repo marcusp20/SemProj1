@@ -11,6 +11,10 @@ public class BeeHive extends Interactable implements TimeProgression{
 
     @Override
     public void nextDay() {
+        //Move flowers = more bees, pesticides = dead bees
+    }
 
+    public int getBees() {
+        return bees;
     }
 }
