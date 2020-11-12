@@ -276,7 +276,8 @@ public class Game {
     }
 
     private void sleep()    {
-        //field.sleep;
+        testField.nextDay();
+
     }
 
     //Methods for Field(s)

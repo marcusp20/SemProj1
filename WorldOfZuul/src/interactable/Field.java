@@ -17,7 +17,7 @@ package interactable;/*
 
 import game.CommandWords;
 
-public class Field extends Interactable {
+public class Field extends Interactable implements TimeProgression {
     //Attributes
     private Boolean isReadyToHarvest = false;
     private Boolean isSowed = false;
@@ -38,6 +38,11 @@ public class Field extends Interactable {
 
     public Field(CommandWords commandWords) {
         super(commandWords);
+    }
+
+    @Override
+    public void nextDay() {
+        //TODO Progress to next day code
     }
 
     public void setCurrentHarvest(String crop) {
