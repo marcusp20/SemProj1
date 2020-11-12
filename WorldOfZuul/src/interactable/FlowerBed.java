@@ -3,57 +3,19 @@ package interactable;
 import game.CommandWords;
 
 public class FlowerBed extends Interactable {
-    private int flowerBeds[] = new int[6];
-    private int pesticides;
+    private int flowerBeds[] = new int[6];  //Each index is a flower bed, int describes flowers quality
+    private int pesticides = 0;
+
     FlowerBed(CommandWords commandWords)    {
         super(commandWords);
-        this.pesticides = 0;
     }
 
-    private void setFlower(int bed, String flower) {
-        int fNum = -1;
-        switch(flower){
-            case "Dandelion":
-                fNum = 0;
-                break;
-            case "Poppy":
-                fNum = 1;
-                break;
-            case "Snapdragon":
-                fNum = 2;
-                break;
-            case "Sun flower":
-                fNum = 3;
-                break;
-            case "Buttercup":
-                fNum = 4;
-                break;
-            case "Tulip":
-                fNum = 5;
-                break;
-        }
-        if(fNum != -1)   {
-            this.flowerBeds[bed] = fNum;
-        }
+    private void setFlower(int bed, int quality) {
+        this.flowerBeds[bed] = quality;;
     }
 
-    private String getFlower(int bed)   {
-        switch(bed){
-            case 0:
-                return "Dandelion";
-            case 1:
-                return "Poppy";
-            case 2:
-                return "Snapdragon";
-            case 3:
-                return "Sun flower";
-            case 4:
-                return "Buttercup";
-            case 5:
-                return "Tulip";
-            default:
-                return "Invalid flower";
-        }
+    private int[] getFlowers()   {
+        return this.flowerBeds;
     }
 
     public int getPesticides() {
