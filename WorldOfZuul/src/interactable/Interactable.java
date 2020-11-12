@@ -8,4 +8,10 @@ public class Interactable {
     public Interactable(CommandWords commandWords) {
         this.commandWords = commandWords;
     }
+
+    /*
+    TODO Add interactWith function (Without body) for all interactables to override.
+         Ex. NPCName.interactWith(), fieldName.interactWITH()
+         Posible change, will see how Visuals are implemented
+     */
 }

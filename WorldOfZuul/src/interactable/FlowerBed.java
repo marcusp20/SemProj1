@@ -3,9 +3,11 @@ package interactable;
 import game.CommandWords;
 
 public class FlowerBed extends Interactable {
-    int flowerBeds[] = new int[6];
+    private int flowerBeds[] = new int[6];
+    private int pesticides;
     FlowerBed(CommandWords commandWords)    {
         super(commandWords);
+        this.pesticides = 0;
     }
 
     private void setFlower(int bed, String flower) {
@@ -52,5 +54,9 @@ public class FlowerBed extends Interactable {
             default:
                 return "Invalid flower";
         }
+    }
+
+    public int getPesticides() {
+        return this.pesticides;
     }
 }
