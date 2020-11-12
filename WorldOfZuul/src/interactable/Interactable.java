@@ -12,6 +12,6 @@ public class Interactable {
     /*
     TODO Add interactWith function (Without body) for all interactables to override.
          Ex. NPCName.interactWith(), fieldName.interactWITH()
-         Posible change, will see how Visuals are implemented
+         Possible change, will see how Visuals are implemented
      */
 }
