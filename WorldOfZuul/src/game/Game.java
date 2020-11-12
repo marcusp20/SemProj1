@@ -275,6 +275,10 @@ public class Game {
         parser.showCommands();
     }
 
+    private void sleep()    {
+        //field.sleep;
+    }
+
     //Methods for Field(s)
 
     //Choose which crop will be planted with Scanner.
