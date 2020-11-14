@@ -6,15 +6,13 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
-import java.util.Scanner;
-
 public class Game {
     private Parser parser;
     private Room currentRoom;
     private CommandWords gameCommandWords;
     private CommandWords storeCommandWords;
     private CommandWords fieldCommandWords;
-    private Field testField;
+    private Field field;
     private Player player;
     private List<Item> storeItemList;
     private NPC majorBob;
@@ -25,18 +23,19 @@ public class Game {
     private Quiz postQuiz;
 
     public Game() {
-        initCommandWords();
+        createCommandWords();
         createNPC();
         createRooms();
         parser = new Parser(gameCommandWords);
         createField();
         createPlayer();
-        initStoreItemList();
-        initQuiz();
+        createStoreItemList();
+        createQuiz();
 
     }
 
-    private void initQuiz() {
+
+    private void createQuiz() {
         chadChicken = new ChadChicken();
         //TODO change TextQuiz to GUIQuiz when QUIQuiz has been implemented
         preQuiz = new TextQuiz(chadChicken.getPreQuestions());
@@ -44,7 +43,11 @@ public class Game {
 
     }
 
-    public void initStoreItemList() {
+    /////////////////////////////////////////////////////////////////////////////////////
+    ///////////////// Create Methods used in constructor ////////////////////////////////
+    /////////////////////////////////////////////////////////////////////////////////////
+
+    public void createStoreItemList() {
         storeItemList = new ArrayList<Item>();
 
         for (ItemName itemName : ItemName.values()) {
@@ -63,6 +66,11 @@ public class Game {
         //storeNPC.converse();
     }
 
+    /**
+     * Used by createNPC to properly load textFiles
+     * @param fileName name of the text file (including the .txt)
+     * @return the file path of the given fileName
+     */
     private File load(String fileName) {
         String path = System.getProperty("user.dir");
         if(path.endsWith("SemProj1")) {
@@ -75,7 +83,7 @@ public class Game {
 
     }
 
-    private void initCommandWords() {
+    private void createCommandWords() {
         gameCommandWords = new CommandWords();
         gameCommandWords.addCommandWord(CommandWord.GO);
         gameCommandWords.addCommandWord(CommandWord.HELP);
@@ -102,14 +110,13 @@ public class Game {
 
     //Used for testing Field methods
     private void createField() {
-        testField = new Field(fieldCommandWords);
+        field = new Field(fieldCommandWords);
 
     }
 
     private void createPlayer() {
         player = new Player("Lars TyndSkid");
     }
-
 
     private void createRooms() {
         Room headquarter, shed, field, stables, garden, store;
@@ -144,6 +151,10 @@ public class Game {
         currentRoom = headquarter;
     }
 
+    /////////////////////////////////////////////////////////////////////////////////////
+    ///////////////// play method, and the methods it is using //////////////////////////
+    /////////////////////////////////////////////////////////////////////////////////////
+
     public void play() {
         playIntro();
         printWelcome();
@@ -177,6 +188,10 @@ public class Game {
         System.out.println();
         System.out.println(currentRoom.getLongDescription());
     }
+
+    /////////////////////////////////////////////////////////////////////////////////////
+    ///////////////// processCommand and the methods it calls ///////////////////////////
+    /////////////////////////////////////////////////////////////////////////////////////
 
     private boolean processCommand(Command command) {
         boolean wantToQuit = false;
@@ -224,6 +239,10 @@ public class Game {
         return wantToQuit;
     }
 
+    /////////////////////////////////////////////////////////////////////////////////////
+    ///////////////////////////////// Game Commands  ////////////////////////////////////
+    /////////////////////////////////////////////////////////////////////////////////////
+
     private void use(Command command) {
         if(command.getSecondWord() != null) {           //If player is attempting to use something then...
                                                         //Checks if player is in the right place to use intractable
@@ -250,6 +269,45 @@ public class Game {
                     "with your injectables: npc, store, field...");
         }
     }
+
+    private void goRoom(Command command) {
+        if(!command.hasSecondWord()) {
+            System.out.println("Go where?");
+            return;
+        }
+
+        String direction = command.getSecondWord();
+
+        Room nextRoom = currentRoom.getExit(direction);
+
+        if (nextRoom == null) {
+            System.out.println("There is no door!");
+        } else {
+            currentRoom = nextRoom;
+            System.out.println(currentRoom.getLongDescription());
+        }
+    }
+
+    private boolean quit(Command command) {
+        if(command.hasSecondWord()) {
+            System.out.println("Quit what?");
+            return false;
+        } else {
+            return true;
+        }
+    }
+
+    private void printHelp() {
+        System.out.println("You are lost. You are alone. You wander");
+        System.out.println("around at your farm.");
+        System.out.println();
+        System.out.println("Your command words are:");
+        parser.showCommands();
+    }
+
+    /////////////////////////////////////////////////////////////////////////////////////
+    ///////////////////////////////// Store Commands  ///////////////////////////////////
+    /////////////////////////////////////////////////////////////////////////////////////
 
     private boolean buyStore(Command command) {
         // 1. check if you can afford it.
@@ -287,15 +345,9 @@ public class Game {
         }
     }
 
-    private void printHelp() {
-        System.out.println("You are lost. You are alone. You wander");
-        System.out.println("around at your farm.");
-        System.out.println();
-        System.out.println("Your command words are:");
-        parser.showCommands();
-    }
-
-    //Methods for Field(s)
+    /////////////////////////////////////////////////////////////////////////////////////
+    ///////////////////////////////// Field Commands  ///////////////////////////////////
+    /////////////////////////////////////////////////////////////////////////////////////
 
     //Choose which crop will be planted with Scanner.
     //Checks which crops owned to use.
@@ -311,19 +363,19 @@ public class Game {
             }
 
             if (choice.equals("wheat") && player.itemOwned(ItemName.BAG_OF_WHEAT)) {
-                testField.setCurrentHarvest("wheat");
+                field.setCurrentHarvest("wheat");
                 System.out.println("Wheat was used");
                 //break;
             } else if (choice.equals("clover") && player.itemOwned(ItemName.BAG_OF_CLOVER)) {
-                testField.setCurrentHarvest("clover");
+                field.setCurrentHarvest("clover");
                 System.out.println("Clover was used");
                 //break;
             } else if (choice.equals("corn") && player.itemOwned(ItemName.BAG_OF_CORN)) {
-                testField.setCurrentHarvest("corn");
+                field.setCurrentHarvest("corn");
                 System.out.println("Corn was used");
                 //break;
             } else if (choice.equals("cannabis") && player.itemOwned(ItemName.BAG_OF_CANNABIS)) {
-                testField.setCurrentHarvest("cannabis");
+                field.setCurrentHarvest("cannabis");
                 System.out.println("cannabis was sowed");
                 //break;
             } else if (choice.equals("options")) {
@@ -343,18 +395,27 @@ public class Game {
     //Checks if field is sowed already. Checks for crops in inventory.
     //Checks for tractor in inventory, if not, shovel is used. If no shovel, nothing happens.
     public void sowField(Command command) {
-        if (!testField.getIsSowed()) {
-            if (player.checkForNoCrops()) { //TODO reconsidder how the chooseCrop method is used
-                System.out.println("No seeds or crops in inventory, go buy some");
-            } else if (player.itemOwned(ItemName.TRACTOR) && chooseCrop(command)) {
-                testField.sowFieldTractor();//TODO remove crop when sown
-            } else if (player.itemOwned(ItemName.SHOVEL) && chooseCrop(command)) {
-                testField.sowFieldShovel();//TODO remove crop when sown
-            } else { //TODO fix dialog
-                System.out.println("You don't have a shovel, or a tractor yet, better go shopping...");
-            }
-        } else {
+        if (field.getIsSowed()) {
             System.out.println("The field has already been sowed... Try watering or harvesting");
+            return;
+        }
+        if (player.checkForNoCrops()) {
+            System.out.println("No seeds or crops in inventory, go buy some");
+            return;
+        }
+        boolean hasChosenACrop = chooseCrop(command);
+        if(!hasChosenACrop) {
+            return;
+        }
+
+        if (player.itemOwned(ItemName.TRACTOR)) {
+            field.sowFieldTractor();
+            //TODO remove crop when sown
+        } else if (player.itemOwned(ItemName.SHOVEL)) {
+            field.sowFieldShovel();
+            //TODO remove crop when sown
+        } else {
+            System.out.println("You don't have a shovel, or a tractor yet, better go shopping...");
         }
     }
 
@@ -364,24 +425,24 @@ public class Game {
     //Calculates value yield, after scythe or harvester is used, and adds money to player wallet.
     //Resets field.
     public void harvestField() {
-        if (testField.getIsReadyToHarvest()) {
+        if (field.getIsReadyToHarvest()) {
             if (player.itemOwned(ItemName.HARVESTER)) {
                 System.out.println("Used harvester on field.");
 
-                testField.useHarvester(testField.getYield());
-                testField.checkPreviousHarvest();
-                player.sellYields(testField.getYield()); //yields sold to money.
-                testField.harvestDone();
+                field.useHarvester(field.getYield());
+                field.checkPreviousHarvest();
+                player.sellYields(field.getYield()); //yields sold to money.
+                field.harvestDone();
 
                 System.out.println("Wallet is now "  + player.checkWallet());
 
             } else if (player.itemOwned(ItemName.SCYTHE)) {
                 System.out.println("Used scythe to harvest field.");
 
-                testField.useScythe(testField.getYield());
-                testField.checkPreviousHarvest();
-                player.sellYields(testField.getYield()); //yields sold to money.
-                testField.harvestDone();
+                field.useScythe(field.getYield());
+                field.checkPreviousHarvest();
+                player.sellYields(field.getYield()); //yields sold to money.
+                field.harvestDone();
 
                 System.out.println("Wallet is now "  + player.checkWallet());
 
@@ -393,16 +454,15 @@ public class Game {
         }
     }
 
-
     //FertilizeField method
     //Checks for fertilizer and isSowed.
     //Fertilizer strength depends on isSowed condition.
     public void fertilizeField() {
         if (player.itemOwned(ItemName.BAG_OF_FERTILIZER)) {
-            if (testField.getIsSowed()) {
-                testField.useFertilizerAfterSow();
+            if (field.getIsSowed()) {
+                field.useFertilizerAfterSow();
             } else {
-                testField.useFertilizerBeforeSow();
+                field.useFertilizerBeforeSow();
             }
         }
         else {
@@ -410,27 +470,25 @@ public class Game {
         }
     }
 
-
     //waterField method
     //Check for isSowed
     //See moistField method for further explanation.
     public void waterField() {
-        if (testField.getIsSowed()) {
-            testField.moistField();
+        if (field.getIsSowed()) {
+            field.moistField();
         } else {
             System.out.println("You have nothing to water...");
         }
     }
 
-
     //getFieldSample method
     //shows condition of field based on yield.
     public void getFieldSample() {
-        if (testField.getYield() > 64) {
+        if (field.getYield() > 64) {
             System.out.println("Your soil is in excellent condition!");
-        } else if (testField.getYield() > 33  ) {
+        } else if (field.getYield() > 33  ) {
             System.out.println("your soil is in good condition.");
-        } else if (testField.getYield() > 15) {
+        } else if (field.getYield() > 15) {
             System.out.println("Your soil could be worse...");
         } else {
             System.out.println("Your soil is not too great...");
@@ -438,30 +496,4 @@ public class Game {
     }
 
 
-    private void goRoom(Command command) {
-        if(!command.hasSecondWord()) {
-            System.out.println("Go where?");
-            return;
-        }
-
-        String direction = command.getSecondWord();
-
-        Room nextRoom = currentRoom.getExit(direction);
-
-        if (nextRoom == null) {
-            System.out.println("There is no door!");
-        } else {
-            currentRoom = nextRoom;
-            System.out.println(currentRoom.getLongDescription());
-        }
-    }
-
-    private boolean quit(Command command) {
-        if(command.hasSecondWord()) {
-            System.out.println("Quit what?");
-            return false;
-        } else {
-            return true;
-        }
-    }
 }
