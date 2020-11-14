@@ -47,5 +47,11 @@ public class Command
     {
         return (secondWord != null);
     }
+
+    @Override
+    public String toString() {
+        return commandWord + " " + secondWord;
+
+    }
 }
 

@@ -21,6 +21,8 @@ public class Game {
     private ChadChicken chadChicken;
     private Quiz preQuiz;
     private Quiz postQuiz;
+    private GameLogger logger;
+    private boolean isCreatedFromSaveFile;
 
     public Game() {
         createCommandWords();
@@ -31,9 +33,19 @@ public class Game {
         createPlayer();
         createStoreItemList();
         createQuiz();
-
+        createGameLogger();
     }
 
+
+
+    /////////////////////////////////////////////////////////////////////////////////////
+    ///////////////// Create Methods used in constructor ////////////////////////////////
+    /////////////////////////////////////////////////////////////////////////////////////
+
+    private void createGameLogger() {
+        logger = new GameLogger();
+        isCreatedFromSaveFile = false;
+    }
 
     private void createQuiz() {
         chadChicken = new ChadChicken();
@@ -42,10 +54,6 @@ public class Game {
         postQuiz = new TextQuiz(chadChicken.getPostQuestions());
 
     }
-
-    /////////////////////////////////////////////////////////////////////////////////////
-    ///////////////// Create Methods used in constructor ////////////////////////////////
-    /////////////////////////////////////////////////////////////////////////////////////
 
     public void createStoreItemList() {
         storeItemList = new ArrayList<Item>();
@@ -89,6 +97,7 @@ public class Game {
         gameCommandWords.addCommandWord(CommandWord.HELP);
         gameCommandWords.addCommandWord(CommandWord.QUIT);
         gameCommandWords.addCommandWord(CommandWord.USE);
+        gameCommandWords.addCommandWord(CommandWord.SAVE);
 
         // Adding additional commands
         storeCommandWords = new CommandWords();
@@ -156,8 +165,11 @@ public class Game {
     /////////////////////////////////////////////////////////////////////////////////////
 
     public void play() {
-        playIntro();
-        printWelcome();
+        if(!isCreatedFromSaveFile) {
+            //only if new game
+            playIntro();
+            printWelcome();
+        }
 
 
         boolean finished = false;
@@ -189,11 +201,15 @@ public class Game {
         System.out.println(currentRoom.getLongDescription());
     }
 
+    public void setCreatedFromSaveFile(boolean createdFromSaveFile) {
+        isCreatedFromSaveFile = createdFromSaveFile;
+    }
+
     /////////////////////////////////////////////////////////////////////////////////////
     ///////////////// processCommand and the methods it calls ///////////////////////////
     /////////////////////////////////////////////////////////////////////////////////////
 
-    private boolean processCommand(Command command) {
+    public boolean processCommand(Command command) {
         boolean wantToQuit = false;
 
         CommandWord commandWord = command.getCommandWord();
@@ -201,39 +217,64 @@ public class Game {
         if(commandWord == CommandWord.UNKNOWN) {
             System.out.println("I don't know what you mean...");
             return false;
-        } if(commandWord == commandWord.LEAVE) {
+        }
+        if(commandWord == commandWord.LEAVE) {
+            logger.log(command);
             System.out.println("You leave...");
             parser.setCommands(gameCommandWords);
-        } if (commandWord == CommandWord.HELP) {
+        }
+        if (commandWord == CommandWord.HELP) {
             printHelp();
-        } else if (commandWord == CommandWord.GO) {
+        }
+        else if (commandWord == CommandWord.GO) {
+            logger.log(command);
             goRoom(command);
-        } else if (commandWord == CommandWord.QUIT) {
+        }
+        else if (commandWord == CommandWord.QUIT) {
             wantToQuit = quit(command);
-        } else if (commandWord == CommandWord.USE) {
+        }
+        else if (commandWord == CommandWord.USE) {
             use(command);
-        } else if (commandWord == CommandWord.MONEY) {
+        }
+        else if (commandWord == CommandWord.MONEY) {
             System.out.println("You have $" + player.getWallet());
             return false;
         } //TODO print player inventory
+        else if (commandWord == CommandWord.SAVE) {
+            if(logger.save()) {
+                System.out.println("Game saved successfully");
+            } // else the save method prints an error and a stacktrace
+        }
         // Store commands
         else if (commandWord == CommandWord.STORE_BROWSE) {
             printStoreItemList();
-        } else if (commandWord == CommandWord.STORE_BUY) {
+        }
+        else if (commandWord == CommandWord.STORE_BUY) {
+            logger.log(command);
             return buyStore(command);
         }
         // Field commands
         else if (commandWord == CommandWord.FIELD_SOW) {
+            logger.log(command);
             sowField(command);
-        } else if (commandWord == CommandWord.FIELD_USE_PESTICIDES) {
+        }
+        else if (commandWord == CommandWord.FIELD_USE_PESTICIDES) {
+            logger.log(command);
             //TODO implement pesticides
-        } else if (commandWord == CommandWord.FIELD_HARVEST) {
+        }
+        else if (commandWord == CommandWord.FIELD_HARVEST) {
+            logger.log(command);
             harvestField();
-        } else if (commandWord == CommandWord.FIELD_SOIL_SAMPLE) {
+        }
+        else if (commandWord == CommandWord.FIELD_SOIL_SAMPLE) {
             getFieldSample();
-        } else if (commandWord == CommandWord.FIELD_WATER) {
+        }
+        else if (commandWord == CommandWord.FIELD_WATER) {
+            logger.log(command);
             waterField();
-        } else if (commandWord == CommandWord.FIELD_FERTILIZE) {
+        }
+        else if (commandWord == CommandWord.FIELD_FERTILIZE) {
+            logger.log(command);
             fertilizeField();
         }
         return wantToQuit;
@@ -249,10 +290,12 @@ public class Game {
             //TODO provide more feedback to the use
             String end = " used successfully";
             if (command.getSecondWord().equals("field") && currentRoom.getShortDescription().equals("in the field")) {
+                logger.log(command);
                 System.out.println("Field" + end);
                 parser.setCommands(fieldCommandWords);
                 parser.showCommands();
             } else if (command.getSecondWord().equals("store") && currentRoom.getShortDescription().equals("in the store, smells like flower seeds in here")) {
+                logger.log(command);
                 System.out.println("Store" + end);
                 parser.setCommands(storeCommandWords);
                 parser.showCommands();

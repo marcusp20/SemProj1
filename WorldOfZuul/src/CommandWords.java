@@ -33,4 +33,10 @@ public class CommandWords {
         }
         System.out.println();
     }
+
+    public void addAllCommandWords() {
+        for (CommandWord c : CommandWord.values()) {
+            validCommands.put(c.toString(), c);
+        }
+    }
 }
