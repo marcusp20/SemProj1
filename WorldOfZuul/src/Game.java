@@ -1,3 +1,7 @@
+import chadChicken.ChadChicken;
+import chadChicken.Quiz;
+import chadChicken.TextQuiz;
+
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
@@ -16,6 +20,9 @@ public class Game {
     private NPC majorBob;
     private NPC shopkeeperLizzy;
     private NPC storeNPC;
+    private ChadChicken chadChicken;
+    private Quiz preQuiz;
+    private Quiz postQuiz;
 
     public Game() {
         initCommandWords();
@@ -24,8 +31,17 @@ public class Game {
         parser = new Parser(gameCommandWords);
         createField();
         createPlayer();
-
         initStoreItemList();
+        initQuiz();
+
+    }
+
+    private void initQuiz() {
+        chadChicken = new ChadChicken();
+        //TODO change TextQuiz to GUIQuiz when QUIQuiz has been implemented
+        preQuiz = new TextQuiz(chadChicken.getPreQuestions());
+        postQuiz = new TextQuiz(chadChicken.getPostQuestions());
+
     }
 
     public void initStoreItemList() {
@@ -129,6 +145,7 @@ public class Game {
     }
 
     public void play() {
+        playIntro();
         printWelcome();
 
 
@@ -142,6 +159,14 @@ public class Game {
             finished = processCommand(command);
         }
         System.out.println("Thank you for playing.  Good bye.");
+    }
+
+    private void playIntro() {
+        //print intro of ChadChicken
+
+        //launch preQuiz
+        preQuiz.run();
+        chadChicken.uploadAnswers(preQuiz.getAnswers());
     }
 
     private void printWelcome() {
