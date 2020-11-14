@@ -162,7 +162,7 @@ public class Game {
     }
 
     private void playIntro() {
-        //print intro of ChadChicken
+        //TODO print intro of ChadChicken
 
         //launch preQuiz
         preQuiz.run();
@@ -344,11 +344,17 @@ public class Game {
     //Checks for tractor in inventory, if not, shovel is used. If no shovel, nothing happens.
     public void sowField(Command command) {
         if (!testField.getIsSowed()) {
-            if (player.checkForNoCrops()) { //TODO reconsidder how the chooseCrop method is used
+            if (player.checkForNoCrops()) {
                 System.out.println("No seeds or crops in inventory, go buy some");
-            } else if (player.itemOwned(ItemName.TRACTOR) && chooseCrop(command)) {
+                return;
+            }
+            boolean hasChosenACrop = chooseCrop(command);
+            if(!hasChosenACrop) {
+                return;
+            }
+            if (player.itemOwned(ItemName.TRACTOR)) {
                 testField.sowFieldTractor();//TODO remove crop when sown
-            } else if (player.itemOwned(ItemName.SHOVEL) && chooseCrop(command)) {
+            } else if (player.itemOwned(ItemName.SHOVEL)) {
                 testField.sowFieldShovel();//TODO remove crop when sown
             } else { //TODO fix dialog
                 System.out.println("You don't have a shovel, or a tractor yet, better go shopping...");
