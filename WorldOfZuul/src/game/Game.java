@@ -3,6 +3,7 @@ package game;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
+
 import interactable.*;
 
 public class Game {
@@ -17,10 +18,13 @@ public class Game {
     private NPC majorBob;
     private NPC shopkeeperLizzy;
     private NPC farmerBob;
+    private Bed hqBed;
+    private int gameTimer = 0;
 
     public Game() {
         initCommandWords();
         createNPC();
+        createBed();
         createRooms();
         parser = new Parser(gameCommandWords);
         createField();
@@ -39,16 +43,20 @@ public class Game {
 
     private void createNPC() {
         File majorBobDialog = load("majorBobDialog.txt");
-        majorBob = new NPC(majorBobDialog, gameCommandWords);
+        majorBob = new NPC(majorBobDialog);
 
         File storeNPCDialog = load("shopKeeperLizzyDialog.txt");
-        shopkeeperLizzy = new NPC(storeNPCDialog, storeCommandWords);
+        shopkeeperLizzy = new NPC(storeNPCDialog);
 
         File fieldNPCDialog = load("fieldNPCDialog.txt");
-        farmerBob = new NPC(fieldNPCDialog, gameCommandWords);
+        farmerBob = new NPC(fieldNPCDialog);
 
         //majorBob.converse();
         //storeNPC.converse();
+    }
+
+    private void createBed()    {
+        hqBed = new Bed();
     }
 
     private File load(String fileName) {
@@ -226,6 +234,8 @@ public class Game {
                 majorBob.converse();
             }else if (command.getSecondWord().equals("npc") && currentRoom.getShortDescription().equals("in the store, smells like flower seeds in here")) {
                 shopkeeperLizzy.converse();
+            } else if (command.getSecondWord().equals("bed") && currentRoom.getShortDescription().equals("In the headquarter"))   {
+                sleep();
             }
 
         }else   {
@@ -278,9 +288,14 @@ public class Game {
         parser.showCommands();
     }
 
-    private void sleep()    {
+    public void sleep()    {
+
+        hqBed.sleep();
         testField.nextDay();
 
+        gameTimer++;
+
+        event();
     }
 
     //Methods for Field(s)
@@ -361,7 +376,7 @@ public class Game {
                 player.sellYields(testField.getYield()); //yields sold to money.
                 testField.harvestDone();
 
-                System.out.println("Wallet is now "  + player.checkWallet());
+                System.out.println("Wallet is now " + player.checkWallet());
 
             } else if (player.itemOwned(ItemName.SCYTHE)) {
                 System.out.println("Used scythe to harvest field.");
@@ -371,13 +386,17 @@ public class Game {
                 player.sellYields(testField.getYield()); //yields sold to money.
                 testField.harvestDone();
 
-                System.out.println("Wallet is now "  + player.checkWallet());
+                System.out.println("Wallet is now " + player.checkWallet());
 
             } else {
                 System.out.println("You don't have a scythe, or a harvester yet, better go shopping");
             }
+        } else if(testField.isWatered()  && testField.getIsSowed()) {
+            System.out.println("Field has not had time to grow, go take a nap at HQ");
+        } else if(testField.getIsSowed()) {
+            System.out.println("The plants haven't been watered, so they have yet to grown");
         } else {
-            System.out.println("Field not ready to harvest, try watering or sowing...");
+            System.out.println("There is nothing to harvest, try planting something");
         }
     }
 
@@ -450,6 +469,12 @@ public class Game {
             return false;
         } else {
             return true;
+        }
+    }
+
+    private void event()    {
+        if(gameTimer == 1)  {
+            System.out.println("Sweden was lost...");
         }
     }
 }

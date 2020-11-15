@@ -14,10 +14,9 @@ public class NPC extends Interactable implements TimeProgression {
     private File dialog;                //File containing NPC dialog
     private ArrayList<String> lines = new ArrayList<>();        //Array list containing all dialog lines
     private boolean firstMeeting = true;        //Attribute is true if player has not met npc
-    private CommandWords commandWords;  //NPC commands,, not used
 
-    public NPC(File dialog, CommandWords commandWords)   {
-        super(commandWords);
+    public NPC(File dialog)   {
+        super();
         this.dialog = dialog;
 
         try {

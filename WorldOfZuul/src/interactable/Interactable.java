@@ -9,6 +9,10 @@ public class Interactable {
         this.commandWords = commandWords;
     }
 
+    public Interactable()   {   //interactable wo command words
+
+    }
+
     /*
     TODO Add interactWith function (Without body) for all interactables to override.
          Ex. NPCName.interactWith(), fieldName.interactWITH()
