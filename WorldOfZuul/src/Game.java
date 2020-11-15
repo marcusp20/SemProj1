@@ -271,7 +271,7 @@ public class Game {
         }
         // Field commands
         else if (commandWord == CommandWord.FIELD_SOW) {
-            logger.log(command);
+
             sowField(command);
         } else if (commandWord == CommandWord.FIELD_USE_PESTICIDES) {
             logger.log(command);
@@ -468,8 +468,10 @@ public class Game {
 
         if (player.itemOwned(ItemName.TRACTOR)) {
             field.sowFieldTractor();
+            logger.log(command);
         } else if (player.itemOwned(ItemName.SHOVEL)) {
             field.sowFieldShovel();
+            logger.log(command);
         } else {
             System.out.println("You don't have a shovel, or a tractor yet, better go shopping...");
         }
