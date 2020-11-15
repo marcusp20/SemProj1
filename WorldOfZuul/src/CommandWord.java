@@ -2,7 +2,7 @@ public enum CommandWord
 {
     //Game command words
     GO("go"), QUIT("quit"), HELP("help"), UNKNOWN("?"), USE("use"),
-    LEAVE("leave"), MONEY("money"), SAVE("save"),
+    LEAVE("leave"), MONEY("money"), SAVE("save"), TASK("task"),
     //Intractable command words
     //Field
     FIELD_SOW("sow"), FIELD_HARVEST("harvest"), FIELD_USE_PESTICIDES("pesticides"),
