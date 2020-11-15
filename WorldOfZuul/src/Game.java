@@ -7,6 +7,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+import java.util.Scanner;
+
 public class Game {
     private Parser parser;
     private Room currentRoom;
@@ -19,6 +21,7 @@ public class Game {
     private NPC majorBob;
     private NPC shopkeeperLizzy;
     private NPC storeNPC;
+    private NPC beekeeperBetti;
     private ChadChicken chadChicken;
     private Quiz preQuiz;
     private Quiz postQuiz;
@@ -74,8 +77,12 @@ public class Game {
         File storeNPCDialog = load("shopKeeperLizzyDialog.txt");
         shopkeeperLizzy = new NPC(storeNPCDialog, storeCommandWords);
 
+        File beekeeperDialog = load("beekeeperBetti.txt");
+        beekeeperBetti = new NPC(beekeeperDialog, gameCommandWords);
+
         //majorBob.converse();
         //storeNPC.converse();
+        //beekeeperBetti.converse();
     }
 
     /**
@@ -131,6 +138,7 @@ public class Game {
     private void createPlayer() {
         player = new Player("Lars TyndSkid");
     }
+
 
     private void createRooms() {
         Room headquarter, shed, field, field2, field3, garden, store;
@@ -315,6 +323,9 @@ public class Game {
             } else if (command.getSecondWord().equals("npc") && currentRoom.getShortDescription().equals("in the store, smells like flower seeds in here")) {
                 //System.out.println("Shopkeeper Lizzy" + end);
                 shopkeeperLizzy.converse();
+            }else if (command.getSecondWord().equals("npc") && currentRoom.getShortDescription().equals("in the beautiful garden")) {
+                // System.out.println("Beekeeper Betti" + end);
+                beekeeperBetti.converse();
             }
         } else {
             System.out.println("This command is used to interact \n" +

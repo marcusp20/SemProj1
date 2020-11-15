@@ -1,0 +1,24 @@
+.nn beekeeper betti
+.dd guides you in your garden
+
+*0 Oh, hello there!
+*1 Welcome to your new beautiful garden
+*2 My name is Betti, but you can call me bee
+*3 I am here to help you get a beehive up and running, isn't it exciting?
+*4 Well enough about me, have you any questions?
+
+$$0 I'm always happy to help!
+
+##0 Good luck!
+
+q00 1. Why do I need bees if I am to run a farm?
+a00 placeholder
+
+q01 2. How did you get to know so much about bees?
+a11 Ah you see, this is best answered through some sick rhymes.
+a12 My name is Beekeeper Betti and bees are one of my deals
+a13 I had to choosing a living to afford my meals
+a14 Bees are are the coolest if not the best
+a15 If you don't believe me, put it to a test.
+a16 There is no subject cooler, because without bees we die
+a17 so skimpin' on dem bees, don't you even try.
