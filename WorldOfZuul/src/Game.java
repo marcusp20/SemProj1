@@ -4,7 +4,6 @@ import chadChicken.TextQuiz;
 
 import java.io.File;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 
@@ -41,7 +40,6 @@ public class Game {
         createQuiz();
         createGameLogger();
     }
-
 
 
     /////////////////////////////////////////////////////////////////////////////////////
@@ -87,13 +85,13 @@ public class Game {
      */
     private File load(String fileName) {
         String path = System.getProperty("user.dir");
-        if(path.endsWith("SemProj1")) {
-            return new File(path + "\\WorldOfZuul\\src\\dialog\\"+fileName);    //Add remaining path to dialog text file
-        } else if(path.endsWith("WorldOfZuul")) {
-            return new File(path + "\\src\\dialog\\"+fileName);
+        if (path.endsWith("SemProj1")) {
+            return new File(path + "\\WorldOfZuul\\src\\dialog\\" + fileName);    //Add remaining path to dialog text file
+        } else if (path.endsWith("WorldOfZuul")) {
+            return new File(path + "\\src\\dialog\\" + fileName);
         }
         //Default - probably not gonna work
-            return new File(path + "\\dialog\\"+fileName);
+        return new File(path + "\\dialog\\" + fileName);
 
     }
 
@@ -104,6 +102,7 @@ public class Game {
         gameCommandWords.addCommandWord(CommandWord.QUIT);
         gameCommandWords.addCommandWord(CommandWord.USE);
         gameCommandWords.addCommandWord(CommandWord.SAVE);
+        gameCommandWords.addCommandWord(CommandWord.TASK);
 
         // Adding additional commands
         storeCommandWords = new CommandWords();
@@ -173,7 +172,7 @@ public class Game {
         field3.setExit("north", shed);
 
         garden.setLocked(true);
-        unLockableRooms.put("garden",garden);
+        unLockableRooms.put("garden", garden);
         garden.setExit("east", headquarter);
         garden.setExit("south", field2);
 
@@ -185,7 +184,7 @@ public class Game {
     /////////////////////////////////////////////////////////////////////////////////////
 
     public void play() {
-        if(!isCreatedFromSaveFile) {
+        if (!isCreatedFromSaveFile) {
             //only if new game
             playIntro();
             printWelcome();
@@ -234,42 +233,39 @@ public class Game {
 
         CommandWord commandWord = command.getCommandWord();
 
-        if(commandWord == CommandWord.UNKNOWN) {
+        if (commandWord == CommandWord.UNKNOWN) {
             System.out.println("I don't know what you mean...");
             return false;
         }
-        if(commandWord == commandWord.LEAVE) {
+        if (commandWord == commandWord.LEAVE) {
             logger.log(command);
             System.out.println("You leave...");
             parser.setCommands(gameCommandWords);
         }
         if (commandWord == CommandWord.HELP) {
             printHelp();
-        }
-        else if (commandWord == CommandWord.GO) {
+        } else if (commandWord == CommandWord.GO) {
             logger.log(command);
             goRoom(command);
-        }
-        else if (commandWord == CommandWord.QUIT) {
+        } else if (commandWord == CommandWord.QUIT) {
             wantToQuit = quit(command);
-        }
-        else if (commandWord == CommandWord.USE) {
+        } else if (commandWord == CommandWord.USE) {
             use(command);
-        }
-        else if (commandWord == CommandWord.MONEY) {
+        } else if (commandWord == CommandWord.TASK) {
+            printTaskList();
+        } else if (commandWord == CommandWord.MONEY) {
             System.out.println("You have $" + player.getWallet());
             return false;
         } //TODO print player inventory
         else if (commandWord == CommandWord.SAVE) {
-            if(logger.save()) {
+            if (logger.save()) {
                 System.out.println("Game saved successfully");
             } // else the save method prints an error and a stacktrace
         }
         // Store commands
         else if (commandWord == CommandWord.STORE_BROWSE) {
             printStoreItemList();
-        }
-        else if (commandWord == CommandWord.STORE_BUY) {
+        } else if (commandWord == CommandWord.STORE_BUY) {
             logger.log(command);
             return buyStore(command);
         }
@@ -277,23 +273,18 @@ public class Game {
         else if (commandWord == CommandWord.FIELD_SOW) {
             logger.log(command);
             sowField(command);
-        }
-        else if (commandWord == CommandWord.FIELD_USE_PESTICIDES) {
+        } else if (commandWord == CommandWord.FIELD_USE_PESTICIDES) {
             logger.log(command);
             //TODO implement pesticides
-        }
-        else if (commandWord == CommandWord.FIELD_HARVEST) {
+        } else if (commandWord == CommandWord.FIELD_HARVEST) {
             logger.log(command);
             harvestField();
-        }
-        else if (commandWord == CommandWord.FIELD_SOIL_SAMPLE) {
+        } else if (commandWord == CommandWord.FIELD_SOIL_SAMPLE) {
             getFieldSample();
-        }
-        else if (commandWord == CommandWord.FIELD_WATER) {
+        } else if (commandWord == CommandWord.FIELD_WATER) {
             logger.log(command);
             waterField();
-        }
-        else if (commandWord == CommandWord.FIELD_FERTILIZE) {
+        } else if (commandWord == CommandWord.FIELD_FERTILIZE) {
             logger.log(command);
             fertilizeField();
         }
@@ -305,8 +296,8 @@ public class Game {
     /////////////////////////////////////////////////////////////////////////////////////
 
     private void use(Command command) {
-        if(command.getSecondWord() != null) {           //If player is attempting to use something then...
-                                                        //Checks if player is in the right place to use intractable
+        if (command.getSecondWord() != null) {           //If player is attempting to use something then...
+            //Checks if player is in the right place to use intractable
             //TODO provide more feedback to the use
             String end = " used successfully";
             if (command.getSecondWord().equals("field") && currentRoom.getShortDescription().equals("in the field")) {
@@ -322,19 +313,19 @@ public class Game {
             } else if (command.getSecondWord().equals("npc") && currentRoom.getShortDescription().equals("In the headquarter")) {
                 //System.out.println("Major Bob" + end);
                 majorBob.converse();
-            }else if (command.getSecondWord().equals("npc") && currentRoom.getShortDescription().equals("in the store, smells like flower seeds in here")) {
+            } else if (command.getSecondWord().equals("npc") && currentRoom.getShortDescription().equals("in the store, smells like flower seeds in here")) {
                 //System.out.println("Shopkeeper Lizzy" + end);
                 shopkeeperLizzy.converse();
             }
 
-        }else   {
+        } else {
             System.out.println("This command is used to interact \n" +
                     "with your injectables: npc, store, field...");
         }
     }
 
     private void goRoom(Command command) {
-        if(!command.hasSecondWord()) {
+        if (!command.hasSecondWord()) {
             System.out.println("Go where?");
             return;
         }
@@ -352,7 +343,7 @@ public class Game {
     }
 
     private boolean quit(Command command) {
-        if(command.hasSecondWord()) {
+        if (command.hasSecondWord()) {
             System.out.println("Quit what?");
             return false;
         } else {
@@ -366,6 +357,14 @@ public class Game {
         System.out.println();
         System.out.println("Your command words are:");
         parser.showCommands();
+    }
+
+    private void printTaskList() {
+        for (Task t : taskList.getTasks()) {
+            if (t.isActive()) {
+                System.out.println(t.getDescription() + "->" + t.getReward());
+            }
+        }
     }
 
     /////////////////////////////////////////////////////////////////////////////////////
@@ -424,38 +423,37 @@ public class Game {
     //Loops until a valid crop has been chosen
     public boolean chooseCrop(Command command) {
         //while (true) {
-            //Scanner s = new Scanner(System.in);
-            //System.out.println("Which crop would you like to use? Last used crop was " + testField.getPreviousHarvest() +  ". Type 'options' for choices.");
-            String choice = "";
-            if (command.hasSecondWord()) {
-                choice = command.getSecondWord();//s.nextLine();
-            }
+        //Scanner s = new Scanner(System.in);
+        //System.out.println("Which crop would you like to use? Last used crop was " + testField.getPreviousHarvest() +  ". Type 'options' for choices.");
+        String choice = "";
+        if (command.hasSecondWord()) {
+            choice = command.getSecondWord();//s.nextLine();
+        }
 
-            if (choice.equals("wheat") && player.itemOwned(ItemName.BAG_OF_WHEAT)) {
-                field.setCurrentHarvest("wheat");
-                System.out.println("Wheat was used");
-                //break;
-            } else if (choice.equals("clover") && player.itemOwned(ItemName.BAG_OF_CLOVER)) {
-                field.setCurrentHarvest("clover");
-                System.out.println("Clover was used");
-                //break;
-            } else if (choice.equals("corn") && player.itemOwned(ItemName.BAG_OF_CORN)) {
-                field.setCurrentHarvest("corn");
-                System.out.println("Corn was used");
-                //break;
-            } else if (choice.equals("cannabis") && player.itemOwned(ItemName.BAG_OF_CANNABIS)) {
-                field.setCurrentHarvest("cannabis");
-                System.out.println("cannabis was sowed");
-                //break;
-            } else if (choice.equals("options")) {
-                System.out.println("Corn, Wheat, Clover and illegal plant...");
-                return false;
-            }
-            else {
-                System.out.println("You don't have \"" + choice + "\" in inventory...");
-                return false;
-            }
-            return true;
+        if (choice.equals("wheat") && player.itemOwned(ItemName.BAG_OF_WHEAT)) {
+            field.setCurrentHarvest("wheat");
+            System.out.println("Wheat was used");
+            //break;
+        } else if (choice.equals("clover") && player.itemOwned(ItemName.BAG_OF_CLOVER)) {
+            field.setCurrentHarvest("clover");
+            System.out.println("Clover was used");
+            //break;
+        } else if (choice.equals("corn") && player.itemOwned(ItemName.BAG_OF_CORN)) {
+            field.setCurrentHarvest("corn");
+            System.out.println("Corn was used");
+            //break;
+        } else if (choice.equals("cannabis") && player.itemOwned(ItemName.BAG_OF_CANNABIS)) {
+            field.setCurrentHarvest("cannabis");
+            System.out.println("cannabis was sowed");
+            //break;
+        } else if (choice.equals("options")) {
+            System.out.println("Corn, Wheat, Clover and illegal plant...");
+            return false;
+        } else {
+            System.out.println("You don't have \"" + choice + "\" in inventory...");
+            return false;
+        }
+        return true;
         //}
     }
 
@@ -473,7 +471,7 @@ public class Game {
             return;
         }
         boolean hasChosenACrop = chooseCrop(command);
-        if(!hasChosenACrop) {
+        if (!hasChosenACrop) {
             return;
         }
 
@@ -530,8 +528,7 @@ public class Game {
             } else {
                 field.useFertilizerBeforeSow();
             }
-        }
-        else {
+        } else {
             System.out.println("No fertilizer in inventory");
         }
     }
@@ -552,7 +549,7 @@ public class Game {
     public void getFieldSample() {
         if (field.getYield() > 64) {
             System.out.println("Your soil is in excellent condition!");
-        } else if (field.getYield() > 33  ) {
+        } else if (field.getYield() > 33) {
             System.out.println("your soil is in good condition.");
         } else if (field.getYield() > 15) {
             System.out.println("Your soil could be worse...");
@@ -568,7 +565,7 @@ public class Game {
 
         //Error handling - to catch mismatch typos in strings across classes.
         boolean roomExists = unLockableRooms.containsKey(roomName);
-        if(!roomExists) {
+        if (!roomExists) {
             StringBuilder errorMessage = new StringBuilder();
             errorMessage.append("Typo in code: \"")
                     .append(roomName)
