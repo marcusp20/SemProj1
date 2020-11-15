@@ -45,7 +45,9 @@ public class Field extends Interactable implements TimeProgression {
 
     @Override
     public void nextDay() {
-        //TODO Progress to next day code
+        if(isSowed && waterCounter > 0) {
+            isReadyToHarvest = true;
+        }
     }
 
     public void setCurrentHarvest(String crop) {
@@ -54,7 +56,6 @@ public class Field extends Interactable implements TimeProgression {
 
     public void sowFieldTractor() {
         isSowed = true;
-        isReadyToHarvest = true;
         System.out.println("You used the Tractor to sow");
         yields += 25;
 
@@ -62,7 +63,6 @@ public class Field extends Interactable implements TimeProgression {
 
     public void sowFieldShovel() {
         isSowed = true;
-        isReadyToHarvest = true;
         System.out.println("You used the shovel to sow");
         yields += 5;
     }
@@ -151,7 +151,14 @@ public class Field extends Interactable implements TimeProgression {
 
     public double getYield() {
         return Math.round(yields);
+    }
 
+    public boolean isWatered()  {
+        if(waterCounter > 0)    {
+            return true;
+        } else  {
+            return false;
+        }
     }
 
     public String getCurrentHarvest() {

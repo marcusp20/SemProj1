@@ -31,6 +31,8 @@ public class Game {
     private boolean isCreatedFromSaveFile;
     private HashMap<String, Room> unLockableRooms;
     private TaskList taskList;
+    private Bed hqBed;
+    private int gameTimer = 0;
 
     public Game() {
         unLockableRooms = new HashMap<>();
@@ -74,18 +76,23 @@ public class Game {
 
     private void createNPC() {
         File majorBobDialog = load("majorBobDialog.txt");
-        majorBob = new NPC(majorBobDialog, gameCommandWords);
+        majorBob = new NPC(majorBobDialog);
 
         File storeNPCDialog = load("shopKeeperLizzyDialog.txt");
-        shopkeeperLizzy = new NPC(storeNPCDialog, storeCommandWords);
+        shopkeeperLizzy = new NPC(storeNPCDialog);
 
         File fieldNPCDialog = load("fieldNPCDialog.txt");
-        farmerBob = new NPC(fieldNPCDialog, gameCommandWords);
+        farmerBob = new NPC(fieldNPCDialog);
 
         File beekeeperDialog = load("beekeeperBetti.txt");
-        beekeeperBetti = new NPC(beekeeperDialog, gameCommandWords);
+        beekeeperBetti = new NPC(beekeeperDialog);
 
         //majorBob.converse();
+        //storeNPC.converse();
+    }
+
+    private void createBed()    {
+        hqBed = new Bed();
     }
 
     /**
@@ -356,6 +363,8 @@ public class Game {
             } else if (command.getSecondWord().equals("npc") && currentRoom.getShortDescription().equals("in the beautiful garden")) {
                 // System.out.println("Beekeeper Betti" + end);
                 beekeeperBetti.converse();
+            } else if (command.getSecondWord().equals("bed") && currentRoom.getShortDescription().equals("In the headquarter"))   {
+                sleep();
             }
 
         }else {
@@ -406,6 +415,12 @@ public class Game {
                 System.out.println(t.getDescription() + "->" + t.getReward());
             }
         }
+    }
+        //Prob not a game command, room command? or something...
+    public void sleep()    {
+        //hqBed.sleep();            //Used in 2d implementation
+        field.nextDay();
+        gameTimer++;
     }
 
     /////////////////////////////////////////////////////////////////////////////////////
@@ -548,7 +563,14 @@ public class Game {
     //Resets field.
     public void harvestField() {
         if (!field.getIsReadyToHarvest()) {
-            System.out.println("Field not ready to harvest, try watering or sowing...");
+            if(field.isWatered()  && field.getIsSowed()) {
+                System.out.println("Field has not had time to grow, go take a nap at HQ");
+            } else if(field.getIsSowed()) {
+                System.out.println("The plants haven't been watered, so they have yet to grown");
+            } else {
+                System.out.println("There is nothing to harvest, try planting something");
+            }
+            //System.out.println("Field not ready to harvest, try watering or sowing...");
             return;
         }
 
