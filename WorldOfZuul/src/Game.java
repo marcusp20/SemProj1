@@ -298,7 +298,6 @@ public class Game {
     private void use(Command command) {
         if (command.getSecondWord() != null) {           //If player is attempting to use something then...
             //Checks if player is in the right place to use intractable
-            //TODO provide more feedback to the use
             String end = " used successfully";
             if (command.getSecondWord().equals("field") && currentRoom.getShortDescription().equals("in the field")) {
                 logger.log(command);
@@ -317,7 +316,6 @@ public class Game {
                 //System.out.println("Shopkeeper Lizzy" + end);
                 shopkeeperLizzy.converse();
             }
-
         } else {
             System.out.println("This command is used to interact \n" +
                     "with your injectables: npc, store, field...");
@@ -331,7 +329,6 @@ public class Game {
         }
 
         String direction = command.getSecondWord();
-
         Room nextRoom = currentRoom.getExit(direction);
 
         if (nextRoom == null) {
@@ -424,9 +421,6 @@ public class Game {
     //Updates currentHarvest to choice.
     //Loops until a valid crop has been chosen
     public boolean chooseCrop(Command command) {
-        //while (true) {
-        //Scanner s = new Scanner(System.in);
-        //System.out.println("Which crop would you like to use? Last used crop was " + testField.getPreviousHarvest() +  ". Type 'options' for choices.");
         String choice = "";
         if (command.hasSecondWord()) {
             choice = command.getSecondWord();//s.nextLine();
@@ -435,19 +429,15 @@ public class Game {
         if (choice.equals("wheat") && player.itemOwned(ItemName.BAG_OF_WHEAT)) {
             field.setCurrentHarvest("wheat");
             System.out.println("Wheat was used");
-            //break;
         } else if (choice.equals("clover") && player.itemOwned(ItemName.BAG_OF_CLOVER)) {
             field.setCurrentHarvest("clover");
             System.out.println("Clover was used");
-            //break;
         } else if (choice.equals("corn") && player.itemOwned(ItemName.BAG_OF_CORN)) {
             field.setCurrentHarvest("corn");
             System.out.println("Corn was used");
-            //break;
         } else if (choice.equals("cannabis") && player.itemOwned(ItemName.BAG_OF_CANNABIS)) {
             field.setCurrentHarvest("cannabis");
             System.out.println("cannabis was sowed");
-            //break;
         } else if (choice.equals("options")) {
             System.out.println("Corn, Wheat, Clover and illegal plant...");
             return false;
@@ -456,7 +446,6 @@ public class Game {
             return false;
         }
         return true;
-        //}
     }
 
 
@@ -479,10 +468,8 @@ public class Game {
 
         if (player.itemOwned(ItemName.TRACTOR)) {
             field.sowFieldTractor();
-            //TODO remove crop when sown
         } else if (player.itemOwned(ItemName.SHOVEL)) {
             field.sowFieldShovel();
-            //TODO remove crop when sown
         } else {
             System.out.println("You don't have a shovel, or a tractor yet, better go shopping...");
         }
