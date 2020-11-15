@@ -8,11 +8,21 @@ public class Room
     private String description;
     private HashMap<String, Room> exits;
     private NPC npc;
+    private boolean isLocked;
 
     public Room(String description) 
     {
         this.description = description;
         exits = new HashMap<String, Room>();
+        isLocked = false;
+    }
+
+    public boolean isLocked() {
+        return isLocked;
+    }
+
+    public void setLocked(boolean locked) {
+        isLocked = locked;
     }
 
     public NPC getNpc() {

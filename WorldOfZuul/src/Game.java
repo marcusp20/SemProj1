@@ -4,6 +4,8 @@ import chadChicken.TextQuiz;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
 
 public class Game {
@@ -23,8 +25,10 @@ public class Game {
     private Quiz postQuiz;
     private GameLogger logger;
     private boolean isCreatedFromSaveFile;
+    private HashMap<String, Room> unLockableRooms;
 
     public Game() {
+        unLockableRooms = new HashMap<>();
         createCommandWords();
         createNPC();
         createRooms();
@@ -128,34 +132,48 @@ public class Game {
     }
 
     private void createRooms() {
-        Room headquarter, shed, field, stables, garden, store;
+        Room headquarter, shed, field, field2, field3, garden, store;
 
         headquarter = new Room("In the headquarter"); //update description and add hashmap.
         shed = new Room("in your shed");
         field = new Room("in the field");
-        stables = new Room("in the stable, smells nice in here");
+        field2 = new Room("in the 2nd field");
+        field3 = new Room("in the 3rd field");
         garden = new Room("in the beautiful garden");
         store = new Room("in the store, smells like flower seeds in here");
-        
-        headquarter.setExit("east", shed);
-        headquarter.setExit("south", field);
-        headquarter.setNpc(majorBob);
+
 
         headquarter.setExit("north", store);
+        headquarter.setExit("east", shed);
+        headquarter.setExit("south", field);
+        headquarter.setExit("west", garden);
+        headquarter.setNpc(majorBob);
+
 
         store.setExit("south", headquarter);
         store.setNpc(shopkeeperLizzy);
 
         shed.setExit("west", headquarter);
+        shed.setExit("south", field3);
 
         field.setExit("north", headquarter);
-        field.setExit("south", stables);
-        field.setExit("west", garden);
+        field.setExit("west", field2);
+        field.setExit("east", field3);
 
-        stables.setExit("north", headquarter);
-        stables.setExit("east", garden);
+        field2.setLocked(true);
+        unLockableRooms.put("field2", field2);
+        field2.setExit("east", field);
+        field2.setExit("north", garden);
 
-        garden.setExit("west", stables);
+        field3.setLocked(true);
+        unLockableRooms.put("field3", field3);
+        field3.setExit("west", field);
+        field3.setExit("north", shed);
+
+        garden.setLocked(true);
+        unLockableRooms.put("garden",garden);
+        garden.setExit("east", headquarter);
+        garden.setExit("south", field2);
 
         currentRoom = headquarter;
     }
@@ -539,4 +557,28 @@ public class Game {
     }
 
 
+    //This is used by the TaskList class,
+    //to unlock rewards from completed tasks
+    public void unlock(String roomName) {
+
+        //Error handling - to catch mismatch typos in strings across classes.
+        boolean roomExists = unLockableRooms.containsKey(roomName);
+        if(!roomExists) {
+            StringBuilder errorMessage = new StringBuilder();
+            errorMessage.append("Typo in code: \"")
+                    .append(roomName)
+                    .append("\" is not a key in hashmap.\n")
+                    .append("KeySet: \n");
+
+            for (String s : unLockableRooms.keySet()) {
+                errorMessage.append(s)
+                        .append("\n");
+            }
+            System.err.println(errorMessage.toString());
+            return;
+        }
+
+        Room room = unLockableRooms.get(roomName);
+        room.setLocked(false);
+    }
 }
