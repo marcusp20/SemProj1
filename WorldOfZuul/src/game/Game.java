@@ -140,6 +140,7 @@ public class Game {
 
         gardenCommandWords = new CommandWords();
         gardenCommandWords.addCommandWord(CommandWord.GARDEN_CHECK_BEES);
+        gardenCommandWords.addCommandWord(CommandWord.LEAVE);
 
 
     }
@@ -151,7 +152,7 @@ public class Game {
     }
 
     private void createPlayer() {
-        player = new Player("Lars TyndSkid");
+        player = new Player("Lars Tyndskid");
     }
 
 
