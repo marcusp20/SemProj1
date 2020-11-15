@@ -572,4 +572,14 @@ public class Game {
         Room room = unLockableRooms.get(roomName);
         room.setLocked(false);
     }
+
+    public void startEndEvent() {
+        System.out.println("You collect the last of your yield.");
+        System.out.println("Another honest days work.");
+        System.out.println("But the earth tremors...");
+        System.out.println("A heart wrenching screech fills the air!");
+        System.out.println("CoCk-A-dOoDlE-dOoOO!");
+        System.out.println("The rooster appears before you!");
+        postQuiz.run();
+    }
 }

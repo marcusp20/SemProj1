@@ -21,6 +21,7 @@ public class TaskList {
 
         tasks.add(new Task("Buy a tractor", "Unlock a 2nd field"));
         tasks.add(new Task("Buy a harvester", "Unlock a 3rd field"));
+        tasks.add(new Task("Get $1000", "The grand finale!"));
     }
 
 
@@ -63,9 +64,23 @@ public class TaskList {
                 //hide the task
                 tasks.get(2).setVisible(false);
                 tasks.get(2).setActive(false);
+                //give next task
+                tasks.get(3).setActive(true);
+                tasks.get(3).setVisible(true);
+
+            }
+        }
+
+        if(tasks.get(3).isActive()) {
+            if(player.getWallet() >= 1000) {
+                game.startEndEvent();
+                //hide the task
+                tasks.get(3).setVisible(false);
+                tasks.get(3).setActive(false);
                 //no more tasks
                 /*tasks.get(2).setActive(true);
                 tasks.get(2).setVisible(true);*/
+
             }
         }
     }
