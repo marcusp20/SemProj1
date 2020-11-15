@@ -26,6 +26,7 @@ public class Game {
     private GameLogger logger;
     private boolean isCreatedFromSaveFile;
     private HashMap<String, Room> unLockableRooms;
+    private TaskList taskList;
 
     public Game() {
         unLockableRooms = new HashMap<>();
@@ -35,6 +36,7 @@ public class Game {
         parser = new Parser(gameCommandWords);
         createField();
         createPlayer();
+        taskList = new TaskList(this, player);
         createStoreItemList();
         createQuiz();
         createGameLogger();
@@ -391,10 +393,16 @@ public class Game {
         if (!player.addWallet(-item.getPrice())) {
             System.out.println("You cannot afford it.");
         } else {
-            //TODO Don't remove items with prefix "BAG_OF_"
-            storeItemList.remove(item);                             // remove item from StoreItemList.
+            String itemName = item.getName();
+            boolean isUnlimitedSupply = itemName.startsWith("bag of") || itemName.startsWith("pesticides");
+            if(!isUnlimitedSupply) {
+                storeItemList.remove(item);                             // remove item from StoreItemList.
+            }
             player.getPlayerInventory().put(item.getEnum(), true);  // change item hashmap value to true.
             System.out.println("you brought a " + item.getName());
+
+            //Successfully bought an item, update tasks list, to see if purchase fulfilled a task requirement
+            taskList.update();
         }
         return false;
     }
@@ -486,33 +494,30 @@ public class Game {
     //Calculates value yield, after scythe or harvester is used, and adds money to player wallet.
     //Resets field.
     public void harvestField() {
-        if (field.getIsReadyToHarvest()) {
-            if (player.itemOwned(ItemName.HARVESTER)) {
-                System.out.println("Used harvester on field.");
-
-                field.useHarvester(field.getYield());
-                field.checkPreviousHarvest();
-                player.sellYields(field.getYield()); //yields sold to money.
-                field.harvestDone();
-
-                System.out.println("Wallet is now "  + player.checkWallet());
-
-            } else if (player.itemOwned(ItemName.SCYTHE)) {
-                System.out.println("Used scythe to harvest field.");
-
-                field.useScythe(field.getYield());
-                field.checkPreviousHarvest();
-                player.sellYields(field.getYield()); //yields sold to money.
-                field.harvestDone();
-
-                System.out.println("Wallet is now "  + player.checkWallet());
-
-            } else {
-                System.out.println("You don't have a scythe, or a harvester yet, better go shopping");
-            }
-        } else {
+        if (!field.getIsReadyToHarvest()) {
             System.out.println("Field not ready to harvest, try watering or sowing...");
+            return;
         }
+
+        if (player.itemOwned(ItemName.HARVESTER)) {
+            System.out.println("Used harvester on field.");
+            field.useHarvester(field.getYield());
+        } else if (player.itemOwned(ItemName.SCYTHE)) {
+            System.out.println("Used scythe to harvest field.");
+            field.useScythe(field.getYield());
+        } else {
+            System.out.println("You don't have a scythe, or a harvester yet, better go shopping");
+            return;
+        }
+
+        field.checkPreviousHarvest();
+        player.sellYields(field.getYield()); //yields sold to money.
+        field.harvestDone();
+
+        System.out.println("Wallet is now "  + player.checkWallet());
+
+        //Check to see if player has enough money to complete task
+        taskList.update();
     }
 
     //FertilizeField method
