@@ -336,6 +336,8 @@ public class Game {
 
         if (nextRoom == null) {
             System.out.println("There is no door!");
+        } else if (nextRoom.isLocked()) {
+            System.out.println("You don't have access to that area yet.");
         } else {
             currentRoom = nextRoom;
             System.out.println(currentRoom.getLongDescription());
