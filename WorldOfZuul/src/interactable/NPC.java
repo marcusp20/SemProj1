@@ -1,9 +1,14 @@
+package interactable;
+
+import game.CommandWords;
+
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.Scanner;
 
-public class NPC extends Interactable{
+
+public class NPC extends Interactable implements TimeProgression {
     private String name;                 //NPC name
     private String description;         //NPC description
     private File dialog;                //File containing NPC dialog
@@ -29,6 +34,11 @@ public class NPC extends Interactable{
 
         this.name = findLine(".nn");
         this.description = findLine(".dd");
+    }
+
+    @Override
+    public void nextDay() {
+
     }
 
     public String getName() {

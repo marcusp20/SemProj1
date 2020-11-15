@@ -1,3 +1,5 @@
+package game;
+
 public class Task {
     private String description;
     private String reward;

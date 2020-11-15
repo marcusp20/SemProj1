@@ -1,16 +1,18 @@
+package game;
+
 public enum ItemName {
-    SHOVEL("Shovel", "for plowing the field.", 0),
-    WATER_CAN("Watering can", "to water crops.", 0),
-    TRACTOR("Tractor", "for fertilizing, plowing, sowing, and more.", 5000),
-    HARVESTER("Harvester", "Used for harvesting", 7000),
-    BAG_OF_FERTILIZER("Bag of fertilizer", "used for fertilizing", 200),
+    SHOVEL("Shovel", "for plowing the field.", 10),
+    SCYTHE("scythe", "for manual harvesting", 20),
+    WATER_CAN("Watering can", "to water crops.", 10),
+    TRACTOR("Tractor", "for fertilizing, plowing, sowing, and more.", 1000),
+    HARVESTER("Harvester", "Used for harvesting", 3500),
     PESTICIDES("pesticides", "used for destroying water-collection", 150),
-    SCYTHE("scythe", "for manual harvesting", 0),
-    SOIL_SAMPLE_COLLECTOR("Soil Sample collector", "to collects soil samples, and test it.", 750),
-    BAG_OF_CANNABIS("Bag of Cannabis", "holds seeds for planting 420", 10),
-    BAG_OF_WHEAT("Bag of Wheat", "holds seeds for planting", 50),
+    SOIL_SAMPLE_COLLECTOR("Soil Sample collector", "to collects soil samples, and test it.", 250),
+    BAG_OF_FERTILIZER("Bag of fertilizer", "used for fertilizing", 150),
+    BAG_OF_CANNABIS("Bag of Cannabis", "holds seeds for planting 420", 100),
+    BAG_OF_WHEAT("Bag of Wheat", "holds seeds for planting", 10),
     BAG_OF_CORN("Bag of Corn", "holds seeds for planting", 50),
-    BAG_OF_CLOVER("Bag of Clover", "holds seeds for planting", 0);
+    BAG_OF_CLOVER("Bag of Clover", "holds seeds for planting", 5);
 
 
     private String itemNameString;

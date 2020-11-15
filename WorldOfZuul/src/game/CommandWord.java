@@ -1,6 +1,8 @@
+package game;
+
 public enum CommandWord
 {
-    //Game command words
+    //game.Game command words
     GO("go"), QUIT("quit"), HELP("help"), UNKNOWN("?"), USE("use"),
     LEAVE("leave"), MONEY("money"), SAVE("save"), TASK("task"),
     //Intractable command words
@@ -9,7 +11,10 @@ public enum CommandWord
     FIELD_SOIL_SAMPLE("sample"), FIELD_WATER("water"), FIELD_FERTILIZE("fertilize"),
     //StoreNPC
     STORE_BUY("buy"),
-    STORE_BROWSE("browse");
+    STORE_BROWSE("browse"),
+    //Garden
+    GARDEN_CHECK_BEES("bees");
+
 
     private String commandString;
     

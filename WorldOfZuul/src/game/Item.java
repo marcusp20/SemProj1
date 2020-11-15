@@ -1,8 +1,10 @@
+package game;
+
 public class Item {
 
     private ItemName name;
 
-    // Item Constructor
+    // game.Item Constructor
     public Item(ItemName name) {
         this.name = name;
 
@@ -19,6 +21,7 @@ public class Item {
     public int getPrice() {
         return name.getPrice();
     }
+
     public ItemName getEnum() {
         return this.name;
     }

@@ -1,3 +1,5 @@
+import game.GameLogger;
+
 import java.io.File;
 import java.util.Scanner;
 
@@ -7,6 +9,8 @@ import java.util.Scanner;
  * @author marcus pedersen
  * @version 23-09-2020
  */
+
+import game.*;
 public class SustainableFarmer {
     private static File saveFile;
 
