@@ -366,6 +366,7 @@ public class Game {
                 beekeeperBetti.converse();
             } else if (command.getSecondWord().equals("bed") && currentRoom.getShortDescription().equals("In the headquarter"))   {
                 sleep();
+                logger.log(command);
             }
 
         }else {
