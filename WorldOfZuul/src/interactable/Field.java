@@ -230,5 +230,22 @@ public class Field extends Interactable implements TimeProgression {
         getPests();
 
     }
+    public void rainEvent(){
+        moistField();
+        moistField();
+
+    }
+    public void extremeSunEvent(){
+        waterCounter =- 2;
+        yields =- 26; //TODO Separate yields from waterCounter
+    }
+    public boolean pestEvent(){
+        if(pesticidesCounter > 2){
+            return false;
+        }
+
+        yields =- 30;
+        return true;
+    }
 
 }

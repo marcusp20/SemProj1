@@ -692,4 +692,25 @@ public class Game {
         System.out.println("The rooster appears before you!");
         postQuiz.run();
     }
+    public void eventChecker(){
+       if(gameTimer == 2) {
+           field.rainEvent();
+           System.out.println("It's raining");
+       } else if(gameTimer == 3){
+           System.out.println("OmegaAlphaChickenChad is on your farm");
+       } else if(gameTimer == 4) {
+           field.extremeSunEvent();
+           System.out.println("It's very hot today");
+       } else if(gameTimer == 5){
+           System.out.println("OmegaAlphaChickenChad is stirring at you");
+           }else if(gameTimer == 6) {
+           System.out.println("Bundles of flies");
+           if(field.pestEvent()){
+               System.out.println("your plants were eating by pest");
+           } else
+               System.out.println("your crops was unharmed because of appropriate use of pesticides");
+       }else if(gameTimer == 7){
+           System.out.println("OmegaAlphaChickenChad is keeping an eye on you");
+       }
+    }
 }
