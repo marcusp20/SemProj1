@@ -6,7 +6,7 @@ import java.util.Random;
 
 public class FlowerBed extends Interactable implements TimeProgression {
     private int flowerBeds[] = new int[6];  //Each index is a flower bed, int describes flowers quality
-    private double bees;
+    private double bees = 0;
     private Random random = Game.getRandom();
 
 
@@ -20,6 +20,10 @@ public class FlowerBed extends Interactable implements TimeProgression {
 
     private void setFlower(int bed, int quality) {
         this.flowerBeds[bed] = quality;
+    }
+
+    public double getBees() {
+        return bees;
     }
 
     private int[] getFlowers()   {
@@ -49,7 +53,7 @@ public class FlowerBed extends Interactable implements TimeProgression {
             System.out.println("Maximum amount of flowers planted already");
         //adds new flower to empty bed and breaks after.
         } else {
-            int flowerRNG = random.nextInt((3 - 1) + 1) + 1; //Generate random int
+            int flowerRNG = random.nextInt((5 - 1) + 1) + 1; //Generate random int
             for (int i=0; i<flowerBeds.length; i++) {
                 if (flowerBeds[i] == 0) {
                     flowerBeds[i] = flowerRNG;

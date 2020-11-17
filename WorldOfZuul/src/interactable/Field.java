@@ -213,6 +213,27 @@ public class Field extends Interactable implements TimeProgression {
         return pesticidesCounter;
     }
 
+    public void calcBeeYield(double bee) {
+        double amount = 0;
+        if (bee > 15) {
+            amount = 1.5;
+        } else if (bee > 10) {
+            amount = 1.1;
+        } else if (bee > 5) {
+            amount = 0.95;
+        } else if (bee > 3) {
+            amount = 0.9;
+        } else if (bee > 1) {
+            amount = 0.8;
+        } else {
+            amount = 0.7;
+        }
+        yields = yields * amount;
+
+    }
+
+
+
     public void harvestDone() {
         isReadyToHarvest = false;
         isSowed = false;

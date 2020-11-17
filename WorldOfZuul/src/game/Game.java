@@ -163,9 +163,9 @@ public class Game {
 
     }
 
-    //Used for testing Field methods
     private void createField() {
         field = new Field(fieldCommandWords);
+        //TODO: how does the program handle more fields?
 
     }
 
@@ -206,12 +206,12 @@ public class Game {
         field.setExit("west", field2);
         field.setExit("east", field3);
 
-        field2.setLocked(true);
+        field2.setLocked(false);
         unLockableRooms.put("field2", field2);
         field2.setExit("east", field);
         field2.setExit("north", garden);
 
-        field3.setLocked(true);
+        field3.setLocked(false);
         unLockableRooms.put("field3", field3);
         field3.setExit("west", field);
         field3.setExit("north", shed);
@@ -628,9 +628,11 @@ public class Game {
             return;
         }
 
-        field.checkPreviousHarvest();
-        player.sellYields(field.getYield()); //yields sold to money.
-        field.harvestDone();
+        field.calcBeeYield(flowerbed.getBees());  //Bees impact on field
+        field.checkPreviousHarvest();             //Crop rotations impact on field
+        field.harvestDone();                      //calc rest of yield
+        player.sellYields(field.getYield());      //yields sold to money.
+
 
         System.out.println("Wallet is now "  + player.checkWallet());
 
@@ -656,6 +658,8 @@ public class Game {
             System.out.println("No fertilizer in inventory.");
         }
     }
+
+
 
     //waterField method
     //Check for isSowed
@@ -698,6 +702,8 @@ public class Game {
             System.out.println("Have you tried fertilizing the soil?");
         }
     }
+
+
 
 
     //This is used by the TaskList class,
