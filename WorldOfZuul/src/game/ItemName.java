@@ -12,7 +12,9 @@ public enum ItemName {
     BAG_OF_CANNABIS("Bag of Cannabis", "holds seeds for planting 420", 100),
     BAG_OF_WHEAT("Bag of Wheat", "holds seeds for planting", 10),
     BAG_OF_CORN("Bag of Corn", "holds seeds for planting", 50),
-    BAG_OF_CLOVER("Bag of Clover", "holds seeds for planting", 5);
+    BAG_OF_CLOVER("Bag of Clover", "holds seeds for planting", 5),
+    FLOWER_SEEDS("Flower", "Used for planting in garden", 25);
+
 
 
     private String itemNameString;

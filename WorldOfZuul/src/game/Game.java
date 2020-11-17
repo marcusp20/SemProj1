@@ -331,7 +331,7 @@ public class Game {
             sowField(command);
         } else if (commandWord == CommandWord.FIELD_USE_PESTICIDES) {
             logger.log(command);
-            //TODO implement pesticides
+            usePesticide();
         } else if (commandWord == CommandWord.FIELD_HARVEST) {
             logger.log(command);
             harvestField();
@@ -346,11 +346,9 @@ public class Game {
         }
         //Garden CommandWords
         else if (commandWord == CommandWord.GARDEN_CHECK_BEES) {
-            System.out.println("Bees are cool");
+            checkBees(field.getPesticidesCounter());
         } else if (commandWord == CommandWord.GARDEN_PLANT_FLOWER) {
             plantFlower();
-
-
         }
 
         return wantToQuit;
@@ -455,8 +453,15 @@ public class Game {
     /////////////////////////////////////////////////////////////////////////////////////
 
     public void plantFlower() {
-        flowerbed.plantFlower();
+        if (player.itemOwned(ItemName.FLOWER_SEEDS)) {
+            flowerbed.plantFlower();
+        } else {
+            System.out.println("No flower in inventory");
+        }
+    }
 
+    public void checkBees(int pestCounter) {
+        flowerbed.calcBees(pestCounter);
     }
 
 
