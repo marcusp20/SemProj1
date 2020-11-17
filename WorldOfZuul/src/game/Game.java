@@ -50,6 +50,7 @@ public class Game {
         parser = new Parser(gameCommandWords);
         createField();
         createPlayer();
+        createFlowerBed();
 
         taskList = new TaskList(this, player);
         createStoreItemList();
@@ -157,6 +158,7 @@ public class Game {
         gardenCommandWords = new CommandWords();
         gardenCommandWords.addCommandWord(CommandWord.GARDEN_CHECK_BEES);
         gardenCommandWords.addCommandWord(CommandWord.LEAVE);
+        gardenCommandWords.addCommandWord(CommandWord.GARDEN_PLANT_FLOWER);
 
 
     }
@@ -346,6 +348,7 @@ public class Game {
         else if (commandWord == CommandWord.GARDEN_CHECK_BEES) {
             System.out.println("Bees are cool");
         } else if (commandWord == CommandWord.GARDEN_PLANT_FLOWER) {
+            plantFlower();
 
 
         }
@@ -451,12 +454,10 @@ public class Game {
     ///////////////////////////////// Garden Commands  ///////////////////////////////////
     /////////////////////////////////////////////////////////////////////////////////////
 
+    public void plantFlower() {
+        flowerbed.plantFlower();
 
-    public void checkBees() {
-        //field.getPesticidesCounter()
     }
-
-
 
 
     /////////////////////////////////////////////////////////////////////////////////////
