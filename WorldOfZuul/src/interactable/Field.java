@@ -17,8 +17,10 @@ package interactable;
 */
 
 import game.CommandWords;
+import game.Game;
 
 import java.util.Random;
+
 
 public class Field extends Interactable implements TimeProgression {
     //Attributes
@@ -37,6 +39,8 @@ public class Field extends Interactable implements TimeProgression {
     private int harvestCounter;
 
     private double yields;
+
+    private Random random = Game.getRandom();
 
 
     public Field(CommandWords commandWords) {
@@ -116,8 +120,7 @@ public class Field extends Interactable implements TimeProgression {
 
 
     public void getPests() {
-        Random r = new Random();
-        int pestRNG = r.nextInt(5);
+        int pestRNG = random.nextInt(5); //returns a value from 0 to 4 (inclusive)
         if (pestRNG == 1) {
             pests = true;
         }
