@@ -7,8 +7,10 @@ import java.util.Scanner;
 
 public class GameLogger {
     private ArrayList<Command> inputs;
+    private long seed;
 
-    public GameLogger() {
+    public GameLogger(long seed) {
+        this.seed = seed;
         inputs = new ArrayList<>();
     }
 
@@ -32,6 +34,7 @@ public class GameLogger {
     @Override
     public String toString() {
         StringBuilder transcript = new StringBuilder();
+        transcript.append(seed);
         Iterator<Command> transcriptIterator = this.inputs.iterator();
         while (transcriptIterator.hasNext()) {
             Command line = transcriptIterator.next();
@@ -44,7 +47,7 @@ public class GameLogger {
     }
 
     public static Game loadGameFrom(File file) {
-        Game game = new Game();
+        Game game = null;
         CommandWords commands = new CommandWords();
         commands.addAllCommandWords();
         try {
@@ -52,6 +55,13 @@ public class GameLogger {
             String inputLine;
             String word1 = null;
             String word2 = null;
+
+            long seed = log.nextLong(); //This only reads the first line
+            game = new Game(seed);
+            game.setCreatedFromSaveFile(true);
+
+            //This will skip the first line, containing the seed
+            log.nextLine();
 
             while(log.hasNextLine())   {
                 inputLine = log.nextLine();
@@ -70,7 +80,6 @@ public class GameLogger {
         } catch (FileNotFoundException e)  {
             System.out.println("File not found");
         }
-        game.setCreatedFromSaveFile(true);
         return game;
     }
 }
