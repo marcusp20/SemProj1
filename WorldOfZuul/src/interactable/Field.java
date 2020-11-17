@@ -233,6 +233,9 @@ public class Field extends Interactable implements TimeProgression {
             System.out.println("The harvested " + currentHarvest + " was sold for a profit of: " + getYield() + ".");
         }
 
+        //Update yields, dependent on bees
+
+
         yields = 0;
         previousHarvest = currentHarvest;
 

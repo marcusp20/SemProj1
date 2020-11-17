@@ -26,6 +26,7 @@ public class SustainableFarmer {
         } else {
             game = new Game();
         }
+
         game.play();
 
     }
