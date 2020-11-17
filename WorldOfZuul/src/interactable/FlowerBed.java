@@ -31,7 +31,7 @@ public class FlowerBed extends Interactable implements TimeProgression {
     }
 
     public void plantFlower() {
-        System.out.println(" ");
+
     }
 
     public void calcBees() {
