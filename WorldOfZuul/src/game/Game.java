@@ -7,6 +7,8 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Random;
+
 import interactable.*;
 
 
@@ -33,8 +35,13 @@ public class Game {
     private TaskList taskList;
     private Bed hqBed;
     private int gameTimer = 0;
+    private static final Random random = new Random();
+    private long seed;
 
-    public Game() {
+    public Game(long seed) {
+        this.seed = seed;
+        random.setSeed(seed);
+        System.out.println(seed);
         unLockableRooms = new HashMap<>();
         createCommandWords();
         createNPC();
@@ -48,13 +55,18 @@ public class Game {
         createGameLogger();
     }
 
+    public Game() {
+        this(random.nextLong());
+    }
+
+
 
     /////////////////////////////////////////////////////////////////////////////////////
     ///////////////// Create Methods used in constructor ////////////////////////////////
     /////////////////////////////////////////////////////////////////////////////////////
 
     private void createGameLogger() {
-        logger = new GameLogger();
+        logger = new GameLogger(seed);
         isCreatedFromSaveFile = false;
     }
 
@@ -212,6 +224,7 @@ public class Game {
             //only if new game
             playIntro();
             printWelcome();
+
         }
 
 
