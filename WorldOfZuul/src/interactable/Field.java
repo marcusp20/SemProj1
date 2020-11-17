@@ -243,7 +243,6 @@ public class Field extends Interactable implements TimeProgression {
         if(pesticidesCounter > 2){
             return false;
         }
-
         yields =- 30;
         return true;
     }
