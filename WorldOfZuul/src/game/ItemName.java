@@ -13,7 +13,7 @@ public enum ItemName {
     BAG_OF_WHEAT("Bag of Wheat", "holds seeds for planting", 10),
     BAG_OF_CORN("Bag of Corn", "holds seeds for planting", 50),
     BAG_OF_CLOVER("Bag of Clover", "holds seeds for planting", 5),
-    FLOWER_SEEDS("Flower", "Used for planting in garden", 25);
+    BAG_OF_FLOWER_SEEDS("Flower", "Used for planting in garden", 25);
 
 
 

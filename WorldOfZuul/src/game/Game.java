@@ -453,8 +453,9 @@ public class Game {
     /////////////////////////////////////////////////////////////////////////////////////
 
     public void plantFlower() {
-        if (player.itemOwned(ItemName.FLOWER_SEEDS)) {
+        if (player.itemOwned(ItemName.BAG_OF_FLOWER_SEEDS)) {
             flowerbed.plantFlower();
+            player.getPlayerInventory().put(ItemName.BAG_OF_FLOWER_SEEDS, false);
         } else {
             System.out.println("No flower in inventory");
         }
@@ -675,7 +676,7 @@ public class Game {
     public void usePesticide() {
         if (player.itemOwned(ItemName.PESTICIDES)) {
             field.usePesticides();
-            System.out.println("Used pesticides on field, all pests where killed");
+            System.out.println("all pests where killed");
             player.getPlayerInventory().put(ItemName.PESTICIDES, false);
         } else {
             System.out.println("No pesticides in inventory");

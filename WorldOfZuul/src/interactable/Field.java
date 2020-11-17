@@ -218,6 +218,8 @@ public class Field extends Interactable implements TimeProgression {
         isSowed = false;
         waterCounter = 0;
 
+        //Update yield dependent on crops.
+        getCropYields();
         //check for pests
         if (pests) {
             System.out.println("Heck! You found pests in field, harvest was reduced by 20 %");

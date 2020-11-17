@@ -2,9 +2,6 @@ package interactable;
 
 import game.CommandWords;
 import game.Game;
-
-
-import java.util.ArrayList;
 import java.util.Random;
 
 public class FlowerBed extends Interactable implements TimeProgression {
@@ -14,11 +11,8 @@ public class FlowerBed extends Interactable implements TimeProgression {
     private Random random = Game.getRandom();
 
 
-
-
     public FlowerBed(CommandWords commandWords)    {
         super(commandWords);
-
     }
 
     @Override
@@ -27,7 +21,6 @@ public class FlowerBed extends Interactable implements TimeProgression {
 
     private void setFlower(int bed, int quality) {
         this.flowerBeds[bed] = quality;
-
     }
 
     private int[] getFlowers()   {
@@ -40,7 +33,6 @@ public class FlowerBed extends Interactable implements TimeProgression {
             flowerQuality += i;
 
         }
-        System.out.println(flowerQuality);
         return flowerQuality;
     }
 
