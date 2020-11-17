@@ -206,6 +206,10 @@ public class Field extends Interactable implements TimeProgression {
         }
     }
 
+    public int getPesticidesCounter() {
+        return pesticidesCounter;
+    }
+
     public void harvestDone() {
         isReadyToHarvest = false;
         isSowed = false;

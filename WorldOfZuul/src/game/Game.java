@@ -28,6 +28,7 @@ public class Game {
     private Quiz preQuiz;
     private Quiz postQuiz;
     private GameLogger logger;
+    private FlowerBed flowerbed;
     private boolean isCreatedFromSaveFile;
     private HashMap<String, Room> unLockableRooms;
     private TaskList taskList;
@@ -42,6 +43,7 @@ public class Game {
         parser = new Parser(gameCommandWords);
         createField();
         createPlayer();
+
         taskList = new TaskList(this, player);
         createStoreItemList();
         createQuiz();
@@ -155,6 +157,9 @@ public class Game {
         player = new Player("Lars Tyndskid");
     }
 
+    private void createFlowerBed() {
+        flowerbed = new FlowerBed(gardenCommandWords);
+    }
 
     private void createRooms() {
         Room headquarter, shed, field, field2, field3, garden, store;
@@ -195,7 +200,7 @@ public class Game {
         field3.setExit("west", field);
         field3.setExit("north", shed);
 
-        garden.setLocked(true);
+        garden.setLocked(false);
         unLockableRooms.put("garden", garden);
         garden.setExit("east", headquarter);
         garden.setExit("south", field2);
@@ -306,7 +311,6 @@ public class Game {
         }
         // Field commands
         else if (commandWord == CommandWord.FIELD_SOW) {
-
             sowField(command);
         } else if (commandWord == CommandWord.FIELD_USE_PESTICIDES) {
             logger.log(command);
@@ -326,6 +330,9 @@ public class Game {
         //Garden CommandWords
         else if (commandWord == CommandWord.GARDEN_CHECK_BEES) {
             System.out.println("Bees are cool");
+        } else if (commandWord == CommandWord.GARDEN_PLANT_FLOWER) {
+
+
         }
 
         return wantToQuit;
@@ -349,12 +356,11 @@ public class Game {
                 System.out.println("Store" + end);
                 parser.setCommands(storeCommandWords);
                 parser.showCommands();
-            } else if (command.getSecondWord().equals("beehive") && currentRoom.getShortDescription().equals("in the beautiful garden")) {
+            } else if (command.getSecondWord().equals("garden") && currentRoom.getShortDescription().equals("in the beautiful garden")) {
                 System.out.println("Garden" + end);
                 parser.setCommands(gardenCommandWords);
                 parser.showCommands();
             }
-
             else if (command.getSecondWord().equals("npc") && currentRoom.getShortDescription().equals("In the headquarter")) {
                 majorBob.converse();
             } else if (command.getSecondWord().equals("npc") && currentRoom.getShortDescription().equals("in the store, smells like flower seeds in here")) {
@@ -424,6 +430,19 @@ public class Game {
         field.nextDay();
         gameTimer++;
     }
+
+
+    /////////////////////////////////////////////////////////////////////////////////////
+    ///////////////////////////////// Garden Commands  ///////////////////////////////////
+    /////////////////////////////////////////////////////////////////////////////////////
+
+
+    public void checkBees() {
+        //field.getPesticidesCounter()
+    }
+
+
+
 
     /////////////////////////////////////////////////////////////////////////////////////
     ///////////////////////////////// Store Commands  ///////////////////////////////////

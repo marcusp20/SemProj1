@@ -2,11 +2,15 @@ package interactable;
 
 import game.CommandWords;
 
+import java.util.ArrayList;
+
 public class FlowerBed extends Interactable implements TimeProgression {
     private int flowerBeds[] = new int[6];  //Each index is a flower bed, int describes flowers quality
     private int pesticides = 0;
+    private int bees = 0;
 
-    FlowerBed(CommandWords commandWords)    {
+
+    public FlowerBed(CommandWords commandWords)    {
         super(commandWords);
     }
 
@@ -15,7 +19,7 @@ public class FlowerBed extends Interactable implements TimeProgression {
     }
 
     private void setFlower(int bed, int quality) {
-        this.flowerBeds[bed] = quality;;
+        this.flowerBeds[bed] = quality;
     }
 
     private int[] getFlowers()   {
@@ -26,5 +30,12 @@ public class FlowerBed extends Interactable implements TimeProgression {
         return this.pesticides;
     }
 
+    public void plantFlower() {
+        System.out.println(" ");
+    }
+
+    public void calcBees() {
+
+    }
 
 }
