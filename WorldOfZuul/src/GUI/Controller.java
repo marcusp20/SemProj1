@@ -24,7 +24,8 @@ public class Controller implements Initializable {
     private int playerPosY = (832 / 2);
     private int height = 832;
     private int width = 1280;
-    private Circle player = new Circle(5.0,5.2,5.1);
+    private Circle player = new Circle(5.0, 5.2, 5.1);
+    private int playerSpeed = 5;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -40,33 +41,35 @@ public class Controller implements Initializable {
     }
 
 
-
     public void movePlayer(KeyEvent keyEvent) {
 
-        if (keyEvent.getCode() == KeyCode.W) {
-            playerPosY -= 5;
+
+        if (keyEvent.getCode() == KeyCode.W && playerPosY + playerSpeed > 106) {
+            playerPosY -= playerSpeed;
             player.setLayoutX(playerPosX);
             player.setLayoutY(playerPosY);
             return;
         }
-        if (keyEvent.getCode() == KeyCode.S) {
-            playerPosY += 5;
+        if (keyEvent.getCode() == KeyCode.S && playerPosY + playerSpeed < 711) {
+            playerPosY += playerSpeed;
             player.setLayoutX(playerPosX);
             player.setLayoutY(playerPosY);
             return;
         }
-        if (keyEvent.getCode() == KeyCode.A) {
-            playerPosX -= 5;
+        if (keyEvent.getCode() == KeyCode.A && playerPosX + playerSpeed > 170.0) {
+            playerPosX -= playerSpeed;
             player.setLayoutX(playerPosX);
             player.setLayoutY(playerPosY);
             return;
         }
-        if (keyEvent.getCode() == KeyCode.D) {
-            playerPosX += 5;
+        if (keyEvent.getCode() == KeyCode.D && playerPosX + playerSpeed < 1085) {
+            playerPosX += playerSpeed;
             player.setLayoutX(playerPosX);
             player.setLayoutY(playerPosY);
             return;
         }
+        else return;
 
     }
+
 }
