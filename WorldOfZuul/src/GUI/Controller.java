@@ -3,6 +3,7 @@ package GUI;
 
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Button;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.AnchorPane;
@@ -16,6 +17,8 @@ public class Controller implements Initializable {
 
     @FXML
     public AnchorPane pane;
+    @FXML
+    Button saveGameButton;
 
     private int playerPosX = (1280 / 2);
     private int playerPosY = (832 / 2);
@@ -25,11 +28,18 @@ public class Controller implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        saveGameButton.setOnAction(e -> {
+            System.out.println("Player pos X " + player.getLayoutX());
+            System.out.println("Player Pos Y " + player.getLayoutY());
+        });
+
         pane.getChildren().add(player);
-        player.setRadius(10.0);
+        player.setRadius(20.0);
         player.setLayoutX(playerPosX);
         player.setLayoutY(playerPosY);
     }
+
+
 
     public void movePlayer(KeyEvent keyEvent) {
 
