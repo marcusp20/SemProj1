@@ -11,6 +11,10 @@ import java.util.Scanner;
  */
 
 import game.*;
+import GUI.*;
+
+import static javafx.application.Application.launch;
+
 public class SustainableFarmer {
     private static File saveFile;
 
@@ -26,6 +30,7 @@ public class SustainableFarmer {
         } else {
             game = new Game();
         }
+
         game.play();
 
     }
