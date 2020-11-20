@@ -262,7 +262,6 @@ public class Game {
         if (!isCreatedFromSaveFile) {
             //only if new game
             playIntro();
-            printWelcome();
 
         }
     }
