@@ -44,31 +44,30 @@ public class Controller implements Initializable {
     public void movePlayer(KeyEvent keyEvent) {
 
 
-        if (keyEvent.getCode() == KeyCode.W && playerPosY + playerSpeed > 106) {
+        if (keyEvent.getCode() == KeyCode.W && playerPosY + playerSpeed > 316.0) {
             playerPosY -= playerSpeed;
             player.setLayoutX(playerPosX);
             player.setLayoutY(playerPosY);
             return;
         }
-        if (keyEvent.getCode() == KeyCode.S && playerPosY + playerSpeed < 711) {
+        if (keyEvent.getCode() == KeyCode.S && playerPosY + playerSpeed < 661) {
             playerPosY += playerSpeed;
             player.setLayoutX(playerPosX);
             player.setLayoutY(playerPosY);
             return;
         }
-        if (keyEvent.getCode() == KeyCode.A && playerPosX + playerSpeed > 170.0) {
+        if (keyEvent.getCode() == KeyCode.A && playerPosX + playerSpeed > 240) {
             playerPosX -= playerSpeed;
             player.setLayoutX(playerPosX);
             player.setLayoutY(playerPosY);
             return;
         }
-        if (keyEvent.getCode() == KeyCode.D && playerPosX + playerSpeed < 1085) {
+        if (keyEvent.getCode() == KeyCode.D && playerPosX + playerSpeed < 1020) {
             playerPosX += playerSpeed;
             player.setLayoutX(playerPosX);
             player.setLayoutY(playerPosY);
-            return;
         }
-        else return;
+        return;
 
     }
 
