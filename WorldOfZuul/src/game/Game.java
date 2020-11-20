@@ -1,6 +1,7 @@
 package game;
 
 import chadChicken.ChadChicken;
+import chadChicken.GUIQuiz;
 import chadChicken.Quiz;
 import chadChicken.TextQuiz;
 import java.io.File;
@@ -37,9 +38,11 @@ public class Game {
     private int gameTimer = 0;
     private static final Random random = new Random();
     private long seed;
+    private boolean isGUI;
 
-    public Game(long seed) {
+    public Game(long seed, boolean isGUI) {
         this.seed = seed;
+        this.isGUI = isGUI;
         random.setSeed(seed);
         System.out.println(seed);
         unLockableRooms = new HashMap<>();
@@ -55,8 +58,16 @@ public class Game {
         createGameLogger();
     }
 
+    public Game(long seed) {
+        this(seed, false);
+    }
+
+    public Game(boolean isGUI) {
+        this(random.nextLong(), isGUI);
+    }
+
     public Game() {
-        this(random.nextLong());
+        this(random.nextLong(), false);
     }
 
     public static Random getRandom() {
@@ -74,9 +85,14 @@ public class Game {
 
     private void createQuiz() {
         chadChicken = new ChadChicken();
-        //TODO change TextQuiz to GUIQuiz when QUIQuiz has been implemented
-        preQuiz = new TextQuiz(chadChicken.getPreQuestions());
-        postQuiz = new TextQuiz(chadChicken.getPostQuestions());
+        if(isGUI) {
+            preQuiz = new GUIQuiz(chadChicken.getPreQuestions());
+            postQuiz = new GUIQuiz(chadChicken.getPostQuestions());
+        } else {
+            //TODO change TextQuiz to GUIQuiz when QUIQuiz has been implemented
+            preQuiz = new TextQuiz(chadChicken.getPreQuestions());
+            postQuiz = new TextQuiz(chadChicken.getPostQuestions());
+        }
 
     }
 
@@ -229,7 +245,6 @@ public class Game {
 
         }
 
-
         boolean finished = false;
         while (!finished) {
             Command command = parser.getCommand();
@@ -241,6 +256,15 @@ public class Game {
             }
         }
         System.out.println("Thank you for playing. Good bye.");
+    }
+
+    public void playGUI() {
+        if (!isCreatedFromSaveFile) {
+            //only if new game
+            playIntro();
+            printWelcome();
+
+        }
     }
 
     private void playIntro() {
@@ -729,4 +753,6 @@ public class Game {
            System.out.println("OmegaAlphaChickenChad is keeping an eye on you");
        }
     }
+
+
 }
