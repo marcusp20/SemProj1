@@ -255,12 +255,13 @@ public class Field extends Interactable implements TimeProgression {
         }
 
         //Update yields, dependent on bees
-
-
-        yields = 0;
         previousHarvest = currentHarvest;
-
         getPests();
+
+    }
+
+    public void resetYield() {
+        yields = 0;
 
     }
     public void rainEvent(){

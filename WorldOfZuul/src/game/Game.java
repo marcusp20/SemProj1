@@ -206,17 +206,17 @@ public class Game {
         field.setExit("west", field2);
         field.setExit("east", field3);
 
-        field2.setLocked(false);
+        field2.setLocked(true);
         unLockableRooms.put("field2", field2);
         field2.setExit("east", field);
         field2.setExit("north", garden);
 
-        field3.setLocked(false);
+        field3.setLocked(true);
         unLockableRooms.put("field3", field3);
         field3.setExit("west", field);
         field3.setExit("north", shed);
 
-        garden.setLocked(false);
+        garden.setLocked(true);
         unLockableRooms.put("garden", garden);
         garden.setExit("east", headquarter);
         garden.setExit("south", field2);
@@ -632,7 +632,7 @@ public class Game {
         field.checkPreviousHarvest();             //Crop rotations impact on field
         field.harvestDone();                      //calc rest of yield
         player.sellYields(field.getYield());      //yields sold to money.
-
+        field.resetYield();
 
         System.out.println("Wallet is now "  + player.checkWallet());
 

@@ -53,7 +53,7 @@ public class FlowerBed extends Interactable implements TimeProgression {
             System.out.println("Maximum amount of flowers planted already");
         //adds new flower to empty bed and breaks after.
         } else {
-            int flowerRNG = random.nextInt((5 - 1) + 1) + 1; //Generate random int
+            int flowerRNG = random.nextInt((6 - 1) + 1) + 1; //Generate random int
             for (int i=0; i<flowerBeds.length; i++) {
                 if (flowerBeds[i] == 0) {
                     flowerBeds[i] = flowerRNG;
