@@ -244,7 +244,6 @@ public class Game {
         field.setExit("west", field2);
         field.setExit("east", field3);
 
-
         field.setRoomPane(createPane("FieldVer1.png"));
 
         ////////////////
@@ -265,9 +264,6 @@ public class Game {
         garden.setExit("south", field2);
 
         garden.setRoomPane(createPane("GardenVer1.png"));
-
-
-
 
         shed.setExit("west", headquarter);
         shed.setExit("south", field3);

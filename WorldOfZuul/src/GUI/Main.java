@@ -73,11 +73,13 @@ public class Main extends Application {
 
         //Set scene
         Pane p = game.getCurrentRoom().getRoomPane();
+
         //Add FXML root to pane.
         //Parent root = FXMLLoader.load(getClass().getResource("Headquarter.fxml"));
         //p.getChildren().addAll(playerSprite);
+
         //Add FXML layout to Pane.
-        p.getChildren().addAll(game.getPlayer().getPlayerSprite());
+        p.getChildren().add(game.getPlayer().getPlayerSprite());
         scene = new Scene(p);
 
         //Start timer
@@ -118,28 +120,50 @@ public class Main extends Application {
 
     private void playerRoomChangeCheck()    {
         ImageView playerSprite = game.getPlayer().getPlayerSprite();
+
         //NORTH
-        if(playerSprite.getY() < - 10)  {
+        if(playerSprite.getY() < -10)  {
             System.out.println("GO NORTH");
-            game.processCommand(new Command(CommandWord.GO, "NORTH"));
-            scene.setRoot(game.getCurrentRoom().getRoomPane());
+            Pane oldPane = game.getCurrentRoom().getRoomPane();
+            game.processCommand(new Command(CommandWord.GO, "north"));
+
+            if(game.getCurrentRoom().getRoomPane() == oldPane) {
+                playerSprite.setY(-10);
+                System.out.println("HELP");
+            } else {
+                playerSprite.setY(scene.getHeight()-200);
+                game.getCurrentRoom().getRoomPane().getChildren().add(playerSprite);
+                scene.setRoot(game.getCurrentRoom().getRoomPane());
+            }
         }
         //EAST
         if(playerSprite.getX() > scene.getWidth() - 120) {
             System.out.println("GO EAST");
-            game.processCommand(new Command(CommandWord.GO, "EAST"));
+            game.processCommand(new Command(CommandWord.GO, "east"));
+
+            playerSprite.setX(20);
+
+            game.getCurrentRoom().getRoomPane().getChildren().add(playerSprite);
             scene.setRoot(game.getCurrentRoom().getRoomPane());
         }
         //SOUTH
         if(playerSprite.getY() > scene.getHeight() - 180)  {
             System.out.println("GO SOUTH");
-            game.processCommand(new Command(CommandWord.GO, "SOUTH"));
+            game.processCommand(new Command(CommandWord.GO, "south"));
+
+            playerSprite.setY(20);
+
+            game.getCurrentRoom().getRoomPane().getChildren().add(playerSprite);
             scene.setRoot(game.getCurrentRoom().getRoomPane());
         }
         //WEST
         if(playerSprite.getX() < - 10) {
             System.out.println("GO WEST");
-            game.processCommand(new Command(CommandWord.GO, "WEST"));
+            game.processCommand(new Command(CommandWord.GO, "west"));
+
+            playerSprite.setX(game.getCurrentRoom().getRoomPane().getWidth() - 140);
+
+            game.getCurrentRoom().getRoomPane().getChildren().add(playerSprite);
             scene.setRoot(game.getCurrentRoom().getRoomPane());
         }
     }

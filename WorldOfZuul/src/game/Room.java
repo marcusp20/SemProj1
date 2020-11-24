@@ -7,7 +7,6 @@ import javafx.scene.layout.Pane;
 import java.util.Set;
 import java.util.HashMap;
 
-
 public class Room {
     private String description;
     private HashMap<String, Room> exits;
