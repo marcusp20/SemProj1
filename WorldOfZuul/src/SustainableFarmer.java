@@ -11,7 +11,7 @@ import java.util.Scanner;
  */
 
 import game.*;
-import GUI.*;
+import Gui.*;
 
 import static javafx.application.Application.launch;
 
@@ -19,7 +19,6 @@ public class SustainableFarmer {
     private static File saveFile;
 
     public static void main(String[] args) {
-
         Game game;
 
         //choose newGame or loadGame

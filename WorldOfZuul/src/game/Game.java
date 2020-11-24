@@ -24,7 +24,7 @@ public class Game {
     private List<Item> storeItemList;
     private NPC majorBob;
     private NPC shopkeeperLizzy;
-    private NPC farmerBob;
+    private NPC farmerBill;
     private NPC beekeeperBetti;
     private ChadChicken chadChicken;
     private Quiz preQuiz;
@@ -96,7 +96,7 @@ public class Game {
         shopkeeperLizzy = new NPC(storeNPCDialog);
 
         File fieldNPCDialog = load("fieldNPCDialog.txt");
-        farmerBob = new NPC(fieldNPCDialog);
+        farmerBill = new NPC(fieldNPCDialog);
 
         File beekeeperDialog = load("beekeeperBetti.txt");
         beekeeperBetti = new NPC(beekeeperDialog);
@@ -375,7 +375,7 @@ public class Game {
             } else if (command.getSecondWord().equals("npc") && currentRoom.getShortDescription().equals("in the store, smells like flower seeds in here")) {
                 shopkeeperLizzy.converse();
             }  else if(command.getSecondWord().equals("npc") && currentRoom.getShortDescription().equals("in the field")) {
-                farmerBob.converse();
+                farmerBill.converse();
             } else if (command.getSecondWord().equals("npc") && currentRoom.getShortDescription().equals("in the beautiful garden")) {
                 // System.out.println("Beekeeper Betti" + end);
                 beekeeperBetti.converse();
