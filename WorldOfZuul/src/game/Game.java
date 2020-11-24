@@ -201,6 +201,17 @@ public class Game {
 
     private void createPlayer() {
         player = new Player("Lars Tyndskid");
+
+        try {
+            Image sprite = loadImage("FarmerSprite.png");
+            player.setPlayerSprite(sprite);
+        } catch (FileNotFoundException e)   {
+            System.out.println("Player image not found");
+        }
+    }
+
+    public Player getPlayer()   {
+        return player;
     }
 
 

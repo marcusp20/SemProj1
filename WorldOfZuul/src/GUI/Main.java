@@ -31,8 +31,6 @@ public class Main extends Application {
 
     //Create structure
     Scene scene;
-    Pane sceneHeadquarters = new Pane();
-    Pane sceneField = new Pane();
 
     private Game game;
     private static File saveFile;
@@ -48,8 +46,6 @@ public class Main extends Application {
     private boolean d;
     private boolean w;
 
-    private int room = 1;
-
 
     public static void main(String[] args){
         launch(args);
@@ -62,19 +58,20 @@ public class Main extends Application {
         //TODO call launchNewGame or launchLoadGame based on user choice.
 
         //Create objects
-        createPlayer();
-        //createFrameRateLabel();
-        //createRootNodes();
+        //createPlayer();
 
+        //Create new game object
         launchNewGame();
+
+        //playerSprite = game.getPlayer().getPlayerSprite();
 
         //Set scene
         Pane p = game.getCurrentRoom().getRoomPane();
-        p.getChildren().add(playerSprite);
+        p.getChildren().add(game.getPlayer().getPlayerSprite());
         scene = new Scene(p);
 
+        //Start timer
         startTimer();
-        //createContent();
 
         //Call checkInput on keyPress/release
         scene.setOnKeyPressed(this::checkInput);
@@ -96,6 +93,30 @@ public class Main extends Application {
 
         timer.start();
     }
+
+    //Main loop content
+    private void update()   {
+        //t represents current game time
+        t += 0.016;
+
+        //Moves player based on movement keys
+        move();
+
+        playerRoomChangeCheck();
+    }
+
+    private void playerRoomChangeCheck()    {
+        ImageView playerSprite = game.getPlayer().getPlayerSprite();
+        //NORTH
+        if(playerSprite.getY() < - 10)  {
+            System.out.println("GO NORTH");
+        }
+        //EAST
+        if(playerSprite.getX() > scene.getWidth() - playerSprite.getFitWidth())  {
+            System.out.println("EAST");
+        }
+    }
+
     private void launchNewGame() {
         game = new Game(true);
         game.playGUI();
@@ -111,15 +132,6 @@ public class Main extends Application {
             System.err.println("Could not load saveFile");
             launchNewGame();
         }
-    }
-
-    //Main loop content
-    private void update()   {
-        //t represents current game time
-        t += 0.016;
-
-        //Moves player based on movement keys
-        move();
     }
 
     /* Keeping increase code is good
@@ -165,6 +177,8 @@ public class Main extends Application {
 
     //Move player
     public void move() {
+        ImageView playerSprite = game.getPlayer().getPlayerSprite();
+
         int speed = 8;
         if(w) {
             playerSprite.setY(playerSprite.getY() - speed);
