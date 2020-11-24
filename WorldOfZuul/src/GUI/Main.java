@@ -114,7 +114,6 @@ public class Main extends Application {
 
         //Moves player based on movement keys
         move();
-
         playerRoomChangeCheck();
     }
 
@@ -131,7 +130,8 @@ public class Main extends Application {
                 playerSprite.setY(-10);
                 System.out.println("HELP");
             } else {
-                playerSprite.setY(scene.getHeight()-200);
+                double currentRoomHeight = game.getCurrentRoom().getRoomPane().getHeight();
+                playerSprite.setY(currentRoomHeight - 200);
                 game.getCurrentRoom().getRoomPane().getChildren().add(playerSprite);
                 scene.setRoot(game.getCurrentRoom().getRoomPane());
             }
@@ -161,7 +161,8 @@ public class Main extends Application {
             System.out.println("GO WEST");
             game.processCommand(new Command(CommandWord.GO, "west"));
 
-            playerSprite.setX(game.getCurrentRoom().getRoomPane().getWidth() - 140);
+            double currentRoomWidth = game.getCurrentRoom().getRoomPane().getWidth();
+            playerSprite.setX(currentRoomWidth - 140);
 
             game.getCurrentRoom().getRoomPane().getChildren().add(playerSprite);
             scene.setRoot(game.getCurrentRoom().getRoomPane());
@@ -207,6 +208,15 @@ public class Main extends Application {
             }
             if (e.getCode() == KeyCode.D) {
                 d = true;
+            }
+            if (e.getCode() == KeyCode.E) {
+                //TODO use interactable closest to player
+            }
+            if (e.getCode() == KeyCode.I) {
+                //TODO toggle inventory
+            }
+            if (e.getCode() == KeyCode.TAB) {
+                //TODO toggle task list
             }
         }
 
