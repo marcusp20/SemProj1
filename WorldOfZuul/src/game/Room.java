@@ -1,6 +1,8 @@
 package game;
 
 import interactable.NPC;
+import javafx.scene.Scene;
+import javafx.scene.layout.Pane;
 
 import java.util.Set;
 import java.util.HashMap;
@@ -11,6 +13,7 @@ public class Room {
     private HashMap<String, Room> exits;
     private NPC npc;
     private boolean isLocked;
+    private Pane roomPane;
 
     public Room(String description) 
     {
@@ -69,5 +72,16 @@ public class Room {
     {
         return exits.get(direction);
     }
+
+    public void setRoomPane(Pane pane)    {
+        pane.setPrefSize(1280,720);
+
+        this.roomPane = pane;
+    }
+
+    public Pane getRoomPane()   {
+        return this.roomPane;
+    }
+
 }
 

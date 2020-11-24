@@ -22,7 +22,6 @@ import javafx.stage.Stage;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
-import java.util.Scanner;
 
 /*
     Learnt from https://www.youtube.com/watch?v=FVo1fm52hz0
@@ -32,8 +31,8 @@ public class Main extends Application {
 
     //Create structure
     Scene scene;
-    Pane root = new Pane();
-    Pane root2 = new Pane();
+    Pane sceneHeadquarters = new Pane();
+    Pane sceneField = new Pane();
 
     private Game game;
     private static File saveFile;
@@ -64,11 +63,25 @@ public class Main extends Application {
 
         //Create objects
         createPlayer();
-        createFrameRateLabel();
-        createRootNodes();
+        //createFrameRateLabel();
+        //createRootNodes();
+
+        launchNewGame();
 
         //Set scene
-        scene = new Scene(createContent(root));
+        Pane p = game.getCurrentRoom().getRoomPane();
+        p.getChildren().add(playerSprite);
+        scene = new Scene(p);
+
+        //createContent();
+        AnimationTimer timer = new AnimationTimer() {
+            @Override
+            public void handle(long now) {
+                update();
+            }
+        };
+
+        timer.start();
 
         //Call checkInput on keyPress/release
         scene.setOnKeyPressed(this::checkInput);
@@ -78,8 +91,6 @@ public class Main extends Application {
         stage.setTitle("FARMVILL 99 RETARDO EDITION");
         stage.setScene(scene);
         stage.show();
-
-
     }
 
     private void launchNewGame() {
@@ -98,10 +109,7 @@ public class Main extends Application {
             launchNewGame();
         }
     }
-
-
-
-
+    
     private void createRootNodes()  {
         //Create root
         try {
@@ -110,34 +118,18 @@ public class Main extends Application {
             BackgroundImage back = new BackgroundImage(img, BackgroundRepeat.REPEAT, BackgroundRepeat.NO_REPEAT,
                     BackgroundPosition.DEFAULT, BackgroundSize.DEFAULT);
 
-            root.setBackground(new Background(back));
+            sceneHeadquarters.setBackground(new Background(back));
         } catch (FileNotFoundException e)   {
             System.out.println("File not found");
         }
 
         //Create root 2
-        root2.setBackground(new Background(new BackgroundFill(Color.PINK, CornerRadii.EMPTY, Insets.EMPTY)));
+        sceneField.setBackground(new Background(new BackgroundFill(Color.PINK, CornerRadii.EMPTY, Insets.EMPTY)));
         Text text = new Text("Hello there");
         text.setX(10);
         text.setY(10);
-        root2.getChildren().add(text);
-    }
+        sceneField.getChildren().add(text);
 
-    //Contains methods that are true for all scenes. Ie size, having a player & having a timer (main loop)
-    private Parent createContent(Pane p)  {
-
-        p.setPrefSize(1280,720);
-        root.getChildren().add(playerSprite);
-
-        AnimationTimer timer = new AnimationTimer() {
-            @Override
-            public void handle(long now) {
-                update();
-            }
-        };
-
-        timer.start();
-        return p;
     }
 
     //Main loop content
@@ -147,41 +139,15 @@ public class Main extends Application {
 
         //Moves player based on movement keys
         move();
-
-        //The following shows that only 1 player object exists
-        if(false) {
-            System.out.print(root.getChildren().size());
-            System.out.println("  " + root2.getChildren().size());
-        }
-
-        if(room == 1) {
-            if (playerSprite.getX() > root.getWidth() - 70) {
-                room = 2;
-                System.out.println("next scene");
-                create2ndScene();
-            }
-        }
-        if(room == 2)   {
-            if (playerSprite.getX() < -70) {
-                room = 1;
-                System.out.println("next scene");
-                create1stScene();
-            }
-        }
     }
 
-    //
+    /* Keeping increase code is good
     private void create1stScene()   {
-        root.getChildren().add(playerSprite);
-        scene.setRoot(root);
-        playerSprite.setX(root.getWidth()-75);
+        sceneHeadquarters.getChildren().add(playerSprite);
+        scene.setRoot(sceneHeadquarters);
+        playerSprite.setX(sceneHeadquarters.getWidth()-75);
     }
-
-    private void create2ndScene()   {
-        root2.getChildren().add(playerSprite);
-        scene.setRoot(root2);
-        playerSprite.setX(-70);
-    }
+    */
 
     //Check pressed key and react accordingly
     private void checkInput(KeyEvent e) {
@@ -258,15 +224,6 @@ public class Main extends Application {
         } catch (FileNotFoundException e)   {
             System.out.println("File not found");
         }
-    }
-
-    //Crate Label object that displays fps
-    private void createFrameRateLabel() {
-        FrameTimer fps = new FrameTimer();
-        Label fpsLabel = fps.run();
-        fpsLabel.setFont(new Font("Arial", 40));
-        fpsLabel.setTextFill(Color.HOTPINK);
-        root.getChildren().add(fpsLabel);
     }
 
 }
