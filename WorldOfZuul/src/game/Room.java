@@ -74,7 +74,7 @@ public class Room {
     }
 
     public void setRoomPane(Pane pane)    {
-        pane.setPrefSize(1280,720);
+        pane.setPrefSize(1280,832);
 
         this.roomPane = pane;
     }

@@ -5,23 +5,20 @@ import game.GameLogger;
 import javafx.animation.AnimationTimer;
 import javafx.application.Application;
 
-import javafx.geometry.Insets;
+import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.*;
-import javafx.scene.paint.Color;
-import javafx.scene.text.Font;
-import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.IOException;
 
 /*
     Learnt from https://www.youtube.com/watch?v=FVo1fm52hz0
@@ -56,7 +53,7 @@ public class Main extends Application {
     }
 
     @Override
-    public void start(Stage stage) {
+    public void start(Stage stage) throws IOException {
 
         //TODO Init main menu
         //TODO call launchNewGame or launchLoadGame based on user choice.
@@ -70,7 +67,10 @@ public class Main extends Application {
 
         //Set scene
         Pane p = game.getCurrentRoom().getRoomPane();
-        p.getChildren().add(playerSprite);
+        //Add FXML root to pane.
+        //Parent root = FXMLLoader.load(getClass().getResource("Headquarter.fxml"));
+        p.getChildren().addAll(playerSprite);
+        //Add FXML layout to Pane.
         scene = new Scene(p);
 
         startTimer();

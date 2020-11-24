@@ -152,7 +152,7 @@ public class Game {
     private Image loadImage(String fileName) throws FileNotFoundException {
         String path = System.getProperty("user.dir");
         if (path.endsWith("SemProj1")) {
-            return new Image(new FileInputStream(path + "\\WorldOfZuul\\src\\resources\\img\\" + fileName));    //Add remaining path to dialog text file
+            return new Image(new FileInputStream(path + "\\WorldOfZuul\\src\\resources\\img\\images\\" + fileName));    //Add remaining path to dialog text file
         } else if (path.endsWith("WorldOfZuul")) {
             return new Image(new FileInputStream(path + "\\src\\resources\\img\\" + fileName));
         }
@@ -224,16 +224,44 @@ public class Game {
         headquarter.setExit("west", garden);
         headquarter.setNpc(majorBob);
 
+        headquarter.setRoomPane(createPane("FieldVer1.png"));
+
+        ////////////////
+        //FIELD////////
+        ////////////////
+        field.setExit("north", headquarter);
+        field.setExit("west", field2);
+        field.setExit("east", field3);
 
 
+        field.setRoomPane(createPane("FieldVer1.png"));
 
-        headquarter.setRoomPane(createPane("HQ", Color.HOTPINK));
+        ////////////////
+        //STORE////////
+        ///////////////
 
         store.setExit("south", headquarter);
         store.setNpc(shopkeeperLizzy);
 
+        store.setRoomPane(createPane("StoreVer1.png"));
+
+        ////////////////
+        //GARDEN////////
+        ///////////////
+        garden.setLocked(false);
+        unLockableRooms.put("garden", garden);
+        garden.setExit("east", headquarter);
+        garden.setExit("south", field2);
+
+        garden.setRoomPane(createPane("GardenVer1.png"));
+
+
+
+
         shed.setExit("west", headquarter);
         shed.setExit("south", field3);
+
+
 
         field.setExit("north", headquarter);
         field.setExit("west", field2);
@@ -277,7 +305,7 @@ public class Game {
 
             pane.setBackground(new Background(back));
         } catch (FileNotFoundException e)   {
-            System.out.println("File not found");
+            System.out.println("Image not found");
         }
 
          return  pane;
