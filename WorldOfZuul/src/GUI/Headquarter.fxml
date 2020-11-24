@@ -9,5 +9,6 @@
    <children>
       <Button fx:id="invButton" layoutX="1145.0" layoutY="757.0" mnemonicParsing="false" prefWidth="82.0" text="Inventory" />
       <Button fx:id="saveGameButton" layoutX="1145.0" layoutY="723.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="82.0" text="Savegame" />
+
    </children>
 </AnchorPane>

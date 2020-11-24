@@ -61,14 +61,22 @@ public class Main extends Application {
         //TODO Init main menu
         //TODO call launchNewGame or launchLoadGame based on user choice.
 
+        //Create objects
+        createPlayer();
+        //createFrameRateLabel();
+        //createRootNodes();
+
         //Create new game object
         launchNewGame();
+
+        //playerSprite = game.getPlayer().getPlayerSprite();
 
         //Set scene
         Pane p = game.getCurrentRoom().getRoomPane();
 
         //Add FXML root to pane.
         //Parent root = FXMLLoader.load(getClass().getResource("Headquarter.fxml"));
+        //p.getChildren().addAll(playerSprite);
 
         //Add FXML layout to Pane.
         p.getChildren().add(game.getPlayer().getPlayerSprite());
