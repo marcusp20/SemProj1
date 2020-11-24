@@ -1,11 +1,10 @@
 package GUI;
 
-import game.Game;
-import game.GameLogger;
+import game.*;
 import javafx.animation.AnimationTimer;
 import javafx.application.Application;
 
-import javafx.geometry.Insets;
+import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
@@ -22,7 +21,7 @@ import javafx.stage.Stage;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
-import java.util.Scanner;
+import java.io.IOException;
 
 /*
     Learnt from https://www.youtube.com/watch?v=FVo1fm52hz0
@@ -32,8 +31,8 @@ public class Main extends Application {
 
     //Create structure
     Scene scene;
-    Pane root = new Pane();
-    Pane root2 = new Pane();
+    Pane sceneHeadquarters = new Pane();
+    Pane sceneField = new Pane();
 
     private Game game;
     private static File saveFile;
@@ -57,18 +56,27 @@ public class Main extends Application {
     }
 
     @Override
-    public void start(Stage stage) {
+    public void start(Stage stage) throws IOException {
 
         //TODO Init main menu
         //TODO call launchNewGame or launchLoadGame based on user choice.
 
-        //Create objects
-        createPlayer();
-        createFrameRateLabel();
-        createRootNodes();
+        //Create new game object
+        launchNewGame();
 
         //Set scene
-        scene = new Scene(createContent(root));
+        Pane p = game.getCurrentRoom().getRoomPane();
+
+        //Add FXML root to pane.
+        //Parent root = FXMLLoader.load(getClass().getResource("Headquarter.fxml"));
+
+        //Add FXML layout to Pane.
+        p.getChildren().add(game.getPlayer().getPlayerSprite());
+        scene = new Scene(p);
+
+        //Start timer
+        startTimer();
+        //createContent();
 
         //Call checkInput on keyPress/release
         scene.setOnKeyPressed(this::checkInput);
@@ -78,8 +86,78 @@ public class Main extends Application {
         stage.setTitle("FARMVILL 99 RETARDO EDITION");
         stage.setScene(scene);
         stage.show();
+    }
 
+    private void startTimer()    {
+        AnimationTimer timer = new AnimationTimer() {
+            @Override
+            public void handle(long now) {
+                update();
+            }
+        };
 
+        timer.start();
+    }
+
+    //Main loop content
+    private void update()   {
+        //t represents current game time
+        t += 0.016;
+
+        //Moves player based on movement keys
+        move();
+
+        playerRoomChangeCheck();
+    }
+
+    private void playerRoomChangeCheck()    {
+        ImageView playerSprite = game.getPlayer().getPlayerSprite();
+
+        //NORTH
+        if(playerSprite.getY() < -10)  {
+            System.out.println("GO NORTH");
+            Pane oldPane = game.getCurrentRoom().getRoomPane();
+            game.processCommand(new Command(CommandWord.GO, "north"));
+
+            if(game.getCurrentRoom().getRoomPane() == oldPane) {
+                playerSprite.setY(-10);
+                System.out.println("HELP");
+            } else {
+                playerSprite.setY(scene.getHeight()-200);
+                game.getCurrentRoom().getRoomPane().getChildren().add(playerSprite);
+                scene.setRoot(game.getCurrentRoom().getRoomPane());
+            }
+        }
+        //EAST
+        if(playerSprite.getX() > scene.getWidth() - 120) {
+            System.out.println("GO EAST");
+            game.processCommand(new Command(CommandWord.GO, "east"));
+
+            playerSprite.setX(20);
+
+            game.getCurrentRoom().getRoomPane().getChildren().add(playerSprite);
+            scene.setRoot(game.getCurrentRoom().getRoomPane());
+        }
+        //SOUTH
+        if(playerSprite.getY() > scene.getHeight() - 180)  {
+            System.out.println("GO SOUTH");
+            game.processCommand(new Command(CommandWord.GO, "south"));
+
+            playerSprite.setY(20);
+
+            game.getCurrentRoom().getRoomPane().getChildren().add(playerSprite);
+            scene.setRoot(game.getCurrentRoom().getRoomPane());
+        }
+        //WEST
+        if(playerSprite.getX() < - 10) {
+            System.out.println("GO WEST");
+            game.processCommand(new Command(CommandWord.GO, "west"));
+
+            playerSprite.setX(game.getCurrentRoom().getRoomPane().getWidth() - 140);
+
+            game.getCurrentRoom().getRoomPane().getChildren().add(playerSprite);
+            scene.setRoot(game.getCurrentRoom().getRoomPane());
+        }
     }
 
     private void launchNewGame() {
@@ -99,89 +177,13 @@ public class Main extends Application {
         }
     }
 
-
-
-
-    private void createRootNodes()  {
-        //Create root
-        try {
-            Image img = load("backG1.png");
-
-            BackgroundImage back = new BackgroundImage(img, BackgroundRepeat.REPEAT, BackgroundRepeat.NO_REPEAT,
-                    BackgroundPosition.DEFAULT, BackgroundSize.DEFAULT);
-
-            root.setBackground(new Background(back));
-        } catch (FileNotFoundException e)   {
-            System.out.println("File not found");
-        }
-
-        //Create root 2
-        root2.setBackground(new Background(new BackgroundFill(Color.PINK, CornerRadii.EMPTY, Insets.EMPTY)));
-        Text text = new Text("Hello there");
-        text.setX(10);
-        text.setY(10);
-        root2.getChildren().add(text);
-    }
-
-    //Contains methods that are true for all scenes. Ie size, having a player & having a timer (main loop)
-    private Parent createContent(Pane p)  {
-
-        p.setPrefSize(1280,720);
-        root.getChildren().add(playerSprite);
-
-        AnimationTimer timer = new AnimationTimer() {
-            @Override
-            public void handle(long now) {
-                update();
-            }
-        };
-
-        timer.start();
-        return p;
-    }
-
-    //Main loop content
-    private void update()   {
-        //t represents current game time
-        t += 0.016;
-
-        //Moves player based on movement keys
-        move();
-
-        //The following shows that only 1 player object exists
-        if(false) {
-            System.out.print(root.getChildren().size());
-            System.out.println("  " + root2.getChildren().size());
-        }
-
-        if(room == 1) {
-            if (playerSprite.getX() > root.getWidth() - 70) {
-                room = 2;
-                System.out.println("next scene");
-                create2ndScene();
-            }
-        }
-        if(room == 2)   {
-            if (playerSprite.getX() < -70) {
-                room = 1;
-                System.out.println("next scene");
-                create1stScene();
-            }
-        }
-    }
-
-    //
+    /* Keeping increase code is good
     private void create1stScene()   {
-        root.getChildren().add(playerSprite);
-        scene.setRoot(root);
-        playerSprite.setX(root.getWidth()-75);
+        sceneHeadquarters.getChildren().add(playerSprite);
+        scene.setRoot(sceneHeadquarters);
+        playerSprite.setX(sceneHeadquarters.getWidth()-75);
     }
-
-    private void create2ndScene()   {
-        root2.getChildren().add(playerSprite);
-        scene.setRoot(root2);
-        playerSprite.setX(-70);
-    }
+    */
 
     //Check pressed key and react accordingly
     private void checkInput(KeyEvent e) {
@@ -218,6 +220,8 @@ public class Main extends Application {
 
     //Move player
     public void move() {
+        ImageView playerSprite = game.getPlayer().getPlayerSprite();
+
         int speed = 8;
         if(w) {
             playerSprite.setY(playerSprite.getY() - speed);
@@ -258,15 +262,6 @@ public class Main extends Application {
         } catch (FileNotFoundException e)   {
             System.out.println("File not found");
         }
-    }
-
-    //Crate Label object that displays fps
-    private void createFrameRateLabel() {
-        FrameTimer fps = new FrameTimer();
-        Label fpsLabel = fps.run();
-        fpsLabel.setFont(new Font("Arial", 40));
-        fpsLabel.setTextFill(Color.HOTPINK);
-        root.getChildren().add(fpsLabel);
     }
 
 }

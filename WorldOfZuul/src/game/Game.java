@@ -5,12 +5,19 @@ import chadChicken.GUIQuiz;
 import chadChicken.Quiz;
 import chadChicken.TextQuiz;
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Random;
 
 import interactable.*;
+import javafx.geometry.Insets;
+import javafx.scene.image.Image;
+import javafx.scene.layout.*;
+import javafx.scene.paint.Color;
+import javafx.scene.text.Text;
 
 
 public class Game {
@@ -142,6 +149,17 @@ public class Game {
 
     }
 
+    private Image loadImage(String fileName) throws FileNotFoundException {
+        String path = System.getProperty("user.dir");
+        if (path.endsWith("SemProj1")) {
+            return new Image(new FileInputStream(path + "\\WorldOfZuul\\src\\resources\\img\\" + fileName));    //Add remaining path to dialog text file
+        } else if (path.endsWith("WorldOfZuul")) {
+            return new Image(new FileInputStream(path + "\\src\\resources\\img\\" + fileName));
+        }
+        //Default - probably not gonna work
+        return new Image(new FileInputStream(path + "\\img\\" + fileName));
+    }
+
     private void createCommandWords() {
         gameCommandWords = new CommandWords();
         gameCommandWords.addCommandWord(CommandWord.GO);
@@ -183,6 +201,17 @@ public class Game {
 
     private void createPlayer() {
         player = new Player("Lars Tyndskid");
+
+        try {
+            Image sprite = loadImage("FarmerSprite.png");
+            player.setPlayerSprite(sprite);
+        } catch (FileNotFoundException e)   {
+            System.out.println("Player image not found");
+        }
+    }
+
+    public Player getPlayer()   {
+        return player;
     }
 
 
@@ -197,16 +226,44 @@ public class Game {
         garden = new Room("in the beautiful garden");
         store = new Room("in the store, smells like flower seeds in here");
 
-
+        ////////////////
+        //HEADQUARTERS//
+        ////////////////
         headquarter.setExit("north", store);
         headquarter.setExit("east", shed);
         headquarter.setExit("south", field);
         headquarter.setExit("west", garden);
         headquarter.setNpc(majorBob);
 
+        headquarter.setRoomPane(createPane("FieldVer1.png"));
+
+        ////////////////
+        //FIELD////////
+        ////////////////
+        field.setExit("north", headquarter);
+        field.setExit("west", field2);
+        field.setExit("east", field3);
+
+        field.setRoomPane(createPane("FieldVer1.png"));
+
+        ////////////////
+        //STORE////////
+        ///////////////
 
         store.setExit("south", headquarter);
         store.setNpc(shopkeeperLizzy);
+
+        store.setRoomPane(createPane("StoreVer1.png"));
+
+        ////////////////
+        //GARDEN////////
+        ///////////////
+        garden.setLocked(false);
+        unLockableRooms.put("garden", garden);
+        garden.setExit("east", headquarter);
+        garden.setExit("south", field2);
+
+        garden.setRoomPane(createPane("GardenVer1.png"));
 
         shed.setExit("west", headquarter);
         shed.setExit("south", field3);
@@ -231,6 +288,32 @@ public class Game {
         garden.setExit("south", field2);
 
         currentRoom = headquarter;
+    }
+
+    private Pane createPane(String name, Color color)   {
+        Pane pane = new Pane();
+        pane.setBackground(new Background(new BackgroundFill(color, CornerRadii.EMPTY, Insets.EMPTY)));
+        Text text = new Text(name);
+        text.setX(10);
+        text.setY(10);
+        pane.getChildren().add(text);
+        return pane;
+    }
+
+    private Pane createPane(String fileName)   {
+        Pane pane = new Pane();
+        try {
+            Image img = loadImage(fileName);
+
+            BackgroundImage back = new BackgroundImage(img, BackgroundRepeat.REPEAT, BackgroundRepeat.NO_REPEAT,
+                    BackgroundPosition.DEFAULT, BackgroundSize.DEFAULT);
+
+            pane.setBackground(new Background(back));
+        } catch (FileNotFoundException e)   {
+            System.out.println("Image not found");
+        }
+
+         return  pane;
     }
 
     /////////////////////////////////////////////////////////////////////////////////////
@@ -751,6 +834,9 @@ public class Game {
        } else if(gameTimer == 7) {
            System.out.println("OmegaAlphaChickenChad is keeping an eye on you");
        }
+    }
+    public Room getCurrentRoom() {
+        return this.currentRoom;
     }
 
 

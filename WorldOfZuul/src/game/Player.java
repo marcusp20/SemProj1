@@ -1,6 +1,8 @@
 package game;
 
 import game.ItemName;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 
 import java.util.HashMap;
 
@@ -10,6 +12,9 @@ public class Player {
     private double wallet = 50;
     private HashMap<ItemName, Boolean> playerInventory; //TODO can be a set
     private boolean noCropsOwned;
+
+    //Gui attributes
+    ImageView playerSprite;
 
     //Constructor
     public Player(String name) {
@@ -64,5 +69,16 @@ public class Player {
 
     public void sellYields(double yields) {
         wallet += yields;
+    }
+
+    public void setPlayerSprite(Image img)   {
+        this.playerSprite = new ImageView(img);
+
+        this.playerSprite.setX(80);
+        this.playerSprite.setY(400);
+    }
+
+    public ImageView getPlayerSprite()  {
+        return playerSprite;
     }
 }
