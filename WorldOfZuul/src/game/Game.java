@@ -267,8 +267,6 @@ public class Game {
         garden.setRoomPane(createPane("GardenVer1.png"));
 
 
-
-
         shed.setExit("west", headquarter);
         shed.setExit("south", field3);
 
