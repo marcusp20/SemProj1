@@ -109,28 +109,6 @@ public class Main extends Application {
             launchNewGame();
         }
     }
-    
-    private void createRootNodes()  {
-        //Create root
-        try {
-            Image img = load("backG1.png");
-
-            BackgroundImage back = new BackgroundImage(img, BackgroundRepeat.REPEAT, BackgroundRepeat.NO_REPEAT,
-                    BackgroundPosition.DEFAULT, BackgroundSize.DEFAULT);
-
-            sceneHeadquarters.setBackground(new Background(back));
-        } catch (FileNotFoundException e)   {
-            System.out.println("File not found");
-        }
-
-        //Create root 2
-        sceneField.setBackground(new Background(new BackgroundFill(Color.PINK, CornerRadii.EMPTY, Insets.EMPTY)));
-        Text text = new Text("Hello there");
-        text.setX(10);
-        text.setY(10);
-        sceneField.getChildren().add(text);
-
-    }
 
     //Main loop content
     private void update()   {

@@ -226,19 +226,7 @@ public class Game {
 
 
 
-        /*
-        try {
-            Image img = loadImage("backG1.png");
 
-            BackgroundImage back = new BackgroundImage(img, BackgroundRepeat.REPEAT, BackgroundRepeat.NO_REPEAT,
-                    BackgroundPosition.DEFAULT, BackgroundSize.DEFAULT);
-
-            pane.setBackground(new Background(back));
-        } catch (FileNotFoundException e)   {
-            System.out.println("File not found");
-        }
-
-         */
         headquarter.setRoomPane(createPane("HQ", Color.HOTPINK));
 
         store.setExit("south", headquarter);
@@ -277,6 +265,22 @@ public class Game {
         text.setY(10);
         pane.getChildren().add(text);
         return pane;
+    }
+
+    private Pane createPane(String fileName)   {
+        Pane pane = new Pane();
+        try {
+            Image img = loadImage(fileName);
+
+            BackgroundImage back = new BackgroundImage(img, BackgroundRepeat.REPEAT, BackgroundRepeat.NO_REPEAT,
+                    BackgroundPosition.DEFAULT, BackgroundSize.DEFAULT);
+
+            pane.setBackground(new Background(back));
+        } catch (FileNotFoundException e)   {
+            System.out.println("File not found");
+        }
+
+         return  pane;
     }
 
     /////////////////////////////////////////////////////////////////////////////////////
