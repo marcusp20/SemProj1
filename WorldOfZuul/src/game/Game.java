@@ -201,6 +201,17 @@ public class Game {
 
     private void createPlayer() {
         player = new Player("Lars Tyndskid");
+
+        try {
+            Image sprite = loadImage("FarmerSprite.png");
+            player.setPlayerSprite(sprite);
+        } catch (FileNotFoundException e)   {
+            System.out.println("Player image not found");
+        }
+    }
+
+    public Player getPlayer()   {
+        return player;
     }
 
 
@@ -260,8 +271,6 @@ public class Game {
 
         shed.setExit("west", headquarter);
         shed.setExit("south", field3);
-
-
 
         field.setExit("north", headquarter);
         field.setExit("west", field2);

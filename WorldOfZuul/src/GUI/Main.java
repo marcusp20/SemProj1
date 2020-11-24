@@ -1,18 +1,21 @@
 package GUI;
 
-import game.Game;
-import game.GameLogger;
+import game.*;
 import javafx.animation.AnimationTimer;
 import javafx.application.Application;
 
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.*;
+import javafx.scene.paint.Color;
+import javafx.scene.text.Font;
+import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
 import java.io.File;
@@ -63,7 +66,10 @@ public class Main extends Application {
         //createFrameRateLabel();
         //createRootNodes();
 
+        //Create new game object
         launchNewGame();
+
+        //playerSprite = game.getPlayer().getPlayerSprite();
 
         //Set scene
         Pane p = game.getCurrentRoom().getRoomPane();
@@ -71,8 +77,10 @@ public class Main extends Application {
         //Parent root = FXMLLoader.load(getClass().getResource("Headquarter.fxml"));
         p.getChildren().addAll(playerSprite);
         //Add FXML layout to Pane.
+        p.getChildren().add(game.getPlayer().getPlayerSprite());
         scene = new Scene(p);
 
+        //Start timer
         startTimer();
         //createContent();
 
@@ -96,6 +104,46 @@ public class Main extends Application {
 
         timer.start();
     }
+
+    //Main loop content
+    private void update()   {
+        //t represents current game time
+        t += 0.016;
+
+        //Moves player based on movement keys
+        move();
+
+        playerRoomChangeCheck();
+    }
+
+    private void playerRoomChangeCheck()    {
+        ImageView playerSprite = game.getPlayer().getPlayerSprite();
+        //NORTH
+        if(playerSprite.getY() < - 10)  {
+            System.out.println("GO NORTH");
+            game.processCommand(new Command(CommandWord.GO, "NORTH"));
+            scene.setRoot(game.getCurrentRoom().getRoomPane());
+        }
+        //EAST
+        if(playerSprite.getX() > scene.getWidth() - 120) {
+            System.out.println("GO EAST");
+            game.processCommand(new Command(CommandWord.GO, "EAST"));
+            scene.setRoot(game.getCurrentRoom().getRoomPane());
+        }
+        //SOUTH
+        if(playerSprite.getY() > scene.getHeight() - 180)  {
+            System.out.println("GO SOUTH");
+            game.processCommand(new Command(CommandWord.GO, "SOUTH"));
+            scene.setRoot(game.getCurrentRoom().getRoomPane());
+        }
+        //WEST
+        if(playerSprite.getX() < - 10) {
+            System.out.println("GO WEST");
+            game.processCommand(new Command(CommandWord.GO, "WEST"));
+            scene.setRoot(game.getCurrentRoom().getRoomPane());
+        }
+    }
+
     private void launchNewGame() {
         game = new Game(true);
         game.playGUI();
@@ -111,15 +159,6 @@ public class Main extends Application {
             System.err.println("Could not load saveFile");
             launchNewGame();
         }
-    }
-
-    //Main loop content
-    private void update()   {
-        //t represents current game time
-        t += 0.016;
-
-        //Moves player based on movement keys
-        move();
     }
 
     /* Keeping increase code is good
@@ -165,6 +204,8 @@ public class Main extends Application {
 
     //Move player
     public void move() {
+        ImageView playerSprite = game.getPlayer().getPlayerSprite();
+
         int speed = 8;
         if(w) {
             playerSprite.setY(playerSprite.getY() - speed);
