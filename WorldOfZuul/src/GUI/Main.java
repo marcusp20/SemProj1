@@ -112,8 +112,16 @@ public class Main extends Application {
             System.out.println("GO NORTH");
         }
         //EAST
-        if(playerSprite.getX() > scene.getWidth() - playerSprite.getFitWidth())  {
-            System.out.println("EAST");
+        if(playerSprite.getX() > scene.getWidth() - 120) {
+            System.out.println("GO EAST");
+        }
+        //SOUTH
+        if(playerSprite.getY() > scene.getHeight() - 180)  {
+            System.out.println("GO SOUTH");
+        }
+        //WEST
+        if(playerSprite.getX() < - 10) {
+            System.out.println("GO WEST");
         }
     }
 
