@@ -152,7 +152,7 @@ public class Game {
     private Image loadImage(String fileName) throws FileNotFoundException {
         String path = System.getProperty("user.dir");
         if (path.endsWith("SemProj1")) {
-            return new Image(new FileInputStream(path + "\\WorldOfZuul\\src\\resources\\img\\images\\" + fileName));    //Add remaining path to dialog text file
+            return new Image(new FileInputStream(path + "\\WorldOfZuul\\src\\resources\\img\\" + fileName));    //Add remaining path to dialog text file
         } else if (path.endsWith("WorldOfZuul")) {
             return new Image(new FileInputStream(path + "\\src\\resources\\img\\" + fileName));
         }
