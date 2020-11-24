@@ -435,6 +435,9 @@ public class Game {
     ///////////////////////////////// Game Commands  ////////////////////////////////////
     /////////////////////////////////////////////////////////////////////////////////////
 
+    public CommandWords getGameCommandWords()   {
+        return gameCommandWords;
+    }
     private void use(Command command) {
         if (command.getSecondWord() != null) {           //If player is attempting to use something then...
             //Checks if player is in the right place to use intractable

@@ -1,7 +1,6 @@
 package GUI;
 
-import game.Game;
-import game.GameLogger;
+import game.*;
 import javafx.animation.AnimationTimer;
 import javafx.application.Application;
 
@@ -110,6 +109,7 @@ public class Main extends Application {
         //NORTH
         if(playerSprite.getY() < - 10)  {
             System.out.println("GO NORTH");
+            game.processCommand(new Command(CommandWord.GO, "NORTH"));
         }
         //EAST
         if(playerSprite.getX() > scene.getWidth() - 120) {
