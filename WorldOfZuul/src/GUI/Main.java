@@ -73,15 +73,8 @@ public class Main extends Application {
         p.getChildren().add(playerSprite);
         scene = new Scene(p);
 
+        startTimer();
         //createContent();
-        AnimationTimer timer = new AnimationTimer() {
-            @Override
-            public void handle(long now) {
-                update();
-            }
-        };
-
-        timer.start();
 
         //Call checkInput on keyPress/release
         scene.setOnKeyPressed(this::checkInput);
@@ -93,6 +86,16 @@ public class Main extends Application {
         stage.show();
     }
 
+    private void startTimer()    {
+        AnimationTimer timer = new AnimationTimer() {
+            @Override
+            public void handle(long now) {
+                update();
+            }
+        };
+
+        timer.start();
+    }
     private void launchNewGame() {
         game = new Game(true);
         game.playGUI();
