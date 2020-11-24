@@ -110,18 +110,25 @@ public class Main extends Application {
         if(playerSprite.getY() < - 10)  {
             System.out.println("GO NORTH");
             game.processCommand(new Command(CommandWord.GO, "NORTH"));
+            scene.setRoot(game.getCurrentRoom().getRoomPane());
         }
         //EAST
         if(playerSprite.getX() > scene.getWidth() - 120) {
             System.out.println("GO EAST");
+            game.processCommand(new Command(CommandWord.GO, "EAST"));
+            scene.setRoot(game.getCurrentRoom().getRoomPane());
         }
         //SOUTH
         if(playerSprite.getY() > scene.getHeight() - 180)  {
             System.out.println("GO SOUTH");
+            game.processCommand(new Command(CommandWord.GO, "SOUTH"));
+            scene.setRoot(game.getCurrentRoom().getRoomPane());
         }
         //WEST
         if(playerSprite.getX() < - 10) {
             System.out.println("GO WEST");
+            game.processCommand(new Command(CommandWord.GO, "WEST"));
+            scene.setRoot(game.getCurrentRoom().getRoomPane());
         }
     }
 
