@@ -112,15 +112,21 @@ public class Main extends Application {
 
     private void playerRoomChangeCheck()    {
         ImageView playerSprite = game.getPlayer().getPlayerSprite();
+
         //NORTH
-        if(playerSprite.getY() < - 10)  {
+        if(playerSprite.getY() < -10)  {
             System.out.println("GO NORTH");
+            Pane oldPane = game.getCurrentRoom().getRoomPane();
             game.processCommand(new Command(CommandWord.GO, "north"));
 
-            playerSprite.setY(game.getCurrentRoom().getRoomPane().getHeight() - 220);
-
-            game.getCurrentRoom().getRoomPane().getChildren().add(playerSprite);
-            scene.setRoot(game.getCurrentRoom().getRoomPane());
+            if(game.getCurrentRoom().getRoomPane() == oldPane) {
+                playerSprite.setY(-10);
+                System.out.println("HELP");
+            } else {
+                playerSprite.setY(scene.getHeight()-200);
+                game.getCurrentRoom().getRoomPane().getChildren().add(playerSprite);
+                scene.setRoot(game.getCurrentRoom().getRoomPane());
+            }
         }
         //EAST
         if(playerSprite.getX() > scene.getWidth() - 120) {
