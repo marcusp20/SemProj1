@@ -75,9 +75,9 @@ public class Main extends Application {
         Pane p = game.getCurrentRoom().getRoomPane();
         //Add FXML root to pane.
         //Parent root = FXMLLoader.load(getClass().getResource("Headquarter.fxml"));
-        p.getChildren().addAll(playerSprite);
+        //p.getChildren().addAll(playerSprite);
         //Add FXML layout to Pane.
-        p.getChildren().add(game.getPlayer().getPlayerSprite());
+        p.getChildren().addAll(game.getPlayer().getPlayerSprite());
         scene = new Scene(p);
 
         //Start timer
