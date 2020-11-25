@@ -197,11 +197,13 @@ public class Main extends Application {
     }
 
     public void buttonNewGame() {
-        launchNewGame();
+        //launchNewGame();
+        System.out.println("NewGame");
     }
 
     public void buttonLoadGame(){
-        launchLoadGame();
+        //launchLoadGame();
+        System.out.println("LoadGame");
     }
 
     //Check pressed key and react accordingly
