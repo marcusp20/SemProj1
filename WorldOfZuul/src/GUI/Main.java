@@ -51,7 +51,15 @@ public class Main extends Application {
 
         //TODO Init main menu
         //TODO call launchNewGame or launchLoadGame based on user choice.
+        while(true) {
 
+            break;
+        }
+
+        startGame(stage);
+    }
+
+    private void startGame(Stage stage)    {
 
 
         //Create new game object
@@ -65,7 +73,7 @@ public class Main extends Application {
         //p.getChildren().addAll(playerSprite);
 
         //Add FXML layout to Pane.
-        p.getChildren().addAll(game.getPlayer().getPlayerSprite(), root);
+        p.getChildren().add(game.getPlayer().getPlayerSprite());
         scene = new Scene(p);
 
         //Start timer
@@ -171,7 +179,6 @@ public class Main extends Application {
     private void checkCollision()    {
         ImageView player = game.getPlayer().getPlayerSprite();
 
-        Pane currentPane = game.getCurrentRoom().getRoomPane();
         for(Interactable i: game.getCurrentRoom().getInteractables())  {
             if(i.getImageView().intersects(player.getLayoutBounds()))   {
                 System.out.println("YOU ARE INTERACTING");
