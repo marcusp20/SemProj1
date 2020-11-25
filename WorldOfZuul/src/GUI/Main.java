@@ -50,7 +50,15 @@ public class Main extends Application {
 
         //TODO Init main menu
         //TODO call launchNewGame or launchLoadGame based on user choice.
+        while(true) {
 
+            break;
+        }
+
+        startGame(stage);
+    }
+
+    private void startGame(Stage stage)    {
         //Create new game object
         launchNewGame();
 
@@ -168,7 +176,6 @@ public class Main extends Application {
     private void checkCollision()    {
         ImageView player = game.getPlayer().getPlayerSprite();
 
-        Pane currentPane = game.getCurrentRoom().getRoomPane();
         for(Interactable i: game.getCurrentRoom().getInteractables())  {
             if(i.getImageView().intersects(player.getLayoutBounds()))   {
                 System.out.println("YOU ARE INTERACTING");
