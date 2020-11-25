@@ -31,8 +31,6 @@ public class Main extends Application {
 
     //Create structure
     Scene scene;
-    Pane sceneHeadquarters = new Pane();
-    Pane sceneField = new Pane();
 
     private Game game;
     private static File saveFile;
@@ -59,15 +57,8 @@ public class Main extends Application {
         //TODO Init main menu
         //TODO call launchNewGame or launchLoadGame based on user choice.
 
-        //Create objects
-        createPlayer();
-        //createFrameRateLabel();
-        //createRootNodes();
-
         //Create new game object
         launchNewGame();
-
-        //playerSprite = game.getPlayer().getPlayerSprite();
 
         //Set scene
         Pane p = game.getCurrentRoom().getRoomPane();
@@ -82,7 +73,6 @@ public class Main extends Application {
 
         //Start timer
         startTimer();
-        //createContent();
 
         //Call checkInput on keyPress/release
         scene.setOnKeyPressed(this::checkInput);
@@ -101,7 +91,6 @@ public class Main extends Application {
                 update();
             }
         };
-
         timer.start();
     }
 
@@ -198,14 +187,6 @@ public class Main extends Application {
         }
     }
 
-    /* Keeping increase code is good
-    private void create1stScene()   {
-        sceneHeadquarters.getChildren().add(playerSprite);
-        scene.setRoot(sceneHeadquarters);
-        playerSprite.setX(sceneHeadquarters.getWidth()-75);
-    }
-    */
-
     //Check pressed key and react accordingly
     private void checkInput(KeyEvent e) {
         if (e.getEventType() == KeyEvent.KEY_PRESSED) {
@@ -270,19 +251,4 @@ public class Main extends Application {
         //Default - probably not gonna work
         return new Image(new FileInputStream(path + "\\img\\" + fileName));
     }
-
-    //Create player object
-    private void createPlayer()   {
-        try {
-            Image img = load("FarmerSprite.png");
-
-            playerSprite = new ImageView(img);
-
-            playerSprite.setX(80);
-            playerSprite.setY(400);
-        } catch (FileNotFoundException e)   {
-            System.out.println("File not found");
-        }
-    }
-
 }
