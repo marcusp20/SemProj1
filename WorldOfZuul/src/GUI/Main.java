@@ -9,6 +9,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
@@ -28,7 +29,8 @@ import java.io.IOException;
 public class Main extends Application {
 
     //Create structure
-    Scene scene;
+    Scene scene, introScene;
+
 
     private Game game;
     private static File saveFile;
@@ -41,6 +43,10 @@ public class Main extends Application {
     private boolean d;
     private boolean w;
 
+    //Buttons
+    Button loadGameButton;
+    Button newGameButton;
+
 
     public static void main(String[] args){
         launch(args);
@@ -48,20 +54,51 @@ public class Main extends Application {
 
     @Override
     public void start(Stage stage) throws IOException {
-
         //TODO Init main menu
         //TODO call launchNewGame or launchLoadGame based on user choice.
+
+
+
+
+        ImageView startScreen = new ImageView(load("IntroScreenVer1.png"));
+        startScreen.setFitHeight(832);
+        startScreen.setFitWidth(1280);
+
+        //Add FXML root to pane.
+        loadGameButton = new Button();
+        newGameButton = new Button();
+        newGameButton.setOnAction(e -> {
+            try {
+                newGame(stage);
+            } catch (IOException ioException) {
+                ioException.printStackTrace();
+            }
+        });
+        loadGameButton.setOnAction(e -> loadGame(stage));
+
+
+        //Parent rootButtonLayout = FXMLLoader.load(getClass().getResource("ButtonLayout.fxml"));
+        //Parent rootStartScreen = FXMLLoader.load(getClass().getResource("StartScreen.fxml"));
+        VBox startPane = new VBox(20);
+        startPane.setPrefSize(1280, 832);
+        startPane.getChildren().addAll(startScreen, loadGameButton, newGameButton);
+        introScene = new Scene(startPane);
+        stage.setScene(introScene);
+        stage.show();
+
+
+
         while(true) {
 
             break;
         }
 
-        startGame(stage);
+        //startGame(stage);
     }
 
     private void startGame(Stage stage) throws IOException {
-        //Add FXML root to pane.
-        Parent rootButtonLayout = FXMLLoader.load(getClass().getResource("StartScreen.fxml"));
+
+
 
 
         //Create new game object
@@ -72,8 +109,6 @@ public class Main extends Application {
 
         //add Children
         p.getChildren().add(game.getPlayer().getPlayerSprite());
-        //add FXML
-        p.getChildren().addAll(rootButtonLayout);
         scene = new Scene(p);
 
         //Start timer
@@ -203,12 +238,13 @@ public class Main extends Application {
         }
     }
 
-    public void buttonNewGame() {
-        //launchNewGame();
+    public void newGame(Stage stage) throws IOException {
+        startGame(stage);
         System.out.println("NewGame");
     }
 
-    public void buttonLoadGame(){
+    public void loadGame(Stage stage){
+        stage.close();
         //launchLoadGame();
         System.out.println("LoadGame");
     }
