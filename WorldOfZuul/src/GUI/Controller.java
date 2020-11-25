@@ -1,6 +1,5 @@
 package GUI;
 
-
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
@@ -11,7 +10,6 @@ import javafx.scene.shape.Circle;
 
 import java.net.URL;
 import java.util.ResourceBundle;
-
 
 public class Controller implements Initializable {
 
@@ -35,14 +33,13 @@ public class Controller implements Initializable {
         });
 
         pane.getChildren().add(player);
+        player.setOpacity(0.0);
         player.setRadius(20.0);
         player.setLayoutX(playerPosX);
         player.setLayoutY(playerPosY);
     }
 
-
     public void movePlayer(KeyEvent keyEvent) {
-
 
         if (keyEvent.getCode() == KeyCode.W && playerPosY + playerSpeed > 316.0) {
             playerPosY -= playerSpeed;
