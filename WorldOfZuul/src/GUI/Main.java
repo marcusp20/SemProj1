@@ -200,6 +200,14 @@ public class Main extends Application {
         }
     }
 
+    public void buttonNewGame() {
+        launchNewGame();
+    }
+
+    public void buttonLoadGame(){
+        launchLoadGame();
+    }
+
     //Check pressed key and react accordingly
     private void checkInput(KeyEvent e) {
         if (e.getEventType() == KeyEvent.KEY_PRESSED) {

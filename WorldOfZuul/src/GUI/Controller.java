@@ -25,6 +25,7 @@ public class Controller implements Initializable {
     private Circle player = new Circle(5.0, 5.2, 5.1);
     private int playerSpeed = 5;
 
+
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         saveGameButton.setOnAction(e -> {
@@ -38,6 +39,8 @@ public class Controller implements Initializable {
         player.setLayoutX(playerPosX);
         player.setLayoutY(playerPosY);
     }
+
+
 
     public void movePlayer(KeyEvent keyEvent) {
 

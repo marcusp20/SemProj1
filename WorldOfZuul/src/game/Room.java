@@ -16,6 +16,7 @@ public class Room {
     private Pane roomPane;
     private ArrayList<Interactable> interactables = new ArrayList<>();
 
+
     public Room(String description) 
     {
         this.description = description;
