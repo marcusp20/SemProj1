@@ -235,6 +235,7 @@ public class Game {
         headquarter.setExit("west", garden);
         headquarter.setNpc(majorBob);
 
+
         headquarter.setRoomPane(createPane("Headquarter.png"));
         headquarter.addInteractable(majorBob);
 
