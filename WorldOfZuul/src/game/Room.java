@@ -4,6 +4,7 @@ import interactable.Interactable;
 import interactable.NPC;
 import javafx.scene.layout.Pane;
 
+import java.util.ArrayList;
 import java.util.Set;
 import java.util.HashMap;
 
@@ -13,6 +14,7 @@ public class Room {
     private NPC npc;
     private boolean isLocked;
     private Pane roomPane;
+    private ArrayList<Interactable> interactables = new ArrayList<>();
 
     public Room(String description) 
     {
@@ -83,7 +85,12 @@ public class Room {
     }
 
     public void addInteractable(Interactable i)   {
+        this.interactables.add(i);
         this.roomPane.getChildren().add(i.getImageView());
+    }
+
+    public ArrayList<Interactable> getInteractables()   {
+        return interactables;
     }
 
 }

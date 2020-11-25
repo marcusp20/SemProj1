@@ -1,10 +1,12 @@
 package GUI;
 
 import game.*;
+import interactable.Interactable;
 import javafx.animation.AnimationTimer;
 import javafx.application.Application;
 
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -95,6 +97,7 @@ public class Main extends Application {
         move();
 
         playerRoomChangeCheck();
+        checkCollision();
     }
 
     private void playerRoomChangeCheck()    {
@@ -158,6 +161,17 @@ public class Main extends Application {
                 playerSprite.setX(scene.getWidth() - 140);
                 game.getCurrentRoom().getRoomPane().getChildren().add(playerSprite);
                 scene.setRoot(game.getCurrentRoom().getRoomPane());
+            }
+        }
+    }
+
+    private void checkCollision()    {
+        ImageView player = game.getPlayer().getPlayerSprite();
+
+        Pane currentPane = game.getCurrentRoom().getRoomPane();
+        for(Interactable i: game.getCurrentRoom().getInteractables())  {
+            if(i.getImageView().intersects(player.getLayoutBounds()))   {
+                System.out.println("YOU ARE INTERACTING");
             }
         }
     }
