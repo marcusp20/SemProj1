@@ -267,7 +267,9 @@ public class Game {
 
         shed.setExit("west", headquarter);
         shed.setExit("south", field3);
+        shed.setRoomPane(createPane("SHED", Color.BLANCHEDALMOND));
 
+        //????? Declaerd twice
         field.setExit("north", headquarter);
         field.setExit("west", field2);
         field.setExit("east", field3);

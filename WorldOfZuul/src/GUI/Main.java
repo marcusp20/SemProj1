@@ -48,8 +48,6 @@ public class Main extends Application {
     private boolean d;
     private boolean w;
 
-    private int room = 1;
-
 
     public static void main(String[] args){
         launch(args);
@@ -114,13 +112,13 @@ public class Main extends Application {
         ImageView playerSprite = game.getPlayer().getPlayerSprite();
 
         //NORTH
-        if(playerSprite.getY() < -10)  {
+        if(playerSprite.getY() < -40)  {
             System.out.println("GO NORTH");
             Pane oldPane = game.getCurrentRoom().getRoomPane();
             game.processCommand(new Command(CommandWord.GO, "north"));
 
             if(game.getCurrentRoom().getRoomPane() == oldPane) {
-                playerSprite.setY(-10);
+                playerSprite.setY(-40);
                 System.out.println("HELP");
             } else {
                 playerSprite.setY(scene.getHeight()-200);
@@ -131,32 +129,47 @@ public class Main extends Application {
         //EAST
         if(playerSprite.getX() > scene.getWidth() - 120) {
             System.out.println("GO EAST");
+            Pane oldPane = game.getCurrentRoom().getRoomPane();
             game.processCommand(new Command(CommandWord.GO, "east"));
 
-            playerSprite.setX(20);
-
-            game.getCurrentRoom().getRoomPane().getChildren().add(playerSprite);
-            scene.setRoot(game.getCurrentRoom().getRoomPane());
+            if(game.getCurrentRoom().getRoomPane() == oldPane) {
+                playerSprite.setX(scene.getWidth() - 120);
+                System.out.println("HELP");
+            } else {
+                playerSprite.setX(10);
+                game.getCurrentRoom().getRoomPane().getChildren().add(playerSprite);
+                scene.setRoot(game.getCurrentRoom().getRoomPane());
+            }
         }
         //SOUTH
         if(playerSprite.getY() > scene.getHeight() - 180)  {
             System.out.println("GO SOUTH");
+            Pane oldPane = game.getCurrentRoom().getRoomPane();
             game.processCommand(new Command(CommandWord.GO, "south"));
 
-            playerSprite.setY(20);
-
-            game.getCurrentRoom().getRoomPane().getChildren().add(playerSprite);
-            scene.setRoot(game.getCurrentRoom().getRoomPane());
+            if(game.getCurrentRoom().getRoomPane() == oldPane) {
+                playerSprite.setY(scene.getHeight() - 180);
+                System.out.println("HELP");
+            } else {
+                playerSprite.setY(20);
+                game.getCurrentRoom().getRoomPane().getChildren().add(playerSprite);
+                scene.setRoot(game.getCurrentRoom().getRoomPane());
+            }
         }
         //WEST
         if(playerSprite.getX() < - 10) {
             System.out.println("GO WEST");
+            Pane oldPane = game.getCurrentRoom().getRoomPane();
             game.processCommand(new Command(CommandWord.GO, "west"));
 
-            playerSprite.setX(game.getCurrentRoom().getRoomPane().getWidth() - 140);
-
-            game.getCurrentRoom().getRoomPane().getChildren().add(playerSprite);
-            scene.setRoot(game.getCurrentRoom().getRoomPane());
+            if(game.getCurrentRoom().getRoomPane() == oldPane) {
+                playerSprite.setX(-10);
+                System.out.println("HELP");
+            } else {
+                playerSprite.setX(scene.getWidth() - 140);
+                game.getCurrentRoom().getRoomPane().getChildren().add(playerSprite);
+                scene.setRoot(game.getCurrentRoom().getRoomPane());
+            }
         }
     }
 
