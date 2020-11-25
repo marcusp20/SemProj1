@@ -1,7 +1,7 @@
 package game;
 
+import interactable.Interactable;
 import interactable.NPC;
-import javafx.scene.Scene;
 import javafx.scene.layout.Pane;
 
 import java.util.Set;
@@ -73,13 +73,17 @@ public class Room {
     }
 
     public void setRoomPane(Pane pane)    {
-        pane.setPrefSize(1280,832);
+        pane.setPrefSize(1280,832); //720
 
         this.roomPane = pane;
     }
 
     public Pane getRoomPane()   {
         return this.roomPane;
+    }
+
+    public void addInteractable(Interactable i)   {
+        this.roomPane.getChildren().add(i.getImageView());
     }
 
 }

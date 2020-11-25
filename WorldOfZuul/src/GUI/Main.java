@@ -5,17 +5,12 @@ import javafx.animation.AnimationTimer;
 import javafx.application.Application;
 
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.*;
-import javafx.scene.paint.Color;
-import javafx.scene.text.Font;
-import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
 import java.io.File;
@@ -34,9 +29,6 @@ public class Main extends Application {
 
     private Game game;
     private static File saveFile;
-
-    //Create playerSprite
-    private ImageView playerSprite;
 
     private double t;
 

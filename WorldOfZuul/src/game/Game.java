@@ -236,6 +236,7 @@ public class Game {
         headquarter.setNpc(majorBob);
 
         headquarter.setRoomPane(createPane("Headquarter.png"));
+        headquarter.addInteractable(majorBob);
 
         ////////////////
         //FIELD////////
@@ -245,6 +246,7 @@ public class Game {
         field.setExit("east", field3);
 
         field.setRoomPane(createPane("FieldVer1.png"));
+        field.addInteractable(farmerBob);
 
         ////////////////
         //STORE////////
