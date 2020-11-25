@@ -59,7 +59,9 @@ public class Main extends Application {
         startGame(stage);
     }
 
-    private void startGame(Stage stage)    {
+    private void startGame(Stage stage) throws IOException {
+        //Add FXML root to pane.
+        Parent rootButtonLayout = FXMLLoader.load(getClass().getResource("StartScreen.fxml"));
 
 
         //Create new game object
@@ -68,12 +70,10 @@ public class Main extends Application {
         //Set scene
         Pane p = game.getCurrentRoom().getRoomPane();
 
-        //Add FXML root to pane.
-        Parent root = FXMLLoader.load(getClass().getResource("StartScreen.fxml"));
-        //p.getChildren().addAll(playerSprite);
-
-        //Add FXML layout to Pane.
+        //add Children
         p.getChildren().add(game.getPlayer().getPlayerSprite());
+        //add FXML
+        p.getChildren().addAll(rootButtonLayout);
         scene = new Scene(p);
 
         //Start timer
