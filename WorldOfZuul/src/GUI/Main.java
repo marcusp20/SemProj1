@@ -7,6 +7,7 @@ import javafx.application.Application;
 
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -51,6 +52,8 @@ public class Main extends Application {
         //TODO Init main menu
         //TODO call launchNewGame or launchLoadGame based on user choice.
 
+
+
         //Create new game object
         launchNewGame();
 
@@ -58,11 +61,11 @@ public class Main extends Application {
         Pane p = game.getCurrentRoom().getRoomPane();
 
         //Add FXML root to pane.
-        //Parent root = FXMLLoader.load(getClass().getResource("Headquarter.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("StartScreen.fxml"));
         //p.getChildren().addAll(playerSprite);
 
         //Add FXML layout to Pane.
-        p.getChildren().add(game.getPlayer().getPlayerSprite());
+        p.getChildren().addAll(game.getPlayer().getPlayerSprite(), root);
         scene = new Scene(p);
 
         //Start timer
