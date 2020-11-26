@@ -57,16 +57,26 @@ public class Main extends Application {
         //TODO Init main menu
         //TODO call launchNewGame or launchLoadGame based on user choice.
 
-
-
-
+        //startscreen
         ImageView startScreen = new ImageView(load("IntroScreenVer1.png"));
+        startScreen.setPreserveRatio(false);
         startScreen.setFitHeight(832);
         startScreen.setFitWidth(1280);
 
-        //Add FXML root to pane.
+        //Buttons
         loadGameButton = new Button();
         newGameButton = new Button();
+        loadGameButton.setPrefSize(420, 69);
+        newGameButton.setPrefSize(420, 69);
+        loadGameButton.setOpacity(0);
+        newGameButton.setOpacity(0);
+
+        loadGameButton.setLayoutX(480);
+        loadGameButton.setLayoutY(410);
+        newGameButton.setLayoutX(480);
+        newGameButton.setLayoutY(280);
+
+
         newGameButton.setOnAction(e -> {
             try {
                 newGame(stage);
@@ -76,12 +86,13 @@ public class Main extends Application {
         });
         loadGameButton.setOnAction(e -> loadGame(stage));
 
-
         //Parent rootButtonLayout = FXMLLoader.load(getClass().getResource("ButtonLayout.fxml"));
         //Parent rootStartScreen = FXMLLoader.load(getClass().getResource("StartScreen.fxml"));
-        VBox startPane = new VBox(20);
+
+        Pane startPane = new Pane();
         startPane.setPrefSize(1280, 832);
         startPane.getChildren().addAll(startScreen, loadGameButton, newGameButton);
+
         introScene = new Scene(startPane);
         stage.setScene(introScene);
         stage.show();
@@ -107,8 +118,13 @@ public class Main extends Application {
         //Set scene
         Pane p = game.getCurrentRoom().getRoomPane();
 
+        //FXML root OR JavaFX Code...
+        Parent rootButtonLayout = FXMLLoader.load(getClass().getResource("ButtonLayout.fxml"));
+
+
+
         //add Children
-        p.getChildren().add(game.getPlayer().getPlayerSprite());
+        p.getChildren().addAll(game.getPlayer().getPlayerSprite(), rootButtonLayout);
         scene = new Scene(p);
 
         //Start timer
@@ -121,7 +137,9 @@ public class Main extends Application {
         //Set stage (window) tile and scene (scene includes root)
         stage.setTitle("FARMVILL 99 RETARDO EDITION");
         stage.setScene(scene);
+        stage.setOpacity(0);
         stage.show();
+        setFadeIn(stage);
     }
 
     private void startTimer()    {
@@ -145,6 +163,8 @@ public class Main extends Application {
         playerRoomChangeCheck();
         checkCollision();
     }
+
+
 
     private void playerRoomChangeCheck()    {
         ImageView playerSprite = game.getPlayer().getPlayerSprite();
@@ -229,6 +249,7 @@ public class Main extends Application {
     private void launchLoadGame() {
         saveFile = new File(System.getProperty("user.dir") + "\\saveFile.txt");
         boolean saveFileExists = saveFile.exists();
+        System.out.println(saveFile);
         if(saveFileExists) {
             game = GameLogger.loadGameFrom(saveFile, true);
             game.playGUI();
@@ -239,14 +260,32 @@ public class Main extends Application {
     }
 
     public void newGame(Stage stage) throws IOException {
+        setFadeOut(stage);
+        stage.close();
         startGame(stage);
         System.out.println("NewGame");
     }
 
+
     public void loadGame(Stage stage){
+        setFadeOut(stage);
         stage.close();
-        //launchLoadGame();
+        launchLoadGame();
         System.out.println("LoadGame");
+    }
+
+
+    public void setFadeOut(Stage stage) {
+        for (double i=1; i>=0.02; i = i-0.00001) {
+            stage.setOpacity(i);
+        }
+    }
+
+
+    public void setFadeIn(Stage stage) {
+        for (double i=0; i<=0.999; i = i+0.00001) {
+            stage.setOpacity(i);
+        }
     }
 
     //Check pressed key and react accordingly
@@ -303,8 +342,8 @@ public class Main extends Application {
 
     private Image load(String fileName) throws FileNotFoundException {
         String path = System.getProperty("user.dir");
-        System.out.println("Path: " + path);
-        System.out.println("Should be: " + "C:\\Users\\Marcus\\IdeaProjects\\OOP\\SemProj1\\WorldOfZuul\\src\\resources\\img\\backG1.png");
+        //System.out.println("Path: " + path);
+        //System.out.println("Should be: " + "C:\\Users\\Marcus\\IdeaProjects\\OOP\\SemProj1\\WorldOfZuul\\src\\resources\\img\\backG1.png");
         if (path.endsWith("SemProj1")) {
             return new Image(new FileInputStream(path + "\\WorldOfZuul\\src\\resources\\img\\" + fileName));    //Add remaining path to dialog text file
         } else if (path.endsWith("WorldOfZuul")) {
