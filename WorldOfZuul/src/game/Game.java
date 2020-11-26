@@ -42,6 +42,7 @@ public class Game {
     private HashMap<String, Room> unLockableRooms;
     private TaskList taskList;
     private Bed hqBed;
+    private BeeHive beeHive;
     private int gameTimer = 0;
     private static final Random random = new Random();
     private long seed;
@@ -52,16 +53,33 @@ public class Game {
         this.isGUI = isGUI;
         random.setSeed(seed);
         System.out.println(seed);
+
         unLockableRooms = new HashMap<>();
+
+        //Create command words
         createCommandWords();
-        createNPC();
-        createRooms();
         parser = new Parser(gameCommandWords);
+
+        //Create intractables
+        createNPC();
         createField();
         createPlayer();
+        createBed();
+        createBeeHive();
+
+        //create task list
         taskList = new TaskList(this, player);
+
+        //Create room objects
+        createRooms();
+
+        //Create store items
         createStoreItemList();
+
+        //Create quiz
         createQuiz();
+
+        //Create game logger (for saving games)
         createGameLogger();
     }
 
@@ -130,11 +148,19 @@ public class Game {
         File beekeeperDialog = load("beekeeperBetti.txt");
         beekeeperBetti = new NPC(beekeeperDialog);
         beekeeperBetti.getImageView().setX(950);
-        beekeeperBetti.getImageView().setY(400);
+        beekeeperBetti.getImageView().setY(250);
     }
 
     private void createBed()    {
         hqBed = new Bed();
+        hqBed.getImageView().setX(900);
+        hqBed.getImageView().setY(400);
+    }
+
+    private void createBeeHive()    {
+        beeHive = new BeeHive();
+        beeHive.getImageView().setX(330);
+        beeHive.getImageView().setY(200);
     }
 
     /**
@@ -201,7 +227,8 @@ public class Game {
     //Used for testing Field methods
     private void createField() {
         field = new Field(fieldCommandWords);
-
+        field.getImageView().setX(500);
+        field.getImageView().setY(500);
     }
 
     private void createPlayer() {
@@ -240,9 +267,9 @@ public class Game {
         headquarter.setExit("west", garden);
         headquarter.setNpc(majorBob);
 
-
         headquarter.setRoomPane(createPane("Headquarter.png"));
         headquarter.addInteractable(majorBob);
+        headquarter.addInteractable(hqBed);
 
         ////////////////
         //FIELD////////
@@ -253,6 +280,7 @@ public class Game {
 
         field.setRoomPane(createPane("FieldVer1.png"));
         field.addInteractable(farmerBob);
+        field.addInteractable(this.field);      //TODO Rename field, this is stupid
 
         ////////////////
         //STORE////////
@@ -275,6 +303,7 @@ public class Game {
 
         garden.setRoomPane(createPane("GardenVer1.png"));
         garden.addInteractable(beekeeperBetti);
+        garden.addInteractable(beeHive);
 
         //////////
         //SHED////
