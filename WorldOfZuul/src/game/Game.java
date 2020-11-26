@@ -114,18 +114,23 @@ public class Game {
     private void createNPC() {
         File majorBobDialog = load("majorBobDialog.txt");
         majorBob = new NPC(majorBobDialog);
+        majorBob.getImageView().setX(250);
+        majorBob.getImageView().setY(300);
 
         File storeNPCDialog = load("shopKeeperLizzyDialog.txt");
         shopkeeperLizzy = new NPC(storeNPCDialog);
+        shopkeeperLizzy.getImageView().setX(200);
+        shopkeeperLizzy.getImageView().setY(250);
 
         File fieldNPCDialog = load("fieldNPCDialog.txt");
         farmerBob = new NPC(fieldNPCDialog);
+        farmerBob.getImageView().setX(170);
+        farmerBob.getImageView().setY(190);
 
         File beekeeperDialog = load("beekeeperBetti.txt");
         beekeeperBetti = new NPC(beekeeperDialog);
-
-        //majorBob.converse();
-        //storeNPC.converse();
+        beekeeperBetti.getImageView().setX(950);
+        beekeeperBetti.getImageView().setY(400);
     }
 
     private void createBed()    {
@@ -257,6 +262,7 @@ public class Game {
         store.setNpc(shopkeeperLizzy);
 
         store.setRoomPane(createPane("StoreVer1.png"));
+        store.addInteractable(shopkeeperLizzy);
 
         ////////////////
         //GARDEN////////
@@ -265,17 +271,26 @@ public class Game {
         unLockableRooms.put("garden", garden);
         garden.setExit("east", headquarter);
         garden.setExit("south", field2);
+        garden.setNpc(beekeeperBetti);
 
         garden.setRoomPane(createPane("GardenVer1.png"));
+        garden.addInteractable(beekeeperBetti);
 
+        //////////
+        //SHED////
+        //////////
         shed.setExit("west", headquarter);
         shed.setExit("south", field3);
+
         shed.setRoomPane(createPane("SHED", Color.BLANCHEDALMOND));
 
-        //????? Declaerd twice
+        //????? Declared twice  TODO SOMEONE LOOK AT THIS
+        /*
         field.setExit("north", headquarter);
         field.setExit("west", field2);
         field.setExit("east", field3);
+         */
+
 
         field2.setLocked(true);
         unLockableRooms.put("field2", field2);
@@ -287,10 +302,12 @@ public class Game {
         field3.setExit("west", field);
         field3.setExit("north", shed);
 
+        /*
         garden.setLocked(true);
         unLockableRooms.put("garden", garden);
         garden.setExit("east", headquarter);
         garden.setExit("south", field2);
+        */
 
         currentRoom = headquarter;
     }

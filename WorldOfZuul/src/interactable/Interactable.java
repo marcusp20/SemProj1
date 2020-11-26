@@ -1,5 +1,7 @@
 package interactable;
 
+import game.Command;
+import game.CommandWord;
 import game.CommandWords;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -20,18 +22,22 @@ public class Interactable {
         setDefaultImage();
     }
 
+     public void interact()   {
+         System.out.println("No interact command defined");
+    }
+
     private void setDefaultImage()   {
         try {
             Image img = loadImage("placeHolder.png");
             image = new ImageView(img);
-            image.setX(Math.random()*1000);
-            image.setY(Math.random()*800);
+            image.setX(500);
+            image.setY(400);
         } catch (FileNotFoundException e)   {
             System.out.println("placeHolder.png not found");
         }
     }
 
-    public void addImage(ImageView imageView)  {
+    public void setImage(ImageView imageView)  {
         this.image = imageView;
     }
 

@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 
-public class NPC extends Interactable implements TimeProgression {
+public class NPC extends Interactable{
     private String name;                 //NPC name
     private String description;         //NPC description
     private File dialog;                //File containing NPC dialog
@@ -36,10 +36,6 @@ public class NPC extends Interactable implements TimeProgression {
         this.description = findLine(".dd");
     }
 
-    @Override
-    public void nextDay() {
-
-    }
 
     public String getName() {
         return name;
@@ -160,6 +156,11 @@ public class NPC extends Interactable implements TimeProgression {
         catch(InterruptedException ex) {
             Thread.currentThread().interrupt();     //Interrupts thread if there is an exception
         }
+    }
+
+    @Override
+    public void interact()  {
+        System.out.println("You can interact with " + this.name);
     }
 }
 

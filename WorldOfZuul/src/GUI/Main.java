@@ -35,8 +35,6 @@ public class Main extends Application {
     private Game game;
     private static File saveFile;
 
-    private double t;
-
     //Movement keys
     private boolean a;
     private boolean s;
@@ -97,20 +95,10 @@ public class Main extends Application {
         stage.setScene(introScene);
         stage.show();
 
-
-
-        while(true) {
-
-            break;
-        }
-
         //startGame(stage);
     }
 
     private void startGame(Stage stage) throws IOException {
-
-
-
 
         //Create new game object
         launchNewGame();
@@ -120,8 +108,6 @@ public class Main extends Application {
 
         //FXML root OR JavaFX Code...
         Parent rootButtonLayout = FXMLLoader.load(getClass().getResource("ButtonLayout.fxml"));
-
-
 
         //add Children
         p.getChildren().addAll(game.getPlayer().getPlayerSprite(), rootButtonLayout);
@@ -154,8 +140,6 @@ public class Main extends Application {
 
     //Main loop content
     private void update()   {
-        //t represents current game time
-        t += 0.016;
 
         //Moves player based on movement keys
         move();
@@ -167,6 +151,7 @@ public class Main extends Application {
 
 
     private void playerRoomChangeCheck()    {
+        //playerSprite used to check player location
         ImageView playerSprite = game.getPlayer().getPlayerSprite();
 
         //NORTH
@@ -236,7 +221,7 @@ public class Main extends Application {
 
         for(Interactable i: game.getCurrentRoom().getInteractables())  {
             if(i.getImageView().intersects(player.getLayoutBounds()))   {
-                System.out.println("YOU ARE INTERACTING");
+                i.interact();
             }
         }
     }
