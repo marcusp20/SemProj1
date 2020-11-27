@@ -35,15 +35,19 @@ public class Controller implements Initializable {
             System.out.println("Player Pos Y " + player.getLayoutY());
         });
 
+        /*
         pane.getChildren().add(player);
+
         player.setRadius(20.0);
         player.setLayoutX(playerPosX);
         player.setLayoutY(playerPosY);
 
+    
+         */
     }
 
 
-
+    //TODO SOMEONE FIGURE OUT HOW TO REMOVE THIS AND THE REST OF THE UNUSED CODE IN THIS FILE (SOMTHING FXML SOMTHING)
     public void movePlayer(KeyEvent keyEvent) {
         /*
         if (keyEvent.getCode() == KeyCode.W && playerPosY + playerSpeed > 316.0) {

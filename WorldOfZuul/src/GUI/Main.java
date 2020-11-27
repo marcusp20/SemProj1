@@ -141,11 +141,11 @@ public class Main extends Application {
 
     //Main loop content
     private void update()   {
-
         //Moves player based on movement keys
         move();
-
+        //Check if room should be changed (player position)
         playerRoomChangeCheck();
+        //Check if there is collision between player and object
         checkCollision();
     }
 
@@ -213,6 +213,7 @@ public class Main extends Application {
                 scene.setRoot(game.getCurrentRoom().getRoomPane());
             }
         }
+
     }
 
     private void checkCollision()    {
@@ -222,7 +223,6 @@ public class Main extends Application {
             if(i.getImageView().intersects(player.getLayoutBounds()))   {
 
                 //Moves player to previous position if intersecting with intractable, still allows other movement
-                //TODO Fix acceleration
                 if(game.getPlayer().getWestSpeed() > 0 || game.getPlayer().getEastSpeed() > 0)   {
                     double curX = player.getX();
                     int curAc = game.getPlayer().getWestSpeed() - game.getPlayer().getEastSpeed();
@@ -403,23 +403,6 @@ public class Main extends Application {
 
         playerSprite.setY(playerSprite.getY() - player.getNorthSpeed() + player.getSouthSpeed());
         playerSprite.setX(playerSprite.getX() - player.getEastSpeed() + player.getWestSpeed());
-
-        /*
-        int speed = 8;
-        if(w) {
-            playerSprite.setY(playerSprite.getY() - speed);
-        }
-        if(a)  {
-            playerSprite.setX(playerSprite.getX() - speed);
-        }
-        if(s)   {
-            playerSprite.setY(playerSprite.getY() + speed);
-        }
-        if(d)   {
-            playerSprite.setX(playerSprite.getX() + speed);
-        }
-
-         */
 
     }
 
