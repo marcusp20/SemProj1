@@ -6,13 +6,13 @@ import javafx.animation.AnimationTimer;
 import javafx.application.Application;
 
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Node;
+import javafx.geometry.BoundingBox;
+import javafx.geometry.Bounds.*;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.*;
 import javafx.stage.Stage;
@@ -242,8 +242,16 @@ public class Main extends Application {
                         }
                     }
                 }
+            }
 
+            //Create new bounds that extend the original, creating an area where from the player can interact
+            double minX = i.getImageView().getLayoutBounds().getMinX();
+            double minY = i.getImageView().getLayoutBounds().getMinY();
+            double width = i.getImageView().getLayoutBounds().getWidth();
+            double height = i.getImageView().getLayoutBounds().getHeight();
 
+            BoundingBox interactionBounds = new BoundingBox(minX - 15,minY - 15,width + 30,height + 30);
+            if(interactionBounds.intersects(player.getLayoutBounds()))   {
                 if(this.e)  {
                     i.interact();
                     this.e = false;
