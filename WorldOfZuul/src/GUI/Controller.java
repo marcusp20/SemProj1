@@ -42,7 +42,7 @@ public class Controller implements Initializable {
         player.setLayoutX(playerPosX);
         player.setLayoutY(playerPosY);
 
-    
+
          */
     }
 

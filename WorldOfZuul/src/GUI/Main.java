@@ -53,8 +53,6 @@ public class Main extends Application {
 
     @Override
     public void start(Stage stage) throws IOException {
-        //TODO Init main menu
-        //TODO call launchNewGame or launchLoadGame based on user choice.
 
         //startscreen
         ImageView startScreen = new ImageView(load("IntroScreenVer1.png"));
@@ -74,7 +72,6 @@ public class Main extends Application {
         loadGameButton.setLayoutY(410);
         newGameButton.setLayoutX(480);
         newGameButton.setLayoutY(280);
-
 
         newGameButton.setOnAction(e -> {
             try {
@@ -213,19 +210,18 @@ public class Main extends Application {
                 scene.setRoot(game.getCurrentRoom().getRoomPane());
             }
         }
-
     }
 
     private void checkCollision()    {
         ImageView player = game.getPlayer().getPlayerSprite();
 
         for(Interactable i: game.getCurrentRoom().getInteractables())  {
+            //Code for intractable collision
             if(i.getImageView().intersects(player.getLayoutBounds()))   {
 
                 //Moves player to previous position if intersecting with intractable, still allows other movement
                 if(game.getPlayer().getWestSpeed() > 0 || game.getPlayer().getEastSpeed() > 0)   {
                     double curX = player.getX();
-                    int curAc = game.getPlayer().getWestSpeed() - game.getPlayer().getEastSpeed();
 
                     player.setX(game.getPlayer().getPrevX());
                     if(i.getImageView().intersects(player.getLayoutBounds()))   {
@@ -247,7 +243,7 @@ public class Main extends Application {
                 }
             }
 
-            //Create new bounds that extend the original, creating an area where from the player can interact
+            //Create new bounds that extend the original, creating an area where from the player can interact with said object
             double minX = i.getImageView().getLayoutBounds().getMinX();
             double minY = i.getImageView().getLayoutBounds().getMinY();
             double width = i.getImageView().getLayoutBounds().getWidth();
@@ -256,7 +252,9 @@ public class Main extends Application {
             BoundingBox interactionBounds = new BoundingBox(minX - 15,minY - 15,width + 30,height + 30);
             if(interactionBounds.intersects(player.getLayoutBounds()))   {
                 if(this.e)  {
-                    i.interact();
+                    //Code hereunder is run after player interacts with object
+                    Command c = i.interact();
+                    game.processCommand(c);
                     this.e = false;
                 }
             }

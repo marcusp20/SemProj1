@@ -593,7 +593,7 @@ public class Game {
     }
         //Prob not a game command, room command? or something...
     public void sleep()    {
-        //hqBed.sleep();            //Used in 2d implementation
+        hqBed.sleep();            //Used in 2d implementation
         field.nextDay();
         gameTimer++;
     }

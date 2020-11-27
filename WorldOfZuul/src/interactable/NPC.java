@@ -1,5 +1,7 @@
 package interactable;
 
+import game.Command;
+import game.CommandWord;
 import game.CommandWords;
 
 import java.io.File;
@@ -159,8 +161,9 @@ public class NPC extends Interactable{
     }
 
     @Override
-    public void interact()  {
+    public Command interact()  {
         System.out.println("You can interact with " + this.name);
+        return new Command(CommandWord.USE, "npc");
     }
 }
 
