@@ -15,6 +15,8 @@ public class Player {
 
     //Gui attributes
     ImageView playerSprite;
+    private double prevX = 0;
+    private double prevY = 0;
 
     //Constructor
     public Player(String name) {
@@ -81,4 +83,20 @@ public class Player {
     public ImageView getPlayerSprite()  {
         return playerSprite;
     }
+
+    public void setPrevX(double x) {
+        this.prevX = x;
+    }
+
+    public void setPrevY(double y) {
+        this.prevY = y;
+    }
+    public double getPrevX()  {
+        return prevX;
+    }
+
+    public double getPrevY()  {
+        return prevY;
+    }
+
 }

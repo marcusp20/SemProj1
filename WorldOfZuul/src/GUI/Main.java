@@ -31,7 +31,6 @@ public class Main extends Application {
     //Create structure
     Scene scene, introScene;
 
-
     private Game game;
     private static File saveFile;
 
@@ -40,6 +39,8 @@ public class Main extends Application {
     private boolean s;
     private boolean d;
     private boolean w;
+
+    private boolean e;
 
     //Buttons
     Button loadGameButton;
@@ -148,8 +149,6 @@ public class Main extends Application {
         checkCollision();
     }
 
-
-
     private void playerRoomChangeCheck()    {
         //playerSprite used to check player location
         ImageView playerSprite = game.getPlayer().getPlayerSprite();
@@ -221,7 +220,34 @@ public class Main extends Application {
 
         for(Interactable i: game.getCurrentRoom().getInteractables())  {
             if(i.getImageView().intersects(player.getLayoutBounds()))   {
-                i.interact();
+
+                //Moves player to previous position if intersecting with intractable, still allows other movement
+                if(a || d)   {
+                    double curX = player.getX();
+                    player.setX(game.getPlayer().getPrevX());
+                    if(i.getImageView().intersects(player.getLayoutBounds()))   {
+                        player.setX(curX);
+                        if(w || s)   {
+                            player.setY(game.getPlayer().getPrevY());
+                        }
+                    }
+                }
+                if(i.getImageView().intersects(player.getLayoutBounds())) {
+                    if (w || s) {
+                        player.setY(game.getPlayer().getPrevY());
+                        if (i.getImageView().intersects(player.getLayoutBounds())) {
+                            if (a || d) {
+                                player.setX(game.getPlayer().getPrevX());
+                            }
+                        }
+                    }
+                }
+
+
+                if(this.e)  {
+                    i.interact();
+                    this.e = false;
+                }
             }
         }
     }
@@ -251,7 +277,6 @@ public class Main extends Application {
         System.out.println("NewGame");
     }
 
-
     public void loadGame(Stage stage){
         setFadeOut(stage);
         stage.close();
@@ -259,13 +284,11 @@ public class Main extends Application {
         System.out.println("LoadGame");
     }
 
-
     public void setFadeOut(Stage stage) {
         for (double i=1; i>=0.02; i = i-0.00001) {
             stage.setOpacity(i);
         }
     }
-
 
     public void setFadeIn(Stage stage) {
         for (double i=0; i<=0.999; i = i+0.00001) {
@@ -275,33 +298,49 @@ public class Main extends Application {
 
     //Check pressed key and react accordingly
     private void checkInput(KeyEvent e) {
+        //Key pressed event
         if (e.getEventType() == KeyEvent.KEY_PRESSED) {
-            if (e.getCode() == KeyCode.W) {
-                w = true;
-            }
-            if (e.getCode() == KeyCode.A) {
-                a = true;
-            }
-            if (e.getCode() == KeyCode.S) {
-                s = true;
-            }
-            if (e.getCode() == KeyCode.D) {
-                d = true;
+            //Movement
+            switch (e.getCode())    {
+                case W:
+                    w = true;
+                    break;
+                case A:
+                    a = true;
+                    break;
+                case S:
+                    s = true;
+                    break;
+                case D:
+                    d = true;
+                    break;
+                //Interact
+                case E:
+                    this.e = true;
+                    break;
             }
         }
 
+        //Key released event
         if (e.getEventType() == KeyEvent.KEY_RELEASED) {
-            if (e.getCode() == KeyCode.W) {
-                w = false;
-            }
-            if (e.getCode() == KeyCode.A) {
-                a = false;
-            }
-            if (e.getCode() == KeyCode.S) {
-                s = false;
-            }
-            if (e.getCode() == KeyCode.D) {
-                d = false;
+            //Movement
+            switch (e.getCode())    {
+                case W:
+                    w = false;
+                    break;
+                case A:
+                    a = false;
+                    break;
+                case S:
+                    s = false;
+                    break;
+                case D:
+                    d = false;
+                    break;
+                //Interact
+                case E:
+                    this.e = false;
+                    break;
             }
         }
     }
@@ -309,6 +348,9 @@ public class Main extends Application {
     //Move player
     public void move() {
         ImageView playerSprite = game.getPlayer().getPlayerSprite();
+
+        game.getPlayer().setPrevX(playerSprite.getX());
+        game.getPlayer().setPrevY(playerSprite.getY());
 
         int speed = 8;
         if(w) {
