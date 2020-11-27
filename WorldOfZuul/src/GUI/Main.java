@@ -222,21 +222,24 @@ public class Main extends Application {
             if(i.getImageView().intersects(player.getLayoutBounds()))   {
 
                 //Moves player to previous position if intersecting with intractable, still allows other movement
-                if(a || d)   {
+                //TODO Fix acceleration
+                if(game.getPlayer().getWestSpeed() > 0 || game.getPlayer().getEastSpeed() > 0)   {
                     double curX = player.getX();
+                    int curAc = game.getPlayer().getWestSpeed() - game.getPlayer().getEastSpeed();
+
                     player.setX(game.getPlayer().getPrevX());
                     if(i.getImageView().intersects(player.getLayoutBounds()))   {
                         player.setX(curX);
-                        if(w || s)   {
+                        if(game.getPlayer().getNorthSpeed() > 0 || game.getPlayer().getSouthSpeed() > 0)   {
                             player.setY(game.getPlayer().getPrevY());
                         }
                     }
                 }
                 if(i.getImageView().intersects(player.getLayoutBounds())) {
-                    if (w || s) {
+                    if (game.getPlayer().getNorthSpeed() > 0 || game.getPlayer().getSouthSpeed() > 0) {
                         player.setY(game.getPlayer().getPrevY());
                         if (i.getImageView().intersects(player.getLayoutBounds())) {
-                            if (a || d) {
+                            if (game.getPlayer().getWestSpeed() > 0 || game.getPlayer().getEastSpeed() > 0) {
                                 player.setX(game.getPlayer().getPrevX());
                             }
                         }
@@ -360,6 +363,48 @@ public class Main extends Application {
         game.getPlayer().setPrevX(playerSprite.getX());
         game.getPlayer().setPrevY(playerSprite.getY());
 
+        Player player = game.getPlayer();
+        if(w) {
+            if(player.getNorthSpeed() != 8)    {
+                player.setNorthSpeed(player.getNorthSpeed() + 1);
+            }
+        } else  {
+            if(player.getNorthSpeed() != 0)    {
+                player.setNorthSpeed(player.getNorthSpeed() - 1);
+            }
+        }
+        if(a)  {
+            if(player.getEastSpeed() != 8) {
+                player.setEastSpeed(player.getEastSpeed() + 1);
+            }
+        } else  {
+            if(player.getEastSpeed() != 0) {
+                player.setEastSpeed(player.getEastSpeed() - 1);
+            }
+        }
+        if(s)   {
+            if(player.getSouthSpeed() != 8) {
+                player.setSouthSpeed(player.getSouthSpeed() + 1);
+            }
+        } else  {
+            if(player.getSouthSpeed() != 0) {
+                player.setSouthSpeed(player.getSouthSpeed() - 1);
+            }
+        }
+        if(d)   {
+            if(player.getWestSpeed() != 8) {
+                player.setWestSpeed(player.getWestSpeed() + 1);
+            }
+        } else  {
+            if(player.getWestSpeed() != 0) {
+                player.setWestSpeed(player.getWestSpeed() - 1);
+            }
+        }
+
+        playerSprite.setY(playerSprite.getY() - player.getNorthSpeed() + player.getSouthSpeed());
+        playerSprite.setX(playerSprite.getX() - player.getEastSpeed() + player.getWestSpeed());
+
+        /*
         int speed = 8;
         if(w) {
             playerSprite.setY(playerSprite.getY() - speed);
@@ -373,6 +418,9 @@ public class Main extends Application {
         if(d)   {
             playerSprite.setX(playerSprite.getX() + speed);
         }
+
+         */
+
     }
 
     private Image load(String fileName) throws FileNotFoundException {

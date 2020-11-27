@@ -18,6 +18,11 @@ public class Player {
     private double prevX = 0;
     private double prevY = 0;
 
+    private int northSpeed = 0;
+    private int eastSpeed = 0;
+    private int southSpeed = 0;
+    private int westSpeed = 0;
+
     //Constructor
     public Player(String name) {
         this.name = name;
@@ -91,6 +96,7 @@ public class Player {
     public void setPrevY(double y) {
         this.prevY = y;
     }
+
     public double getPrevX()  {
         return prevX;
     }
@@ -99,4 +105,35 @@ public class Player {
         return prevY;
     }
 
+    public int getNorthSpeed() {
+        return northSpeed;
+    }
+
+    public void setNorthSpeed(int northSpeed) {
+        this.northSpeed = northSpeed;
+    }
+
+    public int getEastSpeed() {
+        return eastSpeed;
+    }
+
+    public void setEastSpeed(int eastSpeed) {
+        this.eastSpeed = eastSpeed;
+    }
+
+    public int getSouthSpeed() {
+        return southSpeed;
+    }
+
+    public void setSouthSpeed(int southSpeed) {
+        this.southSpeed = southSpeed;
+    }
+
+    public int getWestSpeed() {
+        return westSpeed;
+    }
+
+    public void setWestSpeed(int westSpeed) {
+        this.westSpeed = westSpeed;
+    }
 }
