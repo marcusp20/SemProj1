@@ -5,22 +5,28 @@ import interactable.Interactable;
 import javafx.animation.AnimationTimer;
 import javafx.application.Application;
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.BoundingBox;
-import javafx.geometry.Bounds.*;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.ListCell;
+import javafx.scene.control.ListView;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.*;
 import javafx.stage.Stage;
+import javafx.util.Callback;
 
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.HashMap;
 
 /*
     Learnt from https://www.youtube.com/watch?v=FVo1fm52hz0
@@ -45,6 +51,8 @@ public class Main extends Application {
     //Buttons
     Button loadGameButton;
     Button newGameButton;
+
+    ListView<String> lastLV = new ListView<>();
 
 
     public static void main(String[] args){
@@ -152,6 +160,7 @@ public class Main extends Application {
 
         //NORTH
         if(playerSprite.getY() < -40)  {
+            game.getCurrentRoom().getRoomPane().getChildren().remove(lastLV);
             System.out.println("GO NORTH");
             Pane oldPane = game.getCurrentRoom().getRoomPane();
             game.processCommand(new Command(CommandWord.GO, "north"));
@@ -167,6 +176,7 @@ public class Main extends Application {
         }
         //EAST
         if(playerSprite.getX() > scene.getWidth() - 120) {
+            game.getCurrentRoom().getRoomPane().getChildren().remove(lastLV);
             System.out.println("GO EAST");
             Pane oldPane = game.getCurrentRoom().getRoomPane();
             game.processCommand(new Command(CommandWord.GO, "east"));
@@ -182,6 +192,7 @@ public class Main extends Application {
         }
         //SOUTH
         if(playerSprite.getY() > scene.getHeight() - 180)  {
+            game.getCurrentRoom().getRoomPane().getChildren().remove(lastLV);
             System.out.println("GO SOUTH");
             Pane oldPane = game.getCurrentRoom().getRoomPane();
             game.processCommand(new Command(CommandWord.GO, "south"));
@@ -197,6 +208,7 @@ public class Main extends Application {
         }
         //WEST
         if(playerSprite.getX() < - 10) {
+            game.getCurrentRoom().getRoomPane().getChildren().remove(lastLV);
             System.out.println("GO WEST");
             Pane oldPane = game.getCurrentRoom().getRoomPane();
             game.processCommand(new Command(CommandWord.GO, "west"));
@@ -244,6 +256,7 @@ public class Main extends Application {
             }
 
             //Create new bounds that extend the original, creating an area where from the player can interact with said object
+            //Potentially optimize by placing interactionBounds in objects
             double minX = i.getImageView().getLayoutBounds().getMinX();
             double minY = i.getImageView().getLayoutBounds().getMinY();
             double width = i.getImageView().getLayoutBounds().getWidth();
@@ -254,11 +267,38 @@ public class Main extends Application {
                 if(this.e)  {
                     //Code hereunder is run after player interacts with object
                     Command c = i.interact();
-                    game.processCommand(c);
+                    //game.processCommand(c);
+                    game.getCurrentRoom().getRoomPane().getChildren().remove(lastLV);
+                    lastLV = createInteractionMenu(i.getImageView().getX(), i.getImageView().getY());
                     this.e = false;
                 }
             }
         }
+    }
+
+    private ListView<String> createInteractionMenu(double x, double y)    {
+        StackPane pane = new StackPane();
+
+        //TODO send in commands from intractable (hashmap)
+        ObservableList<String> list = FXCollections.observableArrayList(
+                "use npc", "use bed");
+        ListView<String> lv = new ListView<>(list);
+        HashMap<String, Command> commands = new HashMap();
+        commands.put("use npc", new Command(CommandWord.USE, "npc"));
+        commands.put("use bed", new Command(CommandWord.USE, "bed"));
+        Callback<ListView<String>, ListCell<String>> customCellFactory = new Callback<ListView<String>, ListCell<String>>() {
+            @Override
+            public ListCell<String> call(ListView<String> stringListView) {
+                return new ButtonCell(game, commands);
+            }
+        };
+        lv.setCellFactory(customCellFactory);
+        lv.setLayoutX(x);
+        lv.setLayoutY(y);
+        lv.setPrefHeight(200);
+        lv.setPrefWidth(120);
+        game.getCurrentRoom().getRoomPane().getChildren().add(lv);
+        return lv;
     }
 
     private void launchNewGame() {
