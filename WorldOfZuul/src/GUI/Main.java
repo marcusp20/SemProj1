@@ -276,6 +276,7 @@ public class Main extends Application {
         }
     }
 
+    //TODO experiment with placing listview in intractable, so they each contain a menu, rather than always creating a new one
     private ListView<String> createInteractionMenu(double x, double y)    {
         StackPane pane = new StackPane();
 
