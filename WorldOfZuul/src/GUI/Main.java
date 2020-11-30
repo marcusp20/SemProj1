@@ -25,7 +25,6 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.HashMap;
 
 /*
@@ -106,8 +105,9 @@ public class Main extends Application {
 
     private void startGame(Stage stage) throws IOException {
 
-        //Create new game object
+        //Create new objects
         launchNewGame();
+        createListViews();
 
         //Set scene
         Pane p = game.getCurrentRoom().getRoomPane();
@@ -269,7 +269,9 @@ public class Main extends Application {
                     Command c = i.interact();
                     //game.processCommand(c);
                     game.getCurrentRoom().getRoomPane().getChildren().remove(lastLV);
-                    lastLV = createInteractionMenu(i.getImageView().getX(), i.getImageView().getY());
+                    game.getCurrentRoom().getRoomPane().getChildren().add(i.getCommandList());
+                    lastLV = i.getCommandList();
+                    //lastLV = createInteractionMenu(i.getImageView().getX(), i.getImageView().getY());
                     this.e = false;
                 }
             }
@@ -278,7 +280,6 @@ public class Main extends Application {
 
     //TODO experiment with placing listview in intractable, so they each contain a menu, rather than always creating a new one
     private ListView<String> createInteractionMenu(double x, double y)    {
-        StackPane pane = new StackPane();
 
         //TODO send in commands from intractable (hashmap)
         ObservableList<String> list = FXCollections.observableArrayList(
@@ -290,7 +291,7 @@ public class Main extends Application {
         Callback<ListView<String>, ListCell<String>> customCellFactory = new Callback<ListView<String>, ListCell<String>>() {
             @Override
             public ListCell<String> call(ListView<String> stringListView) {
-                return new ButtonCell(game, commands);
+                return new CommandButtonCell(game, commands);
             }
         };
         lv.setCellFactory(customCellFactory);
@@ -442,7 +443,49 @@ public class Main extends Application {
 
         playerSprite.setY(playerSprite.getY() - player.getNorthSpeed() + player.getSouthSpeed());
         playerSprite.setX(playerSprite.getX() - player.getEastSpeed() + player.getWestSpeed());
+    }
 
+    private void createListViews()  {
+        HashMap<String, Command> bedCommands = new HashMap();
+        bedCommands.put("Use bed", new Command(CommandWord.USE, "bed"));
+        createListFromMap(bedCommands, game.getHqBed());
+
+        HashMap<String, Command> fieldCommands = new HashMap();
+        fieldCommands.put("Sow clover", new Command(CommandWord.FIELD_SOW, "clover"));
+        fieldCommands.put("water field", new Command(CommandWord.FIELD_WATER, ""));
+        createListFromMap(fieldCommands, game.getField());
+
+        HashMap<String, Command> beeHiveCommands = new HashMap();
+        beeHiveCommands.put("Use beehive", new Command(CommandWord.USE, "beehive"));
+        beeHiveCommands.put("Bees?", new Command(CommandWord.GARDEN_CHECK_BEES, ""));
+        createListFromMap(beeHiveCommands, game.getBeeHive());
+
+    }
+
+    private ListView<String> createListFromMap(HashMap<String, Command> commandHashMap, Interactable interactable)  {
+        ObservableList<String> list = FXCollections.observableArrayList();
+        for(String key : commandHashMap.keySet())   {
+            list.add(key);
+        }
+        ListView<String> listView = new ListView<>(list);
+
+        Callback<ListView<String>, ListCell<String>> commandCellFactory = new Callback<ListView<String>, ListCell<String>>() {
+            @Override
+            public ListCell<String> call(ListView<String> stringListView) {
+                return new CommandButtonCell(game, commandHashMap);
+            }
+        };
+        listView.setCellFactory(commandCellFactory);
+        listView.setLayoutX(interactable.getImageView().getX());
+        listView.setLayoutY(interactable.getImageView().getY());
+        listView.setPrefHeight(35*commandHashMap.size());
+        if(listView.getPrefHeight() > 300)  {
+            listView.setPrefHeight(300);
+        }
+        listView.setPrefWidth(120);
+
+        interactable.setCommandList(listView);
+        return listView;
     }
 
     private Image load(String fileName) throws FileNotFoundException {

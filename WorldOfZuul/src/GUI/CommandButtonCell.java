@@ -18,20 +18,20 @@ https://stackoverflow.com/questions/15661500/javafx-listview-item-with-an-image-
 http://fxexperience.com/2012/05/listview-custom-cell-factories-and-context-menus/
  */
 
-class ButtonCell extends ListCell<String> {
+class CommandButtonCell extends ListCell<String> {
     HBox hbox = new HBox();
     Label label = new Label("(empty)");
     Pane pane = new Pane();
     Button button = new Button("->");
     String lastItem;
 
-    public ButtonCell(Game game, HashMap<String, Command> hM) {
+    public CommandButtonCell(Game game, HashMap<String, Command> commandHashMap) {
         super();
         hbox.getChildren().addAll(label, pane, button);
         HBox.setHgrow(pane, Priority.ALWAYS);
         button.setOnAction(e -> {
             System.out.println(lastItem + " : " + e);
-            Command command = hM.get(lastItem);
+            Command command = commandHashMap.get(lastItem);
             game.processCommand(command);
         });
     }
@@ -51,27 +51,4 @@ class ButtonCell extends ListCell<String> {
     }
 }
 
-/*
-    //TEST CODE, delete when code works
-        game = new Game();
-
-        StackPane pane = new StackPane();
-        Scene scene = new Scene(pane, 300, 150);
-        stage.setScene(scene);
-        ObservableList<String> list = FXCollections.observableArrayList(
-                "use npc", "use bed");
-        ListView<String> lv = new ListView<>(list);
-        HashMap<String, Command> commands = new HashMap();
-        commands.put("use npc", new Command(CommandWord.USE, "npc"));
-        commands.put("use bed", new Command(CommandWord.USE, "bed"));
-        Callback<ListView<String>, ListCell<String>> customCellFactory = new Callback<ListView<String>, ListCell<String>>() {
-            @Override
-            public ListCell<String> call(ListView<String> stringListView) {
-                return new ButtonCell(game, commands);
-            }
-        };
-        lv.setCellFactory(customCellFactory);
-        pane.getChildren().add(lv);
-        stage.show();
- */
 

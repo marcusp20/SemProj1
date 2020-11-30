@@ -3,6 +3,7 @@ package interactable;
 import game.Command;
 import game.CommandWord;
 import game.CommandWords;
+import javafx.scene.control.ListView;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 
@@ -11,7 +12,10 @@ import java.io.FileNotFoundException;
 
 public class Interactable {
     private CommandWords commandWords;
+
+    //Gui
     private ImageView image;
+    private ListView<String> commandList;
 
     public Interactable(CommandWords commandWords) {
         this.commandWords = commandWords;
@@ -55,5 +59,13 @@ public class Interactable {
         }
         //Default - probably not gonna work
         return new Image(new FileInputStream(path + "\\img\\" + fileName));
+    }
+
+    public void setCommandList(ListView<String> commandList)    {
+        this.commandList = commandList;
+    }
+
+    public ListView<String> getCommandList()    {
+        return this.commandList;
     }
 }

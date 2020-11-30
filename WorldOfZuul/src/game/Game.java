@@ -891,5 +891,17 @@ public class Game {
         return this.currentRoom;
     }
 
+    public Bed getHqBed() {
+        return hqBed;
+    }
+
+    public Field getField() {
+        return field;
+    }
+
+    public BeeHive getBeeHive() {
+        return beeHive;
+    }
 
 }
+
