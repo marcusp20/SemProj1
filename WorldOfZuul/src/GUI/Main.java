@@ -460,8 +460,15 @@ public class Main extends Application {
         createListFromMap(bedCommands, game.getHqBed());
 
         HashMap<String, Command> fieldCommands = new HashMap();
+        fieldCommands.put("Water field", new Command(CommandWord.FIELD_WATER, ""));
+        fieldCommands.put("Harvest field", new Command(CommandWord.FIELD_HARVEST, ""));
+        fieldCommands.put("Spread fertilizer", new Command(CommandWord.FIELD_FERTILIZE, ""));
+        fieldCommands.put("Spread pesticides", new Command(CommandWord.FIELD_USE_PESTICIDES, ""));
+        fieldCommands.put("Take soil sample", new Command(CommandWord.FIELD_SOIL_SAMPLE, ""));
         fieldCommands.put("Sow clover", new Command(CommandWord.FIELD_SOW, "clover"));
-        fieldCommands.put("water field", new Command(CommandWord.FIELD_WATER, ""));
+        fieldCommands.put("Sow wheat", new Command(CommandWord.FIELD_SOW, "wheat"));
+        fieldCommands.put("Sow corn", new Command(CommandWord.FIELD_SOW, "corn"));
+        fieldCommands.put("Sow cannabis", new Command(CommandWord.FIELD_SOW, "cannabis"));
         createListFromMap(fieldCommands, game.getField());
 
         HashMap<String, Command> beeHiveCommands = new HashMap();
@@ -470,18 +477,11 @@ public class Main extends Application {
         createListFromMap(beeHiveCommands, game.getBeeHive());
 
         HashMap<String, Command> shopCommands = new HashMap();
-        /*
-        shopCommands.put("Buy shovel", new Command(CommandWord.STORE_BUY, "Shovel"));
-        shopCommands.put("Buy scythe", new Command(CommandWord.STORE_BUY, "Scythe"));
-        shopCommands.put("Buy watering can", new Command(CommandWord.STORE_BUY, "Watering can"));
-        shopCommands.put("Buy tractor", new Command(CommandWord.STORE_BUY, "Tractor"));
-        shopCommands.put("Buy harvester", new Command(CommandWord.STORE_BUY, "Harvester"));
-
-         */
         for(ItemName i : ItemName.values()) {
             shopCommands.put(("Buy " + i.getItemNameString()), new Command(CommandWord.STORE_BUY, i.getItemNameString()));
         }
         createListFromMap(shopCommands, game.getShop());
+
 
 
 
