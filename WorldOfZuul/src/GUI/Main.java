@@ -45,7 +45,9 @@ public class Main extends Application {
     private boolean d;
     private boolean w;
 
+    //Interaction keys
     private boolean e;
+    private boolean backSpace;
 
     //Buttons
     Button loadGameButton;
@@ -162,8 +164,14 @@ public class Main extends Application {
         move();
         //Check if room should be changed (player position)
         playerRoomChangeCheck();
+
+        if(backSpace)  {
+            game.getCurrentRoom().getRoomPane().getChildren().remove(lastLV);
+            System.out.println("??");
+        }
         //Check if there is collision between player and object
         checkCollision();
+
     }
 
     private void playerRoomChangeCheck()    {
@@ -283,7 +291,6 @@ public class Main extends Application {
                     game.getCurrentRoom().getRoomPane().getChildren().remove(lastLV);
                     game.getCurrentRoom().getRoomPane().getChildren().add(i.getCommandList());
                     lastLV = i.getCommandList();
-                    //lastLV = createInteractionMenu(i.getImageView().getX(), i.getImageView().getY());
                     this.e = false;
                 }
             }
@@ -358,6 +365,9 @@ public class Main extends Application {
                 case E:
                     this.e = true;
                     break;
+                case BACK_SPACE:
+                    this.backSpace = true;
+                    break;
             }
         }
 
@@ -380,6 +390,9 @@ public class Main extends Application {
                 //Interact
                 case E:
                     this.e = false;
+                    break;
+                case BACK_SPACE:
+                    this.backSpace = false;
                     break;
             }
         }
