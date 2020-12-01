@@ -88,7 +88,13 @@ public class Main extends Application {
                 ioException.printStackTrace();
             }
         });
-        loadGameButton.setOnAction(e -> loadGame(stage));
+        loadGameButton.setOnAction(e -> {
+            try {
+                loadGame(stage);
+            } catch (IOException ioException) {
+                ioException.printStackTrace();
+            }
+        });
 
         //Parent rootButtonLayout = FXMLLoader.load(getClass().getResource("ButtonLayout.fxml"));
         //Parent rootStartScreen = FXMLLoader.load(getClass().getResource("StartScreen.fxml"));
@@ -104,10 +110,8 @@ public class Main extends Application {
         //startGame(stage);
     }
 
+    //Must only be called through newGame or loadGame
     private void startGame(Stage stage) throws IOException {
-
-        //Create new game object
-        launchNewGame();
 
         //Set scene
         Pane p = game.getCurrentRoom().getRoomPane();
@@ -302,35 +306,37 @@ public class Main extends Application {
         return lv;
     }
 
-    private void launchNewGame() {
+    private void launchNewGame(Stage stage) throws IOException{
         game = new Game(true);
         game.playGUI();
+        startGame(stage);
     }
 
-    private void launchLoadGame() {
+    private void launchLoadGame(Stage stage) throws IOException{
         saveFile = new File(System.getProperty("user.dir") + "\\saveFile.txt");
         boolean saveFileExists = saveFile.exists();
-        System.out.println(saveFile);
+        //System.out.println(saveFile);
         if(saveFileExists) {
             game = GameLogger.loadGameFrom(saveFile, true);
             game.playGUI();
         } else {
             System.err.println("Could not load saveFile");
-            launchNewGame();
+            launchNewGame(stage);
         }
+        startGame(stage);
     }
 
     public void newGame(Stage stage) throws IOException {
         setFadeOut(stage);
         stage.close();
-        startGame(stage);
+        launchNewGame(stage);
         System.out.println("NewGame");
     }
 
-    public void loadGame(Stage stage){
+    public void loadGame(Stage stage) throws IOException{
         setFadeOut(stage);
         stage.close();
-        launchLoadGame();
+        launchLoadGame(stage);
         System.out.println("LoadGame");
     }
 
