@@ -21,6 +21,7 @@ import javafx.scene.text.Text;
 
 
 public class Game {
+    //TODO Sort variables
     private Parser parser;
     private Room currentRoom;
     private CommandWords gameCommandWords;
@@ -30,6 +31,7 @@ public class Game {
     private Field field;
     private Player player;
     private List<Item> storeItemList;
+    private Shop shop;
     private NPC majorBob;
     private NPC shopkeeperLizzy;
     private NPC farmerBob;
@@ -62,6 +64,7 @@ public class Game {
 
         //Create intractables
         createNPC();
+        createStore();
         createField();
         createPlayer();
         createBed();
@@ -127,6 +130,12 @@ public class Game {
         for (ItemName itemName : ItemName.values()) {
             storeItemList.add(new Item(itemName));
         }
+    }
+
+    public void createStore()   {
+        shop = new Shop();
+        shop.getImageView().setX(650);
+        shop.getImageView().setY(100);
     }
 
     private void createNPC() {
@@ -291,6 +300,7 @@ public class Game {
 
         store.setRoomPane(createPane("StoreVer1.png"));
         store.addInteractable(shopkeeperLizzy);
+        store.addInteractable(shop);
 
         ////////////////
         //GARDEN////////
@@ -604,36 +614,51 @@ public class Game {
 
     private boolean buyStore(Command command) {
         // 1. check if you can afford it.
-        if (!command.hasSecondWord()) {
-            System.out.println("Please specify the item you want to buy.");
-            return false;
-        }
-        Item item = null;
-        try {
-            int itemindex = Integer.parseInt(command.getSecondWord());
-            item = storeItemList.get(itemindex);
-
-        } catch (NumberFormatException nfe) {
-            System.out.println("Give me the index of the item you wish to buy.");
-            return false;
-        } catch (IndexOutOfBoundsException eobe) {
-            System.out.println("Please give me a number between 0 & " + (storeItemList.size()-1));
-            return false;
-        }
-        if (!player.addWallet(-item.getPrice())) {
-            System.out.println("You cannot afford it.");
-        } else {
-            boolean noRemove = item.getName().startsWith("Bag of")
-                    || item.getName().startsWith("pesticides"); //Check if item bought starts with "bag of"
-            if (!noRemove) {
-                storeItemList.remove(item);                             // remove item from StoreItemList.
+        if(!isGUI)  {
+            if (!command.hasSecondWord()) {
+                System.out.println("Please specify the item you want to buy.");
+                return false;
             }
-            player.getPlayerInventory().put(item.getEnum(), true);  // change item hashmap value to true.
-            System.out.println("you bought a " + item.getName());
+            Item item = null;
+            try {
+                int itemindex = Integer.parseInt(command.getSecondWord());
+                item = storeItemList.get(itemindex);
 
-            //Successfully bought an item, update tasks list, to see if purchase fulfilled a task requirement
-            taskList.update();
+            } catch (NumberFormatException nfe) {
+                System.out.println("Give me the index of the item you wish to buy.");
+                return false;
+            } catch (IndexOutOfBoundsException eobe) {
+                System.out.println("Please give me a number between 0 & " + (storeItemList.size()-1));
+                return false;
+            }
+        } else  {
+            Item item = null;
+            for(Item i : storeItemList)  {
+                if(i.getName() == command.getSecondWord())   {
+                    System.out.println(i.getName());
+                    item = i;
+                    break;
+                } else  {
+                    System.out.println("'buyStore': Item not found");
+                    return false;
+                }
+            }
+            if (!player.addWallet(-item.getPrice())) {
+                System.out.println("You cannot afford it.");
+            } else {
+                boolean noRemove = item.getName().startsWith("Bag of")
+                        || item.getName().startsWith("pesticides"); //Check if item bought starts with "bag of"
+                if (!noRemove) {
+                    storeItemList.remove(item);                             // remove item from StoreItemList.
+                }
+                player.getPlayerInventory().put(item.getEnum(), true);  // change item hashmap value to true.
+                System.out.println("you bought a " + item.getName());
+
+                //Successfully bought an item, update tasks list, to see if purchase fulfilled a task requirement
+                taskList.update();
+            }
         }
+
         return false;
     }
 
@@ -892,15 +917,19 @@ public class Game {
     }
 
     public Bed getHqBed() {
-        return hqBed;
+        return this.hqBed;
     }
 
     public Field getField() {
-        return field;
+        return this.field;
     }
 
     public BeeHive getBeeHive() {
-        return beeHive;
+        return this.beeHive;
+    }
+
+    public Shop getShop()   {
+        return this.shop;
     }
 
 }

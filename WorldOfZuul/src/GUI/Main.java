@@ -460,6 +460,10 @@ public class Main extends Application {
         beeHiveCommands.put("Bees?", new Command(CommandWord.GARDEN_CHECK_BEES, ""));
         createListFromMap(beeHiveCommands, game.getBeeHive());
 
+        HashMap<String, Command> shopCommands = new HashMap();
+        shopCommands.put("Buy shovel", new Command(CommandWord.STORE_BUY, "Shovel"));
+        createListFromMap(shopCommands, game.getShop());
+
     }
 
     private ListView<String> createListFromMap(HashMap<String, Command> commandHashMap, Interactable interactable)  {
