@@ -18,6 +18,7 @@ public class Controller implements Initializable {
     @FXML
     Button saveGameButton;
 
+
     private int playerPosX = (1280 / 2);
     private int playerPosY = (832 / 2);
     private int height = 832;
@@ -25,22 +26,30 @@ public class Controller implements Initializable {
     private Circle player = new Circle(5.0, 5.2, 5.1);
     private int playerSpeed = 5;
 
+
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+
         saveGameButton.setOnAction(e -> {
             System.out.println("Player pos X " + player.getLayoutX());
             System.out.println("Player Pos Y " + player.getLayoutY());
         });
 
+        /*
         pane.getChildren().add(player);
-        player.setOpacity(0.0);
+
         player.setRadius(20.0);
         player.setLayoutX(playerPosX);
         player.setLayoutY(playerPosY);
+
+
+         */
     }
 
-    public void movePlayer(KeyEvent keyEvent) {
 
+    //TODO SOMEONE FIGURE OUT HOW TO REMOVE THIS AND THE REST OF THE UNUSED CODE IN THIS FILE (SOMTHING FXML SOMTHING)
+    public void movePlayer(KeyEvent keyEvent) {
+        /*
         if (keyEvent.getCode() == KeyCode.W && playerPosY + playerSpeed > 316.0) {
             playerPosY -= playerSpeed;
             player.setLayoutX(playerPosX);
@@ -65,7 +74,7 @@ public class Controller implements Initializable {
             player.setLayoutY(playerPosY);
         }
         return;
-
+        */
     }
 
 }

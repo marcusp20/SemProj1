@@ -15,6 +15,13 @@ public class Player {
 
     //Gui attributes
     ImageView playerSprite;
+    private double prevX = 0;
+    private double prevY = 0;
+
+    private int northSpeed = 0;
+    private int eastSpeed = 0;
+    private int southSpeed = 0;
+    private int westSpeed = 0;
 
     //Constructor
     public Player(String name) {
@@ -80,5 +87,53 @@ public class Player {
 
     public ImageView getPlayerSprite()  {
         return playerSprite;
+    }
+
+    public void setPrevX(double x) {
+        this.prevX = x;
+    }
+
+    public void setPrevY(double y) {
+        this.prevY = y;
+    }
+
+    public double getPrevX()  {
+        return prevX;
+    }
+
+    public double getPrevY()  {
+        return prevY;
+    }
+
+    public int getNorthSpeed() {
+        return northSpeed;
+    }
+
+    public void setNorthSpeed(int northSpeed) {
+        this.northSpeed = northSpeed;
+    }
+
+    public int getEastSpeed() {
+        return eastSpeed;
+    }
+
+    public void setEastSpeed(int eastSpeed) {
+        this.eastSpeed = eastSpeed;
+    }
+
+    public int getSouthSpeed() {
+        return southSpeed;
+    }
+
+    public void setSouthSpeed(int southSpeed) {
+        this.southSpeed = southSpeed;
+    }
+
+    public int getWestSpeed() {
+        return westSpeed;
+    }
+
+    public void setWestSpeed(int westSpeed) {
+        this.westSpeed = westSpeed;
     }
 }
