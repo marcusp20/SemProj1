@@ -37,7 +37,7 @@ public class Main extends Application {
     Scene scene, introScene;
 
     private Game game;
-    private static File saveFile;
+    private File saveFile;
 
     //Movement keys
     private boolean a;
@@ -51,8 +51,10 @@ public class Main extends Application {
     Button loadGameButton;
     Button newGameButton;
 
+    //Contains last opened menu
     ListView<String> lastLV = new ListView<>();
 
+    //Easy access to player and player sprite objects
     private ImageView playerSprite;
     private Player player;
 
@@ -288,31 +290,6 @@ public class Main extends Application {
         }
     }
 
-    //TODO experiment with placing listview in intractable, so they each contain a menu, rather than always creating a new one
-    private ListView<String> createInteractionMenu(double x, double y)    {
-
-        //TODO send in commands from intractable (hashmap)
-        ObservableList<String> list = FXCollections.observableArrayList(
-                "use npc", "use bed");
-        ListView<String> lv = new ListView<>(list);
-        HashMap<String, Command> commands = new HashMap();
-        commands.put("use npc", new Command(CommandWord.USE, "npc"));
-        commands.put("use bed", new Command(CommandWord.USE, "bed"));
-        Callback<ListView<String>, ListCell<String>> customCellFactory = new Callback<ListView<String>, ListCell<String>>() {
-            @Override
-            public ListCell<String> call(ListView<String> stringListView) {
-                return new CommandButtonCell(game, commands);
-            }
-        };
-        lv.setCellFactory(customCellFactory);
-        lv.setLayoutX(x);
-        lv.setLayoutY(y);
-        lv.setPrefHeight(200);
-        lv.setPrefWidth(120);
-        game.getCurrentRoom().getRoomPane().getChildren().add(lv);
-        return lv;
-    }
-
     private void launchNewGame(Stage stage) throws IOException{
         game = new Game(true);
         game.playGUI();
@@ -481,13 +458,9 @@ public class Main extends Application {
             shopCommands.put(("Buy " + i.getItemNameString()), new Command(CommandWord.STORE_BUY, i.getItemNameString()));
         }
         createListFromMap(shopCommands, game.getShop());
-
-
-
-
     }
 
-    private ListView<String> createListFromMap(HashMap<String, Command> commandHashMap, Interactable interactable)  {
+    private void createListFromMap(HashMap<String, Command> commandHashMap, Interactable interactable)  {
         ObservableList<String> list = FXCollections.observableArrayList();
         for(String key : commandHashMap.keySet())   {
             list.add(key);
@@ -510,7 +483,6 @@ public class Main extends Application {
         listView.setPrefWidth(200);
 
         interactable.setCommandList(listView);
-        return listView;
     }
 
     private Image load(String fileName) throws FileNotFoundException {
