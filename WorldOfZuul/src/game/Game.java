@@ -649,6 +649,7 @@ public class Game {
                         || item.getName().startsWith("pesticides"); //Check if item bought starts with "bag of"
                 if (!noRemove) {
                     storeItemList.remove(item);                             // remove item from StoreItemList.
+                    shop.removeItem(command.getSecondWord());
                 }
                 player.getPlayerInventory().put(item.getEnum(), true);  // change item hashmap value to true.
                 System.out.println("you bought a " + item.getName());
