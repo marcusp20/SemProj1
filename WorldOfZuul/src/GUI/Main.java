@@ -53,6 +53,8 @@ public class Main extends Application {
 
     ListView<String> lastLV = new ListView<>();
 
+    private ImageView playerSprite;
+    private Player player;
 
     public static void main(String[] args){
         launch(args);
@@ -87,7 +89,13 @@ public class Main extends Application {
                 ioException.printStackTrace();
             }
         });
-        loadGameButton.setOnAction(e -> loadGame(stage));
+        loadGameButton.setOnAction(e -> {
+            try {
+                loadGame(stage);
+            } catch (IOException ioException) {
+                ioException.printStackTrace();
+            }
+        });
 
         //Parent rootButtonLayout = FXMLLoader.load(getClass().getResource("ButtonLayout.fxml"));
         //Parent rootStartScreen = FXMLLoader.load(getClass().getResource("StartScreen.fxml"));
@@ -103,10 +111,12 @@ public class Main extends Application {
         //startGame(stage);
     }
 
+    //Must only be called through newGame or loadGame
     private void startGame(Stage stage) throws IOException {
 
+        player = game.getPlayer();
+        playerSprite = player.getPlayerSprite();
         //Create new objects
-        launchNewGame();
         createListViews();
 
         //Set scene
@@ -303,35 +313,37 @@ public class Main extends Application {
         return lv;
     }
 
-    private void launchNewGame() {
+    private void launchNewGame(Stage stage) throws IOException{
         game = new Game(true);
         game.playGUI();
+        startGame(stage);
     }
 
-    private void launchLoadGame() {
+    private void launchLoadGame(Stage stage) throws IOException{
         saveFile = new File(System.getProperty("user.dir") + "\\saveFile.txt");
         boolean saveFileExists = saveFile.exists();
-        System.out.println(saveFile);
+        //System.out.println(saveFile);
         if(saveFileExists) {
             game = GameLogger.loadGameFrom(saveFile, true);
             game.playGUI();
         } else {
             System.err.println("Could not load saveFile");
-            launchNewGame();
+            launchNewGame(stage);
         }
+        startGame(stage);
     }
 
     public void newGame(Stage stage) throws IOException {
         setFadeOut(stage);
         stage.close();
-        startGame(stage);
+        launchNewGame(stage);
         System.out.println("NewGame");
     }
 
-    public void loadGame(Stage stage){
+    public void loadGame(Stage stage) throws IOException{
         setFadeOut(stage);
         stage.close();
-        launchLoadGame();
+        launchLoadGame(stage);
         System.out.println("LoadGame");
     }
 
@@ -398,12 +410,9 @@ public class Main extends Application {
 
     //Move player
     public void move() {
-        ImageView playerSprite = game.getPlayer().getPlayerSprite();
-
         game.getPlayer().setPrevX(playerSprite.getX());
         game.getPlayer().setPrevY(playerSprite.getY());
 
-        Player player = game.getPlayer();
         if(w) {
             if(player.getNorthSpeed() != 8)    {
                 player.setNorthSpeed(player.getNorthSpeed() + 1);
