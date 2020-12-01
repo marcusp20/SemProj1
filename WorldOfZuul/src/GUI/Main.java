@@ -470,8 +470,20 @@ public class Main extends Application {
         createListFromMap(beeHiveCommands, game.getBeeHive());
 
         HashMap<String, Command> shopCommands = new HashMap();
+        /*
         shopCommands.put("Buy shovel", new Command(CommandWord.STORE_BUY, "Shovel"));
+        shopCommands.put("Buy scythe", new Command(CommandWord.STORE_BUY, "Scythe"));
+        shopCommands.put("Buy watering can", new Command(CommandWord.STORE_BUY, "Watering can"));
+        shopCommands.put("Buy tractor", new Command(CommandWord.STORE_BUY, "Tractor"));
+        shopCommands.put("Buy harvester", new Command(CommandWord.STORE_BUY, "Harvester"));
+
+         */
+        for(ItemName i : ItemName.values()) {
+            shopCommands.put(("Buy " + i.getItemNameString()), new Command(CommandWord.STORE_BUY, i.getItemNameString()));
+        }
         createListFromMap(shopCommands, game.getShop());
+
+
 
     }
 
@@ -495,7 +507,7 @@ public class Main extends Application {
         if(listView.getPrefHeight() > 300)  {
             listView.setPrefHeight(300);
         }
-        listView.setPrefWidth(120);
+        listView.setPrefWidth(200);
 
         interactable.setCommandList(listView);
         return listView;

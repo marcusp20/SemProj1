@@ -613,12 +613,12 @@ public class Game {
 
     private boolean buyStore(Command command) {
         // 1. check if you can afford it.
+        Item item = null;
         if(!isGUI)  {
             if (!command.hasSecondWord()) {
                 System.out.println("Please specify the item you want to buy.");
                 return false;
             }
-            Item item = null;
             try {
                 int itemindex = Integer.parseInt(command.getSecondWord());
                 item = storeItemList.get(itemindex);
@@ -630,18 +630,18 @@ public class Game {
                 System.out.println("Please give me a number between 0 & " + (storeItemList.size()-1));
                 return false;
             }
-        } else  {
-            Item item = null;
-            for(Item i : storeItemList)  {
-                if(i.getName() == command.getSecondWord())   {
+        } else {
+            for (Item i : storeItemList) {
+                if (i.getName().equals(command.getSecondWord())) {
                     System.out.println(i.getName());
                     item = i;
                     break;
-                } else  {
-                    System.out.println("'buyStore': Item not found");
-                    return false;
                 }
             }
+            if (item == null) {
+                return false;
+            }
+        }
             if (!player.addWallet(-item.getPrice())) {
                 System.out.println("You cannot afford it.");
             } else {
@@ -656,7 +656,7 @@ public class Game {
                 //Successfully bought an item, update tasks list, to see if purchase fulfilled a task requirement
                 taskList.update();
             }
-        }
+
 
         return false;
     }
