@@ -53,6 +53,8 @@ public class Main extends Application {
     Button newGameButton;
 
     ListView<String> lastLV = new ListView<>();
+    private ImageView playerSprite;
+    private Player player;
 
 
     public static void main(String[] args){
@@ -112,6 +114,8 @@ public class Main extends Application {
 
     //Must only be called through newGame or loadGame
     private void startGame(Stage stage) throws IOException {
+        player = game.getPlayer();
+        playerSprite = player.getPlayerSprite();
 
         //Set scene
         Pane p = game.getCurrentRoom().getRoomPane();
@@ -403,12 +407,9 @@ public class Main extends Application {
 
     //Move player
     public void move() {
-        ImageView playerSprite = game.getPlayer().getPlayerSprite();
-
         game.getPlayer().setPrevX(playerSprite.getX());
         game.getPlayer().setPrevY(playerSprite.getY());
 
-        Player player = game.getPlayer();
         if(w) {
             if(player.getNorthSpeed() != 8)    {
                 player.setNorthSpeed(player.getNorthSpeed() + 1);
