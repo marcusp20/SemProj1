@@ -91,7 +91,6 @@ public class Field extends Interactable implements TimeProgression {
         if (fertilizerCounter < 2) {
             fertilizerCounter += 1;
             yields += 7;
-
         } else {
             yields -= 10;
             fertilizerCounter += 1;
@@ -253,7 +252,7 @@ public class Field extends Interactable implements TimeProgression {
     }
 
     @Override
-    public Command interact() {
-        return new Command(CommandWord.USE, "field");
+    public String interact() {
+        return "field";
     }
 }

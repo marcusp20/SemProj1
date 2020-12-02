@@ -2,6 +2,7 @@ package GUI;
 
 import game.*;
 import interactable.Interactable;
+import interactable.NPC;
 import javafx.animation.AnimationTimer;
 import javafx.application.Application;
 import javafx.collections.FXCollections;
@@ -283,6 +284,13 @@ public class Main extends Application {
 
                 if (interactionBounds.intersects(playerSprite.getLayoutBounds())) {
                     game.getCurrentRoom().getRoomPane().getChildren().remove(lastLV);
+
+                    if(i.interact().equals("npc")) {
+                        System.out.println("!!!!!!!");
+                        NPC npc = (NPC)i;
+                        game.getCurrentRoom().getRoomPane().getChildren().add(npc.getNpcWindow());
+                    }
+
                     game.getCurrentRoom().getRoomPane().getChildren().add(i.getCommandList());
                     lastLV = i.getCommandList();
                 }

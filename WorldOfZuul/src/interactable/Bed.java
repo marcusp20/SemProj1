@@ -14,7 +14,7 @@ public class Bed extends Interactable {
     }
 
     @Override
-    public Command interact() {
-        return new Command(CommandWord.USE, "bed");
+    public String interact() {
+        return "bed";
     }
 }

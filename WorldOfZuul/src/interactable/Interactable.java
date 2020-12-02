@@ -26,9 +26,9 @@ public class Interactable {
         setDefaultImage();
     }
 
-     public Command interact()   {
+     public String interact()   {
          System.out.println("No interact command defined");
-         return new Command(CommandWord.HELP, "No command set");
+         return "No type";
     }
 
     private void setDefaultImage()   {
