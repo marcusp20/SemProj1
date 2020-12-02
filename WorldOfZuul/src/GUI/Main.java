@@ -358,7 +358,7 @@ public class Main extends Application {
 
         HashMap<String, Command> shopCommands = new HashMap<>();
         for (ItemName i : ItemName.values()) {
-            shopCommands.put(("Buy " + i.getItemNameString()), new Command(CommandWord.STORE_BUY, i.getItemNameString()));
+            shopCommands.put(("$" + i.getPrice() + "\t\t" + i.getItemNameString()), new Command(CommandWord.STORE_BUY, i.getItemNameString()));
         }
         createListFromMap(shopCommands, game.getShop());
     }

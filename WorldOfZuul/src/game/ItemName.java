@@ -7,7 +7,7 @@ public enum ItemName {
     TRACTOR("Tractor", "for fertilizing, plowing, sowing, and more.", 300),
     HARVESTER("Harvester", "Used for harvesting", 500),
     PESTICIDES("Pesticides", "used for destroying water-collection", 50),
-    SOIL_SAMPLE_COLLECTOR("Soil Sample collector", "to collects soil samples, and test it.", 150),
+    SOIL_SAMPLE_COLLECTOR("Soil Sampler", "to collects soil samples, and test it.", 150),
     BAG_OF_FERTILIZER("Bag of fertilizer", "used for fertilizing", 50),
     BAG_OF_CANNABIS("Bag of Cannabis", "holds seeds for planting 420", 100),
     BAG_OF_WHEAT("Bag of Wheat", "holds seeds for planting", 10),
