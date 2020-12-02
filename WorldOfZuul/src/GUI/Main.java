@@ -74,32 +74,19 @@ public class Main extends Application {
         startScreen.setFitWidth(1280);
 
         //Buttons
-        loadGameButton = new Button();
         newGameButton = new Button();
-        loadGameButton.setPrefSize(420, 69);
         newGameButton.setPrefSize(420, 69);
-        loadGameButton.setOpacity(0);
         newGameButton.setOpacity(0);
-
-        loadGameButton.setLayoutX(480);
-        loadGameButton.setLayoutY(410);
         newGameButton.setLayoutX(480);
         newGameButton.setLayoutY(280);
+        newGameButton.setOnAction(e -> newGame(stage));
 
-        newGameButton.setOnAction(e -> {
-            try {
-                newGame(stage);
-            } catch (IOException ioException) {
-                ioException.printStackTrace();
-            }
-        });
-        loadGameButton.setOnAction(e -> {
-            try {
-                loadGame(stage);
-            } catch (IOException ioException) {
-                ioException.printStackTrace();
-            }
-        });
+        loadGameButton = new Button();
+        loadGameButton.setPrefSize(420, 69);
+        loadGameButton.setOpacity(0);
+        loadGameButton.setLayoutX(480);
+        loadGameButton.setLayoutY(410);
+        loadGameButton.setOnAction(e -> loadGame(stage));
 
         //Parent rootButtonLayout = FXMLLoader.load(getClass().getResource("ButtonLayout.fxml"));
         //Parent rootStartScreen = FXMLLoader.load(getClass().getResource("StartScreen.fxml"));
@@ -116,7 +103,7 @@ public class Main extends Application {
     }
 
     //Must only be called through newGame or loadGame
-    private void startGame(Stage stage) throws IOException {
+    private void startGame(Stage stage) {
 
         player = game.getPlayer();
         playerSprite = player.getPlayerSprite();
@@ -127,10 +114,15 @@ public class Main extends Application {
         Pane p = game.getCurrentRoom().getRoomPane();
 
         //FXML root OR JavaFX Code...
-        Parent rootButtonLayout = FXMLLoader.load(getClass().getResource("ButtonLayout.fxml"));
+        try {
+            Parent rootButtonLayout = FXMLLoader.load(getClass().getResource("ButtonLayout.fxml"));
+            p.getChildren().addAll(game.getPlayer().getPlayerSprite(), rootButtonLayout);
+
+        } catch (IOException ioException) {
+            ioException.printStackTrace();
+        }
 
         //add Children
-        p.getChildren().addAll(game.getPlayer().getPlayerSprite(), rootButtonLayout);
         scene = new Scene(p);
 
         //Start timer
@@ -297,13 +289,13 @@ public class Main extends Application {
         }
     }
 
-    private void launchNewGame(Stage stage) throws IOException{
+    private void launchNewGame(Stage stage) {
         game = new Game(true);
         game.playGUI();
         startGame(stage);
     }
 
-    private void launchLoadGame(Stage stage) throws IOException{
+    private void launchLoadGame(Stage stage) {
         saveFile = new File(System.getProperty("user.dir") + "\\saveFile.txt");
         boolean saveFileExists = saveFile.exists();
         //System.out.println(saveFile);
@@ -317,14 +309,14 @@ public class Main extends Application {
         startGame(stage);
     }
 
-    public void newGame(Stage stage) throws IOException {
+    public void newGame(Stage stage) {
         setFadeOut(stage);
         stage.close();
         launchNewGame(stage);
         System.out.println("NewGame");
     }
 
-    public void loadGame(Stage stage) throws IOException{
+    public void loadGame(Stage stage) {
         setFadeOut(stage);
         stage.close();
         launchLoadGame(stage);
@@ -445,11 +437,11 @@ public class Main extends Application {
     }
 
     private void createListViews()  {
-        HashMap<String, Command> bedCommands = new HashMap();
+        HashMap<String, Command> bedCommands = new HashMap<>();
         bedCommands.put("Use bed", new Command(CommandWord.USE, "bed"));
         createListFromMap(bedCommands, game.getHqBed());
 
-        HashMap<String, Command> fieldCommands = new HashMap();
+        HashMap<String, Command> fieldCommands = new HashMap<>();
         fieldCommands.put("Water field", new Command(CommandWord.FIELD_WATER, ""));
         fieldCommands.put("Harvest field", new Command(CommandWord.FIELD_HARVEST, ""));
         fieldCommands.put("Spread fertilizer", new Command(CommandWord.FIELD_FERTILIZE, ""));
@@ -461,12 +453,12 @@ public class Main extends Application {
         fieldCommands.put("Sow cannabis", new Command(CommandWord.FIELD_SOW, "cannabis"));
         createListFromMap(fieldCommands, game.getField());
 
-        HashMap<String, Command> beeHiveCommands = new HashMap();
+        HashMap<String, Command> beeHiveCommands = new HashMap<>();
         beeHiveCommands.put("Use beehive", new Command(CommandWord.USE, "beehive"));
         beeHiveCommands.put("Bees?", new Command(CommandWord.GARDEN_CHECK_BEES, ""));
         createListFromMap(beeHiveCommands, game.getBeeHive());
 
-        HashMap<String, Command> shopCommands = new HashMap();
+        HashMap<String, Command> shopCommands = new HashMap<>();
         for(ItemName i : ItemName.values()) {
             shopCommands.put(("Buy " + i.getItemNameString()), new Command(CommandWord.STORE_BUY, i.getItemNameString()));
         }
