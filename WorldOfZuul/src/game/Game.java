@@ -241,7 +241,7 @@ public class Game {
         field.getImageView().setFitWidth(712);
         field.getImageView().setFitHeight(463);
         try {
-            field.getImageView().setImage(loadImage("FieldSow.png"));
+            field.getImageView().setImage(loadImage("FieldHarvest.png"));
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
