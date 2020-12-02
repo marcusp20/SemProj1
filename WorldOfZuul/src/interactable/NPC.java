@@ -3,6 +3,8 @@ package interactable;
 import game.Command;
 import game.CommandWord;
 import game.CommandWords;
+import javafx.scene.layout.VBox;
+import javafx.scene.text.Text;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -16,7 +18,7 @@ public class NPC extends Interactable{
     private File dialog;                //File containing NPC dialog
     private ArrayList<String> lines = new ArrayList<>();        //Array list containing all dialog lines
     private boolean firstMeeting = true;        //Attribute is true if player has not met npc
-    private CommandWords commandWords;  //NPC commands,, not used
+    private VBox npcWindow = new VBox();
 
     public NPC(File dialog)   {
         super();
@@ -161,9 +163,24 @@ public class NPC extends Interactable{
     }
 
     @Override
-    public Command interact()  {
+    public String interact()  {
         System.out.println("You can interact with " + this.name);
-        return new Command(CommandWord.USE, "npc");
+        return "npc";
     }
+
+    private void createNpcWindow()   {
+        npcWindow.setLayoutX(this.getImageView().getX());
+        npcWindow.setLayoutY(this.getImageView().getY());
+
+        Text dialog = new Text();
+        dialog.setText("This is test text \nThis is second line");
+        npcWindow.getChildren().add(dialog);
+    }
+
+    public VBox getNpcWindow()  {
+        createNpcWindow();
+        return npcWindow;
+    }
+
 }
 
