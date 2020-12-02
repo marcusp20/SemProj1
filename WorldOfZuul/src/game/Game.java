@@ -939,7 +939,8 @@ public class Game {
         return this.shop;
     }
 
-
-
+    public TaskList getTaskList() {
+        return taskList;
+    }
 }
 
