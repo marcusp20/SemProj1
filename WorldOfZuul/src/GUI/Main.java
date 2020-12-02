@@ -37,12 +37,7 @@ public class Main extends Application {
 
     private Game game;
     private File saveFile;
-
-    //Movement keys
-    private boolean a;
-    private boolean s;
-    private boolean d;
-    private boolean w;
+    private MovementHandler movementHandler;
 
     //Interaction keys
     private boolean e;
@@ -100,7 +95,7 @@ public class Main extends Application {
     }
 
     public void newGame(Stage stage) {
-        setFadeOut(stage);
+        fadeOut(stage);
         stage.close();
         game = new Game(true);
         game.playGUI();
@@ -109,7 +104,7 @@ public class Main extends Application {
     }
 
     public void loadGame(Stage stage) {
-        setFadeOut(stage);
+        fadeOut(stage);
         stage.close();
         saveFile = new File(System.getProperty("user.dir") + "\\saveFile.txt");
         boolean saveFileExists = saveFile.exists();
@@ -129,6 +124,7 @@ public class Main extends Application {
     private void startGame(Stage stage) {
         player = game.getPlayer();
         playerSprite = player.getPlayerSprite();
+        movementHandler = new MovementHandler(game, player, playerSprite);
         //Create new objects
         createListViews();
 
@@ -159,7 +155,7 @@ public class Main extends Application {
         stage.setScene(scene);
         stage.setOpacity(0);
         stage.show();
-        setFadeIn(stage);
+        fadeIn(stage);
     }
 
     private void startTimer() {
@@ -175,16 +171,20 @@ public class Main extends Application {
     //Main loop content
     private void update() {
         //Moves player based on movement keys
-        move();
+        movementHandler.move();
+        //Check and correct collision between player and object
+        movementHandler.checkCollision();
+        checkInteraction();
         //Check if room should be changed (player position)
         playerRoomChangeCheck();
 
         if (backSpace) {
             game.getCurrentRoom().getRoomPane().getChildren().remove(lastLV);
-            System.out.println("??");
+            backSpace = false;
+            //System.out.println("??");
         }
-        //Check if there is collision between player and object
-        checkCollision();
+
+
 
     }
 
@@ -195,13 +195,14 @@ public class Main extends Application {
         //NORTH
         if (playerSprite.getY() < -40) {
             game.getCurrentRoom().getRoomPane().getChildren().remove(lastLV);
-            System.out.println("GO NORTH");
+            //System.out.println("GO NORTH");
             Pane oldPane = game.getCurrentRoom().getRoomPane();
             game.processCommand(new Command(CommandWord.GO, "north"));
 
             if (game.getCurrentRoom().getRoomPane() == oldPane) {
                 playerSprite.setY(-40);
-                System.out.println("HELP");
+                movementHandler.haltPlayerMovement(); // stop the player, to stop calling "go north" every frame"
+                //System.out.println("HELP");
             } else {
                 playerSprite.setY(scene.getHeight() - 200);
                 game.getCurrentRoom().getRoomPane().getChildren().add(playerSprite);
@@ -211,13 +212,14 @@ public class Main extends Application {
         //EAST
         if (playerSprite.getX() > scene.getWidth() - 120) {
             game.getCurrentRoom().getRoomPane().getChildren().remove(lastLV);
-            System.out.println("GO EAST");
+            //System.out.println("GO EAST");
             Pane oldPane = game.getCurrentRoom().getRoomPane();
             game.processCommand(new Command(CommandWord.GO, "east"));
 
             if (game.getCurrentRoom().getRoomPane() == oldPane) {
                 playerSprite.setX(scene.getWidth() - 120);
-                System.out.println("HELP");
+                movementHandler.haltPlayerMovement(); // stop the player, to stop calling "go north" every frame"
+                //System.out.println("HELP");
             } else {
                 playerSprite.setX(10);
                 game.getCurrentRoom().getRoomPane().getChildren().add(playerSprite);
@@ -227,13 +229,14 @@ public class Main extends Application {
         //SOUTH
         if (playerSprite.getY() > scene.getHeight() - 180) {
             game.getCurrentRoom().getRoomPane().getChildren().remove(lastLV);
-            System.out.println("GO SOUTH");
+            //System.out.println("GO SOUTH");
             Pane oldPane = game.getCurrentRoom().getRoomPane();
             game.processCommand(new Command(CommandWord.GO, "south"));
 
             if (game.getCurrentRoom().getRoomPane() == oldPane) {
                 playerSprite.setY(scene.getHeight() - 180);
-                System.out.println("HELP");
+                movementHandler.haltPlayerMovement(); // stop the player, to stop calling "go north" every frame"
+                //System.out.println("HELP");
             } else {
                 playerSprite.setY(20);
                 game.getCurrentRoom().getRoomPane().getChildren().add(playerSprite);
@@ -243,13 +246,14 @@ public class Main extends Application {
         //WEST
         if (playerSprite.getX() < -10) {
             game.getCurrentRoom().getRoomPane().getChildren().remove(lastLV);
-            System.out.println("GO WEST");
+            //System.out.println("GO WEST");
             Pane oldPane = game.getCurrentRoom().getRoomPane();
             game.processCommand(new Command(CommandWord.GO, "west"));
 
             if (game.getCurrentRoom().getRoomPane() == oldPane) {
                 playerSprite.setX(-10);
-                System.out.println("HELP");
+                movementHandler.haltPlayerMovement(); // stop the player, to stop calling "go north" every frame"
+                //System.out.println("HELP");
             } else {
                 playerSprite.setX(scene.getWidth() - 140);
                 game.getCurrentRoom().getRoomPane().getChildren().add(playerSprite);
@@ -258,50 +262,18 @@ public class Main extends Application {
         }
     }
 
-    private void checkCollision() {
-        ImageView player = game.getPlayer().getPlayerSprite();
+    private void checkInteraction() {
+        if (this.e) {
+            for (Interactable i : game.getCurrentRoom().getInteractables()) {
+                //Create new bounds that extend the original, creating an area where from the player can interact with said object
+                //Potentially optimize by placing interactionBounds in objects
+                double minX = i.getImageView().getLayoutBounds().getMinX();
+                double minY = i.getImageView().getLayoutBounds().getMinY();
+                double width = i.getImageView().getLayoutBounds().getWidth();
+                double height = i.getImageView().getLayoutBounds().getHeight();
+                BoundingBox interactionBounds = new BoundingBox(minX - 30, minY - 30, width + 30, height + 30);
 
-        for (Interactable i : game.getCurrentRoom().getInteractables()) {
-            //Code for intractable collision
-            if (i.getImageView().intersects(player.getLayoutBounds())) {
-
-                //Moves player to previous position if intersecting with intractable, still allows other movement
-                if (game.getPlayer().getWestSpeed() > 0 || game.getPlayer().getEastSpeed() > 0) {
-                    double curX = player.getX();
-
-                    player.setX(game.getPlayer().getPrevX());
-                    if (i.getImageView().intersects(player.getLayoutBounds())) {
-                        player.setX(curX);
-                        if (game.getPlayer().getNorthSpeed() > 0 || game.getPlayer().getSouthSpeed() > 0) {
-                            player.setY(game.getPlayer().getPrevY());
-                        }
-                    }
-                }
-                if (i.getImageView().intersects(player.getLayoutBounds())) {
-                    if (game.getPlayer().getNorthSpeed() > 0 || game.getPlayer().getSouthSpeed() > 0) {
-                        player.setY(game.getPlayer().getPrevY());
-                        if (i.getImageView().intersects(player.getLayoutBounds())) {
-                            if (game.getPlayer().getWestSpeed() > 0 || game.getPlayer().getEastSpeed() > 0) {
-                                player.setX(game.getPlayer().getPrevX());
-                            }
-                        }
-                    }
-                }
-            }
-
-            //Create new bounds that extend the original, creating an area where from the player can interact with said object
-            //Potentially optimize by placing interactionBounds in objects
-            double minX = i.getImageView().getLayoutBounds().getMinX();
-            double minY = i.getImageView().getLayoutBounds().getMinY();
-            double width = i.getImageView().getLayoutBounds().getWidth();
-            double height = i.getImageView().getLayoutBounds().getHeight();
-
-            BoundingBox interactionBounds = new BoundingBox(minX - 15, minY - 15, width + 30, height + 30);
-            if (interactionBounds.intersects(player.getLayoutBounds())) {
-                if (this.e) {
-                    //Code hereunder is run after player interacts with object
-                    Command c = i.interact();
-                    //game.processCommand(c);
+                if (interactionBounds.intersects(playerSprite.getLayoutBounds())) {
                     game.getCurrentRoom().getRoomPane().getChildren().remove(lastLV);
                     game.getCurrentRoom().getRoomPane().getChildren().add(i.getCommandList());
                     lastLV = i.getCommandList();
@@ -311,14 +283,13 @@ public class Main extends Application {
         }
     }
 
-
-    public void setFadeOut(Stage stage) {
+    public void fadeOut(Stage stage) {
         for (double i = 1; i >= 0.02; i = i - 0.00001) {
             stage.setOpacity(i);
         }
     }
 
-    public void setFadeIn(Stage stage) {
+    public void fadeIn(Stage stage) {
         for (double i = 0; i <= 0.999; i = i + 0.00001) {
             stage.setOpacity(i);
         }
@@ -330,10 +301,10 @@ public class Main extends Application {
         if (keyEvent.getEventType() == KeyEvent.KEY_PRESSED) {
             switch (keyEvent.getCode()) {
                 //Movement
-                case W -> w = true;
-                case A -> a = true;
-                case S -> s = true;
-                case D -> d = true;
+                case W -> movementHandler.w = true;
+                case A -> movementHandler.a = true;
+                case S -> movementHandler.s = true;
+                case D -> movementHandler.d = true;
                 //Interact
                 case E -> e = true;
                 case BACK_SPACE -> this.backSpace = true;
@@ -344,61 +315,15 @@ public class Main extends Application {
         if (keyEvent.getEventType() == KeyEvent.KEY_RELEASED) {
             switch (keyEvent.getCode()) {
                 //Movement
-                case W -> w = false;
-                case A -> a = false;
-                case S -> s = false;
-                case D -> d = false;
+                case W -> movementHandler.w = false;
+                case A -> movementHandler.a = false;
+                case S -> movementHandler.s = false;
+                case D -> movementHandler.d = false;
                 //Interact
                 case E -> e = false;
                 case BACK_SPACE -> this.backSpace = false;
             }
         }
-    }
-
-    //Move player
-    public void move() {
-        game.getPlayer().setPrevX(playerSprite.getX());
-        game.getPlayer().setPrevY(playerSprite.getY());
-
-        if (w) {
-            if (player.getNorthSpeed() != 8) {
-                player.setNorthSpeed(player.getNorthSpeed() + 1);
-            }
-        } else {
-            if (player.getNorthSpeed() != 0) {
-                player.setNorthSpeed(player.getNorthSpeed() - 1);
-            }
-        }
-        if (a) {
-            if (player.getEastSpeed() != 8) {
-                player.setEastSpeed(player.getEastSpeed() + 1);
-            }
-        } else {
-            if (player.getEastSpeed() != 0) {
-                player.setEastSpeed(player.getEastSpeed() - 1);
-            }
-        }
-        if (s) {
-            if (player.getSouthSpeed() != 8) {
-                player.setSouthSpeed(player.getSouthSpeed() + 1);
-            }
-        } else {
-            if (player.getSouthSpeed() != 0) {
-                player.setSouthSpeed(player.getSouthSpeed() - 1);
-            }
-        }
-        if (d) {
-            if (player.getWestSpeed() != 8) {
-                player.setWestSpeed(player.getWestSpeed() + 1);
-            }
-        } else {
-            if (player.getWestSpeed() != 0) {
-                player.setWestSpeed(player.getWestSpeed() - 1);
-            }
-        }
-
-        playerSprite.setY(playerSprite.getY() - player.getNorthSpeed() + player.getSouthSpeed());
-        playerSprite.setX(playerSprite.getX() - player.getEastSpeed() + player.getWestSpeed());
     }
 
     private void createListViews() {
