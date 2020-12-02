@@ -129,6 +129,7 @@ public class Main extends Application {
         } else {
             System.err.println("Could not load saveFile");
             newGame(stage);
+            return;
         }
         fadeOut(stage);
         stage.close();
