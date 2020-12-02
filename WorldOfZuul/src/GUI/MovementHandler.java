@@ -82,16 +82,16 @@ public class MovementHandler {
                         }
                     }
                 }
-                //if (i.getImageView().intersects(playerSprite.getLayoutBounds())) {  //Always true?
-                if (game.getPlayer().getNorthSpeed() > 0 || game.getPlayer().getSouthSpeed() > 0) {
-                    playerSprite.setY(game.getPlayer().getPrevY());
-                    if (i.getImageView().intersects(playerSprite.getLayoutBounds())) {
-                        if (game.getPlayer().getWestSpeed() > 0 || game.getPlayer().getEastSpeed() > 0) {
-                            playerSprite.setX(game.getPlayer().getPrevX());
+                if (i.getImageView().intersects(playerSprite.getLayoutBounds())) {  //Always true?
+                    if (game.getPlayer().getNorthSpeed() > 0 || game.getPlayer().getSouthSpeed() > 0) {
+                        playerSprite.setY(game.getPlayer().getPrevY());
+                        if (i.getImageView().intersects(playerSprite.getLayoutBounds())) {
+                            if (game.getPlayer().getWestSpeed() > 0 || game.getPlayer().getEastSpeed() > 0) {
+                                playerSprite.setX(game.getPlayer().getPrevX());
+                            }
                         }
                     }
                 }
-                //}
             }
         }
     }
