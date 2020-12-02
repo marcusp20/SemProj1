@@ -236,8 +236,15 @@ public class Game {
     //Used for testing Field methods
     private void createField() {
         field = new Field(fieldCommandWords);
-        field.getImageView().setX(500);
-        field.getImageView().setY(500);
+        field.getImageView().setX(297);
+        field.getImageView().setY(312);
+        field.getImageView().setFitWidth(712);
+        field.getImageView().setFitHeight(463);
+        try {
+            field.getImageView().setImage(loadImage("soved0.png"));
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
     }
 
     private void createPlayer() {
