@@ -57,10 +57,17 @@ public class Main extends Application {
     public static void main(String[] args) { launch(args); }
 
     @Override
-    public void start(Stage stage) throws IOException {
+    public void start(Stage stage) {
 
         //StartScreen
-        ImageView startScreen = new ImageView(load("IntroScreenVer1.png"));
+        ImageView startScreen = null;
+        try {
+            startScreen = new ImageView(load("IntroScreenVer1.png"));
+        } catch (IOException ioException) {
+            System.err.println("'IntroScreenVer1.png' not found");
+            ioException.printStackTrace();
+        }
+
         startScreen.setPreserveRatio(false);
         startScreen.setFitHeight(832);
         startScreen.setFitWidth(1280);
