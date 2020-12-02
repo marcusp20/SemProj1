@@ -41,6 +41,9 @@ public class NPC extends Interactable{
 
         this.name = findLine(".nn");
         this.description = findLine(".dd");
+
+        //GUI
+        createNpcWindow();
     }
 
 
@@ -172,8 +175,6 @@ public class NPC extends Interactable{
     }
 
     private void createNpcWindow()   {
-        npcWindow.setLayoutX(this.getImageView().getX());
-        npcWindow.setLayoutY(this.getImageView().getY());
 
         String text = "";
         for(String line : getPatternLines("q0"))    {
@@ -188,7 +189,9 @@ public class NPC extends Interactable{
     }
 
     public VBox getNpcWindow()  {
-        createNpcWindow();
+        npcWindow.setLayoutX(this.getImageView().getX());
+        npcWindow.setLayoutY(this.getImageView().getY());
+
         return npcWindow;
     }
 

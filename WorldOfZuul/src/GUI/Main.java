@@ -286,14 +286,15 @@ public class Main extends Application {
                 if (interactionBounds.intersects(playerSprite.getLayoutBounds())) {
                     game.getCurrentRoom().getRoomPane().getChildren().remove(lastLV);
 
+                    //TODO make abstract method for getting gui visuals (replace getCommandList & getNpcWindow)
                     if(i.interact().equals("npc")) {
-                        System.out.println("!!!!!!!");
                         NPC npc = (NPC)i;
                         game.getCurrentRoom().getRoomPane().getChildren().add(npc.getNpcWindow());
+                        lastLV = npc.getNpcWindow();
+                    } else {
+                        game.getCurrentRoom().getRoomPane().getChildren().add(i.getCommandList());
+                        lastLV = i.getCommandList();
                     }
-
-                    game.getCurrentRoom().getRoomPane().getChildren().add(i.getCommandList());
-                    lastLV = i.getCommandList();
                 }
             }
         }
