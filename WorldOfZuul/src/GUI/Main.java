@@ -44,6 +44,7 @@ public class Main extends Application {
     //Interaction keys
     private boolean e;
     private boolean backSpace;
+    private boolean tabulator;
 
     //Buttons
     Button loadGameButton;
@@ -51,6 +52,11 @@ public class Main extends Application {
 
     //Contains last opened menu
     Node lastNode;
+
+    //Tasklist
+    ObservableList<String> taskListObservable = FXCollections.observableArrayList();
+    ListView<String> taskListView;
+    TaskList taskList;
 
     //Easy access to player and player sprite objects
     private ImageView playerSprite;
@@ -136,6 +142,8 @@ public class Main extends Application {
         player = game.getPlayer();
         playerSprite = player.getPlayerSprite();
         movementHandler = new MovementHandler(game, player, playerSprite);
+        taskList = game.getTaskList();
+
         //Create new objects
         createListViews();
 
@@ -167,6 +175,8 @@ public class Main extends Application {
         stage.setOpacity(0);
         stage.show();
         fadeIn(stage);
+
+        initTasklist();
     }
 
     private void startTimer() {
@@ -287,8 +297,8 @@ public class Main extends Application {
                     game.getCurrentRoom().getRoomPane().getChildren().remove(lastNode);
 
                     //TODO make abstract method for getting gui visuals (replace getCommandList & getNpcWindow)
-                    if(i.interact().equals("npc")) {
-                        NPC npc = (NPC)i;
+                    if (i.interact().equals("npc")) {
+                        NPC npc = (NPC) i;
                         game.getCurrentRoom().getRoomPane().getChildren().add(npc.getNpcWindow());
                         lastNode = npc.getNpcWindow();
                     } else {
@@ -326,6 +336,7 @@ public class Main extends Application {
                 //Interact
                 case E -> e = true;
                 case BACK_SPACE -> this.backSpace = true;
+                case F -> updateTask();
             }
         }
 
@@ -340,6 +351,7 @@ public class Main extends Application {
                 //Interact
                 case E -> e = false;
                 case BACK_SPACE -> this.backSpace = false;
+                case F -> taskListView.setVisible(false);
             }
         }
     }
@@ -407,5 +419,28 @@ public class Main extends Application {
         }
         //Default - probably not gonna work
         return new Image(new FileInputStream(path + "\\img\\" + fileName));
+    }
+
+    private void initTasklist() {
+
+        taskListView = new ListView<>();
+        taskListView.setItems(taskListObservable);
+        game.getCurrentRoom().getRoomPane().getChildren().add(taskListView);
+        taskListView.setPrefSize(355,107);
+        taskListView.setLayoutX(911);
+        taskListView.setLayoutY(14);
+        taskListView.setVisible(false);
+
+
+    }
+
+    public void updateTask() {
+        taskListObservable.clear();
+        for (Task t : taskList.getTasks()) {
+            if(t.isActive()) {
+                taskListObservable.add(t.getDescription() + "\t" + t.getReward());
+            }
+        }
+        taskListView.setVisible(true);
     }
 }
