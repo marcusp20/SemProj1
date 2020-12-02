@@ -9,6 +9,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.BoundingBox;
+import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -49,7 +50,7 @@ public class Main extends Application {
     Button newGameButton;
 
     //Contains last opened menu
-    ListView<String> lastLV = new ListView<>();
+    Node lastLV;
 
     //Easy access to player and player sprite objects
     private ImageView playerSprite;
