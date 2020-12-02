@@ -175,7 +175,11 @@ public class NPC extends Interactable{
         npcWindow.setLayoutX(this.getImageView().getX());
         npcWindow.setLayoutY(this.getImageView().getY());
 
-        dialogText.setText("This is test text \nThis is second line");
+        String text = "";
+        for(String line : getPatternLines("q0"))    {
+            text = text.concat(line + "\n");
+        }
+        dialogText = new Text(text);
         npcWindow.getChildren().add(dialogText);
     }
 
