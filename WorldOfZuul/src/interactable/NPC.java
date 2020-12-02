@@ -18,7 +18,10 @@ public class NPC extends Interactable{
     private File dialog;                //File containing NPC dialog
     private ArrayList<String> lines = new ArrayList<>();        //Array list containing all dialog lines
     private boolean firstMeeting = true;        //Attribute is true if player has not met npc
+
+    //GUI
     private VBox npcWindow = new VBox();
+    Text dialogText = new Text();
 
     public NPC(File dialog)   {
         super();
@@ -172,9 +175,12 @@ public class NPC extends Interactable{
         npcWindow.setLayoutX(this.getImageView().getX());
         npcWindow.setLayoutY(this.getImageView().getY());
 
-        Text dialog = new Text();
-        dialog.setText("This is test text \nThis is second line");
-        npcWindow.getChildren().add(dialog);
+        dialogText.setText("This is test text \nThis is second line");
+        npcWindow.getChildren().add(dialogText);
+    }
+
+    public void updateAnswer(int q) {
+        dialogText.setText("Answer" + q);
     }
 
     public VBox getNpcWindow()  {
