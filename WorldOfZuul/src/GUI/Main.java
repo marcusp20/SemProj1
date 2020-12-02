@@ -190,9 +190,6 @@ public class Main extends Application {
             backSpace = false;
             //System.out.println("??");
         }
-
-
-
     }
 
     private void playerRoomChangeCheck() {
@@ -278,16 +275,16 @@ public class Main extends Application {
                 double minY = i.getImageView().getLayoutBounds().getMinY();
                 double width = i.getImageView().getLayoutBounds().getWidth();
                 double height = i.getImageView().getLayoutBounds().getHeight();
-                BoundingBox interactionBounds = new BoundingBox(minX - 30, minY - 30, width + 30, height + 30);
+                BoundingBox interactionBounds = new BoundingBox(minX - 15, minY - 15, width + 30, height + 30);
 
                 if (interactionBounds.intersects(playerSprite.getLayoutBounds())) {
                     game.getCurrentRoom().getRoomPane().getChildren().remove(lastLV);
                     game.getCurrentRoom().getRoomPane().getChildren().add(i.getCommandList());
                     lastLV = i.getCommandList();
-                    this.e = false;
                 }
             }
         }
+        this.e = false;
     }
 
     public void fadeOut(Stage stage) {
