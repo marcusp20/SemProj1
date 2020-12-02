@@ -139,12 +139,12 @@ public class Main extends Application {
     private File loadFile(String fileName) {
         String path = System.getProperty("user.dir");
         if (path.endsWith("SemProj1")) {
-            return new File(path + "\\WorldOfZuul\\src\\dialog\\" + fileName);    //Add remaining path to dialog text file
+            return new File(path + "\\WorldOfZuul\\" + fileName);    //Add remaining path to dialog text file
         } else if (path.endsWith("WorldOfZuul")) {
-            return new File(path + "\\src\\dialog\\" + fileName);
+            return new File(path + "\\" + fileName);
         }
         //Default - probably not gonna work
-        return new File(path + "\\dialog\\" + fileName);
+        return new File(path + "\\" + fileName);
 
     }
 
