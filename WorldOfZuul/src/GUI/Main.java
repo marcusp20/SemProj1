@@ -54,7 +54,9 @@ public class Main extends Application {
     private ImageView playerSprite;
     private Player player;
 
-    public static void main(String[] args) { launch(args); }
+    public static void main(String[] args) {
+        launch(args);
+    }
 
     @Override
     public void start(Stage stage) {
@@ -275,7 +277,9 @@ public class Main extends Application {
                 double minY = i.getImageView().getLayoutBounds().getMinY();
                 double width = i.getImageView().getLayoutBounds().getWidth();
                 double height = i.getImageView().getLayoutBounds().getHeight();
-                BoundingBox interactionBounds = new BoundingBox(minX - 15, minY - 15, width + 30, height + 30);
+                double offSet = 15;
+
+                BoundingBox interactionBounds = new BoundingBox(minX - offSet, minY - offSet, width + offSet * 2, height + offSet * 2);
 
                 if (interactionBounds.intersects(playerSprite.getLayoutBounds())) {
                     game.getCurrentRoom().getRoomPane().getChildren().remove(lastLV);
