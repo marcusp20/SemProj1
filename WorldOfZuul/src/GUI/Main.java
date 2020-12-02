@@ -300,7 +300,7 @@ public class Main extends Application {
     }
 
     public void fadeOut(Stage stage) {
-        for (double i = 1; i >= 0.02; i = i - 0.0001) {
+        for (double i = 1; i >= 0.01; i = i - 0.0001) {
             stage.setOpacity(i);
         }
     }
