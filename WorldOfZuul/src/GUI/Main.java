@@ -38,7 +38,6 @@ public class Main extends Application {
     Scene scene, introScene;
 
     private Game game;
-    private File saveFile;
     private MovementHandler movementHandler;
 
     //Interaction keys
@@ -115,9 +114,7 @@ public class Main extends Application {
     }
 
     public void loadGame(Stage stage) {
-        fadeOut(stage);
-        stage.close();
-        saveFile = new File(System.getProperty("user.dir") + "\\saveFile.txt");
+        File saveFile = loadFile("saveFile.txt");
         boolean saveFileExists = saveFile.exists();
         //System.out.println(saveFile);
         if (saveFileExists) {
@@ -127,8 +124,22 @@ public class Main extends Application {
             System.err.println("Could not load saveFile");
             newGame(stage);
         }
+        fadeOut(stage);
+        stage.close();
         startGame(stage);
         System.out.println("LoadGame");
+    }
+
+    private File loadFile(String fileName) {
+        String path = System.getProperty("user.dir");
+        if (path.endsWith("SemProj1")) {
+            return new File(path + "\\WorldOfZuul\\src\\dialog\\" + fileName);    //Add remaining path to dialog text file
+        } else if (path.endsWith("WorldOfZuul")) {
+            return new File(path + "\\src\\dialog\\" + fileName);
+        }
+        //Default - probably not gonna work
+        return new File(path + "\\dialog\\" + fileName);
+
     }
 
     //Must only be called through newGame or loadGame
