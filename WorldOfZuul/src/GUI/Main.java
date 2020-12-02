@@ -292,13 +292,13 @@ public class Main extends Application {
     }
 
     public void fadeOut(Stage stage) {
-        for (double i = 1; i >= 0.02; i = i - 0.00001) {
+        for (double i = 1; i >= 0.02; i = i - 0.0001) {
             stage.setOpacity(i);
         }
     }
 
     public void fadeIn(Stage stage) {
-        for (double i = 0; i <= 0.999; i = i + 0.00001) {
+        for (double i = 0; i <= 0.999; i = i + 0.0001) {
             stage.setOpacity(i);
         }
     }
