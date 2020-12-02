@@ -50,7 +50,7 @@ public class Main extends Application {
     Button newGameButton;
 
     //Contains last opened menu
-    Node lastLV;
+    Node lastNode;
 
     //Easy access to player and player sprite objects
     private ImageView playerSprite;
@@ -190,7 +190,7 @@ public class Main extends Application {
         playerRoomChangeCheck();
 
         if (backSpace) {
-            game.getCurrentRoom().getRoomPane().getChildren().remove(lastLV);
+            game.getCurrentRoom().getRoomPane().getChildren().remove(lastNode);
             backSpace = false;
             //System.out.println("??");
         }
@@ -202,7 +202,7 @@ public class Main extends Application {
 
         //NORTH
         if (playerSprite.getY() < -40) {
-            game.getCurrentRoom().getRoomPane().getChildren().remove(lastLV);
+            game.getCurrentRoom().getRoomPane().getChildren().remove(lastNode);
             //System.out.println("GO NORTH");
             Pane oldPane = game.getCurrentRoom().getRoomPane();
             game.processCommand(new Command(CommandWord.GO, "north"));
@@ -219,7 +219,7 @@ public class Main extends Application {
         }
         //EAST
         if (playerSprite.getX() > scene.getWidth() - 120) {
-            game.getCurrentRoom().getRoomPane().getChildren().remove(lastLV);
+            game.getCurrentRoom().getRoomPane().getChildren().remove(lastNode);
             //System.out.println("GO EAST");
             Pane oldPane = game.getCurrentRoom().getRoomPane();
             game.processCommand(new Command(CommandWord.GO, "east"));
@@ -236,7 +236,7 @@ public class Main extends Application {
         }
         //SOUTH
         if (playerSprite.getY() > scene.getHeight() - 180) {
-            game.getCurrentRoom().getRoomPane().getChildren().remove(lastLV);
+            game.getCurrentRoom().getRoomPane().getChildren().remove(lastNode);
             //System.out.println("GO SOUTH");
             Pane oldPane = game.getCurrentRoom().getRoomPane();
             game.processCommand(new Command(CommandWord.GO, "south"));
@@ -253,7 +253,7 @@ public class Main extends Application {
         }
         //WEST
         if (playerSprite.getX() < -10) {
-            game.getCurrentRoom().getRoomPane().getChildren().remove(lastLV);
+            game.getCurrentRoom().getRoomPane().getChildren().remove(lastNode);
             //System.out.println("GO WEST");
             Pane oldPane = game.getCurrentRoom().getRoomPane();
             game.processCommand(new Command(CommandWord.GO, "west"));
@@ -284,16 +284,16 @@ public class Main extends Application {
                 BoundingBox interactionBounds = new BoundingBox(minX - offSet, minY - offSet, width + offSet * 2, height + offSet * 2);
 
                 if (interactionBounds.intersects(playerSprite.getLayoutBounds())) {
-                    game.getCurrentRoom().getRoomPane().getChildren().remove(lastLV);
+                    game.getCurrentRoom().getRoomPane().getChildren().remove(lastNode);
 
                     //TODO make abstract method for getting gui visuals (replace getCommandList & getNpcWindow)
                     if(i.interact().equals("npc")) {
                         NPC npc = (NPC)i;
                         game.getCurrentRoom().getRoomPane().getChildren().add(npc.getNpcWindow());
-                        lastLV = npc.getNpcWindow();
+                        lastNode = npc.getNpcWindow();
                     } else {
                         game.getCurrentRoom().getRoomPane().getChildren().add(i.getCommandList());
-                        lastLV = i.getCommandList();
+                        lastNode = i.getCommandList();
                     }
                 }
             }
