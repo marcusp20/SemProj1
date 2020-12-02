@@ -81,8 +81,9 @@ public class Player {
     public void setPlayerSprite(Image img)   {
         this.playerSprite = new ImageView(img);
 
-        this.playerSprite.setX(80);
+        this.playerSprite.setX(600);
         this.playerSprite.setY(400);
+        this.playerSprite.setCache(true); //Add moving images to cache - improves performance
     }
 
     public ImageView getPlayerSprite()  {

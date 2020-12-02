@@ -4,7 +4,6 @@ import game.*;
 import interactable.Interactable;
 import javafx.animation.AnimationTimer;
 import javafx.application.Application;
-
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXMLLoader;
@@ -17,7 +16,7 @@ import javafx.scene.control.ListView;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyEvent;
-import javafx.scene.layout.*;
+import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 import javafx.util.Callback;
 
@@ -60,14 +59,12 @@ public class Main extends Application {
     private ImageView playerSprite;
     private Player player;
 
-    public static void main(String[] args){
-        launch(args);
-    }
+    public static void main(String[] args) { launch(args); }
 
     @Override
     public void start(Stage stage) throws IOException {
 
-        //startscreen
+        //StartScreen
         ImageView startScreen = new ImageView(load("IntroScreenVer1.png"));
         startScreen.setPreserveRatio(false);
         startScreen.setFitHeight(832);
@@ -79,14 +76,14 @@ public class Main extends Application {
         newGameButton.setOpacity(0);
         newGameButton.setLayoutX(480);
         newGameButton.setLayoutY(280);
-        newGameButton.setOnAction(e -> newGame(stage));
+        newGameButton.setOnAction(e -> newGame(stage)); //This button will close this window, and start a new game
 
         loadGameButton = new Button();
         loadGameButton.setPrefSize(420, 69);
         loadGameButton.setOpacity(0);
         loadGameButton.setLayoutX(480);
         loadGameButton.setLayoutY(410);
-        loadGameButton.setOnAction(e -> loadGame(stage));
+        loadGameButton.setOnAction(e -> loadGame(stage)); //This button will close this window, and load a saved game
 
         //Parent rootButtonLayout = FXMLLoader.load(getClass().getResource("ButtonLayout.fxml"));
         //Parent rootStartScreen = FXMLLoader.load(getClass().getResource("StartScreen.fxml"));
@@ -102,9 +99,34 @@ public class Main extends Application {
         //startGame(stage);
     }
 
+    public void newGame(Stage stage) {
+        setFadeOut(stage);
+        stage.close();
+        game = new Game(true);
+        game.playGUI();
+        startGame(stage);
+        //System.out.println("NewGame");
+    }
+
+    public void loadGame(Stage stage) {
+        setFadeOut(stage);
+        stage.close();
+        saveFile = new File(System.getProperty("user.dir") + "\\saveFile.txt");
+        boolean saveFileExists = saveFile.exists();
+        //System.out.println(saveFile);
+        if (saveFileExists) {
+            game = GameLogger.loadGameFrom(saveFile, true);
+            game.playGUI();
+        } else {
+            System.err.println("Could not load saveFile");
+            newGame(stage);
+        }
+        startGame(stage);
+        System.out.println("LoadGame");
+    }
+
     //Must only be called through newGame or loadGame
     private void startGame(Stage stage) {
-
         player = game.getPlayer();
         playerSprite = player.getPlayerSprite();
         //Create new objects
@@ -140,7 +162,7 @@ public class Main extends Application {
         setFadeIn(stage);
     }
 
-    private void startTimer()    {
+    private void startTimer() {
         AnimationTimer timer = new AnimationTimer() {
             @Override
             public void handle(long now) {
@@ -151,13 +173,13 @@ public class Main extends Application {
     }
 
     //Main loop content
-    private void update()   {
+    private void update() {
         //Moves player based on movement keys
         move();
         //Check if room should be changed (player position)
         playerRoomChangeCheck();
 
-        if(backSpace)  {
+        if (backSpace) {
             game.getCurrentRoom().getRoomPane().getChildren().remove(lastLV);
             System.out.println("??");
         }
@@ -166,34 +188,34 @@ public class Main extends Application {
 
     }
 
-    private void playerRoomChangeCheck()    {
+    private void playerRoomChangeCheck() {
         //playerSprite used to check player location
         ImageView playerSprite = game.getPlayer().getPlayerSprite();
 
         //NORTH
-        if(playerSprite.getY() < -40)  {
+        if (playerSprite.getY() < -40) {
             game.getCurrentRoom().getRoomPane().getChildren().remove(lastLV);
             System.out.println("GO NORTH");
             Pane oldPane = game.getCurrentRoom().getRoomPane();
             game.processCommand(new Command(CommandWord.GO, "north"));
 
-            if(game.getCurrentRoom().getRoomPane() == oldPane) {
+            if (game.getCurrentRoom().getRoomPane() == oldPane) {
                 playerSprite.setY(-40);
                 System.out.println("HELP");
             } else {
-                playerSprite.setY(scene.getHeight()-200);
+                playerSprite.setY(scene.getHeight() - 200);
                 game.getCurrentRoom().getRoomPane().getChildren().add(playerSprite);
                 scene.setRoot(game.getCurrentRoom().getRoomPane());
             }
         }
         //EAST
-        if(playerSprite.getX() > scene.getWidth() - 120) {
+        if (playerSprite.getX() > scene.getWidth() - 120) {
             game.getCurrentRoom().getRoomPane().getChildren().remove(lastLV);
             System.out.println("GO EAST");
             Pane oldPane = game.getCurrentRoom().getRoomPane();
             game.processCommand(new Command(CommandWord.GO, "east"));
 
-            if(game.getCurrentRoom().getRoomPane() == oldPane) {
+            if (game.getCurrentRoom().getRoomPane() == oldPane) {
                 playerSprite.setX(scene.getWidth() - 120);
                 System.out.println("HELP");
             } else {
@@ -203,13 +225,13 @@ public class Main extends Application {
             }
         }
         //SOUTH
-        if(playerSprite.getY() > scene.getHeight() - 180)  {
+        if (playerSprite.getY() > scene.getHeight() - 180) {
             game.getCurrentRoom().getRoomPane().getChildren().remove(lastLV);
             System.out.println("GO SOUTH");
             Pane oldPane = game.getCurrentRoom().getRoomPane();
             game.processCommand(new Command(CommandWord.GO, "south"));
 
-            if(game.getCurrentRoom().getRoomPane() == oldPane) {
+            if (game.getCurrentRoom().getRoomPane() == oldPane) {
                 playerSprite.setY(scene.getHeight() - 180);
                 System.out.println("HELP");
             } else {
@@ -219,13 +241,13 @@ public class Main extends Application {
             }
         }
         //WEST
-        if(playerSprite.getX() < - 10) {
+        if (playerSprite.getX() < -10) {
             game.getCurrentRoom().getRoomPane().getChildren().remove(lastLV);
             System.out.println("GO WEST");
             Pane oldPane = game.getCurrentRoom().getRoomPane();
             game.processCommand(new Command(CommandWord.GO, "west"));
 
-            if(game.getCurrentRoom().getRoomPane() == oldPane) {
+            if (game.getCurrentRoom().getRoomPane() == oldPane) {
                 playerSprite.setX(-10);
                 System.out.println("HELP");
             } else {
@@ -236,26 +258,26 @@ public class Main extends Application {
         }
     }
 
-    private void checkCollision()    {
+    private void checkCollision() {
         ImageView player = game.getPlayer().getPlayerSprite();
 
-        for(Interactable i: game.getCurrentRoom().getInteractables())  {
+        for (Interactable i : game.getCurrentRoom().getInteractables()) {
             //Code for intractable collision
-            if(i.getImageView().intersects(player.getLayoutBounds()))   {
+            if (i.getImageView().intersects(player.getLayoutBounds())) {
 
                 //Moves player to previous position if intersecting with intractable, still allows other movement
-                if(game.getPlayer().getWestSpeed() > 0 || game.getPlayer().getEastSpeed() > 0)   {
+                if (game.getPlayer().getWestSpeed() > 0 || game.getPlayer().getEastSpeed() > 0) {
                     double curX = player.getX();
 
                     player.setX(game.getPlayer().getPrevX());
-                    if(i.getImageView().intersects(player.getLayoutBounds()))   {
+                    if (i.getImageView().intersects(player.getLayoutBounds())) {
                         player.setX(curX);
-                        if(game.getPlayer().getNorthSpeed() > 0 || game.getPlayer().getSouthSpeed() > 0)   {
+                        if (game.getPlayer().getNorthSpeed() > 0 || game.getPlayer().getSouthSpeed() > 0) {
                             player.setY(game.getPlayer().getPrevY());
                         }
                     }
                 }
-                if(i.getImageView().intersects(player.getLayoutBounds())) {
+                if (i.getImageView().intersects(player.getLayoutBounds())) {
                     if (game.getPlayer().getNorthSpeed() > 0 || game.getPlayer().getSouthSpeed() > 0) {
                         player.setY(game.getPlayer().getPrevY());
                         if (i.getImageView().intersects(player.getLayoutBounds())) {
@@ -274,9 +296,9 @@ public class Main extends Application {
             double width = i.getImageView().getLayoutBounds().getWidth();
             double height = i.getImageView().getLayoutBounds().getHeight();
 
-            BoundingBox interactionBounds = new BoundingBox(minX - 15,minY - 15,width + 30,height + 30);
-            if(interactionBounds.intersects(player.getLayoutBounds()))   {
-                if(this.e)  {
+            BoundingBox interactionBounds = new BoundingBox(minX - 15, minY - 15, width + 30, height + 30);
+            if (interactionBounds.intersects(player.getLayoutBounds())) {
+                if (this.e) {
                     //Code hereunder is run after player interacts with object
                     Command c = i.interact();
                     //game.processCommand(c);
@@ -289,103 +311,46 @@ public class Main extends Application {
         }
     }
 
-    private void launchNewGame(Stage stage) {
-        game = new Game(true);
-        game.playGUI();
-        startGame(stage);
-    }
-
-    private void launchLoadGame(Stage stage) {
-        saveFile = new File(System.getProperty("user.dir") + "\\saveFile.txt");
-        boolean saveFileExists = saveFile.exists();
-        //System.out.println(saveFile);
-        if(saveFileExists) {
-            game = GameLogger.loadGameFrom(saveFile, true);
-            game.playGUI();
-        } else {
-            System.err.println("Could not load saveFile");
-            launchNewGame(stage);
-        }
-        startGame(stage);
-    }
-
-    public void newGame(Stage stage) {
-        setFadeOut(stage);
-        stage.close();
-        launchNewGame(stage);
-        System.out.println("NewGame");
-    }
-
-    public void loadGame(Stage stage) {
-        setFadeOut(stage);
-        stage.close();
-        launchLoadGame(stage);
-        System.out.println("LoadGame");
-    }
 
     public void setFadeOut(Stage stage) {
-        for (double i=1; i>=0.02; i = i-0.00001) {
+        for (double i = 1; i >= 0.02; i = i - 0.00001) {
             stage.setOpacity(i);
         }
     }
 
     public void setFadeIn(Stage stage) {
-        for (double i=0; i<=0.999; i = i+0.00001) {
+        for (double i = 0; i <= 0.999; i = i + 0.00001) {
             stage.setOpacity(i);
         }
     }
 
     //Check pressed key and react accordingly
-    private void checkInput(KeyEvent e) {
+    private void checkInput(KeyEvent keyEvent) {
         //Key pressed event
-        if (e.getEventType() == KeyEvent.KEY_PRESSED) {
-            //Movement
-            switch (e.getCode())    {
-                case W:
-                    w = true;
-                    break;
-                case A:
-                    a = true;
-                    break;
-                case S:
-                    s = true;
-                    break;
-                case D:
-                    d = true;
-                    break;
+        if (keyEvent.getEventType() == KeyEvent.KEY_PRESSED) {
+            switch (keyEvent.getCode()) {
+                //Movement
+                case W -> w = true;
+                case A -> a = true;
+                case S -> s = true;
+                case D -> d = true;
                 //Interact
-                case E:
-                    this.e = true;
-                    break;
-                case BACK_SPACE:
-                    this.backSpace = true;
-                    break;
+                case E -> e = true;
+                case BACK_SPACE -> this.backSpace = true;
             }
         }
 
         //Key released event
-        if (e.getEventType() == KeyEvent.KEY_RELEASED) {
-            //Movement
-            switch (e.getCode())    {
-                case W:
-                    w = false;
-                    break;
-                case A:
-                    a = false;
-                    break;
-                case S:
-                    s = false;
-                    break;
-                case D:
-                    d = false;
-                    break;
+        if (keyEvent.getEventType() == KeyEvent.KEY_RELEASED) {
+            switch (keyEvent.getCode()) {
+                //Movement
+                case W -> w = false;
+                case A -> a = false;
+                case S -> s = false;
+                case D -> d = false;
                 //Interact
-                case E:
-                    this.e = false;
-                    break;
-                case BACK_SPACE:
-                    this.backSpace = false;
-                    break;
+                case E -> e = false;
+                case BACK_SPACE -> this.backSpace = false;
             }
         }
     }
@@ -395,39 +360,39 @@ public class Main extends Application {
         game.getPlayer().setPrevX(playerSprite.getX());
         game.getPlayer().setPrevY(playerSprite.getY());
 
-        if(w) {
-            if(player.getNorthSpeed() != 8)    {
+        if (w) {
+            if (player.getNorthSpeed() != 8) {
                 player.setNorthSpeed(player.getNorthSpeed() + 1);
             }
-        } else  {
-            if(player.getNorthSpeed() != 0)    {
+        } else {
+            if (player.getNorthSpeed() != 0) {
                 player.setNorthSpeed(player.getNorthSpeed() - 1);
             }
         }
-        if(a)  {
-            if(player.getEastSpeed() != 8) {
+        if (a) {
+            if (player.getEastSpeed() != 8) {
                 player.setEastSpeed(player.getEastSpeed() + 1);
             }
-        } else  {
-            if(player.getEastSpeed() != 0) {
+        } else {
+            if (player.getEastSpeed() != 0) {
                 player.setEastSpeed(player.getEastSpeed() - 1);
             }
         }
-        if(s)   {
-            if(player.getSouthSpeed() != 8) {
+        if (s) {
+            if (player.getSouthSpeed() != 8) {
                 player.setSouthSpeed(player.getSouthSpeed() + 1);
             }
-        } else  {
-            if(player.getSouthSpeed() != 0) {
+        } else {
+            if (player.getSouthSpeed() != 0) {
                 player.setSouthSpeed(player.getSouthSpeed() - 1);
             }
         }
-        if(d)   {
-            if(player.getWestSpeed() != 8) {
+        if (d) {
+            if (player.getWestSpeed() != 8) {
                 player.setWestSpeed(player.getWestSpeed() + 1);
             }
-        } else  {
-            if(player.getWestSpeed() != 0) {
+        } else {
+            if (player.getWestSpeed() != 0) {
                 player.setWestSpeed(player.getWestSpeed() - 1);
             }
         }
@@ -436,7 +401,7 @@ public class Main extends Application {
         playerSprite.setX(playerSprite.getX() - player.getEastSpeed() + player.getWestSpeed());
     }
 
-    private void createListViews()  {
+    private void createListViews() {
         HashMap<String, Command> bedCommands = new HashMap<>();
         bedCommands.put("Use bed", new Command(CommandWord.USE, "bed"));
         createListFromMap(bedCommands, game.getHqBed());
@@ -459,17 +424,15 @@ public class Main extends Application {
         createListFromMap(beeHiveCommands, game.getBeeHive());
 
         HashMap<String, Command> shopCommands = new HashMap<>();
-        for(ItemName i : ItemName.values()) {
+        for (ItemName i : ItemName.values()) {
             shopCommands.put(("Buy " + i.getItemNameString()), new Command(CommandWord.STORE_BUY, i.getItemNameString()));
         }
         createListFromMap(shopCommands, game.getShop());
     }
 
-    private void createListFromMap(HashMap<String, Command> commandHashMap, Interactable interactable)  {
+    private void createListFromMap(HashMap<String, Command> commandHashMap, Interactable interactable) {
         ObservableList<String> list = FXCollections.observableArrayList();
-        for(String key : commandHashMap.keySet())   {
-            list.add(key);
-        }
+        list.addAll(commandHashMap.keySet());
         ListView<String> listView = new ListView<>(list);
 
         Callback<ListView<String>, ListCell<String>> commandCellFactory = new Callback<ListView<String>, ListCell<String>>() {
@@ -481,8 +444,8 @@ public class Main extends Application {
         listView.setCellFactory(commandCellFactory);
         listView.setLayoutX(interactable.getImageView().getX());
         listView.setLayoutY(interactable.getImageView().getY());
-        listView.setPrefHeight(35*commandHashMap.size());
-        if(listView.getPrefHeight() > 300)  {
+        listView.setPrefHeight(35 * commandHashMap.size());
+        if (listView.getPrefHeight() > 300) {
             listView.setPrefHeight(300);
         }
         listView.setPrefWidth(200);
