@@ -86,11 +86,20 @@ public class Player {
         this.playerSprite.setCache(true); //Add moving images to cache - improves performance
     }
 
+    public void checkDirection()    {
+        if(this.getWestSpeed() > this.getEastSpeed())   {
+            playerSprite.setScaleX(1);
+        } else if (this.getWestSpeed() < this.getEastSpeed()) {
+            playerSprite.setScaleX(-1);
+        }
+    }
+
     public ImageView getPlayerSprite()  {
         return playerSprite;
     }
 
     public void setPrevX(double x) {
+        checkDirection();
         this.prevX = x;
     }
 
