@@ -1,17 +1,20 @@
 package game;
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+
 import java.util.ArrayList;
 import java.util.List;
 
 public class TaskList {
-    private List<Task> tasks;
+    private ObservableList<Task> tasks = FXCollections.observableArrayList();
     private Player player;
     private Game game;
 
     public TaskList(Game game, Player player) {
         this.game = game;
         this.player = player;
-        tasks = new ArrayList<>();
+
 
         createTasks();
     }
@@ -42,8 +45,16 @@ public class TaskList {
     }
 
 
-    public List<Task> getTasks() {
-        return tasks;
+    public ObservableList<String> getTasks() {
+        ObservableList<String> tempList = FXCollections.observableArrayList();
+
+
+        for (Task t : tasks) {
+            if (t.isActive()) {
+                tempList.add(t.getDescription() + "\t" + t.getReward());
+            }
+        }
+        return tempList;
     }
 
     public void update() {

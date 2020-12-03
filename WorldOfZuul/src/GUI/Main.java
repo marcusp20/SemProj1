@@ -43,7 +43,6 @@ public class Main extends Application {
     //Interaction keys
     private boolean e;
     private boolean backSpace;
-    private boolean tabulator;
 
     //Buttons
     Button loadGameButton;
@@ -448,7 +447,7 @@ public class Main extends Application {
     private void initTasklist() {
 
         taskListView = new ListView<>();
-        taskListView.setItems(taskListObservable);
+        taskListView.setItems(game.getTaskList().getTasks());
         game.getCurrentRoom().getRoomPane().getChildren().add(taskListView);
         taskListView.setPrefSize(355, 107);
         taskListView.setLayoutX(911);
@@ -458,6 +457,7 @@ public class Main extends Application {
 
     }
 
+    /*
     public void updateTask() {
         taskListObservable.clear();
         for (Task t : taskList.getTasks()) {
@@ -467,12 +467,14 @@ public class Main extends Application {
         }
     }
 
+     */
+
     public void toggleTaskList() {
         if (taskListView.isVisible()) {
             taskListView.setVisible(false);
         } else {
             taskListView.setVisible(true);
-            updateTask();
+             // updateTask();
         }
     }
 }

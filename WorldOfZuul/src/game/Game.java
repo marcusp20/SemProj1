@@ -472,7 +472,7 @@ public class Game {
         } else if (commandWord == CommandWord.USE) {
             use(command);
         } else if (commandWord == CommandWord.TASK) {
-            printTaskList();
+            //printTaskList();
         } else if (commandWord == CommandWord.MONEY) {
             System.out.println("You have $" + player.getWallet());
             return false;
@@ -599,6 +599,7 @@ public class Game {
         parser.showCommands();
     }
 
+    /*
     private void printTaskList() {
         for (Task t : taskList.getTasks()) {
             if (t.isActive()) {
@@ -606,6 +607,7 @@ public class Game {
             }
         }
     }
+     */
 
     //Prob not a game command, room command? or something...
     public void sleep() {
