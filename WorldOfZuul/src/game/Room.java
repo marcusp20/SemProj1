@@ -80,18 +80,11 @@ public class Room {
     }
 
     public void setRoomPane(Pane pane) {
-        feedbackText = new Label(" DUMMY TEXT DATA HERE");
-        feedbackText.setLayoutX(233);
-        feedbackText.setLayoutY(660);
-        feedbackText.setTextFill(Color.web("#f0ffff"));
-        feedbackText.setOpacity(0.92);
-        feedbackText.setPrefSize(750, 250);
-        feedbackText.setFont(new Font("Arial", 25));
-        feedbackText.setStyle("-fx-border-color:darkgoldenrod; -fx-border-width:3; -fx-background-color:black;");
-        feedbackText.setAlignment(Pos.TOP_CENTER);
-        feedbackText.setOpacity(0);
+        //creating the Label for console output
+        feedbackText = createFeedbackLabel();
+
         pane.setPrefSize(1280, 832); //720
-        pane.getChildren().addAll(feedbackText);
+        pane.getChildren().add(feedbackText);
         this.roomPane = pane;
     }
 
@@ -106,6 +99,22 @@ public class Room {
     }
 
     public Label getFeedbackText() {
+        return feedbackText;
+    }
+
+
+
+    public Label createFeedbackLabel() {
+        feedbackText = new Label(" DUMMY TEXT DATA HERE");
+        feedbackText.setLayoutX(353);
+        feedbackText.setLayoutY(720);
+        feedbackText.setTextFill(Color.web("#f0ffff"));
+        feedbackText.setOpacity(0.92);
+        feedbackText.setPrefSize(550, 110);
+        feedbackText.setFont(new Font("Arial", 22));
+        feedbackText.setStyle("-fx-border-color:darkgoldenrod; -fx-border-width:3; -fx-background-color:black;");
+        feedbackText.setAlignment(Pos.CENTER);
+        feedbackText.setOpacity(0);
         return feedbackText;
     }
 

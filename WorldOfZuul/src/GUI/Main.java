@@ -337,21 +337,8 @@ public class Main extends Application {
         this.e = false;
     }
 
-
-    public Label getFeedbackText() {
-        feedbackText = new Label(" DUMMY TEXT DATA HERE");
-        feedbackText.setOpacity(1);
-        feedbackText.setLayoutX(429);
-        feedbackText.setLayoutY(720);
-        feedbackText.setTextFill(Color.web("#FFFFFF"));
-        feedbackText.setWrapText(true);
-        feedbackText.setPrefSize(350, 150);
-        feedbackText.setFont(new Font("Arial", 34));
-        return feedbackText;
-    }
-
     public void updateFeedbackText(ByteArrayOutputStream b, Label l) {
-        l.setOpacity(0.92);
+        l.setOpacity(0.54);
         l.setText(b.toString());
         l.toFront();
         //game.resetStream();

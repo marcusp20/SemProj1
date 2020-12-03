@@ -950,6 +950,7 @@ public class Game {
         }
     }
 
+    //returns object used for displaying console output to GUIlabel
     public ByteArrayOutputStream setOutputStream() {
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
         PrintStream ps = new PrintStream(baos);
