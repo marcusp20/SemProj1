@@ -2,6 +2,7 @@ package game;
 
 import interactable.Interactable;
 import interactable.NPC;
+import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.control.Label;
 import javafx.scene.layout.Pane;
@@ -23,6 +24,7 @@ public class Room {
     private ArrayList<Interactable> interactables = new ArrayList<>();
 
     private Label feedbackText;
+
 
 
     public Room(String description) {
@@ -79,16 +81,17 @@ public class Room {
 
     public void setRoomPane(Pane pane) {
         feedbackText = new Label(" DUMMY TEXT DATA HERE");
-        feedbackText.setLayoutX(429);
-        feedbackText.setLayoutY(520);
-        feedbackText.setTextFill(Color.web("#FFFFFF"));
-        feedbackText.setWrapText(true);
-        feedbackText.setPrefSize(350, 150);
-        feedbackText.setFont(new Font("Arial", 9));
+        feedbackText.setLayoutX(233);
+        feedbackText.setLayoutY(660);
+        feedbackText.setTextFill(Color.web("#f0ffff"));
+        feedbackText.setOpacity(0.92);
+        feedbackText.setPrefSize(750, 250);
+        feedbackText.setFont(new Font("Arial", 25));
+        feedbackText.setStyle("-fx-border-color:darkgoldenrod; -fx-border-width:3; -fx-background-color:black;");
+        feedbackText.setAlignment(Pos.TOP_CENTER);
+        feedbackText.setOpacity(0);
         pane.setPrefSize(1280, 832); //720
         pane.getChildren().addAll(feedbackText);
-
-
         this.roomPane = pane;
     }
 

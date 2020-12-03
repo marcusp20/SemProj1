@@ -454,6 +454,9 @@ public class Game {
     /////////////////////////////////////////////////////////////////////////////////////
 
     public boolean processCommand(Command command) {
+
+        baos.reset();
+
         boolean wantToQuit = false;
 
         CommandWord commandWord = command.getCommandWord();

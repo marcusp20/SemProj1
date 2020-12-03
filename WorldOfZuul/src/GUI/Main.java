@@ -67,7 +67,7 @@ public class Main extends Application {
     private ImageView playerSprite;
     private Player player;
 
-    public static void main(String[] args) {
+    public static void main(String[] args)  {
         launch(args);
     }
 
@@ -218,7 +218,9 @@ public class Main extends Application {
         //Check if room should be changed (player position)
         playerRoomChangeCheck();
         //check if text label should output console
-        updateFeedbackText(game.getBaos(), game.getCurrentRoom().getFeedbackText()); //TODO: Fix feedback label
+
+        updateFeedbackText(game.getBaos(), game.getCurrentRoom().getFeedbackText()); //TODO: Fix feedback label, Baos.reset() called when. 
+
 
 
         if (backSpace) {
@@ -317,6 +319,8 @@ public class Main extends Application {
 
                 if (interactionBounds.intersects(playerSprite.getLayoutBounds())) {
 
+                    game.getBaos().reset(); //  not sure if placed correct
+
                     game.getCurrentRoom().getRoomPane().getChildren().remove(lastNode);
                     //TODO make abstract method for getting gui visuals (replace getCommandList & getNpcWindow)
                     if (i.interact().equals("npc")) {
@@ -346,9 +350,10 @@ public class Main extends Application {
         return feedbackText;
     }
 
-
     public void updateFeedbackText(ByteArrayOutputStream b, Label l) {
+        l.setOpacity(0.92);
         l.setText(b.toString());
+        l.toFront();
         //game.resetStream();
     }
 
@@ -363,6 +368,8 @@ public class Main extends Application {
             stage.setOpacity(i);
         }
     }
+
+
 
     //Check pressed key and react accordingly
     private void checkInput(KeyEvent keyEvent) {
