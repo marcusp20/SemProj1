@@ -248,6 +248,7 @@ public class Game {
         field.getImageView().setY(312);
         field.getImageView().setFitWidth(712);
         field.getImageView().setFitHeight(463);
+        field.getImageView().setVisible(false);
 
         }
 
@@ -610,6 +611,7 @@ public class Game {
     public void sleep() {
         hqBed.sleep();            //Used in 2d implementation
         field.nextDay();
+        checkField();
         gameTimer++;
     }
 
@@ -754,6 +756,7 @@ public class Game {
     //Checks for tractor in inventory, if not, shovel is used. If no shovel, nothing happens.
     public void sowField(Command command) {
         //Check conditions
+
         if (field.getIsSowed()) {
             System.out.println("Field already sowed with " + field.getCurrentHarvest() + ".");
             return;
@@ -778,6 +781,7 @@ public class Game {
         } else {
             System.out.println("No tractor er shovel in inventory.");
         }
+        checkField();
     }
 
     //harvestField method
@@ -786,6 +790,7 @@ public class Game {
     //Calculates value yield, after scythe or harvester is used, and adds money to player wallet.
     //Resets field.
     public void harvestField() {
+        checkField();
         if (!field.getIsReadyToHarvest()) {
             if (field.isWatered() && field.getIsSowed()) {
                 System.out.println("Field has not had time to grow, go take a nap at HQ");
@@ -816,6 +821,7 @@ public class Game {
         field.resetYield();
 
         System.out.println("Wallet is now " + player.checkWallet());
+        checkField();
 
         //Check to see if player has enough money to complete task
         taskList.update();
@@ -845,6 +851,7 @@ public class Game {
     //Check for isSowed
     //See moistField method for further explanation.
     public void waterField() {
+
         if (player.itemOwned(ItemName.WATER_CAN)) {
             if (field.getIsSowed()) {
                 field.moistField();
@@ -854,6 +861,7 @@ public class Game {
         } else {
             System.out.println("No watering can in inventory.");
         }
+        checkField();
     }
 
 
