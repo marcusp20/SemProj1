@@ -3,7 +3,10 @@ package game;
 import interactable.Interactable;
 import interactable.NPC;
 import javafx.scene.Node;
+import javafx.scene.control.Label;
 import javafx.scene.layout.Pane;
+import javafx.scene.paint.Color;
+import javafx.scene.text.Font;
 
 import java.awt.*;
 import java.util.ArrayList;
@@ -18,6 +21,8 @@ public class Room {
     private boolean isLocked;
     private Pane roomPane;
     private ArrayList<Interactable> interactables = new ArrayList<>();
+
+    private Label feedbackText;
 
 
     public Room(String description) {
@@ -73,7 +78,16 @@ public class Room {
     }
 
     public void setRoomPane(Pane pane) {
+        feedbackText = new Label(" DUMMY TEXT DATA HERE");
+        feedbackText.setLayoutX(429);
+        feedbackText.setLayoutY(520);
+        feedbackText.setTextFill(Color.web("#FFFFFF"));
+        feedbackText.setWrapText(true);
+        feedbackText.setPrefSize(350, 150);
+        feedbackText.setFont(new Font("Arial", 9));
         pane.setPrefSize(1280, 832); //720
+        pane.getChildren().addAll(feedbackText);
+
 
         this.roomPane = pane;
     }
@@ -85,6 +99,11 @@ public class Room {
     public void addInteractable(Interactable i) {
         this.interactables.add(i);
         this.roomPane.getChildren().add(i.getImageView());
+
+    }
+
+    public Label getFeedbackText() {
+        return feedbackText;
     }
 
     public ArrayList<Interactable> getInteractables() {

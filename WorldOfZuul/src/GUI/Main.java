@@ -67,12 +67,6 @@ public class Main extends Application {
     private ImageView playerSprite;
     private Player player;
 
-
-    //console output
-    //private PrintStream oldStream = System.out;
-    //ByteArrayOutputStream baos;
-
-
     public static void main(String[] args) {
         launch(args);
     }
@@ -183,7 +177,7 @@ public class Main extends Application {
 
 
 
-        p.getChildren().addAll(game.getPlayer().getPlayerSprite(), getFeedbackText());
+        p.getChildren().addAll(game.getPlayer().getPlayerSprite());
         //add Children
         scene = new Scene(p);
 
@@ -224,7 +218,8 @@ public class Main extends Application {
         //Check if room should be changed (player position)
         playerRoomChangeCheck();
         //check if text label should output console
-        updateFeedbackText(game.getBaos());
+        updateFeedbackText(game.getBaos(), game.getCurrentRoom().getFeedbackText()); //TODO: Fix feedback label
+
 
         if (backSpace) {
             game.getCurrentRoom().getRoomPane().getChildren().remove(lastNode);
@@ -352,8 +347,8 @@ public class Main extends Application {
     }
 
 
-    public void updateFeedbackText(ByteArrayOutputStream b) {
-        feedbackText.setText(b.toString());
+    public void updateFeedbackText(ByteArrayOutputStream b, Label l) {
+        l.setText(b.toString());
         //game.resetStream();
     }
 
