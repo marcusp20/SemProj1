@@ -187,7 +187,6 @@ public class Main extends Application {
         stage.show();
         fadeIn(stage);
 
-        //initTasklist();
         taskList.createTaskListView();
     }
 
@@ -215,7 +214,6 @@ public class Main extends Application {
         if (backSpace) {
             game.getCurrentRoom().getRoomPane().getChildren().remove(lastNode);
             backSpace = false;
-            //System.out.println("??");
         }
     }
 
@@ -446,37 +444,11 @@ public class Main extends Application {
         return new Image(new FileInputStream(path + "\\img\\" + fileName));
     }
 
-    private void initTasklist() {
-
-        taskListView = new ListView<>();
-        taskListView.setItems(game.getTaskList().getTasks());
-        game.getCurrentRoom().getRoomPane().getChildren().add(taskListView);
-        taskListView.setPrefSize(355, 107);
-        taskListView.setLayoutX(911);
-        taskListView.setLayoutY(14);
-        taskListView.setVisible(false);
-
-
-    }
-
-    /*
-    public void updateTask() {
-        taskListObservable.clear();
-        for (Task t : taskList.getTasks()) {
-            if (t.isActive()) {
-                taskListObservable.add(t.getDescription() + "\t" + t.getReward());
-            }
-        }
-    }
-
-     */
-
     public void toggleTaskList() {
         if (taskList.getTaskListView().isVisible()) {
             taskList.getTaskListView().setVisible(false);
         } else {
             taskList.getTaskListView().setVisible(true);
-             // updateTask();
         }
     }
 }
