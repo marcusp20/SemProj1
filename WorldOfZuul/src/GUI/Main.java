@@ -187,7 +187,8 @@ public class Main extends Application {
         stage.show();
         fadeIn(stage);
 
-        initTasklist();
+        //initTasklist();
+        taskList.createTaskListView();
     }
 
     private void startTimer() {
@@ -209,6 +210,7 @@ public class Main extends Application {
         checkInteraction();
         //Check if room should be changed (player position)
         playerRoomChangeCheck();
+        taskList.update();
 
         if (backSpace) {
             game.getCurrentRoom().getRoomPane().getChildren().remove(lastNode);
@@ -224,7 +226,7 @@ public class Main extends Application {
         //NORTH
         if (playerSprite.getY() < -40) {
             game.getCurrentRoom().getRoomPane().getChildren().remove(lastNode);
-            game.getCurrentRoom().getRoomPane().getChildren().remove(taskListView);
+            game.getCurrentRoom().getRoomPane().getChildren().remove(taskList.getTaskListView());
             //System.out.println("GO NORTH");
             Pane oldPane = game.getCurrentRoom().getRoomPane();
             game.processCommand(new Command(CommandWord.GO, "north"));
@@ -236,14 +238,14 @@ public class Main extends Application {
             } else {
                 playerSprite.setY(scene.getHeight() - 200);
                 game.getCurrentRoom().getRoomPane().getChildren().add(playerSprite);
-                game.getCurrentRoom().getRoomPane().getChildren().add(taskListView);
+                game.getCurrentRoom().getRoomPane().getChildren().add(taskList.getTaskListView());
                 scene.setRoot(game.getCurrentRoom().getRoomPane());
             }
         }
         //EAST
         if (playerSprite.getX() > scene.getWidth() - 120) {
             game.getCurrentRoom().getRoomPane().getChildren().remove(lastNode);
-            game.getCurrentRoom().getRoomPane().getChildren().remove(taskListView);
+            game.getCurrentRoom().getRoomPane().getChildren().remove(taskList.getTaskListView());
             //System.out.println("GO EAST");
             Pane oldPane = game.getCurrentRoom().getRoomPane();
             game.processCommand(new Command(CommandWord.GO, "east"));
@@ -255,14 +257,14 @@ public class Main extends Application {
             } else {
                 playerSprite.setX(10);
                 game.getCurrentRoom().getRoomPane().getChildren().add(playerSprite);
-                game.getCurrentRoom().getRoomPane().getChildren().add(taskListView);
+                game.getCurrentRoom().getRoomPane().getChildren().add(taskList.getTaskListView());
                 scene.setRoot(game.getCurrentRoom().getRoomPane());
             }
         }
         //SOUTH
         if (playerSprite.getY() > scene.getHeight() - 180) {
             game.getCurrentRoom().getRoomPane().getChildren().remove(lastNode);
-            game.getCurrentRoom().getRoomPane().getChildren().remove(taskListView);
+            game.getCurrentRoom().getRoomPane().getChildren().remove(taskList.getTaskListView());
             //System.out.println("GO SOUTH");
             Pane oldPane = game.getCurrentRoom().getRoomPane();
             game.processCommand(new Command(CommandWord.GO, "south"));
@@ -274,14 +276,14 @@ public class Main extends Application {
             } else {
                 playerSprite.setY(20);
                 game.getCurrentRoom().getRoomPane().getChildren().add(playerSprite);
-                game.getCurrentRoom().getRoomPane().getChildren().add(taskListView);
+                game.getCurrentRoom().getRoomPane().getChildren().add(taskList.getTaskListView());
                 scene.setRoot(game.getCurrentRoom().getRoomPane());
             }
         }
         //WEST
         if (playerSprite.getX() < -10) {
             game.getCurrentRoom().getRoomPane().getChildren().remove(lastNode);
-            game.getCurrentRoom().getRoomPane().getChildren().remove(taskListView);
+            game.getCurrentRoom().getRoomPane().getChildren().remove(taskList.getTaskListView());
             //System.out.println("GO WEST");
             Pane oldPane = game.getCurrentRoom().getRoomPane();
             game.processCommand(new Command(CommandWord.GO, "west"));
@@ -293,7 +295,7 @@ public class Main extends Application {
             } else {
                 playerSprite.setX(scene.getWidth() - 140);
                 game.getCurrentRoom().getRoomPane().getChildren().add(playerSprite);
-                game.getCurrentRoom().getRoomPane().getChildren().add(taskListView);
+                game.getCurrentRoom().getRoomPane().getChildren().add(taskList.getTaskListView());
                 scene.setRoot(game.getCurrentRoom().getRoomPane());
             }
         }
@@ -470,10 +472,10 @@ public class Main extends Application {
      */
 
     public void toggleTaskList() {
-        if (taskListView.isVisible()) {
-            taskListView.setVisible(false);
+        if (taskList.getTaskListView().isVisible()) {
+            taskList.getTaskListView().setVisible(false);
         } else {
-            taskListView.setVisible(true);
+            taskList.getTaskListView().setVisible(true);
              // updateTask();
         }
     }

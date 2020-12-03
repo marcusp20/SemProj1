@@ -3,6 +3,10 @@ package game;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
+import javafx.beans.Observable;
+import javafx.collections.ObservableList;
+import javafx.scene.control.ListView;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -10,6 +14,7 @@ public class TaskList {
     private ObservableList<Task> tasks = FXCollections.observableArrayList();
     private Player player;
     private Game game;
+    private ListView<String> taskListView = new ListView<>();
 
     public TaskList(Game game, Player player) {
         this.game = game;
@@ -151,10 +156,21 @@ public class TaskList {
                 //hide the task
             tasks.get(7).setActive(false);
             tasks.get(7).setVisible(false);
-
-
-
             }
         }
+        taskListView.setItems(game.getTaskList().getTasks());
+    }
+
+    public void createTaskListView()    {
+        taskListView.setItems(game.getTaskList().getTasks());
+        game.getCurrentRoom().getRoomPane().getChildren().add(this.taskListView);
+        taskListView.setPrefSize(355, 107);
+        taskListView.setLayoutX(911);
+        taskListView.setLayoutY(14);
+        taskListView.setVisible(false);
+    }
+
+    public ListView<String> getTaskListView()   {
+        return taskListView;
     }
 }
