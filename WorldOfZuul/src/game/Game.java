@@ -172,7 +172,7 @@ public class Game {
     }
 
     private void createBeeHive() {
-        beeHive = new BeeHive();
+        beeHive = new BeeHive(beeHiveCommandWords);
         beeHive.getImageView().setX(330);
         beeHive.getImageView().setY(200);
     }
@@ -271,7 +271,7 @@ public class Game {
     }
 
     private void createFlowerBed() {
-        flowerbed = new FlowerBed(gardenCommandWords);
+        flowerbed = new FlowerBed(flowerBedCommandWords);
     }
 
     private void createRooms() {
