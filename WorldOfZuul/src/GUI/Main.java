@@ -51,10 +51,6 @@ public class Main extends Application {
     //Contains last opened menu
     Node lastNode;
 
-    //Tasklist
-    ObservableList<String> taskListObservable = FXCollections.observableArrayList();
-    ListView<String> taskListView;
-    TaskList taskList;
 
     //Easy access to player and player sprite objects
     private ImageView playerSprite;
@@ -153,7 +149,7 @@ public class Main extends Application {
         player = game.getPlayer();
         playerSprite = player.getPlayerSprite();
         movementHandler = new MovementHandler(game, player, playerSprite);
-        taskList = game.getTaskList();
+        //taskList = game.getTaskList();
 
         //Create new objects
         createListViews();
@@ -187,7 +183,7 @@ public class Main extends Application {
         stage.show();
         fadeIn(stage);
 
-        taskList.createTaskListView();
+        game.getTaskList().createTaskListView();
     }
 
     private void startTimer() {
@@ -209,7 +205,6 @@ public class Main extends Application {
         checkInteraction();
         //Check if room should be changed (player position)
         playerRoomChangeCheck();
-        taskList.update();
 
         if (backSpace) {
             game.getCurrentRoom().getRoomPane().getChildren().remove(lastNode);
@@ -281,12 +276,12 @@ public class Main extends Application {
 
     private void removeRoomContent()    {
         game.getCurrentRoom().getRoomPane().getChildren().remove(lastNode);
-        game.getCurrentRoom().getRoomPane().getChildren().remove(taskList.getTaskListView());
+        game.getCurrentRoom().getRoomPane().getChildren().remove(game.getTaskList().getTaskListView());
     }
 
     private void addRoomContent()   {
         game.getCurrentRoom().getRoomPane().getChildren().add(playerSprite);
-        game.getCurrentRoom().getRoomPane().getChildren().add(taskList.getTaskListView());
+        game.getCurrentRoom().getRoomPane().getChildren().add(game.getTaskList().getTaskListView());
         scene.setRoot(game.getCurrentRoom().getRoomPane());
     }
 
@@ -436,10 +431,10 @@ public class Main extends Application {
     }
 
     public void toggleTaskList() {
-        if (taskList.getTaskListView().isVisible()) {
-            taskList.getTaskListView().setVisible(false);
+        if (game.getTaskList().getTaskListView().isVisible()) {
+            game.getTaskList().getTaskListView().setVisible(false);
         } else {
-            taskList.getTaskListView().setVisible(true);
+            game.getTaskList().getTaskListView().setVisible(true);
         }
     }
 }
