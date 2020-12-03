@@ -220,8 +220,7 @@ public class Main extends Application {
         checkInteraction();
         //Check if room should be changed (player position)
         playerRoomChangeCheck();
-        // update Tasklist
-        updateTask();
+
 
         if (backSpace) {
             game.getCurrentRoom().getRoomPane().getChildren().remove(lastNode);
