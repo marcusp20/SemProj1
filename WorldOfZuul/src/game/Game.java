@@ -248,12 +248,10 @@ public class Game {
         field.getImageView().setY(312);
         field.getImageView().setFitWidth(712);
         field.getImageView().setFitHeight(463);
-        try {
-            field.getImageView().setImage(loadImage("FieldHarvest.png"));
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
+
         }
-    }
+
+
 
     private void createPlayer() {
         player = new Player("Lars Tyndskid");
@@ -882,6 +880,26 @@ public class Game {
         } else {
             System.out.println("Your soil is not too great.");
             System.out.println("Have you tried fertilizing the soil?");
+        }
+    }
+
+    public void checkField() {
+        if (field.getIsReadyToHarvest()) {
+            try {
+                field.getImageView().setVisible(true);
+                field.getImageView().setImage((loadImage("FieldHarvest.png")));
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
+            }
+        } else if (field.getIsSowed()) {
+            try {
+                field.getImageView().setVisible(true);
+                field.getImageView().setImage(loadImage("FieldSow.png"));
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
+            }
+        } else {
+            field.getImageView().setVisible(false);
         }
     }
 
