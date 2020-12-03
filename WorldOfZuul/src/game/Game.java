@@ -5,9 +5,7 @@ import chadChicken.GUIQuiz;
 import chadChicken.Quiz;
 import chadChicken.TextQuiz;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
+import java.io.*;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -53,13 +51,16 @@ public class Game {
     private long seed;
     private boolean isGUI;
 
+    //console output
+    private PrintStream old = System.out;
+    ByteArrayOutputStream baos;
+
 
     public Game(long seed, boolean isGUI) {
         this.seed = seed;
         this.isGUI = isGUI;
         random.setSeed(seed);
         System.out.println(seed);
-
         unLockableRooms = new HashMap<>();
 
         //Create command words
@@ -90,6 +91,9 @@ public class Game {
 
         //Create game logger (for saving games)
         createGameLogger();
+
+        //create
+        baos = setOutputStream();
     }
 
     public Game(long seed) {
@@ -397,7 +401,6 @@ public class Game {
         boolean finished = false;
         while (!finished) {
             Command command = parser.getCommand();
-
             finished = processCommand(command);
             if (checkForDebt()) {
                 System.out.println("You have no more money or seeds, game over");
@@ -454,7 +457,6 @@ public class Game {
         boolean wantToQuit = false;
 
         CommandWord commandWord = command.getCommandWord();
-
 
         if (commandWord == CommandWord.UNKNOWN) {
             System.out.println("I don't know what you mean...");
@@ -943,6 +945,22 @@ public class Game {
         } else if (gameTimer == 7) {
             System.out.println("OmegaAlphaChickenChad is keeping an eye on you");
         }
+    }
+
+    public ByteArrayOutputStream setOutputStream() {
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        PrintStream ps = new PrintStream(baos);
+        System.setOut(ps);
+        return baos;
+    }
+
+    public void resetStream() {
+        System.out.flush();
+        System.setOut(old);
+    }
+
+    public ByteArrayOutputStream getBaos() {
+        return baos;
     }
 
     public Room getCurrentRoom() {

@@ -67,7 +67,10 @@ public class Main extends Application {
     private ImageView playerSprite;
     private Player player;
 
-    private PrintStream old = System.out;
+
+    //console output
+    //private PrintStream oldStream = System.out;
+    //ByteArrayOutputStream baos;
 
 
     public static void main(String[] args) {
@@ -85,13 +88,11 @@ public class Main extends Application {
         game = new Game(true);
         game.playGUI();
         startGame(stage);
-        //System.out.println("NewGame");
     }
 
     public void loadGame(Stage stage) {
         File saveFile = loadFile("saveFile.txt");
         boolean saveFileExists = saveFile.exists();
-        //System.out.println(saveFile);
         if (saveFileExists) {
             game = GameLogger.loadGameFrom(saveFile, true);
             game.playGUI();
@@ -180,7 +181,9 @@ public class Main extends Application {
         }
          */
 
-        p.getChildren().addAll(game.getPlayer().getPlayerSprite());
+
+
+        p.getChildren().addAll(game.getPlayer().getPlayerSprite(), getFeedbackText());
         //add Children
         scene = new Scene(p);
 
@@ -218,11 +221,11 @@ public class Main extends Application {
         //Check and correct collision between player and object
         movementHandler.checkCollision();
         checkInteraction();
-        //check if text label should output console
-
-
         //Check if room should be changed (player position)
         playerRoomChangeCheck();
+        //check if text label should output console
+        updateFeedbackText(game.getBaos());
+
 
         if (backSpace) {
             game.getCurrentRoom().getRoomPane().getChildren().remove(lastNode);
@@ -337,9 +340,8 @@ public class Main extends Application {
     }
 
 
-    public void getFeedbackText(ByteArrayOutputStream baos) {
-
-        feedbackText = new Label(" ");
+    public Label getFeedbackText() {
+        feedbackText = new Label(" DUMMY TEXT DATA HERE");
         feedbackText.setOpacity(1);
         feedbackText.setLayoutX(429);
         feedbackText.setLayoutY(720);
@@ -347,24 +349,13 @@ public class Main extends Application {
         feedbackText.setWrapText(true);
         feedbackText.setPrefSize(350, 150);
         feedbackText.setFont(new Font("Arial", 34));
-        game.getCurrentRoom().getRoomPane().getChildren().addAll(feedbackText);
-        feedbackText.setText(baos.toString());
+        return feedbackText;
     }
 
-
-    public ByteArrayOutputStream setOutputStream() {
-        ByteArrayOutputStream baos = new ByteArrayOutputStream();
-        PrintStream ps = new PrintStream(baos);
-        System.setOut(ps);
-        return baos;
+    public void updateFeedbackText(ByteArrayOutputStream b) {
+        feedbackText.setText(b.toString());
+        //game.resetStream();
     }
-
-    public void resetStream() {
-        System.out.flush();
-        System.setOut(old);
-    }
-
-
 
     public void fadeOut(Stage stage) {
         for (double i = 1; i >= 0.01; i = i - 0.0001) {
