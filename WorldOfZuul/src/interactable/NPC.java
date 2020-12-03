@@ -191,7 +191,7 @@ public class NPC extends Interactable{
     private void createNpcWindow()   {
         //Create start text
         String text = "";
-        for(String line : getPatternLines("q0"))    {
+        for(String line : getPatternLines("*"))    {
             text = text.concat(line + "\n");
         }
         dialogText = new Text(text);
