@@ -15,17 +15,20 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
+import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 import javafx.util.Callback;
+import javafx.scene.control.Label;
+import javafx.scene.paint.Color;
+import javafx.scene.text.Font;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.IOException;
+
+import java.awt.*;
+import java.io.*;
 import java.util.HashMap;
 
 /*
@@ -48,6 +51,9 @@ public class Main extends Application {
     //Buttons
     Button loadGameButton;
     Button newGameButton;
+
+    //labels
+    Label feedbackText;
 
     //Contains last opened menu
     Node lastNode;
@@ -163,15 +169,15 @@ public class Main extends Application {
         //Set scene
         Pane p = game.getCurrentRoom().getRoomPane();
 
-        //FXML root OR JavaFX Code...
+        /*FXML root OR JavaFX Code... answer: JavaFX
         try {
             Parent rootButtonLayout = FXMLLoader.load(getClass().getResource("ButtonLayout.fxml"));
-            p.getChildren().addAll(game.getPlayer().getPlayerSprite(), rootButtonLayout);
-
         } catch (IOException ioException) {
             ioException.printStackTrace();
         }
+         */
 
+        p.getChildren().addAll(game.getPlayer().getPlayerSprite());
         //add Children
         scene = new Scene(p);
 
@@ -209,6 +215,9 @@ public class Main extends Application {
         //Check and correct collision between player and object
         movementHandler.checkCollision();
         checkInteraction();
+        //check if text label should output console
+
+
         //Check if room should be changed (player position)
         playerRoomChangeCheck();
 
@@ -307,8 +316,8 @@ public class Main extends Application {
                 BoundingBox interactionBounds = new BoundingBox(minX - offSet, minY - offSet, width + offSet * 2, height + offSet * 2);
 
                 if (interactionBounds.intersects(playerSprite.getLayoutBounds())) {
-                    game.getCurrentRoom().getRoomPane().getChildren().remove(lastNode);
 
+                    game.getCurrentRoom().getRoomPane().getChildren().remove(lastNode);
                     //TODO make abstract method for getting gui visuals (replace getCommandList & getNpcWindow)
                     if (i.interact().equals("npc")) {
                         NPC npc = (NPC) i;
@@ -323,6 +332,43 @@ public class Main extends Application {
         }
         this.e = false;
     }
+
+    /*
+    public ByteArrayOutputStream setOutputStream() {
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        PrintStream ps = new PrintStream(baos);
+        // IMPORTANT: Save the old System.out!
+        PrintStream old = System.out;
+        // Tell Java to use your special stream
+        System.setOut(ps);
+        // Print some output: goes to your special stream
+        return baos;
+    }
+
+    public void closeOutputStream(PrintStream old) {
+        // Put things back
+        System.out.flush();
+        System.setOut(old);
+        // Show what happened
+    }
+
+     */
+
+    public void getFeedbackText() {
+
+
+        feedbackText = new Label("DUMMY TEXT HERE ");
+        feedbackText.setOpacity(1);
+        feedbackText.setLayoutX(429);
+        feedbackText.setLayoutY(720);
+        feedbackText.setTextFill(Color.web("#FFFFFF"));
+        feedbackText.setWrapText(true);
+        feedbackText.setPrefSize(350, 150);
+        feedbackText.setFont(new Font("Arial", 34));
+        game.getCurrentRoom().getRoomPane().getChildren().addAll(feedbackText);
+    }
+
+
 
     public void fadeOut(Stage stage) {
         for (double i = 1; i >= 0.01; i = i - 0.0001) {
@@ -399,6 +445,7 @@ public class Main extends Application {
     }
 
     private void createListFromMap(HashMap<String, Command> commandHashMap, Interactable interactable) {
+
         ObservableList<String> list = FXCollections.observableArrayList();
         list.addAll(commandHashMap.keySet());
         ListView<String> listView = new ListView<>(list);
@@ -417,7 +464,6 @@ public class Main extends Application {
             listView.setPrefHeight(300);
         }
         listView.setPrefWidth(200);
-
         interactable.setCommandList(listView);
     }
 
@@ -446,6 +492,8 @@ public class Main extends Application {
 
 
     }
+
+
 
     public void updateTask() {
         taskListObservable.clear();

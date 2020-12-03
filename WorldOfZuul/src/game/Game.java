@@ -53,6 +53,7 @@ public class Game {
     private long seed;
     private boolean isGUI;
 
+
     public Game(long seed, boolean isGUI) {
         this.seed = seed;
         this.isGUI = isGUI;
@@ -453,6 +454,7 @@ public class Game {
         boolean wantToQuit = false;
 
         CommandWord commandWord = command.getCommandWord();
+
 
         if (commandWord == CommandWord.UNKNOWN) {
             System.out.println("I don't know what you mean...");
