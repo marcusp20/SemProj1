@@ -182,6 +182,13 @@ public class NPC extends Interactable{
         }
     }
 
+    public boolean isFirstMeeting() {
+        return firstMeeting;
+    }
+
+    ///////
+    //GUI//
+    ///////
     @Override
     public String interact()  {
         System.out.println("You can interact with " + this.name);
@@ -249,6 +256,8 @@ public class NPC extends Interactable{
         npcWindow.setLayoutY(this.getImageView().getY());
 
         npcWindow.setBackground(new Background(new BackgroundFill(Color.WHITE, CornerRadii.EMPTY, Insets.EMPTY)));
+
+        firstMeeting = false;
 
         return npcWindow;
     }

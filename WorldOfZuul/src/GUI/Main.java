@@ -211,8 +211,6 @@ public class Main extends Application {
         //Check if room should be changed (player position)
         playerRoomChangeCheck();
 
-
-
         if (backSpace) {
             game.getCurrentRoom().getRoomPane().getChildren().remove(lastNode);
             backSpace = false;
@@ -318,9 +316,12 @@ public class Main extends Application {
                 if (interactionBounds.intersects(playerSprite.getLayoutBounds())) {
                     game.getCurrentRoom().getRoomPane().getChildren().remove(lastNode);
 
-                    //TODO make abstract method for getting gui visuals (replace getCommandList & getNpcWindow)
+
                     if (i.interact().equals("npc")) {
                         NPC npc = (NPC) i;
+                        if(!npc.isFirstMeeting())    {
+                            npc.resetNpcWindow();
+                        }
                         game.getCurrentRoom().getRoomPane().getChildren().add(npc.getNpcWindow());
                         lastNode = npc.getNpcWindow();
                     } else {
