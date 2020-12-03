@@ -67,47 +67,7 @@ public class Main extends Application {
 
     @Override
     public void start(Stage stage) {
-
-        //StartScreen
-        ImageView startScreen = null;
-        try {
-            startScreen = new ImageView(load("IntroScreenVer1.png"));
-        } catch (IOException ioException) {
-            System.err.println("'IntroScreenVer1.png' not found");
-            ioException.printStackTrace();
-        }
-
-        startScreen.setPreserveRatio(false);
-        startScreen.setFitHeight(832);
-        startScreen.setFitWidth(1280);
-
-        //Buttons
-        newGameButton = new Button();
-        newGameButton.setPrefSize(420, 69);
-        newGameButton.setOpacity(0);
-        newGameButton.setLayoutX(480);
-        newGameButton.setLayoutY(280);
-        newGameButton.setOnAction(e -> newGame(stage)); //This button will close this window, and start a new game
-
-        loadGameButton = new Button();
-        loadGameButton.setPrefSize(420, 69);
-        loadGameButton.setOpacity(0);
-        loadGameButton.setLayoutX(480);
-        loadGameButton.setLayoutY(410);
-        loadGameButton.setOnAction(e -> loadGame(stage)); //This button will close this window, and load a saved game
-
-        //Parent rootButtonLayout = FXMLLoader.load(getClass().getResource("ButtonLayout.fxml"));
-        //Parent rootStartScreen = FXMLLoader.load(getClass().getResource("StartScreen.fxml"));
-
-        Pane startPane = new Pane();
-        startPane.setPrefSize(1280, 832);
-        startPane.getChildren().addAll(startScreen, loadGameButton, newGameButton);
-
-        introScene = new Scene(startPane);
-        stage.setScene(introScene);
-        stage.show();
-
-        //startGame(stage);
+        showStartScreen(stage);
     }
 
     public void newGame(Stage stage) {
@@ -147,6 +107,47 @@ public class Main extends Application {
         //Default - probably not gonna work
         return new File(path + "\\" + fileName);
 
+    }
+
+    public void showStartScreen(Stage stage) {
+        //StartScreen
+        ImageView startScreen = null;
+        try {
+            startScreen = new ImageView(load("IntroScreenVer1.png"));
+        } catch (IOException ioException) {
+            System.err.println("'IntroScreenVer1.png' not found");
+            ioException.printStackTrace();
+        }
+
+        startScreen.setPreserveRatio(false);
+        startScreen.setFitHeight(832);
+        startScreen.setFitWidth(1280);
+
+        //Buttons
+        newGameButton = new Button();
+        newGameButton.setPrefSize(420, 69);
+        newGameButton.setOpacity(0);
+        newGameButton.setLayoutX(480);
+        newGameButton.setLayoutY(280);
+        newGameButton.setOnAction(e -> newGame(stage)); //This button will close this window, and start a new game
+
+        loadGameButton = new Button();
+        loadGameButton.setPrefSize(420, 69);
+        loadGameButton.setOpacity(0);
+        loadGameButton.setLayoutX(480);
+        loadGameButton.setLayoutY(410);
+        loadGameButton.setOnAction(e -> loadGame(stage)); //This button will close this window, and load a saved game
+
+        //Parent rootButtonLayout = FXMLLoader.load(getClass().getResource("ButtonLayout.fxml"));
+        //Parent rootStartScreen = FXMLLoader.load(getClass().getResource("StartScreen.fxml"));
+
+        Pane startPane = new Pane();
+        startPane.setPrefSize(1280, 832);
+        startPane.getChildren().addAll(startScreen, loadGameButton, newGameButton);
+
+        introScene = new Scene(startPane);
+        stage.setScene(introScene);
+        stage.show();
     }
 
     //Must only be called through newGame or loadGame
