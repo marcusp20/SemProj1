@@ -255,7 +255,7 @@ public class NPC extends Interactable{
         npcWindow.setLayoutX(this.getImageView().getX());
         npcWindow.setLayoutY(this.getImageView().getY());
 
-        npcWindow.setBackground(new Background(new BackgroundFill(Color.WHITE, CornerRadii.EMPTY, Insets.EMPTY)));
+        npcWindow.setBackground(new Background(new BackgroundFill(Color.LIGHTSKYBLUE, CornerRadii.EMPTY, Insets.EMPTY)));
 
         firstMeeting = false;
 
