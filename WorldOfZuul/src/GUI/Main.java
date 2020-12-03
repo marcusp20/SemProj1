@@ -39,6 +39,7 @@ public class Main extends Application {
 
     private Game game;
     private MovementHandler movementHandler;
+    private CollisionHandler collisionHandler;
 
     //Interaction keys
     private boolean e;
@@ -156,9 +157,18 @@ public class Main extends Application {
         movementHandler = new MovementHandler(game, player, playerSprite);
         taskList = game.getTaskList();
 
-        //Create new objects
+        createRoomCollisions();
         createListViews();
+        createGameScene(stage);
+        initTasklist();
+    }
 
+    private void createRoomCollisions() {
+        collisionHandler = new CollisionHandler();
+
+    }
+
+    private void createGameScene(Stage stage) {
         //Set scene
         Pane p = game.getCurrentRoom().getRoomPane();
 
@@ -187,8 +197,6 @@ public class Main extends Application {
         stage.setOpacity(0);
         stage.show();
         fadeIn(stage);
-
-        initTasklist();
     }
 
     private void startTimer() {

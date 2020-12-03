@@ -1,5 +1,7 @@
 package game;
 
+import GUI.CollisionBox;
+import GUI.RoomCollisions;
 import chadChicken.ChadChicken;
 import chadChicken.GUIQuiz;
 import chadChicken.Quiz;
@@ -284,6 +286,10 @@ public class Game {
         field3 = new Room("in the 3rd field");
         garden = new Room("in the beautiful garden");
         store = new Room("in the store, smells like flower seeds in here");
+        RoomCollisions headquarterCollision = new RoomCollisions();
+        RoomCollisions gardenCollision = new RoomCollisions();
+        RoomCollisions storeCollision = new RoomCollisions();
+        RoomCollisions fieldCollision = new RoomCollisions();
 
         ////////////////
         //HEADQUARTERS//
@@ -298,6 +304,12 @@ public class Game {
         headquarter.addInteractable(majorBob);
         headquarter.addInteractable(hqBed);
 
+        Image headquarterImg = headquarter.getRoomPane().getBackground().getImages().get(0).getImage();
+        headquarterCollision.addCollisionBox( //East wall
+                new CollisionBox(headquarterImg.getWidth()-130, -40,
+                        140, headquarterImg.getHeight()+180));
+        headquarter.setRoomCollisions(headquarterCollision);
+
         ////////////////
         //FIELD////////
         ////////////////
@@ -309,6 +321,12 @@ public class Game {
         field.addInteractable(farmerBob);
         field.addInteractable(this.field);      //TODO Rename field, this is stupid
 
+        Image fieldImg = field.getRoomPane().getBackground().getImages().get(0).getImage();
+        fieldCollision.addCollisionBox( //South border
+                new CollisionBox(-20, fieldImg.getHeight()-190,
+                        fieldImg.getWidth()+100, 200));
+        field.setRoomCollisions(fieldCollision);
+
         ////////////////
         //STORE////////
         ///////////////
@@ -319,6 +337,19 @@ public class Game {
         store.setRoomPane(createPane("StoreVer1.png"));
         store.addInteractable(shopkeeperLizzy);
         store.addInteractable(shop);
+
+        Image storeImg = store.getRoomPane().getBackground().getImages().get(0).getImage();
+        storeCollision.addCollisionBox( //North wall
+                new CollisionBox(-20, -80,
+                        storeImg.getWidth()+200, 50));
+        storeCollision.addCollisionBox( //East wall
+                new CollisionBox(storeImg.getWidth()-130, -40,
+                        200, storeImg.getHeight()+180));
+        storeCollision.addCollisionBox( //West wall
+                new CollisionBox(-20, -80,
+                        20, storeImg.getHeight()+200));
+        store.setRoomCollisions(storeCollision);
+
 
         ////////////////
         //GARDEN////////
@@ -332,6 +363,15 @@ public class Game {
         garden.setRoomPane(createPane("GardenVer1.png"));
         garden.addInteractable(beekeeperBetti);
         garden.addInteractable(beeHive);
+
+        Image gardenImg = garden.getRoomPane().getBackground().getImages().get(0).getImage();
+        gardenCollision.addCollisionBox(//West wall
+                new CollisionBox(-20, -80,
+                        10, gardenImg.getHeight()+200));
+        gardenCollision.addCollisionBox(//North wall
+                new CollisionBox(-20, -80,
+                        gardenImg.getWidth()+200, 40));
+        garden.setRoomCollisions(gardenCollision);
 
         //////////
         //SHED////

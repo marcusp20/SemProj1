@@ -64,6 +64,9 @@ public class MovementHandler {
     }
 
     public void checkCollision() {
+        if(game.getCurrentRoom().getRoomCollisions().intersectsWith(player)) {
+            System.out.println("IT'S WORKING! IT'S WOoORRrRKING!");
+        }
         for (Interactable i : game.getCurrentRoom().getInteractables()) {
             //Code for intractable collision
             boolean playerIntersectsInteractable = i.getImageView().intersects(playerSprite.getLayoutBounds());

@@ -1,5 +1,6 @@
 package game;
 
+import GUI.RoomCollisions;
 import interactable.Interactable;
 import interactable.NPC;
 import javafx.scene.layout.Pane;
@@ -15,6 +16,7 @@ public class Room {
     private boolean isLocked;
     private Pane roomPane;
     private ArrayList<Interactable> interactables = new ArrayList<>();
+    private RoomCollisions roomCollisions;
 
 
     public Room(String description) 
@@ -22,6 +24,7 @@ public class Room {
         this.description = description;
         exits = new HashMap<String, Room>();
         isLocked = false;
+        roomCollisions = new RoomCollisions();
     }
 
     public boolean isLocked() {
@@ -94,5 +97,12 @@ public class Room {
         return interactables;
     }
 
+    public RoomCollisions getRoomCollisions() {
+        return roomCollisions;
+    }
+
+    public void setRoomCollisions(RoomCollisions roomCollisions) {
+        this.roomCollisions = roomCollisions;
+    }
 }
 
