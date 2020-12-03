@@ -44,17 +44,8 @@ public class Main extends Application {
     private boolean e;
     private boolean backSpace;
 
-    //Buttons
-    Button loadGameButton;
-    Button newGameButton;
-
     //Contains last opened menu
     Node lastNode;
-
-
-    //Easy access to player and player sprite objects
-    private ImageView playerSprite;
-    private Player player;
 
     public static void main(String[] args) {
         launch(args);
@@ -62,7 +53,6 @@ public class Main extends Application {
 
     @Override
     public void start(Stage stage) {
-
         //StartScreen
         ImageView startScreen = null;
         try {
@@ -77,6 +67,9 @@ public class Main extends Application {
         startScreen.setFitWidth(1280);
 
         //Buttons
+        Button loadGameButton;
+        Button newGameButton;
+
         newGameButton = new Button();
         newGameButton.setPrefSize(420, 69);
         newGameButton.setOpacity(0);
@@ -146,10 +139,7 @@ public class Main extends Application {
 
     //Must only be called through newGame or loadGame
     private void startGame(Stage stage) {
-        player = game.getPlayer();
-        playerSprite = player.getPlayerSprite();
-        movementHandler = new MovementHandler(game, player, playerSprite);
-        //taskList = game.getTaskList();
+        movementHandler = new MovementHandler(game, game.getPlayer(), game.getPlayer().getPlayerSprite());  //Don't really need to send playerSprite since its inside player
 
         //Create new objects
         createListViews();
@@ -280,7 +270,7 @@ public class Main extends Application {
     }
 
     private void addRoomContent()   {
-        game.getCurrentRoom().getRoomPane().getChildren().add(playerSprite);
+        game.getCurrentRoom().getRoomPane().getChildren().add(game.getPlayer().getPlayerSprite());
         game.getCurrentRoom().getRoomPane().getChildren().add(game.getTaskList().getTaskListView());
         scene.setRoot(game.getCurrentRoom().getRoomPane());
     }
@@ -298,7 +288,7 @@ public class Main extends Application {
 
                 BoundingBox interactionBounds = new BoundingBox(minX - offSet, minY - offSet, width + offSet * 2, height + offSet * 2);
 
-                if (interactionBounds.intersects(playerSprite.getLayoutBounds())) {
+                if (interactionBounds.intersects(game.getPlayer().getPlayerSprite().getLayoutBounds())) {
                     game.getCurrentRoom().getRoomPane().getChildren().remove(lastNode);
 
 
