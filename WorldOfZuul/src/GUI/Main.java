@@ -67,6 +67,9 @@ public class Main extends Application {
     private ImageView playerSprite;
     private Player player;
 
+    private PrintStream old = System.out;
+
+
     public static void main(String[] args) {
         launch(args);
     }
@@ -333,31 +336,10 @@ public class Main extends Application {
         this.e = false;
     }
 
-    /*
-    public ByteArrayOutputStream setOutputStream() {
-        ByteArrayOutputStream baos = new ByteArrayOutputStream();
-        PrintStream ps = new PrintStream(baos);
-        // IMPORTANT: Save the old System.out!
-        PrintStream old = System.out;
-        // Tell Java to use your special stream
-        System.setOut(ps);
-        // Print some output: goes to your special stream
-        return baos;
-    }
 
-    public void closeOutputStream(PrintStream old) {
-        // Put things back
-        System.out.flush();
-        System.setOut(old);
-        // Show what happened
-    }
+    public void getFeedbackText(ByteArrayOutputStream baos) {
 
-     */
-
-    public void getFeedbackText() {
-
-
-        feedbackText = new Label("DUMMY TEXT HERE ");
+        feedbackText = new Label(" ");
         feedbackText.setOpacity(1);
         feedbackText.setLayoutX(429);
         feedbackText.setLayoutY(720);
@@ -366,6 +348,20 @@ public class Main extends Application {
         feedbackText.setPrefSize(350, 150);
         feedbackText.setFont(new Font("Arial", 34));
         game.getCurrentRoom().getRoomPane().getChildren().addAll(feedbackText);
+        feedbackText.setText(baos.toString());
+    }
+
+
+    public ByteArrayOutputStream setOutputStream() {
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        PrintStream ps = new PrintStream(baos);
+        System.setOut(ps);
+        return baos;
+    }
+
+    public void resetStream() {
+        System.out.flush();
+        System.setOut(old);
     }
 
 
