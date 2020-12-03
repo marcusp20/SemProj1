@@ -226,7 +226,6 @@ public class Main extends Application {
         //check if text label should output console
         updateFeedbackText(game.getBaos());
 
-
         if (backSpace) {
             game.getCurrentRoom().getRoomPane().getChildren().remove(lastNode);
             backSpace = false;
@@ -351,6 +350,7 @@ public class Main extends Application {
         feedbackText.setFont(new Font("Arial", 34));
         return feedbackText;
     }
+
 
     public void updateFeedbackText(ByteArrayOutputStream b) {
         feedbackText.setText(b.toString());
