@@ -47,6 +47,10 @@ public class GameLogger {
     }
 
     public static Game loadGameFrom(File file) {
+        return loadGameFrom(file, false);
+    }
+
+    public static Game loadGameFrom(File file, boolean isGUI) {
         Game game = null;
         CommandWords commands = new CommandWords();
         commands.addAllCommandWords();
@@ -57,7 +61,7 @@ public class GameLogger {
             String word2 = null;
 
             long seed = log.nextLong(); //This only reads the first line
-            game = new Game(seed);
+            game = new Game(seed, isGUI);
             game.setCreatedFromSaveFile(true);
 
             //This will skip the first line, containing the seed

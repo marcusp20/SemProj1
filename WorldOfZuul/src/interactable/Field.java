@@ -16,6 +16,8 @@ package interactable;
     Use the same strain of crop every new harvest.
 */
 
+import game.Command;
+import game.CommandWord;
 import game.CommandWords;
 import game.Game;
 
@@ -89,7 +91,6 @@ public class Field extends Interactable implements TimeProgression {
         if (fertilizerCounter < 2) {
             fertilizerCounter += 1;
             yields += 7;
-
         } else {
             yields -= 10;
             fertilizerCounter += 1;
@@ -251,4 +252,8 @@ public class Field extends Interactable implements TimeProgression {
         return true;
     }
 
+    @Override
+    public String interact() {
+        return "field";
+    }
 }

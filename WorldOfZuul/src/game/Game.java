@@ -1,18 +1,27 @@
 package game;
 
 import chadChicken.ChadChicken;
+import chadChicken.GUIQuiz;
 import chadChicken.Quiz;
 import chadChicken.TextQuiz;
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Random;
 
 import interactable.*;
+import javafx.geometry.Insets;
+import javafx.scene.image.Image;
+import javafx.scene.layout.*;
+import javafx.scene.paint.Color;
+import javafx.scene.text.Text;
 
 
 public class Game {
+    //TODO Sort variables
     private Parser parser;
     private Room currentRoom;
     private CommandWords gameCommandWords;
@@ -22,9 +31,10 @@ public class Game {
     private Field field;
     private Player player;
     private List<Item> storeItemList;
+    private Shop shop;
     private NPC majorBob;
     private NPC shopkeeperLizzy;
-    private NPC farmerBill;
+    private NPC farmerBob;
     private NPC beekeeperBetti;
     private ChadChicken chadChicken;
     private Quiz preQuiz;
@@ -34,29 +44,58 @@ public class Game {
     private HashMap<String, Room> unLockableRooms;
     private TaskList taskList;
     private Bed hqBed;
+    private BeeHive beeHive;
     private int gameTimer = 0;
     private static final Random random = new Random();
     private long seed;
+    private boolean isGUI;
 
-    public Game(long seed) {
+    public Game(long seed, boolean isGUI) {
         this.seed = seed;
+        this.isGUI = isGUI;
         random.setSeed(seed);
         System.out.println(seed);
+
         unLockableRooms = new HashMap<>();
+
+        //Create command words
         createCommandWords();
-        createNPC();
-        createRooms();
         parser = new Parser(gameCommandWords);
+
+        //Create intractables
+        createNPC();
+        createStore();
         createField();
         createPlayer();
+        createBed();
+        createBeeHive();
+
+        //create task list
         taskList = new TaskList(this, player);
+
+        //Create room objects
+        createRooms();
+
+        //Create store items
         createStoreItemList();
+
+        //Create quiz
         createQuiz();
+
+        //Create game logger (for saving games)
         createGameLogger();
     }
 
+    public Game(long seed) {
+        this(seed, false);
+    }
+
+    public Game(boolean isGUI) {
+        this(random.nextLong(), isGUI);
+    }
+
     public Game() {
-        this(random.nextLong());
+        this(random.nextLong(), false);
     }
 
     public static Random getRandom() {
@@ -74,9 +113,14 @@ public class Game {
 
     private void createQuiz() {
         chadChicken = new ChadChicken();
-        //TODO change TextQuiz to GUIQuiz when QUIQuiz has been implemented
-        preQuiz = new TextQuiz(chadChicken.getPreQuestions());
-        postQuiz = new TextQuiz(chadChicken.getPostQuestions());
+        if(isGUI) {
+            preQuiz = new GUIQuiz(chadChicken.getPreQuestions());
+            postQuiz = new GUIQuiz(chadChicken.getPostQuestions());
+        } else {
+            //TODO change TextQuiz to GUIQuiz when QUIQuiz has been implemented
+            preQuiz = new TextQuiz(chadChicken.getPreQuestions());
+            postQuiz = new TextQuiz(chadChicken.getPostQuestions());
+        }
 
     }
 
@@ -88,25 +132,44 @@ public class Game {
         }
     }
 
+    public void createStore()   {
+        shop = new Shop();
+        shop.getImageView().setX(650);
+        shop.getImageView().setY(100);
+    }
+
     private void createNPC() {
         File majorBobDialog = load("majorBobDialog.txt");
         majorBob = new NPC(majorBobDialog);
+        majorBob.getImageView().setX(250);
+        majorBob.getImageView().setY(300);
 
         File storeNPCDialog = load("shopKeeperLizzyDialog.txt");
         shopkeeperLizzy = new NPC(storeNPCDialog);
+        shopkeeperLizzy.getImageView().setX(200);
+        shopkeeperLizzy.getImageView().setY(250);
 
         File fieldNPCDialog = load("fieldNPCDialog.txt");
-        farmerBill = new NPC(fieldNPCDialog);
+        farmerBob = new NPC(fieldNPCDialog);
+        farmerBob.getImageView().setX(170);
+        farmerBob.getImageView().setY(190);
 
         File beekeeperDialog = load("beekeeperBetti.txt");
         beekeeperBetti = new NPC(beekeeperDialog);
-
-        //majorBob.converse();
-        //storeNPC.converse();
+        beekeeperBetti.getImageView().setX(950);
+        beekeeperBetti.getImageView().setY(250);
     }
 
     private void createBed()    {
         hqBed = new Bed();
+        hqBed.getImageView().setX(900);
+        hqBed.getImageView().setY(400);
+    }
+
+    private void createBeeHive()    {
+        beeHive = new BeeHive();
+        beeHive.getImageView().setX(330);
+        beeHive.getImageView().setY(200);
     }
 
     /**
@@ -124,6 +187,17 @@ public class Game {
         //Default - probably not gonna work
         return new File(path + "\\dialog\\" + fileName);
 
+    }
+
+    private Image loadImage(String fileName) throws FileNotFoundException {
+        String path = System.getProperty("user.dir");
+        if (path.endsWith("SemProj1")) {
+            return new Image(new FileInputStream(path + "\\WorldOfZuul\\src\\resources\\img\\" + fileName));    //Add remaining path to dialog text file
+        } else if (path.endsWith("WorldOfZuul")) {
+            return new Image(new FileInputStream(path + "\\src\\resources\\img\\" + fileName));
+        }
+        //Default - probably not gonna work
+        return new Image(new FileInputStream(path + "\\img\\" + fileName));
     }
 
     private void createCommandWords() {
@@ -162,11 +236,30 @@ public class Game {
     //Used for testing Field methods
     private void createField() {
         field = new Field(fieldCommandWords);
-
+        field.getImageView().setX(297);
+        field.getImageView().setY(312);
+        field.getImageView().setFitWidth(712);
+        field.getImageView().setFitHeight(463);
+        try {
+            field.getImageView().setImage(loadImage("FieldHarvest.png"));
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
     }
 
     private void createPlayer() {
         player = new Player("Lars Tyndskid");
+
+        try {
+            Image sprite = loadImage("FarmerSprite.png");
+            player.setPlayerSprite(sprite);
+        } catch (FileNotFoundException e)   {
+            System.out.println("Player image not found");
+        }
+    }
+
+    public Player getPlayer()   {
+        return player;
     }
 
 
@@ -181,23 +274,69 @@ public class Game {
         garden = new Room("in the beautiful garden");
         store = new Room("in the store, smells like flower seeds in here");
 
-
+        ////////////////
+        //HEADQUARTERS//
+        ////////////////
         headquarter.setExit("north", store);
         headquarter.setExit("east", shed);
         headquarter.setExit("south", field);
         headquarter.setExit("west", garden);
         headquarter.setNpc(majorBob);
 
+        headquarter.setRoomPane(createPane("Headquarter.png"));
+        headquarter.addInteractable(majorBob);
+        headquarter.addInteractable(hqBed);
+
+        ////////////////
+        //FIELD////////
+        ////////////////
+        field.setExit("north", headquarter);
+        field.setExit("west", field2);
+        field.setExit("east", field3);
+
+        field.setRoomPane(createPane("FieldVer1.png"));
+        field.addInteractable(farmerBob);
+        field.addInteractable(this.field);      //TODO Rename field, this is stupid
+
+        ////////////////
+        //STORE////////
+        ///////////////
 
         store.setExit("south", headquarter);
         store.setNpc(shopkeeperLizzy);
 
+        store.setRoomPane(createPane("StoreVer1.png"));
+        store.addInteractable(shopkeeperLizzy);
+        store.addInteractable(shop);
+
+        ////////////////
+        //GARDEN////////
+        ///////////////
+        garden.setLocked(false);
+        unLockableRooms.put("garden", garden);
+        garden.setExit("east", headquarter);
+        garden.setExit("south", field2);
+        garden.setNpc(beekeeperBetti);
+
+        garden.setRoomPane(createPane("GardenVer1.png"));
+        garden.addInteractable(beekeeperBetti);
+        garden.addInteractable(beeHive);
+
+        //////////
+        //SHED////
+        //////////
         shed.setExit("west", headquarter);
         shed.setExit("south", field3);
 
+        shed.setRoomPane(createPane("SHED", Color.BLANCHEDALMOND));
+
+        //????? Declared twice  TODO SOMEONE LOOK AT THIS
+        /*
         field.setExit("north", headquarter);
         field.setExit("west", field2);
         field.setExit("east", field3);
+         */
+
 
         field2.setLocked(true);
         unLockableRooms.put("field2", field2);
@@ -209,12 +348,40 @@ public class Game {
         field3.setExit("west", field);
         field3.setExit("north", shed);
 
+        /*
         garden.setLocked(true);
         unLockableRooms.put("garden", garden);
         garden.setExit("east", headquarter);
         garden.setExit("south", field2);
+        */
 
         currentRoom = headquarter;
+    }
+
+    private Pane createPane(String name, Color color)   {
+        Pane pane = new Pane();
+        pane.setBackground(new Background(new BackgroundFill(color, CornerRadii.EMPTY, Insets.EMPTY)));
+        Text text = new Text(name);
+        text.setX(10);
+        text.setY(10);
+        pane.getChildren().add(text);
+        return pane;
+    }
+
+    private Pane createPane(String fileName)   {
+        Pane pane = new Pane();
+        try {
+            Image img = loadImage(fileName);
+
+            BackgroundImage back = new BackgroundImage(img, BackgroundRepeat.REPEAT, BackgroundRepeat.NO_REPEAT,
+                    BackgroundPosition.DEFAULT, BackgroundSize.DEFAULT);
+
+            pane.setBackground(new Background(back));
+        } catch (FileNotFoundException e)   {
+            System.out.println("Image not found");
+        }
+
+         return  pane;
     }
 
     /////////////////////////////////////////////////////////////////////////////////////
@@ -229,7 +396,6 @@ public class Game {
 
         }
 
-
         boolean finished = false;
         while (!finished) {
             Command command = parser.getCommand();
@@ -241,6 +407,14 @@ public class Game {
             }
         }
         System.out.println("Thank you for playing. Good bye.");
+    }
+
+    public void playGUI() {
+        if (!isCreatedFromSaveFile) {
+            //only if new game
+            playIntro();
+
+        }
     }
 
     private void playIntro() {
@@ -375,7 +549,7 @@ public class Game {
             } else if (command.getSecondWord().equals("npc") && currentRoom.getShortDescription().equals("in the store, smells like flower seeds in here")) {
                 shopkeeperLizzy.converse();
             }  else if(command.getSecondWord().equals("npc") && currentRoom.getShortDescription().equals("in the field")) {
-                farmerBill.converse();
+                farmerBob.converse();
             } else if (command.getSecondWord().equals("npc") && currentRoom.getShortDescription().equals("in the beautiful garden")) {
                 // System.out.println("Beekeeper Betti" + end);
                 beekeeperBetti.converse();
@@ -435,7 +609,7 @@ public class Game {
     }
         //Prob not a game command, room command? or something...
     public void sleep()    {
-        //hqBed.sleep();            //Used in 2d implementation
+        hqBed.sleep();            //Used in 2d implementation
         field.nextDay();
         gameTimer++;
     }
@@ -446,36 +620,52 @@ public class Game {
 
     private boolean buyStore(Command command) {
         // 1. check if you can afford it.
-        if (!command.hasSecondWord()) {
-            System.out.println("Please specify the item you want to buy.");
-            return false;
-        }
         Item item = null;
-        try {
-            int itemindex = Integer.parseInt(command.getSecondWord());
-            item = storeItemList.get(itemindex);
-
-        } catch (NumberFormatException nfe) {
-            System.out.println("Give me the index of the item you wish to buy.");
-            return false;
-        } catch (IndexOutOfBoundsException eobe) {
-            System.out.println("Please give me a number between 0 & " + (storeItemList.size()-1));
-            return false;
-        }
-        if (!player.addWallet(-item.getPrice())) {
-            System.out.println("You cannot afford it.");
-        } else {
-            boolean noRemove = item.getName().startsWith("Bag of")
-                    || item.getName().startsWith("pesticides"); //Check if item bought starts with "bag of"
-            if (!noRemove) {
-                storeItemList.remove(item);                             // remove item from StoreItemList.
+        if(!isGUI)  {
+            if (!command.hasSecondWord()) {
+                System.out.println("Please specify the item you want to buy.");
+                return false;
             }
-            player.getPlayerInventory().put(item.getEnum(), true);  // change item hashmap value to true.
-            System.out.println("you bought a " + item.getName());
+            try {
+                int itemindex = Integer.parseInt(command.getSecondWord());
+                item = storeItemList.get(itemindex);
 
-            //Successfully bought an item, update tasks list, to see if purchase fulfilled a task requirement
-            taskList.update();
+            } catch (NumberFormatException nfe) {
+                System.out.println("Give me the index of the item you wish to buy.");
+                return false;
+            } catch (IndexOutOfBoundsException eobe) {
+                System.out.println("Please give me a number between 0 & " + (storeItemList.size()-1));
+                return false;
+            }
+        } else {
+            for (Item i : storeItemList) {
+                if (i.getName().equals(command.getSecondWord())) {
+                    System.out.println(i.getName());
+                    item = i;
+                    break;
+                }
+            }
+            if (item == null) {
+                return false;
+            }
         }
+            if (!player.addWallet(-item.getPrice())) {
+                System.out.println("You cannot afford it.");
+            } else {
+                boolean noRemove = item.getName().startsWith("Bag of")
+                        || item.getName().startsWith("pesticides"); //Check if item bought starts with "bag of"
+                if (!noRemove) {
+                    storeItemList.remove(item);                             // remove item from StoreItemList.
+                    shop.removeItem(command.getSecondWord());
+                }
+                player.getPlayerInventory().put(item.getEnum(), true);  // change item hashmap value to true.
+                System.out.println("you bought a " + item.getName());
+
+                //Successfully bought an item, update tasks list, to see if purchase fulfilled a task requirement
+                taskList.update();
+            }
+
+
         return false;
     }
 
@@ -729,4 +919,28 @@ public class Game {
            System.out.println("OmegaAlphaChickenChad is keeping an eye on you");
        }
     }
+    public Room getCurrentRoom() {
+        return this.currentRoom;
+    }
+
+    public Bed getHqBed() {
+        return this.hqBed;
+    }
+
+    public Field getField() {
+        return this.field;
+    }
+
+    public BeeHive getBeeHive() {
+        return this.beeHive;
+    }
+
+    public Shop getShop()   {
+        return this.shop;
+    }
+
+    public TaskList getTaskList() {
+        return taskList;
+    }
 }
+

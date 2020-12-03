@@ -1,6 +1,10 @@
 package interactable;
 
+import game.Command;
+import game.CommandWord;
 import game.CommandWords;
+import javafx.scene.layout.VBox;
+import javafx.scene.text.Text;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -8,13 +12,16 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 
-public class NPC extends Interactable implements TimeProgression {
+public class NPC extends Interactable{
     private String name;                 //NPC name
     private String description;         //NPC description
     private File dialog;                //File containing NPC dialog
     private ArrayList<String> lines = new ArrayList<>();        //Array list containing all dialog lines
     private boolean firstMeeting = true;        //Attribute is true if player has not met npc
-    private CommandWords commandWords;  //NPC commands,, not used
+
+    //GUI
+    private VBox npcWindow = new VBox();
+    Text dialogText = new Text();
 
     public NPC(File dialog)   {
         super();
@@ -34,12 +41,11 @@ public class NPC extends Interactable implements TimeProgression {
 
         this.name = findLine(".nn");
         this.description = findLine(".dd");
+
+        //GUI
+        createNpcWindow();
     }
 
-    @Override
-    public void nextDay() {
-
-    }
 
     public String getName() {
         return name;
@@ -161,5 +167,33 @@ public class NPC extends Interactable implements TimeProgression {
             Thread.currentThread().interrupt();     //Interrupts thread if there is an exception
         }
     }
+
+    @Override
+    public String interact()  {
+        System.out.println("You can interact with " + this.name);
+        return "npc";
+    }
+
+    private void createNpcWindow()   {
+
+        String text = "";
+        for(String line : getPatternLines("q0"))    {
+            text = text.concat(line + "\n");
+        }
+        dialogText = new Text(text);
+        npcWindow.getChildren().add(dialogText);
+    }
+
+    public void updateAnswer(int q) {
+        dialogText.setText("Answer" + q);
+    }
+
+    public VBox getNpcWindow()  {
+        npcWindow.setLayoutX(this.getImageView().getX());
+        npcWindow.setLayoutY(this.getImageView().getY());
+
+        return npcWindow;
+    }
+
 }
 

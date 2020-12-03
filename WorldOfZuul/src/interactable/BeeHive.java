@@ -5,8 +5,8 @@ import game.CommandWords;
 public class BeeHive extends Interactable implements TimeProgression{
     private int bees;
 
-    BeeHive(CommandWords commandWords)  {
-        super(commandWords);
+    public BeeHive()  {
+        super();
     }
 
     @Override

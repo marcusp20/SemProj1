@@ -29,8 +29,7 @@ public class SustainableFarmer {
             game = new Game();
         }
 
-        game.play();
-
+        //game.play();
     }
 
     private static boolean chooseLoadGame() {
