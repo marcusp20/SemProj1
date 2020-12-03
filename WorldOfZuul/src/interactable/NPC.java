@@ -220,6 +220,13 @@ public class NPC extends Interactable{
             }
         };
         questionList.setCellFactory(commandCellFactory);
+
+        questionList.setPrefHeight(35 * questionMap.size());
+        if (questionList.getPrefHeight() > 300) {
+            questionList.setPrefHeight(300);
+        }
+        questionList.setPrefWidth(200);
+
         npcWindow.getChildren().add(questionList);
     }
 
