@@ -194,11 +194,11 @@ public class NPC extends Interactable{
             text = text.concat(line + "\n");
         }
         dialogText = new Text(text);
+        dialogText.setStyle("-fx-font: 20 arial;");
 
         npcWindow.getChildren().add(dialogText);
 
         //Create hashMap
-
         ArrayList<String> q0Lines = getPatternLines("q0");      //q0Lines is given lines containing q0 ie. the row of questions.
         HashMap<String, Integer> questionMap = new HashMap<>();
 
@@ -211,7 +211,6 @@ public class NPC extends Interactable{
         list.addAll(questionMap.keySet());
         ListView<String> questionList = new ListView<>(list);
 
-        //Cant use "this;" to get npc in anonymous callback
         NPC npc = this;
         Callback<ListView<String>, ListCell<String>> commandCellFactory = new Callback<ListView<String>, ListCell<String>>() {
             @Override
@@ -225,7 +224,8 @@ public class NPC extends Interactable{
         if (questionList.getPrefHeight() > 300) {
             questionList.setPrefHeight(300);
         }
-        questionList.setPrefWidth(200);
+        questionList.setPrefWidth(350);
+        questionList.setStyle("-fx-font: 14 arial;");
 
         npcWindow.getChildren().add(questionList);
     }
