@@ -197,15 +197,8 @@ public class Main extends Application {
 
             @Override
             public void handle(long now) {
-                if (lastTick == 0) {
-                    lastTick = now;
-
-                    return;
-                }
-                if (now - lastTick > 1000000 / 60) {
-                    lastTick = now;
                     update();
-                }
+
             }
         };
         timer.start();
