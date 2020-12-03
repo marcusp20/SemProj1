@@ -21,6 +21,7 @@ import java.awt.*;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Scanner;
 
@@ -209,6 +210,7 @@ public class NPC extends Interactable{
         //Create answer menu
         ObservableList<String> list = FXCollections.observableArrayList();
         list.addAll(questionMap.keySet());
+        Collections.reverse(list);
         ListView<String> questionList = new ListView<>(list);
 
         NPC npc = this;
