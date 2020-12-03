@@ -240,6 +240,10 @@ public class NPC extends Interactable{
         dialogText.setText(text);
     }
 
+    public void resetNpcWindow()    {
+        dialogText.setText(getPatternLines("$$").get(0));
+    }
+
     public VBox getNpcWindow()  {
         npcWindow.setLayoutX(this.getImageView().getX());
         npcWindow.setLayoutY(this.getImageView().getY());
