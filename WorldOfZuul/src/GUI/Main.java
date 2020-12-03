@@ -193,12 +193,9 @@ public class Main extends Application {
 
     private void startTimer() {
         AnimationTimer timer = new AnimationTimer() {
-            long lastTick = 0;
-
             @Override
             public void handle(long now) {
                     update();
-
             }
         };
         timer.start();
