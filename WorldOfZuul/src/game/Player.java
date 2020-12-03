@@ -10,7 +10,7 @@ public class Player {
     //Attributes
     private String name;
     private double wallet = 750;
-    private HashMap<ItemName, Boolean> playerInventory; //TODO can be a set
+    private HashMap<ItemName, Boolean> playerInventory;
     private boolean noCropsOwned;
 
     //Gui attributes
