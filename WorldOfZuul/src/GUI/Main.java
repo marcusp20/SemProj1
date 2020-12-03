@@ -223,80 +223,71 @@ public class Main extends Application {
 
         //NORTH
         if (playerSprite.getY() < -40) {
-            game.getCurrentRoom().getRoomPane().getChildren().remove(lastNode);
-            game.getCurrentRoom().getRoomPane().getChildren().remove(taskList.getTaskListView());
-            //System.out.println("GO NORTH");
+            removeRoomContent();
             Pane oldPane = game.getCurrentRoom().getRoomPane();
             game.processCommand(new Command(CommandWord.GO, "north"));
 
             if (game.getCurrentRoom().getRoomPane() == oldPane) {
                 playerSprite.setY(-40);
                 movementHandler.haltPlayerMovement(); // stop the player, to stop calling "go north" every frame"
-                //System.out.println("HELP");
             } else {
                 playerSprite.setY(scene.getHeight() - 200);
-                game.getCurrentRoom().getRoomPane().getChildren().add(playerSprite);
-                game.getCurrentRoom().getRoomPane().getChildren().add(taskList.getTaskListView());
-                scene.setRoot(game.getCurrentRoom().getRoomPane());
+                addRoomContent();
             }
         }
         //EAST
         if (playerSprite.getX() > scene.getWidth() - 120) {
-            game.getCurrentRoom().getRoomPane().getChildren().remove(lastNode);
-            game.getCurrentRoom().getRoomPane().getChildren().remove(taskList.getTaskListView());
-            //System.out.println("GO EAST");
+            removeRoomContent();
             Pane oldPane = game.getCurrentRoom().getRoomPane();
             game.processCommand(new Command(CommandWord.GO, "east"));
 
             if (game.getCurrentRoom().getRoomPane() == oldPane) {
                 playerSprite.setX(scene.getWidth() - 120);
                 movementHandler.haltPlayerMovement(); // stop the player, to stop calling "go north" every frame"
-                //System.out.println("HELP");
             } else {
                 playerSprite.setX(10);
-                game.getCurrentRoom().getRoomPane().getChildren().add(playerSprite);
-                game.getCurrentRoom().getRoomPane().getChildren().add(taskList.getTaskListView());
-                scene.setRoot(game.getCurrentRoom().getRoomPane());
+                addRoomContent();
             }
         }
         //SOUTH
         if (playerSprite.getY() > scene.getHeight() - 180) {
-            game.getCurrentRoom().getRoomPane().getChildren().remove(lastNode);
-            game.getCurrentRoom().getRoomPane().getChildren().remove(taskList.getTaskListView());
-            //System.out.println("GO SOUTH");
+            removeRoomContent();
             Pane oldPane = game.getCurrentRoom().getRoomPane();
             game.processCommand(new Command(CommandWord.GO, "south"));
 
             if (game.getCurrentRoom().getRoomPane() == oldPane) {
                 playerSprite.setY(scene.getHeight() - 180);
                 movementHandler.haltPlayerMovement(); // stop the player, to stop calling "go north" every frame"
-                //System.out.println("HELP");
             } else {
                 playerSprite.setY(20);
-                game.getCurrentRoom().getRoomPane().getChildren().add(playerSprite);
-                game.getCurrentRoom().getRoomPane().getChildren().add(taskList.getTaskListView());
-                scene.setRoot(game.getCurrentRoom().getRoomPane());
+                addRoomContent();
             }
         }
         //WEST
         if (playerSprite.getX() < -10) {
-            game.getCurrentRoom().getRoomPane().getChildren().remove(lastNode);
-            game.getCurrentRoom().getRoomPane().getChildren().remove(taskList.getTaskListView());
-            //System.out.println("GO WEST");
+            removeRoomContent();
             Pane oldPane = game.getCurrentRoom().getRoomPane();
             game.processCommand(new Command(CommandWord.GO, "west"));
 
             if (game.getCurrentRoom().getRoomPane() == oldPane) {
                 playerSprite.setX(-10);
                 movementHandler.haltPlayerMovement(); // stop the player, to stop calling "go north" every frame"
-                //System.out.println("HELP");
             } else {
                 playerSprite.setX(scene.getWidth() - 140);
-                game.getCurrentRoom().getRoomPane().getChildren().add(playerSprite);
-                game.getCurrentRoom().getRoomPane().getChildren().add(taskList.getTaskListView());
-                scene.setRoot(game.getCurrentRoom().getRoomPane());
+                addRoomContent();
             }
         }
+    }
+
+    private void removeRoomContent()    {
+        game.getCurrentRoom().getRoomPane().getChildren().remove(lastNode);
+        game.getCurrentRoom().getRoomPane().getChildren().remove(taskList.getTaskListView());
+    }
+
+    private void addRoomContent()   {
+        game.getCurrentRoom().getRoomPane().getChildren().add(playerSprite);
+        game.getCurrentRoom().getRoomPane().getChildren().add(taskList.getTaskListView());
+        scene.setRoot(game.getCurrentRoom().getRoomPane());
     }
 
     private void checkInteraction() {
