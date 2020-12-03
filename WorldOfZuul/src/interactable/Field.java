@@ -51,7 +51,7 @@ public class Field extends Interactable implements TimeProgression {
 
     @Override
     public void nextDay() {
-        if(isSowed && waterCounter > 0) {
+        if (isSowed && waterCounter > 0) {
             isReadyToHarvest = true;
         }
     }
@@ -138,11 +138,11 @@ public class Field extends Interactable implements TimeProgression {
     }
 
     public void useScythe(double currentYield) {
-        yields = currentYield*0.9;
+        yields = currentYield * 0.9;
     }
 
     public void useHarvester(double currentYield) {
-        yields = currentYield*1.3;
+        yields = currentYield * 1.3;
     }
 
     public Boolean getIsReadyToHarvest() {
@@ -157,10 +157,10 @@ public class Field extends Interactable implements TimeProgression {
         return Math.round(yields);
     }
 
-    public boolean isWatered()  {
-        if(waterCounter > 0)    {
+    public boolean isWatered() {
+        if (waterCounter > 0) {
             return true;
-        } else  {
+        } else {
             return false;
         }
     }
@@ -182,8 +182,7 @@ public class Field extends Interactable implements TimeProgression {
             yields -= 20;
             System.out.println("The soil is too saturated, try sowing a new crop");
 
-        }
-        else if  (previousHarvest.equals(currentHarvest)) {
+        } else if (previousHarvest.equals(currentHarvest)) {
             harvestCounter++;
 
         } else {
@@ -210,11 +209,36 @@ public class Field extends Interactable implements TimeProgression {
         }
     }
 
+    public int getPesticidesCounter() {
+        return pesticidesCounter;
+    }
+
+    public void calcBeeYield(double bee) {
+        double amount = 0;
+        if (bee > 15) {
+            amount = 1.5;
+        } else if (bee > 10) {
+            amount = 1.1;
+        } else if (bee > 5) {
+            amount = 0.95;
+        } else if (bee > 3) {
+            amount = 0.9;
+        } else if (bee > 1) {
+            amount = 0.8;
+        } else {
+            amount = 0.7;
+        }
+        yields = yields * amount;
+
+    }
+
+
     public void harvestDone() {
         isReadyToHarvest = false;
         isSowed = false;
         waterCounter = 0;
 
+        //Update yield dependent on crops.
         getCropYields();
         //check for pests
         if (pests) {
@@ -229,26 +253,30 @@ public class Field extends Interactable implements TimeProgression {
             System.out.println("The harvested " + currentHarvest + " was sold for a profit of: " + getYield() + ".");
         }
 
-        yields = 0;
+        //Update yields, dependent on bees
         previousHarvest = currentHarvest;
-
         getPests();
-
     }
-    public void rainEvent(){
+
+    public void resetYield() {
+        yields = 0;
+    }
+
+    public void rainEvent() {
         moistField();
         moistField();
+    }
 
+    public void extremeSunEvent() {
+        waterCounter = -2;
+        yields = -26; //TODO Separate yields from waterCounter
     }
-    public void extremeSunEvent(){
-        waterCounter =- 2;
-        yields =- 26; //TODO Separate yields from waterCounter
-    }
-    public boolean pestEvent(){
-        if(pesticidesCounter > 2){
+
+    public boolean pestEvent() {
+        if (pesticidesCounter > 2) {
             return false;
         }
-        yields =- 30;
+        yields = -30;
         return true;
     }
 

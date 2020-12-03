@@ -9,7 +9,7 @@ import java.util.HashMap;
 public class Player {
     //Attributes
     private String name;
-    private double wallet = 50;
+    private double wallet = 750;
     private HashMap<ItemName, Boolean> playerInventory; //TODO can be a set
     private boolean noCropsOwned;
 

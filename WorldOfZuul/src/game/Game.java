@@ -4,6 +4,7 @@ import chadChicken.ChadChicken;
 import chadChicken.GUIQuiz;
 import chadChicken.Quiz;
 import chadChicken.TextQuiz;
+
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -27,7 +28,8 @@ public class Game {
     private CommandWords gameCommandWords;
     private CommandWords storeCommandWords;
     private CommandWords fieldCommandWords;
-    private CommandWords gardenCommandWords;
+    private CommandWords flowerBedCommandWords;
+    private CommandWords beeHiveCommandWords;
     private Field field;
     private Player player;
     private List<Item> storeItemList;
@@ -40,6 +42,7 @@ public class Game {
     private Quiz preQuiz;
     private Quiz postQuiz;
     private GameLogger logger;
+    private FlowerBed flowerbed;
     private boolean isCreatedFromSaveFile;
     private HashMap<String, Room> unLockableRooms;
     private TaskList taskList;
@@ -67,6 +70,8 @@ public class Game {
         createStore();
         createField();
         createPlayer();
+        createFlowerBed();
+
         createBed();
         createBeeHive();
 
@@ -113,7 +118,7 @@ public class Game {
 
     private void createQuiz() {
         chadChicken = new ChadChicken();
-        if(isGUI) {
+        if (isGUI) {
             preQuiz = new GUIQuiz(chadChicken.getPreQuestions());
             postQuiz = new GUIQuiz(chadChicken.getPostQuestions());
         } else {
@@ -132,7 +137,7 @@ public class Game {
         }
     }
 
-    public void createStore()   {
+    public void createStore() {
         shop = new Shop();
         shop.getImageView().setX(650);
         shop.getImageView().setY(100);
@@ -160,13 +165,13 @@ public class Game {
         beekeeperBetti.getImageView().setY(250);
     }
 
-    private void createBed()    {
+    private void createBed() {
         hqBed = new Bed();
         hqBed.getImageView().setX(900);
         hqBed.getImageView().setY(400);
     }
 
-    private void createBeeHive()    {
+    private void createBeeHive() {
         beeHive = new BeeHive();
         beeHive.getImageView().setX(330);
         beeHive.getImageView().setY(200);
@@ -174,6 +179,7 @@ public class Game {
 
     /**
      * Used by createNPC to properly load textFiles
+     *
      * @param fileName name of the text file (including the .txt)
      * @return the file path of the given fileName
      */
@@ -226,14 +232,16 @@ public class Game {
         fieldCommandWords.addCommandWord(CommandWord.FIELD_FERTILIZE);
         fieldCommandWords.addCommandWord(CommandWord.LEAVE);
 
-        gardenCommandWords = new CommandWords();
-        gardenCommandWords.addCommandWord(CommandWord.GARDEN_CHECK_BEES);
-        gardenCommandWords.addCommandWord(CommandWord.LEAVE);
+        beeHiveCommandWords = new CommandWords();
+        beeHiveCommandWords.addCommandWord(CommandWord.GARDEN_CHECK_BEES);
+        beeHiveCommandWords.addCommandWord(CommandWord.LEAVE);
 
+        flowerBedCommandWords = new CommandWords();
+        flowerBedCommandWords.addCommandWord(CommandWord.GARDEN_PLANT_FLOWER);
+        flowerBedCommandWords.addCommandWord(CommandWord.LEAVE);
 
     }
 
-    //Used for testing Field methods
     private void createField() {
         field = new Field(fieldCommandWords);
         field.getImageView().setX(297);
@@ -253,15 +261,18 @@ public class Game {
         try {
             Image sprite = loadImage("FarmerSprite.png");
             player.setPlayerSprite(sprite);
-        } catch (FileNotFoundException e)   {
+        } catch (FileNotFoundException e) {
             System.out.println("Player image not found");
         }
     }
 
-    public Player getPlayer()   {
+    public Player getPlayer() {
         return player;
     }
 
+    private void createFlowerBed() {
+        flowerbed = new FlowerBed(gardenCommandWords);
+    }
 
     private void createRooms() {
         Room headquarter, shed, field, field2, field3, garden, store;
@@ -330,13 +341,6 @@ public class Game {
 
         shed.setRoomPane(createPane("SHED", Color.BLANCHEDALMOND));
 
-        //????? Declared twice  TODO SOMEONE LOOK AT THIS
-        /*
-        field.setExit("north", headquarter);
-        field.setExit("west", field2);
-        field.setExit("east", field3);
-         */
-
 
         field2.setLocked(true);
         unLockableRooms.put("field2", field2);
@@ -348,17 +352,10 @@ public class Game {
         field3.setExit("west", field);
         field3.setExit("north", shed);
 
-        /*
-        garden.setLocked(true);
-        unLockableRooms.put("garden", garden);
-        garden.setExit("east", headquarter);
-        garden.setExit("south", field2);
-        */
-
         currentRoom = headquarter;
     }
 
-    private Pane createPane(String name, Color color)   {
+    private Pane createPane(String name, Color color) {
         Pane pane = new Pane();
         pane.setBackground(new Background(new BackgroundFill(color, CornerRadii.EMPTY, Insets.EMPTY)));
         Text text = new Text(name);
@@ -368,7 +365,7 @@ public class Game {
         return pane;
     }
 
-    private Pane createPane(String fileName)   {
+    private Pane createPane(String fileName) {
         Pane pane = new Pane();
         try {
             Image img = loadImage(fileName);
@@ -377,11 +374,11 @@ public class Game {
                     BackgroundPosition.DEFAULT, BackgroundSize.DEFAULT);
 
             pane.setBackground(new Background(back));
-        } catch (FileNotFoundException e)   {
+        } catch (FileNotFoundException e) {
             System.out.println("Image not found");
         }
 
-         return  pane;
+        return pane;
     }
 
     /////////////////////////////////////////////////////////////////////////////////////
@@ -495,11 +492,10 @@ public class Game {
         }
         // Field commands
         else if (commandWord == CommandWord.FIELD_SOW) {
-
             sowField(command);
         } else if (commandWord == CommandWord.FIELD_USE_PESTICIDES) {
             logger.log(command);
-            //TODO implement pesticides
+            usePesticide();
         } else if (commandWord == CommandWord.FIELD_HARVEST) {
             logger.log(command);
             harvestField();
@@ -514,7 +510,9 @@ public class Game {
         }
         //Garden CommandWords
         else if (commandWord == CommandWord.GARDEN_CHECK_BEES) {
-            System.out.println("Bees are cool");
+            checkBees(field.getPesticidesCounter());
+        } else if (commandWord == CommandWord.GARDEN_PLANT_FLOWER) {
+            plantFlower();
         }
 
         return wantToQuit;
@@ -539,26 +537,28 @@ public class Game {
                 parser.setCommands(storeCommandWords);
                 parser.showCommands();
             } else if (command.getSecondWord().equals("beehive") && currentRoom.getShortDescription().equals("in the beautiful garden")) {
-                System.out.println("Garden" + end);
-                parser.setCommands(gardenCommandWords);
+                System.out.println("Beehive" + end);
+                parser.setCommands(beeHiveCommandWords);
                 parser.showCommands();
-            }
-
-            else if (command.getSecondWord().equals("npc") && currentRoom.getShortDescription().equals("In the headquarter")) {
+            } else if (command.getSecondWord().equals("flowers") && currentRoom.getShortDescription().equals("in the beautiful garden")) {
+                System.out.println("Flower bed" + end);
+                parser.setCommands(flowerBedCommandWords);
+                parser.showCommands();
+            } else if (command.getSecondWord().equals("npc") && currentRoom.getShortDescription().equals("In the headquarter")) {
                 majorBob.converse();
             } else if (command.getSecondWord().equals("npc") && currentRoom.getShortDescription().equals("in the store, smells like flower seeds in here")) {
                 shopkeeperLizzy.converse();
-            }  else if(command.getSecondWord().equals("npc") && currentRoom.getShortDescription().equals("in the field")) {
+            } else if (command.getSecondWord().equals("npc") && currentRoom.getShortDescription().equals("in the field")) {
                 farmerBob.converse();
             } else if (command.getSecondWord().equals("npc") && currentRoom.getShortDescription().equals("in the beautiful garden")) {
                 // System.out.println("Beekeeper Betti" + end);
                 beekeeperBetti.converse();
-            } else if (command.getSecondWord().equals("bed") && currentRoom.getShortDescription().equals("In the headquarter"))   {
+            } else if (command.getSecondWord().equals("bed") && currentRoom.getShortDescription().equals("In the headquarter")) {
                 sleep();
                 logger.log(command);
             }
 
-        }else {
+        } else {
             System.out.println("This command is used to interact \n" +
                     "with your injectables: npc, store, field, beehive...");
         }
@@ -607,12 +607,32 @@ public class Game {
             }
         }
     }
-        //Prob not a game command, room command? or something...
-    public void sleep()    {
+
+    //Prob not a game command, room command? or something...
+    public void sleep() {
         hqBed.sleep();            //Used in 2d implementation
         field.nextDay();
         gameTimer++;
     }
+
+
+    /////////////////////////////////////////////////////////////////////////////////////
+    ///////////////////////////////// Garden Commands  ///////////////////////////////////
+    /////////////////////////////////////////////////////////////////////////////////////
+
+    public void plantFlower() {
+        if (player.itemOwned(ItemName.BAG_OF_FLOWER_SEEDS)) {
+            flowerbed.plantFlower();
+            player.getPlayerInventory().put(ItemName.BAG_OF_FLOWER_SEEDS, false);
+        } else {
+            System.out.println("No flower in inventory");
+        }
+    }
+
+    public void checkBees(int pestCounter) {
+        flowerbed.calcBees(pestCounter);
+    }
+
 
     /////////////////////////////////////////////////////////////////////////////////////
     ///////////////////////////////// Store Commands  ///////////////////////////////////
@@ -621,7 +641,7 @@ public class Game {
     private boolean buyStore(Command command) {
         // 1. check if you can afford it.
         Item item = null;
-        if(!isGUI)  {
+        if (!isGUI) {
             if (!command.hasSecondWord()) {
                 System.out.println("Please specify the item you want to buy.");
                 return false;
@@ -634,7 +654,7 @@ public class Game {
                 System.out.println("Give me the index of the item you wish to buy.");
                 return false;
             } catch (IndexOutOfBoundsException eobe) {
-                System.out.println("Please give me a number between 0 & " + (storeItemList.size()-1));
+                System.out.println("Please give me a number between 0 & " + (storeItemList.size() - 1));
                 return false;
             }
         } else {
@@ -649,21 +669,21 @@ public class Game {
                 return false;
             }
         }
-            if (!player.addWallet(-item.getPrice())) {
-                System.out.println("You cannot afford it.");
-            } else {
-                boolean noRemove = item.getName().startsWith("Bag of")
-                        || item.getName().startsWith("pesticides"); //Check if item bought starts with "bag of"
-                if (!noRemove) {
-                    storeItemList.remove(item);                             // remove item from StoreItemList.
-                    shop.removeItem(command.getSecondWord());
-                }
-                player.getPlayerInventory().put(item.getEnum(), true);  // change item hashmap value to true.
-                System.out.println("you bought a " + item.getName());
-
-                //Successfully bought an item, update tasks list, to see if purchase fulfilled a task requirement
-                taskList.update();
+        if (!player.addWallet(-item.getPrice())) {
+            System.out.println("You cannot afford it.");
+        } else {
+            boolean noRemove = item.getName().startsWith("Bag of")
+                    || item.getName().startsWith("pesticides"); //Check if item bought starts with "bag of"
+            if (!noRemove) {
+                storeItemList.remove(item);                             // remove item from StoreItemList.
+                shop.removeItem(command.getSecondWord());
             }
+            player.getPlayerInventory().put(item.getEnum(), true);  // change item hashmap value to true.
+            System.out.println("you bought a " + item.getName());
+
+            //Successfully bought an item, update tasks list, to see if purchase fulfilled a task requirement
+            taskList.update();
+        }
 
 
         return false;
@@ -686,48 +706,47 @@ public class Game {
     //Loops until a valid crop has been chosen
     public boolean chooseCrop(Command command) {
         //while (true) {
-            //Scanner s = new Scanner(System.in);
-            //System.out.println("Which crop would you like to use? Last used crop was " + field.getPreviousHarvest() +  ". Type 'options' for choices.");
-            String choice = "";
+        //Scanner s = new Scanner(System.in);
+        //System.out.println("Which crop would you like to use? Last used crop was " + field.getPreviousHarvest() +  ". Type 'options' for choices.");
+        String choice = "";
 
-            if (!command.hasSecondWord()) {
-                choice = "?";
-            }
-            if (command.hasSecondWord()) {
-                choice = command.getSecondWord();//s.nextLine();
-            }
-            if (choice.equals("wheat") && player.itemOwned(ItemName.BAG_OF_WHEAT)) {
-                field.setCurrentHarvest("wheat");
-                System.out.println("Wheat was used.");
-                player.getPlayerInventory().put(ItemName.BAG_OF_WHEAT, false);
+        if (!command.hasSecondWord()) {
+            choice = "?";
+        }
+        if (command.hasSecondWord()) {
+            choice = command.getSecondWord();//s.nextLine();
+        }
+        if (choice.equals("wheat") && player.itemOwned(ItemName.BAG_OF_WHEAT)) {
+            field.setCurrentHarvest("wheat");
+            System.out.println("Wheat was used.");
+            player.getPlayerInventory().put(ItemName.BAG_OF_WHEAT, false);
 
-                //break;
-            } else if (choice.equals("clover") && player.itemOwned(ItemName.BAG_OF_CLOVER)) {
-                field.setCurrentHarvest("clover");
-                System.out.println("Clover was used.");
-                player.getPlayerInventory().put(ItemName.BAG_OF_CLOVER, false);
-                //break;
-            } else if (choice.equals("corn") && player.itemOwned(ItemName.BAG_OF_CORN)) {
-                field.setCurrentHarvest("corn");
-                System.out.println("Corn was used.");
-                player.getPlayerInventory().put(ItemName.BAG_OF_CORN, false);
+            //break;
+        } else if (choice.equals("clover") && player.itemOwned(ItemName.BAG_OF_CLOVER)) {
+            field.setCurrentHarvest("clover");
+            System.out.println("Clover was used.");
+            player.getPlayerInventory().put(ItemName.BAG_OF_CLOVER, false);
+            //break;
+        } else if (choice.equals("corn") && player.itemOwned(ItemName.BAG_OF_CORN)) {
+            field.setCurrentHarvest("corn");
+            System.out.println("Corn was used.");
+            player.getPlayerInventory().put(ItemName.BAG_OF_CORN, false);
 
-                //break;
-            } else if (choice.equals("cannabis") && player.itemOwned(ItemName.BAG_OF_CANNABIS)) {
-                field.setCurrentHarvest("cannabis");
-                System.out.println("cannabis was sowed.");
-                player.getPlayerInventory().put(ItemName.BAG_OF_CANNABIS, false);
+            //break;
+        } else if (choice.equals("cannabis") && player.itemOwned(ItemName.BAG_OF_CANNABIS)) {
+            field.setCurrentHarvest("cannabis");
+            System.out.println("cannabis was sowed.");
+            player.getPlayerInventory().put(ItemName.BAG_OF_CANNABIS, false);
 
-                //break;
-            } else if (choice.equals("?")) {
-                System.out.println("Sow what?");
-                return false;
-            }
-            else {
-                System.out.println("You don't have \"" + choice + "\" in inventory...");
-                return false;
-            }
-            return true;
+            //break;
+        } else if (choice.equals("?")) {
+            System.out.println("Sow what?");
+            return false;
+        } else {
+            System.out.println("You don't have \"" + choice + "\" in inventory...");
+            return false;
+        }
+        return true;
         //}
     }
 
@@ -747,7 +766,7 @@ public class Game {
         }
 
         boolean isValidCropChoice = chooseCrop(command);
-        if(!isValidCropChoice) {
+        if (!isValidCropChoice) {
             System.out.println("Specify what to sow please.");
             return;
         }
@@ -770,9 +789,9 @@ public class Game {
     //Resets field.
     public void harvestField() {
         if (!field.getIsReadyToHarvest()) {
-            if(field.isWatered()  && field.getIsSowed()) {
+            if (field.isWatered() && field.getIsSowed()) {
                 System.out.println("Field has not had time to grow, go take a nap at HQ");
-            } else if(field.getIsSowed()) {
+            } else if (field.getIsSowed()) {
                 System.out.println("The plants haven't been watered, so they have yet to grown");
             } else {
                 System.out.println("There is nothing to harvest, try planting something");
@@ -792,11 +811,13 @@ public class Game {
             return;
         }
 
-        field.checkPreviousHarvest();
-        player.sellYields(field.getYield()); //yields sold to money.
-        field.harvestDone();
+        field.calcBeeYield(flowerbed.getBees());  //Bees impact on field
+        field.checkPreviousHarvest();             //Crop rotations impact on field
+        field.harvestDone();                      //calc rest of yield
+        player.sellYields(field.getYield());      //yields sold to money.
+        field.resetYield();
 
-        System.out.println("Wallet is now "  + player.checkWallet());
+        System.out.println("Wallet is now " + player.checkWallet());
 
         //Check to see if player has enough money to complete task
         taskList.update();
@@ -821,6 +842,7 @@ public class Game {
         }
     }
 
+
     //waterField method
     //Check for isSowed
     //See moistField method for further explanation.
@@ -840,7 +862,7 @@ public class Game {
     public void usePesticide() {
         if (player.itemOwned(ItemName.PESTICIDES)) {
             field.usePesticides();
-            System.out.println("Used pesticides on field, all pests where killed");
+            System.out.println("all pests where killed");
             player.getPlayerInventory().put(ItemName.PESTICIDES, false);
         } else {
             System.out.println("No pesticides in inventory");
@@ -898,27 +920,29 @@ public class Game {
         System.out.println("The rooster appears before you!");
         postQuiz.run();
     }
-    public void eventChecker(){
-       if(gameTimer == 2) {
-           field.rainEvent();
-           System.out.println("It's raining");
-       } else if(gameTimer == 3) {
-           System.out.println("OmegaAlphaChickenChad is on your farm");
-       } else if(gameTimer == 4) {
-           field.extremeSunEvent();
-           System.out.println("It's very hot today");
-       } else if(gameTimer == 5) {
-           System.out.println("OmegaAlphaChickenChad is stirring at you");
-       } else if(gameTimer == 6) {
-           System.out.println("You see an abundance of flies today");
-           if(field.pestEvent()) {
-               System.out.println("Your plants were eating by pest");
-           } else
-               System.out.println("Your crops was unharmed because of appropriate use of pesticides");
-       } else if(gameTimer == 7) {
-           System.out.println("OmegaAlphaChickenChad is keeping an eye on you");
-       }
+
+    public void eventChecker() {
+        if (gameTimer == 2) {
+            field.rainEvent();
+            System.out.println("It's raining");
+        } else if (gameTimer == 3) {
+            System.out.println("OmegaAlphaChickenChad is on your farm");
+        } else if (gameTimer == 4) {
+            field.extremeSunEvent();
+            System.out.println("It's very hot today");
+        } else if (gameTimer == 5) {
+            System.out.println("OmegaAlphaChickenChad is stirring at you");
+        } else if (gameTimer == 6) {
+            System.out.println("You see an abundance of flies today");
+            if (field.pestEvent()) {
+                System.out.println("Your plants were eating by pest");
+            } else
+                System.out.println("Your crops was unharmed because of appropriate use of pesticides");
+        } else if (gameTimer == 7) {
+            System.out.println("OmegaAlphaChickenChad is keeping an eye on you");
+        }
     }
+
     public Room getCurrentRoom() {
         return this.currentRoom;
     }
@@ -935,7 +959,7 @@ public class Game {
         return this.beeHive;
     }
 
-    public Shop getShop()   {
+    public Shop getShop() {
         return this.shop;
     }
 

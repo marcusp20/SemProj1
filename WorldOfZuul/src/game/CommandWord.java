@@ -13,7 +13,7 @@ public enum CommandWord
     STORE_BUY("buy"),
     STORE_BROWSE("browse"),
     //Garden
-    GARDEN_CHECK_BEES("bees");
+    GARDEN_CHECK_BEES("bees"), GARDEN_PLANT_FLOWER("plant");
 
 
     private String commandString;
