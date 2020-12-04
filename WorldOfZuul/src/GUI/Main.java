@@ -20,6 +20,8 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.Pane;
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
 import javafx.stage.Stage;
 import javafx.util.Callback;
 import javafx.scene.control.Label;
@@ -105,6 +107,16 @@ public class Main extends Application {
             ioException.printStackTrace();
         }
 
+
+        /*music implemented here
+        String path = "C:/Users/Emil/Software Engineering/Projekt/SemesterProjekt/SemProj1/WorldOfZuul/src/resources/media/Alarm05.wav/";
+        Media media = new Media(new File(path).toURI().toString());
+        MediaPlayer mediaPlayer = new MediaPlayer(media);
+        mediaPlayer.setAutoPlay(true);
+
+         */
+
+
         startScreen.setPreserveRatio(false);
         startScreen.setFitHeight(832);
         startScreen.setFitWidth(1280);
@@ -118,14 +130,20 @@ public class Main extends Application {
         newGameButton.setOpacity(0);
         newGameButton.setLayoutX(480);
         newGameButton.setLayoutY(280);
-        newGameButton.setOnAction(e -> newGame(stage)); //This button will close this window, and start a new game
+        newGameButton.setOnAction(e -> {    //This button will close this window, and start a new game
+            newGame(stage);
+            //mediaPlayer.setAutoPlay(false);
+        });
 
         loadGameButton = new Button();
         loadGameButton.setPrefSize(420, 69);
         loadGameButton.setOpacity(0);
         loadGameButton.setLayoutX(480);
         loadGameButton.setLayoutY(410);
-        loadGameButton.setOnAction(e -> loadGame(stage)); //This button will close this window, and load a saved game
+        loadGameButton.setOnAction(e -> {    //This button will close this window, and load a saved game
+            loadGame(stage);
+            //mediaPlayer.setAutoPlay(false);
+        });
 
         //Parent rootButtonLayout = FXMLLoader.load(getClass().getResource("ButtonLayout.fxml"));
         //Parent rootStartScreen = FXMLLoader.load(getClass().getResource("StartScreen.fxml"));
@@ -178,6 +196,7 @@ public class Main extends Application {
         stage.setOpacity(0);
         stage.show();
         fadeIn(stage);
+
 
         game.getTaskList().createTaskListView();
     }
