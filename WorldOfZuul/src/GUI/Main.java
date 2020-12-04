@@ -399,8 +399,8 @@ public class Main extends Application {
         createListFromMap(beeHiveCommands, game.getBeeHive());
 
         HashMap<String, Command> shopCommands = new HashMap<>();
-        for (ItemName i : ItemName.values()) {
-            shopCommands.put(("$" + i.getPrice() + "\t\t" + i.getItemNameString()), new Command(CommandWord.STORE_BUY, i.getItemNameString()));
+        for (Item i : game.getStoreItemList()) {
+            shopCommands.put(("$" + i.getPrice() + "\t\t" + i.getName()), new Command(CommandWord.STORE_BUY, i.getName()));
         }
         createListFromMap(shopCommands, game.getShop());
     }
