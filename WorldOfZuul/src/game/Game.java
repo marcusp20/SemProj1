@@ -255,6 +255,8 @@ public class Game {
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
+
+
     }
 
     private void createPlayer() {
@@ -354,7 +356,7 @@ public class Game {
         ////////////////
         //GARDEN////////
         ///////////////
-        garden.setLocked(false);
+        garden.setLocked(true);
         unLockableRooms.put("garden", garden);
         garden.setExit("east", headquarter);
         garden.setExit("south", field2);

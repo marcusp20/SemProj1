@@ -410,10 +410,12 @@ public class Main extends Application {
         list.addAll(commandHashMap.keySet());
         ListView<String> listView = new ListView<>(list);
 
+        Main instance = this;
+
         Callback<ListView<String>, ListCell<String>> commandCellFactory = new Callback<ListView<String>, ListCell<String>>() {
             @Override
             public ListCell<String> call(ListView<String> stringListView) {
-                return new CommandButtonCell(game, commandHashMap);
+                return new CommandButtonCell(instance, game, commandHashMap);
             }
         };
         listView.setCellFactory(commandCellFactory);

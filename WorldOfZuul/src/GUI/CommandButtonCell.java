@@ -25,7 +25,7 @@ class CommandButtonCell extends ListCell<String> {
     Button button = new Button("->");
     String lastItem;
 
-    public CommandButtonCell(Game game, HashMap<String, Command> commandHashMap) {
+    public CommandButtonCell(Main main, Game game, HashMap<String, Command> commandHashMap) {
         super();
         hbox.getChildren().addAll(label, pane, button);
         HBox.setHgrow(pane, Priority.ALWAYS);
@@ -33,6 +33,7 @@ class CommandButtonCell extends ListCell<String> {
             System.out.println(lastItem + " : " + e);
             Command command = commandHashMap.get(lastItem);
             game.processCommand(command);
+            main.updateTask();
         });
     }
 
