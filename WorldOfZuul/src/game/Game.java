@@ -67,7 +67,13 @@ public class Game {
 
         //Create command words
         createCommandWords();
-        parser = new Parser(gameCommandWords);
+        if(isGUI) {
+            CommandWords allCommandWords = new CommandWords();
+            allCommandWords.addAllCommandWords();
+            parser = new Parser(allCommandWords);
+        } else {
+            parser = new Parser(gameCommandWords);
+        }
 
         //Create intractables
         createNPC();
@@ -503,7 +509,7 @@ public class Game {
             System.out.println("I don't know what you mean...");
             return false;
         }
-        if (commandWord == commandWord.LEAVE) {
+        if (commandWord == CommandWord.LEAVE) {
             logger.log(command);
             System.out.println("You leave...");
             parser.setCommands(gameCommandWords);
@@ -645,6 +651,7 @@ public class Game {
         parser.showCommands();
     }
 
+    /*
     private void printTaskList() {
         for (Task t : taskList.getTasks()) {
             if (t.isActive()) {
@@ -652,6 +659,7 @@ public class Game {
             }
         }
     }
+    */
 
     //Prob not a game command, room command? or something...
     public void sleep() {

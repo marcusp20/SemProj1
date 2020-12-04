@@ -35,6 +35,7 @@ public class GameLogger {
     public String toString() {
         StringBuilder transcript = new StringBuilder();
         transcript.append(seed);
+        transcript.append("\n");
         Iterator<Command> transcriptIterator = this.inputs.iterator();
         while (transcriptIterator.hasNext()) {
             Command line = transcriptIterator.next();
@@ -57,28 +58,30 @@ public class GameLogger {
         try {
             Scanner log = new Scanner(file);
             String inputLine;
-            String word1 = null;
-            String word2 = null;
+
 
             long seed = log.nextLong(); //This only reads the first line
             game = new Game(seed, isGUI);
             game.setCreatedFromSaveFile(true);
 
             //This will skip the first line, containing the seed
-            log.nextLine();
+            System.out.println(log.nextLine());
 
             while(log.hasNextLine())   {
                 inputLine = log.nextLine();
 
                 Scanner tokenizer = new Scanner(inputLine);
-
+                String word1 = null;
+                StringBuilder word2 = new StringBuilder();
                 if(tokenizer.hasNext()) {
                     word1 = tokenizer.next();
-                    if(tokenizer.hasNext()) {
-                        word2 = tokenizer.next();
+                    while(tokenizer.hasNext()) {
+                        word2.append(tokenizer.next());
                     }
                 }
-                game.processCommand(new Command(commands.getCommandWord(word1), word2));
+                Command command = new Command(commands.getCommandWord(word1), word2.toString());
+                System.out.println(command.toString());
+                game.processCommand(command);
             }
 
         } catch (FileNotFoundException e)  {

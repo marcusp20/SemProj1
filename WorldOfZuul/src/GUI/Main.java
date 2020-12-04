@@ -36,7 +36,7 @@ public class Main extends Application {
     //Create structure
     Scene scene, introScene;
 
-    private Game game;
+    private static Game game;
     private MovementHandler movementHandler;
     private CollisionHandler collisionHandler;
 
@@ -467,7 +467,7 @@ public class Main extends Application {
     }
 
     public void saveButtonClicked(ActionEvent actionEvent) {
-        System.out.println("save");
+        game.processCommand(new Command(CommandWord.SAVE, null));
     }
 
 
