@@ -314,7 +314,7 @@ public class Main extends Application {
                 BoundingBox interactionBounds = new BoundingBox(minX - offSet, minY - offSet, width + offSet * 2, height + offSet * 2);
 
                 if (interactionBounds.intersects(game.getPlayer().getPlayerSprite().getLayoutBounds())) {
-                    game.getBaos().reset(); //  not sure if placed correct
+                    game.getBaos().reset(); //Resets Buffer before interacting
                     game.getCurrentRoom().getRoomPane().getChildren().remove(lastNode);
                     //TODO make abstract method for getting gui visuals (replace getCommandList & getNpcWindow)
                     if (i.interact().equals("npc")) {
@@ -335,7 +335,7 @@ public class Main extends Application {
     }
 
     public void updateFeedbackText(ByteArrayOutputStream b, Label l) {
-        l.setOpacity(0.54);
+        l.setOpacity(0.59);
         l.setText(b.toString());
         l.toFront();
         //game.resetStream();
@@ -465,18 +465,12 @@ public class Main extends Application {
     }
 
     public void toggleInventoryList() {
-        if (game.getCurrentRoom().getInventoryList().isVisible()) {
-            game.getCurrentRoom().getInventoryList().setVisible(false);
-        } else {
-            System.out.println(game.getPlayer().getInventory());
-
-            game.getCurrentRoom().getInventoryList().setVisible(true);
-        }
+        game.getBaos().reset();
+        System.out.println(game.getPlayer().getInventory());
     }
 
     public void invButtonClicked(ActionEvent actionEvent) {
-        game.getBaos().reset();
-        System.out.println(game.getPlayer().getInventory());
+        toggleInventoryList();
     }
 
     public void saveButtonClicked(ActionEvent actionEvent) {

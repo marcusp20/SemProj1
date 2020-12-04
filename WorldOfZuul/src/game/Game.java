@@ -239,7 +239,8 @@ public class Game {
 
         beeHiveCommandWords = new CommandWords();
         beeHiveCommandWords.addCommandWord(CommandWord.GARDEN_CHECK_BEES);
-        beeHiveCommandWords.addCommandWord(CommandWord.LEAVE);
+        beeHiveCommandWords.addCommandWord(CommandWord.GARDEN_PLANT_FLOWER);
+        //beeHiveCommandWords.addCommandWord(CommandWord.LEAVE);
 
         flowerBedCommandWords = new CommandWords();
         flowerBedCommandWords.addCommandWord(CommandWord.GARDEN_PLANT_FLOWER);

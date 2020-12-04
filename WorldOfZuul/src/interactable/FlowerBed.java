@@ -69,17 +69,17 @@ public class FlowerBed extends Interactable implements TimeProgression {
         switch (pestCounter) {
             case 0: pestMultiplier = 1;
                     break;
-            case 1: pestMultiplier = 0.9;
+            case 1: pestMultiplier = 0.7;
                 break;
-            case 2: pestMultiplier = 0.8;
+            case 2: pestMultiplier = 0.5;
                 break;
-            case 3: pestMultiplier = 0.7;
+            case 3: pestMultiplier = 0.3;
                 break;
-            case 4: pestMultiplier = 0.6;
+            case 4: pestMultiplier = 0.2;
                 break;
-            case 5: pestMultiplier = 0.5;
+            case 5: pestMultiplier = 0.1;
                 break;
-            default: pestMultiplier = 0.45;
+            default: pestMultiplier = 0.01;
                 break;
         }
 
