@@ -93,7 +93,7 @@ public class Game {
         createGameLogger();
 
         //create
-        baos = setOutputStream();
+        baos = getOutputStream();
     }
 
     public Game(long seed) {
@@ -979,7 +979,7 @@ public class Game {
     }
 
     //returns object used for displaying console output to GUIlabel
-    public ByteArrayOutputStream setOutputStream() {
+    public ByteArrayOutputStream getOutputStream() {
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
         PrintStream ps = new PrintStream(baos);
         System.setOut(ps);
