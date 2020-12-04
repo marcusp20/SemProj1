@@ -1062,5 +1062,9 @@ public class Game {
     public TaskList getTaskList() {
         return taskList;
     }
+
+    public List<Item> getStoreItemList() {
+        return storeItemList;
+    }
 }
 
