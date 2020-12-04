@@ -80,14 +80,14 @@ public class Player {
     }
 
     public String getInventory() {
-        StringBuilder output = null;
-        for (Map.Entry i : playerInventory.entrySet()) {
-            String key = (String) i.getKey();
-            output.append((String) i.getValue());
-            System.out.println(key + " : " + output);
+        String inventory = "";
+        for (Map.Entry<ItemName, Boolean> entry : playerInventory.entrySet()) {
+            //System.out.println(entry.getKey().toString());
+            if (entry.getValue()) {
+                inventory += entry.getKey().toString() + ", ";
+            }
         }
-        return output.toString();
-
+        return inventory;
     }
 
     public void setPlayerSprite(Image img)   {

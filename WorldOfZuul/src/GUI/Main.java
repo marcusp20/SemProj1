@@ -36,7 +36,7 @@ public class Main extends Application {
     //Create structure
     Scene scene, introScene;
 
-    private Game game;
+    private static Game game;
     private MovementHandler movementHandler;
 
     //Interaction keys
@@ -369,7 +369,10 @@ public class Main extends Application {
                 case E -> e = true;
                 case BACK_SPACE -> this.backSpace = true;
                 case F -> toggleTaskList();
-                case I -> toggleInventoryList();
+                case I -> {
+                    game.getBaos().reset();
+                    toggleInventoryList();
+                }
             }
         }
 
@@ -465,17 +468,21 @@ public class Main extends Application {
         if (game.getCurrentRoom().getInventoryList().isVisible()) {
             game.getCurrentRoom().getInventoryList().setVisible(false);
         } else {
+            System.out.println(game.getPlayer().getInventory());
+
             game.getCurrentRoom().getInventoryList().setVisible(true);
         }
     }
 
     public void invButtonClicked(ActionEvent actionEvent) {
-        System.out.println("inv");
-
+        game.getBaos().reset();
+        System.out.println(game.getPlayer().getInventory());
     }
 
     public void saveButtonClicked(ActionEvent actionEvent) {
         System.out.println("save");
+
+
     }
 
 
