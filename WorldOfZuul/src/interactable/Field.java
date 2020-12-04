@@ -131,7 +131,7 @@ public class Field extends Interactable implements TimeProgression {
         pests = false;
         pesticidesCounter += 1;
         System.out.println("Pesticides was used");
-        if (pesticidesCounter >= 3) {
+        if (pesticidesCounter >= 2) {
             fieldInfected = true;
             System.out.println("Chemicals from pesticides started seeping into the groundwater");
         }
@@ -195,16 +195,16 @@ public class Field extends Interactable implements TimeProgression {
     public void getCropYields() {
         switch (currentHarvest) {
             case "wheat":
-                yields += 25;
+                yields += 45;
                 break;
             case "clover":
                 yields += 15;
                 break;
             case "cannabis":
-                yields += 100;
+                yields += 200;
                 break;
             case "corn":
-                yields += 50;
+                yields += 75;
                 break;
         }
     }
@@ -216,17 +216,17 @@ public class Field extends Interactable implements TimeProgression {
     public void calcBeeYield(double bee) {
         double amount = 0;
         if (bee > 15) {
-            amount = 1.5;
+            amount = 2.5;
         } else if (bee > 10) {
-            amount = 1.1;
+            amount = 1.5;
         } else if (bee > 5) {
-            amount = 0.95;
+            amount = 1.15;
         } else if (bee > 3) {
-            amount = 0.9;
-        } else if (bee > 1) {
             amount = 0.8;
+        } else if (bee > 1) {
+            amount = 0.75;
         } else {
-            amount = 0.7;
+            amount = 0.4;
         }
         yields = yields * amount;
 
@@ -242,10 +242,12 @@ public class Field extends Interactable implements TimeProgression {
         getCropYields();
         //check for pests
         if (pests) {
-            System.out.println("Heck! You found pests in field, harvest was reduced by 20 %");
-            System.out.println(getYield());
+            System.out.println("Heck! there are pests in the field!");
+            //System.out.println(getYield());
             yields = yields * 0.80;
         }
+
+
 
         if (yields <= 0) {
             System.out.println("The harvested " + currentHarvest + " has cost you " + getYield() + " to produce.");

@@ -342,17 +342,16 @@ public class Main extends Application {
     }
 
     public void fadeOut(Stage stage) {
-        for (double i = 1; i >= 0.01; i = i - 0.0001) {
+        for (double i = 1; i >= 0.01; i = i - 0.001) {
             stage.setOpacity(i);
         }
     }
 
     public void fadeIn(Stage stage) {
-        for (double i = 0; i <= 0.999; i = i + 0.0001) {
+        for (double i = 0; i <= 0.999; i = i + 0.001) {
             stage.setOpacity(i);
         }
     }
-
 
 
     //Check pressed key and react accordingly
@@ -409,9 +408,14 @@ public class Main extends Application {
         createListFromMap(fieldCommands, game.getField());
 
         HashMap<String, Command> beeHiveCommands = new HashMap<>();
-        beeHiveCommands.put("Use beehive", new Command(CommandWord.USE, "beehive"));
-        beeHiveCommands.put("Bees?", new Command(CommandWord.GARDEN_CHECK_BEES, ""));
+        //beeHiveCommands.put("Use beehive", new Command(CommandWord.USE, "beehive"));
+        beeHiveCommands.put("Check bee population", new Command(CommandWord.GARDEN_CHECK_BEES, ""));
         createListFromMap(beeHiveCommands, game.getBeeHive());
+
+        HashMap<String, Command> flowerBedCommands = new HashMap<>();
+        flowerBedCommands.put("Plant flower", new Command(CommandWord.GARDEN_PLANT_FLOWER, ""));
+        createListFromMap(flowerBedCommands, game.getFlowerBed());
+
 
         HashMap<String, Command> shopCommands = new HashMap<>();
         for (ItemName i : ItemName.values()) {

@@ -40,11 +40,11 @@ public class Game {
     private Quiz preQuiz;
     private Quiz postQuiz;
     private GameLogger logger;
-    private FlowerBed flowerbed;
     private boolean isCreatedFromSaveFile;
     private HashMap<String, Room> unLockableRooms;
     private TaskList taskList;
     private Bed hqBed;
+    private FlowerBed flowerBed;
     private BeeHive beeHive;
     private int gameTimer = 0;
     private static final Random random = new Random();
@@ -54,6 +54,7 @@ public class Game {
     //console output
     private PrintStream old = System.out;
     ByteArrayOutputStream baos;
+
 
 
     public Game(long seed, boolean isGUI) {
@@ -167,7 +168,7 @@ public class Game {
         File beekeeperDialog = load("beekeeperBetti.txt");
         beekeeperBetti = new NPC(beekeeperDialog);
         beekeeperBetti.getImageView().setX(950);
-        beekeeperBetti.getImageView().setY(250);
+        beekeeperBetti.getImageView().setY(220);
     }
 
     private void createBed() {
@@ -181,6 +182,14 @@ public class Game {
         beeHive.getImageView().setX(330);
         beeHive.getImageView().setY(200);
     }
+
+    private void createFlowerBed() {
+        flowerBed = new FlowerBed(flowerBedCommandWords);
+        flowerBed.getImageView().setX(740);
+        flowerBed.getImageView().setY(620);
+    }
+
+
 
     /**
      * Used by createNPC to properly load textFiles
@@ -239,7 +248,7 @@ public class Game {
 
         beeHiveCommandWords = new CommandWords();
         beeHiveCommandWords.addCommandWord(CommandWord.GARDEN_CHECK_BEES);
-        beeHiveCommandWords.addCommandWord(CommandWord.GARDEN_PLANT_FLOWER);
+        //beeHiveCommandWords.addCommandWord(CommandWord.GARDEN_PLANT_FLOWER);
         //beeHiveCommandWords.addCommandWord(CommandWord.LEAVE);
 
         flowerBedCommandWords = new CommandWords();
@@ -275,9 +284,10 @@ public class Game {
         return player;
     }
 
-    private void createFlowerBed() {
-        flowerbed = new FlowerBed(flowerBedCommandWords);
-    }
+
+       // private void createFlowerBed() {
+       //     flowerbed = new FlowerBed(flowerBedCommandWords);
+       // }
 
     private void createRooms() {
         Room headquarter, shed, field, field2, field3, garden, store;
@@ -337,6 +347,8 @@ public class Game {
         garden.setRoomPane(createPane("GardenVer1.png"));
         garden.addInteractable(beekeeperBetti);
         garden.addInteractable(beeHive);
+        garden.addInteractable(flowerBed);
+
 
         //////////
         //SHED////
@@ -543,11 +555,12 @@ public class Game {
                 System.out.println("Store" + end);
                 parser.setCommands(storeCommandWords);
                 parser.showCommands();
-            } else if (command.getSecondWord().equals("beehive") && currentRoom.getShortDescription().equals("in the beautiful garden")) {
+            } /*else if (command.getSecondWord().equals("beehive") && currentRoom.getShortDescription().equals("in the beautiful garden")) {
                 System.out.println("Beehive" + end);
                 parser.setCommands(beeHiveCommandWords);
                 parser.showCommands();
-            } else if (command.getSecondWord().equals("flowers") && currentRoom.getShortDescription().equals("in the beautiful garden")) {
+            }*/
+              else if (command.getSecondWord().equals("flowers") && currentRoom.getShortDescription().equals("in the beautiful garden")) {
                 System.out.println("Flower bed" + end);
                 parser.setCommands(flowerBedCommandWords);
                 parser.showCommands();
@@ -633,7 +646,7 @@ public class Game {
 
     public void plantFlower() {
         if (player.itemOwned(ItemName.BAG_OF_FLOWER_SEEDS)) {
-            flowerbed.plantFlower();
+            flowerBed.plantFlower();
             player.getPlayerInventory().put(ItemName.BAG_OF_FLOWER_SEEDS, false);
         } else {
             System.out.println("No flower in inventory");
@@ -641,7 +654,7 @@ public class Game {
     }
 
     public void checkBees(int pestCounter) {
-        flowerbed.calcBees(pestCounter);
+        flowerBed.calcBees(pestCounter);
     }
 
 
@@ -779,7 +792,6 @@ public class Game {
 
         boolean isValidCropChoice = chooseCrop(command);
         if (!isValidCropChoice) {
-            System.out.println("Specify what to sow please.");
             return;
         }
 
@@ -825,7 +837,7 @@ public class Game {
             return;
         }
 
-        field.calcBeeYield(flowerbed.getBees());  //Bees impact on field
+        field.calcBeeYield(flowerBed.getBees());  //Bees impact on field
         field.checkPreviousHarvest();             //Crop rotations impact on field
         field.harvestDone();                      //calc rest of yield
         player.sellYields(field.getYield());      //yields sold to money.
@@ -890,16 +902,21 @@ public class Game {
     //getFieldSample method
     //shows condition of field based on yield.
     public void getFieldSample() {
-        if (field.getYield() > 64) {
-            System.out.println("Your soil is in excellent condition!");
-        } else if (field.getYield() > 33) {
-            System.out.println("your soil is in good condition.");
-        } else if (field.getYield() > 15) {
-            System.out.println("Your soil could be worse.");
+        if (player.itemOwned(ItemName.SOIL_SAMPLE_COLLECTOR)) {
+            if (field.getYield() > 64) {
+                System.out.println("Your soil is in excellent condition!");
+            } else if (field.getYield() > 33) {
+                System.out.println("your soil is in good condition.");
+            } else if (field.getYield() > 15) {
+                System.out.println("Your soil could be worse.");
+            } else {
+                System.out.println("Your soil is not too great.");
+                System.out.println("Have you tried fertilizing the soil?");
+            }
         } else {
-            System.out.println("Your soil is not too great.");
-            System.out.println("Have you tried fertilizing the soil?");
+            System.out.println("You don't have a soil sample collector");
         }
+
     }
 
     public void checkField() {
@@ -1004,6 +1021,10 @@ public class Game {
 
     public Bed getHqBed() {
         return this.hqBed;
+    }
+
+    public FlowerBed getFlowerBed() {
+        return this.flowerBed;
     }
 
     public Field getField() {

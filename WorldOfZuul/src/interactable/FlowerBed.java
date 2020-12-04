@@ -96,4 +96,9 @@ public class FlowerBed extends Interactable implements TimeProgression {
             System.out.println("Bee population is very low ");
         }
     }
+
+    @Override
+    public String interact() {
+        return "flowerBed";
+    }
 }
