@@ -21,11 +21,9 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 import javafx.util.Callback;
+import javafx.scene.control.Label;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.IOException;
+import java.io.*;
 import java.util.HashMap;
 
 /*
@@ -44,6 +42,9 @@ public class Main extends Application {
     private boolean e;
     private boolean backSpace;
 
+    //labels
+    Label feedbackText;
+
     //Contains last opened menu
     Node lastNode;
 
@@ -53,6 +54,47 @@ public class Main extends Application {
 
     @Override
     public void start(Stage stage) {
+        showStartScreen(stage);
+    }
+
+    public void newGame(Stage stage) {
+        fadeOut(stage);
+        stage.close();
+        game = new Game(true);
+        game.playGUI();
+        startGame(stage);
+    }
+
+    public void loadGame(Stage stage) {
+        File saveFile = loadFile("saveFile.txt");
+        boolean saveFileExists = saveFile.exists();
+        if (saveFileExists) {
+            game = GameLogger.loadGameFrom(saveFile, true);
+            game.playGUI();
+        } else {
+            System.err.println("Could not load saveFile");
+            newGame(stage);
+            return;
+        }
+        fadeOut(stage);
+        stage.close();
+        startGame(stage);
+        System.out.println("LoadGame");
+    }
+
+    private File loadFile(String fileName) {
+        String path = System.getProperty("user.dir");
+        if (path.endsWith("SemProj1")) {
+            return new File(path + "\\WorldOfZuul\\" + fileName);    //Add remaining path to dialog text file
+        } else if (path.endsWith("WorldOfZuul")) {
+            return new File(path + "\\" + fileName);
+        }
+        //Default - probably not gonna work
+        return new File(path + "\\" + fileName);
+
+    }
+
+    public void showStartScreen(Stage stage) {
         //StartScreen
         ImageView startScreen = null;
         try {
@@ -94,47 +136,6 @@ public class Main extends Application {
         introScene = new Scene(startPane);
         stage.setScene(introScene);
         stage.show();
-
-        //startGame(stage);
-    }
-
-    public void newGame(Stage stage) {
-        fadeOut(stage);
-        stage.close();
-        game = new Game(true);
-        game.playGUI();
-        startGame(stage);
-        //System.out.println("NewGame");
-    }
-
-    public void loadGame(Stage stage) {
-        File saveFile = loadFile("saveFile.txt");
-        boolean saveFileExists = saveFile.exists();
-        //System.out.println(saveFile);
-        if (saveFileExists) {
-            game = GameLogger.loadGameFrom(saveFile, true);
-            game.playGUI();
-        } else {
-            System.err.println("Could not load saveFile");
-            newGame(stage);
-            return;
-        }
-        fadeOut(stage);
-        stage.close();
-        startGame(stage);
-        System.out.println("LoadGame");
-    }
-
-    private File loadFile(String fileName) {
-        String path = System.getProperty("user.dir");
-        if (path.endsWith("SemProj1")) {
-            return new File(path + "\\WorldOfZuul\\" + fileName);    //Add remaining path to dialog text file
-        } else if (path.endsWith("WorldOfZuul")) {
-            return new File(path + "\\" + fileName);
-        }
-        //Default - probably not gonna work
-        return new File(path + "\\" + fileName);
-
     }
 
     //Must only be called through newGame or loadGame
@@ -147,15 +148,16 @@ public class Main extends Application {
         //Set scene
         Pane p = game.getCurrentRoom().getRoomPane();
 
-        //FXML root OR JavaFX Code...
+        //FXML root OR JavaFX Code... answer: JavaFX
         try {
             Parent rootButtonLayout = FXMLLoader.load(getClass().getResource("ButtonLayout.fxml"));
-            p.getChildren().addAll(game.getPlayer().getPlayerSprite(), rootButtonLayout);
-
         } catch (IOException ioException) {
             ioException.printStackTrace();
         }
 
+
+
+        p.getChildren().addAll(game.getPlayer().getPlayerSprite());
         //add Children
         scene = new Scene(p);
 
@@ -180,7 +182,7 @@ public class Main extends Application {
         AnimationTimer timer = new AnimationTimer() {
             @Override
             public void handle(long now) {
-                    update();
+                update();
             }
         };
         timer.start();
@@ -195,6 +197,10 @@ public class Main extends Application {
         checkInteraction();
         //Check if room should be changed (player position)
         playerRoomChangeCheck();
+        //check if text label should output console
+        updateFeedbackText(game.getBaos(), game.getCurrentRoom().getFeedbackText());
+
+
 
         if (backSpace) {
             game.getCurrentRoom().getRoomPane().getChildren().remove(lastNode);
@@ -229,6 +235,7 @@ public class Main extends Application {
             if (game.getCurrentRoom().getRoomPane() == oldPane) {
                 playerSprite.setX(scene.getWidth() - 120);
                 movementHandler.haltPlayerMovement(); // stop the player, to stop calling "go north" every frame"
+                //System.out.println("HELP");
             } else {
                 playerSprite.setX(10);
                 addRoomContent();
@@ -243,6 +250,7 @@ public class Main extends Application {
             if (game.getCurrentRoom().getRoomPane() == oldPane) {
                 playerSprite.setY(scene.getHeight() - 180);
                 movementHandler.haltPlayerMovement(); // stop the player, to stop calling "go north" every frame"
+                //System.out.println("HELP");
             } else {
                 playerSprite.setY(20);
                 addRoomContent();
@@ -289,9 +297,9 @@ public class Main extends Application {
                 BoundingBox interactionBounds = new BoundingBox(minX - offSet, minY - offSet, width + offSet * 2, height + offSet * 2);
 
                 if (interactionBounds.intersects(game.getPlayer().getPlayerSprite().getLayoutBounds())) {
+                    game.getBaos().reset(); //  not sure if placed correct
                     game.getCurrentRoom().getRoomPane().getChildren().remove(lastNode);
-
-
+                    //TODO make abstract method for getting gui visuals (replace getCommandList & getNpcWindow)
                     if (i.interact().equals("npc")) {
                         NPC npc = (NPC) i;
                         if(!npc.isFirstMeeting())    {
@@ -309,6 +317,13 @@ public class Main extends Application {
         this.e = false;
     }
 
+    public void updateFeedbackText(ByteArrayOutputStream b, Label l) {
+        l.setOpacity(0.54);
+        l.setText(b.toString());
+        l.toFront();
+        //game.resetStream();
+    }
+
     public void fadeOut(Stage stage) {
         for (double i = 1; i >= 0.01; i = i - 0.0001) {
             stage.setOpacity(i);
@@ -320,6 +335,8 @@ public class Main extends Application {
             stage.setOpacity(i);
         }
     }
+
+
 
     //Check pressed key and react accordingly
     private void checkInput(KeyEvent keyEvent) {
@@ -349,8 +366,6 @@ public class Main extends Application {
                 //Interact
                 case E -> e = false;
                 case BACK_SPACE -> this.backSpace = false;
-                case F -> {
-                }
             }
         }
     }
