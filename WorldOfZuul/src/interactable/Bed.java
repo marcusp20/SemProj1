@@ -15,6 +15,7 @@ public class Bed extends Interactable {
 
     @Override
     public String interact() {
+        System.out.println("You are interacting with bed");
         return "bed";
     }
 }
