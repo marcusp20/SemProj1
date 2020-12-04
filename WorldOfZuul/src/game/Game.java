@@ -62,7 +62,7 @@ public class Game {
         this.seed = seed;
         this.isGUI = isGUI;
         random.setSeed(seed);
-        System.out.println(seed);
+        //System.out.println(seed);
         unLockableRooms = new HashMap<>();
 
         //Create command words

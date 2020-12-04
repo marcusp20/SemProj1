@@ -83,7 +83,7 @@ public class GameLogger {
                     }
                 }
                 Command command = new Command(commands.getCommandWord(word1), word2.toString());
-                System.err.println(command.toString());
+                //System.err.println(command.toString());
                 game.processCommand(command);
             }
 
