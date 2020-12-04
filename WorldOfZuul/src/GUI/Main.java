@@ -68,7 +68,7 @@ public class Main extends Application {
     }
 
     public void loadGame(Stage stage) {
-        File saveFile = loadFile("saveFile.txt");
+        File saveFile = new File(System.getProperty("user.dir") + "\\saveFile.txt");
         boolean saveFileExists = saveFile.exists();
         if (saveFileExists) {
             game = GameLogger.loadGameFrom(saveFile, true);
@@ -82,18 +82,6 @@ public class Main extends Application {
         stage.close();
         startGame(stage);
         System.out.println("LoadGame");
-    }
-
-    private File loadFile(String fileName) {
-        String path = System.getProperty("user.dir");
-        if (path.endsWith("SemProj1")) {
-            return new File(path + "\\WorldOfZuul\\" + fileName);    //Add remaining path to dialog text file
-        } else if (path.endsWith("WorldOfZuul")) {
-            return new File(path + "\\" + fileName);
-        }
-        //Default - probably not gonna work
-        return new File(path + "\\" + fileName);
-
     }
 
     public void showStartScreen(Stage stage) {
