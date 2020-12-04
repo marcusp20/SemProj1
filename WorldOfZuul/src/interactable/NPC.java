@@ -1,14 +1,28 @@
 package interactable;
 
+import GUI.NpcButtonCell;
 import game.Command;
 import game.CommandWord;
 import game.CommandWords;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+import javafx.geometry.Insets;
+import javafx.scene.control.ListCell;
+import javafx.scene.control.ListView;
+import javafx.scene.layout.Background;
+import javafx.scene.layout.BackgroundFill;
+import javafx.scene.layout.CornerRadii;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
+import javafx.scene.paint.Color;
+import javafx.util.Callback;
 
+import java.awt.*;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashMap;
 import java.util.Scanner;
 
 
@@ -168,29 +182,88 @@ public class NPC extends Interactable{
         }
     }
 
+    public boolean isFirstMeeting() {
+        return firstMeeting;
+    }
+
+    ///////
+    //GUI//
+    ///////
     @Override
     public String interact()  {
         System.out.println("You can interact with " + this.name);
-        return "npc";
-    }
-
-    private void createNpcWindow()   {
-
         String text = "";
         for(String line : getPatternLines("q0"))    {
             text = text.concat(line + "\n");
         }
+        System.out.println(text);
+
+        return "npc";
+    }
+
+    private void createNpcWindow()   {
+        //Create start text
+        String text = "";
+        for(String line : getPatternLines("*"))    {
+            text = text.concat(line + "\n");
+        }
         dialogText = new Text(text);
+        dialogText.setStyle("-fx-font: 20 arial;");
+
         npcWindow.getChildren().add(dialogText);
+
+        //Create hashMap
+        ArrayList<String> q0Lines = getPatternLines("q0");      //q0Lines is given lines containing q0 ie. the row of questions.
+        HashMap<String, Integer> questionMap = new HashMap<>();
+
+        for (int i = 0; i < q0Lines.size(); i++) {                                        //For loop through all q0 questions
+            questionMap.put(q0Lines.get(i), i);
+        }
+
+        //Create answer menu
+        ObservableList<String> list = FXCollections.observableArrayList();
+        list.addAll(questionMap.keySet());
+        Collections.reverse(list);
+        ListView<String> questionList = new ListView<>(list);
+
+        NPC npc = this;
+        Callback<ListView<String>, ListCell<String>> commandCellFactory = new Callback<ListView<String>, ListCell<String>>() {
+            @Override
+            public ListCell<String> call(ListView<String> stringListView) {
+                return new NpcButtonCell(npc, questionMap);
+            }
+        };
+        questionList.setCellFactory(commandCellFactory);
+
+        questionList.setPrefHeight(35 * questionMap.size());
+        if (questionList.getPrefHeight() > 300) {
+            questionList.setPrefHeight(300);
+        }
+        questionList.setPrefWidth(350);
+        questionList.setStyle("-fx-font: 14 arial;");
+
+        npcWindow.getChildren().add(questionList);
     }
 
     public void updateAnswer(int q) {
-        dialogText.setText("Answer" + q);
+        String text = "";
+        for(String line : getPatternLines("a" + q))    {
+            text = text.concat(line + "\n");
+        }
+        dialogText.setText(text);
+    }
+
+    public void resetNpcWindow()    {
+        dialogText.setText(getPatternLines("$$").get(0));
     }
 
     public VBox getNpcWindow()  {
         npcWindow.setLayoutX(this.getImageView().getX());
         npcWindow.setLayoutY(this.getImageView().getY());
+
+        npcWindow.setBackground(new Background(new BackgroundFill(Color.LIGHTSKYBLUE, CornerRadii.EMPTY, Insets.EMPTY)));
+
+        firstMeeting = false;
 
         return npcWindow;
     }

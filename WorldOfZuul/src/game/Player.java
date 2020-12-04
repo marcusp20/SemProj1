@@ -9,8 +9,8 @@ import java.util.HashMap;
 public class Player {
     //Attributes
     private String name;
-    private double wallet = 750;
-    private HashMap<ItemName, Boolean> playerInventory; //TODO can be a set
+    private double wallet = 8;
+    private HashMap<ItemName, Boolean> playerInventory;
     private boolean noCropsOwned;
 
     //Gui attributes
@@ -86,11 +86,20 @@ public class Player {
         this.playerSprite.setCache(true); //Add moving images to cache - improves performance
     }
 
+    public void checkDirection()    {
+        if(this.getWestSpeed() > this.getEastSpeed())   {
+            playerSprite.setScaleX(1);
+        } else if (this.getWestSpeed() < this.getEastSpeed()) {
+            playerSprite.setScaleX(-1);
+        }
+    }
+
     public ImageView getPlayerSprite()  {
         return playerSprite;
     }
 
     public void setPrevX(double x) {
+        checkDirection();
         this.prevX = x;
     }
 

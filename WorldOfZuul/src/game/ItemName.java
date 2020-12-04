@@ -1,9 +1,9 @@
 package game;
 
 public enum ItemName {
-    SHOVEL("Shovel", "for plowing the field.", 10),
-    SCYTHE("Scythe", "for manual harvesting", 20),
-    WATER_CAN("Watering can", "to water crops.", 10),
+    SHOVEL("Shovel", "for plowing the field.", 1),
+    SCYTHE("Scythe", "for manual harvesting", 1),
+    WATER_CAN("Watering can", "to water crops.", 1),
     TRACTOR("Tractor", "for fertilizing, plowing, sowing, and more.", 300),
     HARVESTER("Harvester", "Used for harvesting", 500),
     PESTICIDES("Pesticides", "used for destroying water-collection", 50),

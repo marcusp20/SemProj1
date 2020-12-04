@@ -9,6 +9,8 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.Priority;
 
+import java.io.ByteArrayOutputStream;
+import java.io.PrintStream;
 import java.util.HashMap;
 
 /*
@@ -25,7 +27,9 @@ class CommandButtonCell extends ListCell<String> {
     Button button = new Button("->");
     String lastItem;
 
-    public CommandButtonCell(Main main, Game game, HashMap<String, Command> commandHashMap) {
+
+
+    public CommandButtonCell(Game game, HashMap<String, Command> commandHashMap) {
         super();
         hbox.getChildren().addAll(label, pane, button);
         HBox.setHgrow(pane, Priority.ALWAYS);
@@ -33,7 +37,6 @@ class CommandButtonCell extends ListCell<String> {
             System.out.println(lastItem + " : " + e);
             Command command = commandHashMap.get(lastItem);
             game.processCommand(command);
-            main.updateTask();
         });
     }
 
@@ -50,6 +53,24 @@ class CommandButtonCell extends ListCell<String> {
             setGraphic(hbox);
         }
     }
+
+    public void labelOutputStart() {
+        // Create a stream to hold the output
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        PrintStream ps = new PrintStream(baos);
+        // IMPORTANT: Save the old System.out!
+        PrintStream old = System.out;
+        // Tell Java to use your special stream
+        System.setOut(ps);
+        // Print some output: goes to your special stream
+        System.out.println("lol");
+        // Put things back
+        System.out.flush();
+        System.setOut(old);
+        // Show what happened
+        System.out.println("Here: " + baos.toString());
+    }
+
 }
 
 

@@ -7,6 +7,7 @@ import javafx.animation.AnimationTimer;
 import javafx.application.Application;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.BoundingBox;
 import javafx.scene.Node;
@@ -21,11 +22,9 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 import javafx.util.Callback;
+import javafx.scene.control.Label;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.IOException;
+import java.io.*;
 import java.util.HashMap;
 
 /*
@@ -44,23 +43,12 @@ public class Main extends Application {
     //Interaction keys
     private boolean e;
     private boolean backSpace;
-    private boolean tabulator;
 
-    //Buttons
-    Button loadGameButton;
-    Button newGameButton;
+    //labels
+    Label feedbackText;
 
     //Contains last opened menu
     Node lastNode;
-
-    //Tasklist
-    ObservableList<String> taskListObservable = FXCollections.observableArrayList();
-    ListView<String> taskListView;
-    TaskList taskList;
-
-    //Easy access to player and player sprite objects
-    private ImageView playerSprite;
-    private Player player;
 
     public static void main(String[] args) {
         launch(args);
@@ -68,47 +56,7 @@ public class Main extends Application {
 
     @Override
     public void start(Stage stage) {
-
-        //StartScreen
-        ImageView startScreen = null;
-        try {
-            startScreen = new ImageView(load("IntroScreenVer1.png"));
-        } catch (IOException ioException) {
-            System.err.println("'IntroScreenVer1.png' not found");
-            ioException.printStackTrace();
-        }
-
-        startScreen.setPreserveRatio(false);
-        startScreen.setFitHeight(832);
-        startScreen.setFitWidth(1280);
-
-        //Buttons
-        newGameButton = new Button();
-        newGameButton.setPrefSize(420, 69);
-        newGameButton.setOpacity(0);
-        newGameButton.setLayoutX(480);
-        newGameButton.setLayoutY(280);
-        newGameButton.setOnAction(e -> newGame(stage)); //This button will close this window, and start a new game
-
-        loadGameButton = new Button();
-        loadGameButton.setPrefSize(420, 69);
-        loadGameButton.setOpacity(0);
-        loadGameButton.setLayoutX(480);
-        loadGameButton.setLayoutY(410);
-        loadGameButton.setOnAction(e -> loadGame(stage)); //This button will close this window, and load a saved game
-
-        //Parent rootButtonLayout = FXMLLoader.load(getClass().getResource("ButtonLayout.fxml"));
-        //Parent rootStartScreen = FXMLLoader.load(getClass().getResource("StartScreen.fxml"));
-
-        Pane startPane = new Pane();
-        startPane.setPrefSize(1280, 832);
-        startPane.getChildren().addAll(startScreen, loadGameButton, newGameButton);
-
-        introScene = new Scene(startPane);
-        stage.setScene(introScene);
-        stage.show();
-
-        //startGame(stage);
+        showStartScreen(stage);
     }
 
     public void newGame(Stage stage) {
@@ -117,13 +65,11 @@ public class Main extends Application {
         game = new Game(true);
         game.playGUI();
         startGame(stage);
-        //System.out.println("NewGame");
     }
 
     public void loadGame(Stage stage) {
         File saveFile = loadFile("saveFile.txt");
         boolean saveFileExists = saveFile.exists();
-        //System.out.println(saveFile);
         if (saveFileExists) {
             game = GameLogger.loadGameFrom(saveFile, true);
             game.playGUI();
@@ -150,37 +96,73 @@ public class Main extends Application {
 
     }
 
+    public void showStartScreen(Stage stage) {
+        //StartScreen
+        ImageView startScreen = null;
+        try {
+            startScreen = new ImageView(load("IntroScreenVer1.png"));
+        } catch (IOException ioException) {
+            System.err.println("'IntroScreenVer1.png' not found");
+            ioException.printStackTrace();
+        }
+
+        startScreen.setPreserveRatio(false);
+        startScreen.setFitHeight(832);
+        startScreen.setFitWidth(1280);
+
+        //Buttons
+        Button loadGameButton;
+        Button newGameButton;
+
+        newGameButton = new Button();
+        newGameButton.setPrefSize(420, 69);
+        newGameButton.setOpacity(0);
+        newGameButton.setLayoutX(480);
+        newGameButton.setLayoutY(280);
+        newGameButton.setOnAction(e -> newGame(stage)); //This button will close this window, and start a new game
+
+        loadGameButton = new Button();
+        loadGameButton.setPrefSize(420, 69);
+        loadGameButton.setOpacity(0);
+        loadGameButton.setLayoutX(480);
+        loadGameButton.setLayoutY(410);
+        loadGameButton.setOnAction(e -> loadGame(stage)); //This button will close this window, and load a saved game
+
+        //Parent rootButtonLayout = FXMLLoader.load(getClass().getResource("ButtonLayout.fxml"));
+        //Parent rootStartScreen = FXMLLoader.load(getClass().getResource("StartScreen.fxml"));
+
+        Pane startPane = new Pane();
+        startPane.setPrefSize(1280, 832);
+        startPane.getChildren().addAll(startScreen, loadGameButton, newGameButton);
+
+        introScene = new Scene(startPane);
+        stage.setScene(introScene);
+        stage.show();
+    }
+
     //Must only be called through newGame or loadGame
     private void startGame(Stage stage) {
-        player = game.getPlayer();
-        playerSprite = player.getPlayerSprite();
-        movementHandler = new MovementHandler(game, player, playerSprite);
-        taskList = game.getTaskList();
+        movementHandler = new MovementHandler(game, game.getPlayer(), game.getPlayer().getPlayerSprite());  //Don't really need to send playerSprite since its inside player
 
-        createRoomCollisions();
+        //Create new objects
         createListViews();
-        createGameScene(stage);
-        initTasklist();
-    }
 
-    private void createRoomCollisions() {
-        collisionHandler = new CollisionHandler();
-
-    }
-
-    private void createGameScene(Stage stage) {
         //Set scene
         Pane p = game.getCurrentRoom().getRoomPane();
 
-        //FXML root OR JavaFX Code...
+        //FXML root OR JavaFX Code... answer: JavaFX
         try {
             Parent rootButtonLayout = FXMLLoader.load(getClass().getResource("ButtonLayout.fxml"));
-            p.getChildren().addAll(game.getPlayer().getPlayerSprite(), rootButtonLayout);
-
         } catch (IOException ioException) {
             ioException.printStackTrace();
         }
 
+        // Add buttonlayout+player to first scene
+        try {
+            p.getChildren().addAll(game.getPlayer().getPlayerSprite(),FXMLLoader.load(getClass().getResource("ButtonLayout.fxml")));
+        } catch (IOException ioException) {
+            ioException.printStackTrace();
+        }
         //add Children
         scene = new Scene(p);
 
@@ -197,6 +179,8 @@ public class Main extends Application {
         stage.setOpacity(0);
         stage.show();
         fadeIn(stage);
+
+        game.getTaskList().createTaskListView();
     }
 
     private void startTimer() {
@@ -218,11 +202,14 @@ public class Main extends Application {
         checkInteraction();
         //Check if room should be changed (player position)
         playerRoomChangeCheck();
+        //check if text label should output console
+        updateFeedbackText(game.getBaos(), game.getCurrentRoom().getFeedbackText());
+
+
 
         if (backSpace) {
             game.getCurrentRoom().getRoomPane().getChildren().remove(lastNode);
             backSpace = false;
-            //System.out.println("??");
         }
     }
 
@@ -232,25 +219,21 @@ public class Main extends Application {
 
         //NORTH
         if (playerSprite.getY() < -40) {
-            game.getCurrentRoom().getRoomPane().getChildren().remove(lastNode);
-            //System.out.println("GO NORTH");
+            removeRoomContent();
             Pane oldPane = game.getCurrentRoom().getRoomPane();
             game.processCommand(new Command(CommandWord.GO, "north"));
 
             if (game.getCurrentRoom().getRoomPane() == oldPane) {
                 playerSprite.setY(-40);
                 movementHandler.haltPlayerMovement(); // stop the player, to stop calling "go north" every frame"
-                //System.out.println("HELP");
             } else {
                 playerSprite.setY(scene.getHeight() - 200);
-                game.getCurrentRoom().getRoomPane().getChildren().add(playerSprite);
-                scene.setRoot(game.getCurrentRoom().getRoomPane());
+                addRoomContent();
             }
         }
         //EAST
         if (playerSprite.getX() > scene.getWidth() - 120) {
-            game.getCurrentRoom().getRoomPane().getChildren().remove(lastNode);
-            //System.out.println("GO EAST");
+            removeRoomContent();
             Pane oldPane = game.getCurrentRoom().getRoomPane();
             game.processCommand(new Command(CommandWord.GO, "east"));
 
@@ -260,14 +243,12 @@ public class Main extends Application {
                 //System.out.println("HELP");
             } else {
                 playerSprite.setX(10);
-                game.getCurrentRoom().getRoomPane().getChildren().add(playerSprite);
-                scene.setRoot(game.getCurrentRoom().getRoomPane());
+                addRoomContent();
             }
         }
         //SOUTH
         if (playerSprite.getY() > scene.getHeight() - 180) {
-            game.getCurrentRoom().getRoomPane().getChildren().remove(lastNode);
-            //System.out.println("GO SOUTH");
+            removeRoomContent();
             Pane oldPane = game.getCurrentRoom().getRoomPane();
             game.processCommand(new Command(CommandWord.GO, "south"));
 
@@ -277,27 +258,47 @@ public class Main extends Application {
                 //System.out.println("HELP");
             } else {
                 playerSprite.setY(20);
-                game.getCurrentRoom().getRoomPane().getChildren().add(playerSprite);
-                scene.setRoot(game.getCurrentRoom().getRoomPane());
+                addRoomContent();
             }
         }
         //WEST
         if (playerSprite.getX() < -10) {
-            game.getCurrentRoom().getRoomPane().getChildren().remove(lastNode);
-            //System.out.println("GO WEST");
+            removeRoomContent();
             Pane oldPane = game.getCurrentRoom().getRoomPane();
             game.processCommand(new Command(CommandWord.GO, "west"));
 
             if (game.getCurrentRoom().getRoomPane() == oldPane) {
                 playerSprite.setX(-10);
                 movementHandler.haltPlayerMovement(); // stop the player, to stop calling "go north" every frame"
-                //System.out.println("HELP");
             } else {
                 playerSprite.setX(scene.getWidth() - 140);
-                game.getCurrentRoom().getRoomPane().getChildren().add(playerSprite);
-                scene.setRoot(game.getCurrentRoom().getRoomPane());
+                addRoomContent();
             }
         }
+    }
+
+    private void removeRoomContent()    {
+        game.getCurrentRoom().getRoomPane().getChildren().remove(lastNode);
+        game.getCurrentRoom().getRoomPane().getChildren().remove(game.getTaskList().getTaskListView());
+        try {
+            game.getCurrentRoom().getRoomPane().getChildren().remove(FXMLLoader.load(getClass().getResource("ButtonLayout.fxml")));
+        } catch (IOException ioException) {
+            ioException.printStackTrace();
+        }
+
+    }
+
+
+    private void addRoomContent()   {
+        game.getCurrentRoom().getRoomPane().getChildren().add(game.getPlayer().getPlayerSprite());
+        game.getCurrentRoom().getRoomPane().getChildren().add(game.getTaskList().getTaskListView());
+        scene.setRoot(game.getCurrentRoom().getRoomPane());
+        try {
+            game.getCurrentRoom().getRoomPane().getChildren().add(FXMLLoader.load(getClass().getResource("ButtonLayout.fxml")));
+        } catch (IOException ioException) {
+            ioException.printStackTrace();
+        }
+
     }
 
     private void checkInteraction() {
@@ -313,12 +314,15 @@ public class Main extends Application {
 
                 BoundingBox interactionBounds = new BoundingBox(minX - offSet, minY - offSet, width + offSet * 2, height + offSet * 2);
 
-                if (interactionBounds.intersects(playerSprite.getLayoutBounds())) {
+                if (interactionBounds.intersects(game.getPlayer().getPlayerSprite().getLayoutBounds())) {
+                    game.getBaos().reset(); //  not sure if placed correct
                     game.getCurrentRoom().getRoomPane().getChildren().remove(lastNode);
-
                     //TODO make abstract method for getting gui visuals (replace getCommandList & getNpcWindow)
                     if (i.interact().equals("npc")) {
                         NPC npc = (NPC) i;
+                        if(!npc.isFirstMeeting())    {
+                            npc.resetNpcWindow();
+                        }
                         game.getCurrentRoom().getRoomPane().getChildren().add(npc.getNpcWindow());
                         lastNode = npc.getNpcWindow();
                     } else {
@@ -329,6 +333,13 @@ public class Main extends Application {
             }
         }
         this.e = false;
+    }
+
+    public void updateFeedbackText(ByteArrayOutputStream b, Label l) {
+        l.setOpacity(0.54);
+        l.setText(b.toString());
+        l.toFront();
+        //game.resetStream();
     }
 
     public void fadeOut(Stage stage) {
@@ -343,6 +354,8 @@ public class Main extends Application {
         }
     }
 
+
+
     //Check pressed key and react accordingly
     private void checkInput(KeyEvent keyEvent) {
         //Key pressed event
@@ -356,7 +369,7 @@ public class Main extends Application {
                 //Interact
                 case E -> e = true;
                 case BACK_SPACE -> this.backSpace = true;
-                case F -> updateTask();
+                case F -> toggleTaskList();
             }
         }
 
@@ -371,7 +384,6 @@ public class Main extends Application {
                 //Interact
                 case E -> e = false;
                 case BACK_SPACE -> this.backSpace = false;
-                case F -> taskListView.setVisible(false);
             }
         }
     }
@@ -410,12 +422,10 @@ public class Main extends Application {
         list.addAll(commandHashMap.keySet());
         ListView<String> listView = new ListView<>(list);
 
-        Main instance = this;
-
         Callback<ListView<String>, ListCell<String>> commandCellFactory = new Callback<ListView<String>, ListCell<String>>() {
             @Override
             public ListCell<String> call(ListView<String> stringListView) {
-                return new CommandButtonCell(instance, game, commandHashMap);
+                return new CommandButtonCell(game, commandHashMap);
             }
         };
         listView.setCellFactory(commandCellFactory);
@@ -443,26 +453,25 @@ public class Main extends Application {
         return new Image(new FileInputStream(path + "\\img\\" + fileName));
     }
 
-    private void initTasklist() {
+    public void toggleTaskList() {
+        if (game.getTaskList().getTaskListView().isVisible()) {
+            game.getTaskList().getTaskListView().setVisible(false);
+        } else {
+            game.getTaskList().getTaskListView().setVisible(true);
+        }
+    }
 
-        taskListView = new ListView<>();
-        taskListView.setItems(taskListObservable);
-        game.getCurrentRoom().getRoomPane().getChildren().add(taskListView);
-        taskListView.setPrefSize(355,107);
-        taskListView.setLayoutX(911);
-        taskListView.setLayoutY(14);
-        taskListView.setVisible(false);
-
+    public void invButtonClicked(ActionEvent actionEvent) {
+        System.out.println("inv");
 
     }
 
-    public void updateTask() {
-        taskListObservable.clear();
-        for (Task t : taskList.getTasks()) {
-            if(t.isActive()) {
-                taskListObservable.add(t.getDescription() + "\t" + t.getReward());
-            }
-        }
-        taskListView.setVisible(true);
+    public void saveButtonClicked(ActionEvent actionEvent) {
+        System.out.println("save");
+    }
+
+
+    public void helpButtonClicked(ActionEvent actionEvent) {
+        System.out.println("help pls");
     }
 }

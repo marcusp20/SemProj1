@@ -7,9 +7,7 @@ import chadChicken.GUIQuiz;
 import chadChicken.Quiz;
 import chadChicken.TextQuiz;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
+import java.io.*;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -55,12 +53,16 @@ public class Game {
     private long seed;
     private boolean isGUI;
 
+    //console output
+    private PrintStream old = System.out;
+    ByteArrayOutputStream baos;
+
+
     public Game(long seed, boolean isGUI) {
         this.seed = seed;
         this.isGUI = isGUI;
         random.setSeed(seed);
         System.out.println(seed);
-
         unLockableRooms = new HashMap<>();
 
         //Create command words
@@ -91,6 +93,9 @@ public class Game {
 
         //Create game logger (for saving games)
         createGameLogger();
+
+        //create
+        baos = getOutputStream();
     }
 
     public Game(long seed) {
@@ -250,14 +255,10 @@ public class Game {
         field.getImageView().setY(312);
         field.getImageView().setFitWidth(712);
         field.getImageView().setFitHeight(463);
-        try {
-            field.getImageView().setImage(loadImage("FieldHarvest.png"));
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        }
-
-
+        field.getImageView().setVisible(false);
     }
+
+
 
     private void createPlayer() {
         player = new Player("Lars Tyndskid");
@@ -356,7 +357,7 @@ public class Game {
         ////////////////
         //GARDEN////////
         ///////////////
-        garden.setLocked(true);
+        garden.setLocked(false);
         unLockableRooms.put("garden", garden);
         garden.setExit("east", headquarter);
         garden.setExit("south", field2);
@@ -438,7 +439,6 @@ public class Game {
         boolean finished = false;
         while (!finished) {
             Command command = parser.getCommand();
-
             finished = processCommand(command);
             if (checkForDebt()) {
                 System.out.println("You have no more money or seeds, game over");
@@ -492,6 +492,9 @@ public class Game {
     /////////////////////////////////////////////////////////////////////////////////////
 
     public boolean processCommand(Command command) {
+
+        baos.reset();
+
         boolean wantToQuit = false;
 
         CommandWord commandWord = command.getCommandWord();
@@ -508,14 +511,13 @@ public class Game {
         if (commandWord == CommandWord.HELP) {
             printHelp();
         } else if (commandWord == CommandWord.GO) {
-            logger.log(command);
             goRoom(command);
         } else if (commandWord == CommandWord.QUIT) {
             wantToQuit = quit(command);
         } else if (commandWord == CommandWord.USE) {
             use(command);
         } else if (commandWord == CommandWord.TASK) {
-            printTaskList();
+            //printTaskList();
         } else if (commandWord == CommandWord.MONEY) {
             System.out.println("You have $" + player.getWallet());
             return false;
@@ -620,6 +622,7 @@ public class Game {
         } else if (nextRoom.isLocked()) {
             System.out.println("You don't have access to that area yet.");
         } else {
+            logger.log(command);
             currentRoom = nextRoom;
             System.out.println(currentRoom.getLongDescription());
         }
@@ -654,6 +657,7 @@ public class Game {
     public void sleep() {
         hqBed.sleep();            //Used in 2d implementation
         field.nextDay();
+        checkField();
         gameTimer++;
     }
 
@@ -715,7 +719,7 @@ public class Game {
             System.out.println("You cannot afford it.");
         } else {
             boolean noRemove = item.getName().startsWith("Bag of")
-                    || item.getName().startsWith("pesticides"); //Check if item bought starts with "bag of"
+                    || item.getName().startsWith("Pesticides"); //Check if item bought starts with "bag of"
             if (!noRemove) {
                 storeItemList.remove(item);                             // remove item from StoreItemList.
                 shop.removeItem(command.getSecondWord());
@@ -798,6 +802,7 @@ public class Game {
     //Checks for tractor in inventory, if not, shovel is used. If no shovel, nothing happens.
     public void sowField(Command command) {
         //Check conditions
+
         if (field.getIsSowed()) {
             System.out.println("Field already sowed with " + field.getCurrentHarvest() + ".");
             return;
@@ -822,6 +827,7 @@ public class Game {
         } else {
             System.out.println("No tractor er shovel in inventory.");
         }
+        checkField();
     }
 
     //harvestField method
@@ -830,6 +836,7 @@ public class Game {
     //Calculates value yield, after scythe or harvester is used, and adds money to player wallet.
     //Resets field.
     public void harvestField() {
+        checkField();
         if (!field.getIsReadyToHarvest()) {
             if (field.isWatered() && field.getIsSowed()) {
                 System.out.println("Field has not had time to grow, go take a nap at HQ");
@@ -860,6 +867,7 @@ public class Game {
         field.resetYield();
 
         System.out.println("Wallet is now " + player.checkWallet());
+        checkField();
 
         //Check to see if player has enough money to complete task
         taskList.update();
@@ -898,6 +906,7 @@ public class Game {
         } else {
             System.out.println("No watering can in inventory.");
         }
+        checkField();
     }
 
 
@@ -924,6 +933,26 @@ public class Game {
         } else {
             System.out.println("Your soil is not too great.");
             System.out.println("Have you tried fertilizing the soil?");
+        }
+    }
+
+    public void checkField() {
+        if (field.getIsReadyToHarvest()) {
+            try {
+                field.getImageView().setVisible(true);
+                field.getImageView().setImage((loadImage("FieldHarvest.png")));
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
+            }
+        } else if (field.getIsSowed()) {
+            try {
+                field.getImageView().setVisible(true);
+                field.getImageView().setImage(loadImage("FieldSow.png"));
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
+            }
+        } else {
+            field.getImageView().setVisible(false);
         }
     }
 
@@ -983,6 +1012,23 @@ public class Game {
         } else if (gameTimer == 7) {
             System.out.println("OmegaAlphaChickenChad is keeping an eye on you");
         }
+    }
+
+    //returns object used for displaying console output to GUIlabel
+    public ByteArrayOutputStream getOutputStream() {
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        PrintStream ps = new PrintStream(baos);
+        System.setOut(ps);
+        return baos;
+    }
+
+    public void resetStream() {
+        System.out.flush();
+        System.setOut(old);
+    }
+
+    public ByteArrayOutputStream getBaos() {
+        return baos;
     }
 
     public Room getCurrentRoom() {
