@@ -155,9 +155,12 @@ public class Main extends Application {
             ioException.printStackTrace();
         }
 
-
-
-        p.getChildren().addAll(game.getPlayer().getPlayerSprite());
+        // Add buttonlayout+player to first scene
+        try {
+            p.getChildren().addAll(game.getPlayer().getPlayerSprite(),FXMLLoader.load(getClass().getResource("ButtonLayout.fxml")));
+        } catch (IOException ioException) {
+            ioException.printStackTrace();
+        }
         //add Children
         scene = new Scene(p);
 
@@ -275,12 +278,25 @@ public class Main extends Application {
     private void removeRoomContent()    {
         game.getCurrentRoom().getRoomPane().getChildren().remove(lastNode);
         game.getCurrentRoom().getRoomPane().getChildren().remove(game.getTaskList().getTaskListView());
+        try {
+            game.getCurrentRoom().getRoomPane().getChildren().remove(FXMLLoader.load(getClass().getResource("ButtonLayout.fxml")));
+        } catch (IOException ioException) {
+            ioException.printStackTrace();
+        }
+
     }
+
 
     private void addRoomContent()   {
         game.getCurrentRoom().getRoomPane().getChildren().add(game.getPlayer().getPlayerSprite());
         game.getCurrentRoom().getRoomPane().getChildren().add(game.getTaskList().getTaskListView());
         scene.setRoot(game.getCurrentRoom().getRoomPane());
+        try {
+            game.getCurrentRoom().getRoomPane().getChildren().add(FXMLLoader.load(getClass().getResource("ButtonLayout.fxml")));
+        } catch (IOException ioException) {
+            ioException.printStackTrace();
+        }
+
     }
 
     private void checkInteraction() {
