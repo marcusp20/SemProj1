@@ -369,6 +369,7 @@ public class Main extends Application {
                 case E -> e = true;
                 case BACK_SPACE -> this.backSpace = true;
                 case F -> toggleTaskList();
+                case I -> toggleInventoryList();
             }
         }
 
@@ -457,6 +458,14 @@ public class Main extends Application {
             game.getTaskList().getTaskListView().setVisible(false);
         } else {
             game.getTaskList().getTaskListView().setVisible(true);
+        }
+    }
+
+    public void toggleInventoryList() {
+        if (game.getCurrentRoom().getInventoryList().isVisible()) {
+            game.getCurrentRoom().getInventoryList().setVisible(false);
+        } else {
+            game.getCurrentRoom().getInventoryList().setVisible(true);
         }
     }
 

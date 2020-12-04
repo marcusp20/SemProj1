@@ -343,8 +343,9 @@ public class Game {
         shed.setExit("west", headquarter);
         shed.setExit("south", field3);
 
-        shed.setRoomPane(createPane("SHED", Color.BLANCHEDALMOND));
 
+        shed.setRoomPane(createPane("SHED", Color.BLANCHEDALMOND));
+        shed.getRoomPane().getChildren().addAll(shed.createInventoryList());
 
         field2.setLocked(true);
         unLockableRooms.put("field2", field2);

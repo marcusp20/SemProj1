@@ -87,6 +87,7 @@ public class Player {
             System.out.println(key + " : " + output);
         }
         return output.toString();
+
     }
 
     public void setPlayerSprite(Image img)   {

@@ -24,6 +24,9 @@ public class Room {
     private ArrayList<Interactable> interactables = new ArrayList<>();
 
     private Label feedbackText;
+    private Label inventoryList = new Label("dummy text data is here");
+
+
 
 
 
@@ -102,6 +105,23 @@ public class Room {
         return feedbackText;
     }
 
+    public Label createInventoryList() {
+        inventoryList.setLayoutX(353);
+        inventoryList.setLayoutY(420);
+        inventoryList.setTextFill(Color.web("#f0ffff"));
+        inventoryList.setOpacity(1);
+        inventoryList.setPrefSize(550, 110);
+        inventoryList.setFont(new Font("Arial", 22));
+        inventoryList.setStyle("-fx-border-color:darkgoldenrod; -fx-border-width:6; -fx-background-color:black;");
+        inventoryList.setAlignment(Pos.CENTER);
+        inventoryList.toFront();
+        inventoryList.setVisible(false);
+        return inventoryList;
+    }
+
+    public Label getInventoryList() {
+        return inventoryList;
+    }
 
 
     public Label createFeedbackLabel() {
