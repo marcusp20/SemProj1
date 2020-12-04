@@ -72,15 +72,18 @@ public class GameLogger {
 
                 Scanner tokenizer = new Scanner(inputLine);
                 String word1 = null;
-                StringBuilder word2 = new StringBuilder();
+                String word2 = "";
                 if(tokenizer.hasNext()) {
                     word1 = tokenizer.next();
                     while(tokenizer.hasNext()) {
-                        word2.append(tokenizer.next());
+                        word2 += tokenizer.next();
+                        if (tokenizer.hasNext()) {
+                            word2 += " ";
+                        }
                     }
                 }
                 Command command = new Command(commands.getCommandWord(word1), word2.toString());
-                System.out.println(command.toString());
+                System.err.println(command.toString());
                 game.processCommand(command);
             }
 
