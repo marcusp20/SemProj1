@@ -12,8 +12,8 @@
             <Image url="@../resources/img/FieldVer1.png" />
          </image>
       </ImageView>
-      <Button fx:id="invButton" layoutX="1145.0" layoutY="757.0" mnemonicParsing="false" prefWidth="82.0" text="Inventory" />
-      <Button fx:id="saveGameButton" layoutX="1145.0" layoutY="723.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="82.0" text="Savegame" />
-      <Button fx:id="helpButton" layoutX="1145.0" layoutY="689.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="82.0" text="?" />
+      <Button fx:id="invButton" layoutX="1145.0" layoutY="757.0" mnemonicParsing="false" onAction="#invButtonClicked" prefWidth="82.0" text="Inventory" />
+      <Button fx:id="saveGameButton" layoutX="1145.0" layoutY="723.0" mnemonicParsing="false" onAction="#saveButtonClicked" prefHeight="25.0" prefWidth="82.0" text="Savegame" />
+      <Button fx:id="helpButton" layoutX="1145.0" layoutY="689.0" mnemonicParsing="false" onAction="#helpButtonClicked" prefHeight="25.0" prefWidth="82.0" text="?" />
    </children>
 </AnchorPane>
