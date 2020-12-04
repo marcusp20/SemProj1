@@ -218,8 +218,7 @@ public class Main extends Application {
         //Check if room should be changed (player position)
         playerRoomChangeCheck();
         //check if text label should output console
-
-        updateFeedbackText(game.getBaos(), game.getCurrentRoom().getFeedbackText()); //TODO: Fix feedback label, Baos.reset() called when. 
+        updateFeedbackText(game.getBaos(), game.getCurrentRoom().getFeedbackText());
 
 
 

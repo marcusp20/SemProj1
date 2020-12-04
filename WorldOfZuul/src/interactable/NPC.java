@@ -183,7 +183,7 @@ public class NPC extends Interactable{
     private void createNpcWindow()   {
 
         //moved to interact()^
-        /*
+
         String text = "";
         for(String line : getPatternLines("q0"))    {
             text = text.concat(line + "\n");
@@ -191,7 +191,7 @@ public class NPC extends Interactable{
         dialogText = new Text(text);
         npcWindow.getChildren().add(dialogText);
 
-         */
+
     }
 
     public void updateAnswer(int q) {
