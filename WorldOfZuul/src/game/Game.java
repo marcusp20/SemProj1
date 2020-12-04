@@ -472,7 +472,6 @@ public class Game {
         if (commandWord == CommandWord.HELP) {
             printHelp();
         } else if (commandWord == CommandWord.GO) {
-            logger.log(command);
             goRoom(command);
         } else if (commandWord == CommandWord.QUIT) {
             wantToQuit = quit(command);
@@ -584,6 +583,7 @@ public class Game {
         } else if (nextRoom.isLocked()) {
             System.out.println("You don't have access to that area yet.");
         } else {
+            logger.log(command);
             currentRoom = nextRoom;
             System.out.println(currentRoom.getLongDescription());
         }
