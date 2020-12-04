@@ -8,6 +8,7 @@ import chadChicken.Quiz;
 import chadChicken.TextQuiz;
 
 import java.io.*;
+import java.sql.SQLOutput;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -666,7 +667,10 @@ public class Game {
         hqBed.sleep();            //Used in 2d implementation
         field.nextDay();
         checkField();
+
         gameTimer++;
+
+        eventChecker();
     }
 
 
@@ -1001,24 +1005,42 @@ public class Game {
     }
 
     public void eventChecker() {
-        if (gameTimer == 2) {
-            field.rainEvent();
-            System.out.println("It's raining");
-        } else if (gameTimer == 3) {
-            System.out.println("OmegaAlphaChickenChad is on your farm");
-        } else if (gameTimer == 4) {
-            field.extremeSunEvent();
-            System.out.println("It's very hot today");
-        } else if (gameTimer == 5) {
-            System.out.println("OmegaAlphaChickenChad is stirring at you");
-        } else if (gameTimer == 6) {
-            System.out.println("You see an abundance of flies today");
-            if (field.pestEvent()) {
-                System.out.println("Your plants were eating by pest");
-            } else
-                System.out.println("Your crops was unharmed because of appropriate use of pesticides");
-        } else if (gameTimer == 7) {
-            System.out.println("OmegaAlphaChickenChad is keeping an eye on you");
+        switch(gameTimer){
+            case 2:
+                field.rainEvent();
+                baos.reset();
+                System.out.println("It's raining...");
+                break;
+            case 3:
+                baos.reset();
+                System.out.println("You feel a chill down your spine,");
+                System.out.println("as you spy the legendary OmegaAlphaChickenChad");
+                System.out.println("through your bedroom window.");
+                break;
+            case 4:
+                baos.reset();
+                field.extremeSunEvent();
+                System.out.println("It's very hot today, you wonder");
+                System.out.println("about how this could affect your crops.");
+                break;
+            case 5:
+                baos.reset();
+                System.out.println("The mighty chicken roams your farm once again.");
+                break;
+            case 6:
+                baos.reset();
+                System.out.println("You see an abundance of flies today.");
+                if (field.pestEvent()) {
+                    System.out.println("Your plants were devoured by a swarm of pests.");
+                } else {
+                    System.out.println("Your crops was unharmed because of");
+                    System.out.println("appropriate use of pesticides.");
+                }
+                break;
+            case 7:
+                baos.reset();
+                System.out.println("THE CHICKEN IS WATCHING...");
+                break;
         }
     }
 
