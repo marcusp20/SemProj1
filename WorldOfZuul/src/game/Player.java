@@ -5,6 +5,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 
 import java.util.HashMap;
+import java.util.Map;
 
 public class Player {
     //Attributes
@@ -76,6 +77,16 @@ public class Player {
 
     public void sellYields(double yields) {
         wallet += yields;
+    }
+
+    public String getInventory() {
+        StringBuilder output = null;
+        for (Map.Entry i : playerInventory.entrySet()) {
+            String key = (String) i.getKey();
+            output.append((String) i.getValue());
+            System.out.println(key + " : " + output);
+        }
+        return output.toString();
     }
 
     public void setPlayerSprite(Image img)   {

@@ -986,6 +986,7 @@ public class Game {
         return baos;
     }
 
+
     public void resetStream() {
         System.out.flush();
         System.setOut(old);
