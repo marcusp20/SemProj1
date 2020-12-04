@@ -82,12 +82,14 @@ public class Player {
     public String getInventory() {
         String inventory = "";
         for (Map.Entry<ItemName, Boolean> entry : playerInventory.entrySet()) {
-            //System.out.println(entry.getKey().toString());
             if (entry.getValue()) {
                 inventory += entry.getKey().toString() + ", ";
             }
         }
-        return inventory;
+        if (inventory.isEmpty()) {
+            return "Nothing in inventory, go to the shop to buy items";
+        }
+        return "You have " + inventory + " in your inventory";
     }
 
     public void setPlayerSprite(Image img)   {
