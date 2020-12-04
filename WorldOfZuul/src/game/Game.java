@@ -682,7 +682,7 @@ public class Game {
             System.out.println("You cannot afford it.");
         } else {
             boolean noRemove = item.getName().startsWith("Bag of")
-                    || item.getName().startsWith("pesticides"); //Check if item bought starts with "bag of"
+                    || item.getName().startsWith("Pesticides"); //Check if item bought starts with "bag of"
             if (!noRemove) {
                 storeItemList.remove(item);                             // remove item from StoreItemList.
                 shop.removeItem(command.getSecondWord());
