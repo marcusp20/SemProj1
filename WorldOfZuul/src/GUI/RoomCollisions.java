@@ -20,9 +20,7 @@ public class RoomCollisions {
         return collisionBoxList;
     }
 
-    public boolean intersectsWith(Player player) {
-        double playerX = player.getPrevX();
-        double playerY = player.getPrevY();
+    public boolean intersectsWith(double x, double y) {
         /*return collisionBoxList.stream()
                 .anyMatch(box -> playerX >= box.x && playerX <= box.x+box.width &&
                         playerY >= box.y && playerY <= box.y + box.height);
@@ -31,8 +29,8 @@ public class RoomCollisions {
         However, the stream should be slightly faster, so we chose to use it
         - regardless that it is not OOP paradime but function oriented programming paradime
         */for (CollisionBox box : collisionBoxList) {
-            if(playerX >= box.x && playerX <= box.x+box.width
-                    && playerY >= box.y && playerY <= box.y + box.height)
+            if(x >= box.x && x <= box.x+box.width
+                    && y >= box.y && y <= box.y + box.height)
                 return true;
         }
         return false;

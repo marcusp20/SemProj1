@@ -316,8 +316,8 @@ public class Game {
 
         Image headquarterImg = headquarter.getRoomPane().getBackground().getImages().get(0).getImage();
         headquarterCollision.addCollisionBox( //East wall
-                new CollisionBox(headquarterImg.getWidth()-130, -40,
-                        140, headquarterImg.getHeight()+180));
+                new CollisionBox(headquarterImg.getWidth()-300, -40,
+                        800, headquarterImg.getHeight()+180));
         headquarter.setRoomCollisions(headquarterCollision);
 
         ////////////////
@@ -355,9 +355,9 @@ public class Game {
         Image storeImg = store.getRoomPane().getBackground().getImages().get(0).getImage();
         storeCollision.addCollisionBox( //North wall
                 new CollisionBox(-20, -80,
-                        storeImg.getWidth()+200, 50));
+                        storeImg.getWidth()+200, 85));
         storeCollision.addCollisionBox( //East wall
-                new CollisionBox(storeImg.getWidth()-130, -40,
+                new CollisionBox(storeImg.getWidth()-140, -40,
                         200, storeImg.getHeight()+180));
         storeCollision.addCollisionBox( //West wall
                 new CollisionBox(-20, -80,
@@ -367,7 +367,7 @@ public class Game {
         storeCollision.addCollisionBox(//Counter
                 new CollisionBox(-20, -20, 325, 350));
         storeCollision.addCollisionBox(//Box below counter
-                new CollisionBox(-20, 330, 240, 110));
+                new CollisionBox(-20, 330, 220, 110));
         store.setRoomCollisions(storeCollision);
 
 
@@ -392,9 +392,9 @@ public class Game {
                         10, gardenImg.getHeight()+200));
         gardenCollision.addCollisionBox(//North wall
                 new CollisionBox(-20, -80,
-                        gardenImg.getWidth()+200, 100));
+                        gardenImg.getWidth()+200, 60));
         gardenCollision.addCollisionBox(//BeeHive
-                new CollisionBox(220, 0, 645-220, 140));
+                new CollisionBox(100, -20, 535, 160));
         garden.setRoomCollisions(gardenCollision);
 
 

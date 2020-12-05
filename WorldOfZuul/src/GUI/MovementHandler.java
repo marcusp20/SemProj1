@@ -64,13 +64,40 @@ public class MovementHandler {
     }
 
     public void checkCollision() {
-        if(game.getCurrentRoom().getRoomCollisions().intersectsWith(player)) {
-            //System.out.println("IT'S WORKING! IT'S WOoORRrRKING!");
+    //for (Interactable i : game.getCurrentRoom().getInteractables()) {
+        //Code for intractable collision
+        //boolean playerIntersectsInteractable = i.getImageView().intersects(playerSprite.getLayoutBounds());
+        RoomCollisions collisionsBoxes = game.getCurrentRoom().getRoomCollisions();
+        if (collisionsBoxes.intersectsWith(playerSprite.getX(), playerSprite.getY())) {
+
+            boolean isMovingHorizontal = player.getWestSpeed() > 0 || player.getEastSpeed() > 0;
+            if (isMovingHorizontal) { // The player is moving AT LEAST horizontal (Can also be moving vertical)
+                double curX = playerSprite.getX(); //Attempt to fix collision - by moving the player to a
+                playerSprite.setX(game.getPlayer().getPrevX()); //previous non colliding X-coordinate.
+                if (collisionsBoxes.intersectsWith(playerSprite.getX(), playerSprite.getY())) { //The player is still stuck, after being moves on the X axis
+                    playerSprite.setX(curX); //Then, we try to undo our fix, and move the player on the Y axis instead.
+                    if (game.getPlayer().getNorthSpeed() > 0 || game.getPlayer().getSouthSpeed() > 0) {
+                        playerSprite.setY(game.getPlayer().getPrevY());
+                    }
+                }
+            }
+            if (collisionsBoxes.intersectsWith(playerSprite.getX(), playerSprite.getY())) { //Then, if the player is still colliding
+                boolean isMovingVertical = game.getPlayer().getNorthSpeed() > 0 || game.getPlayer().getSouthSpeed() > 0;
+                if (isMovingVertical) {
+                    playerSprite.setY(game.getPlayer().getPrevY()); //We try to push the player back in the Y axis to a safe position
+                    if (collisionsBoxes.intersectsWith(playerSprite.getX(), playerSprite.getY())) {
+                        if (game.getPlayer().getWestSpeed() > 0 || game.getPlayer().getEastSpeed() > 0) {
+                            playerSprite.setX(game.getPlayer().getPrevX());
+                        }
+                    }
+                }
+            }
         }
-        for (Interactable i : game.getCurrentRoom().getInteractables()) {
+       // }
+         //copy of old collision detection - detects colission with the ImageViews of the Interactable objects
+        /*for (Interactable i : game.getCurrentRoom().getInteractables()) {
             //Code for intractable collision
-            boolean playerIntersectsInteractable = i.getImageView().intersects(playerSprite.getLayoutBounds());
-            if (playerIntersectsInteractable) {
+            if (i.getImageView().intersects(playerSprite.getLayoutBounds())) {
 
                 //Moves player to previous position if intersecting with intractable, still allows other movement
                 boolean isMovingHorizontal = player.getWestSpeed() > 0 || player.getEastSpeed() > 0;
@@ -96,7 +123,8 @@ public class MovementHandler {
                     }
                 }
             }
-        }
+        }*/
+
     }
 
     public void haltPlayerMovement() {
