@@ -8,21 +8,20 @@ import javafx.application.Application;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
+import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.BoundingBox;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.ListCell;
-import javafx.scene.control.ListView;
+import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyEvent;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 import javafx.util.Callback;
-import javafx.scene.control.Label;
 
 import java.io.*;
 import java.util.HashMap;
@@ -33,6 +32,7 @@ import java.util.HashMap;
 
 public class Main extends Application {
 
+    public TabPane tutorialPane;
     //Create structure
     Scene scene, introScene;
 
@@ -42,6 +42,7 @@ public class Main extends Application {
     //Interaction keys
     private boolean e;
     private boolean backSpace;
+
 
     //labels
     Label feedbackText;
@@ -277,6 +278,7 @@ public class Main extends Application {
     }
 
     private void removeRoomContent()    {
+        closeTutorial();
         game.getCurrentRoom().getRoomPane().getChildren().remove(lastNode);
         game.getCurrentRoom().getRoomPane().getChildren().remove(game.getTaskList().getTaskListView());
         try {
@@ -468,9 +470,20 @@ public class Main extends Application {
     public void saveButtonClicked(ActionEvent actionEvent) {
         System.out.println("save");
     }
-
+    public void toggleTutorial() {
+        if (tutorialPane.isVisible()) {
+            tutorialPane.setVisible(false);
+        } else {
+            tutorialPane.setVisible(true);
+        }
+    }
+    public void closeTutorial() {
+        if (tutorialPane != null) {
+            tutorialPane.setVisible(false);
+        }
+    }
 
     public void helpButtonClicked(ActionEvent actionEvent) {
-        System.out.println("help pls");
+        toggleTutorial();
     }
 }

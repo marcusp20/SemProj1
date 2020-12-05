@@ -1,9 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Tab?>
+<?import javafx.scene.control.TabPane?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.effect.Blend?>
+<?import javafx.scene.effect.Light.Distant?>
+<?import javafx.scene.effect.Lighting?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
 
 <AnchorPane fx:id="pane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="832.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.Main">
    <children>
@@ -14,6 +21,94 @@
       </ImageView>
       <Button fx:id="invButton" layoutX="1145.0" layoutY="757.0" mnemonicParsing="false" onAction="#invButtonClicked" prefWidth="82.0" text="Inventory" />
       <Button fx:id="saveGameButton" layoutX="1145.0" layoutY="723.0" mnemonicParsing="false" onAction="#saveButtonClicked" prefHeight="25.0" prefWidth="82.0" text="Savegame" />
-      <Button fx:id="helpButton" layoutX="1145.0" layoutY="689.0" mnemonicParsing="false" onAction="#helpButtonClicked" prefHeight="25.0" prefWidth="82.0" text="?" />
+      <Button fx:id="helpButton" layoutX="1145.0" layoutY="689.0" mnemonicParsing="false" onAction="#helpButtonClicked" prefHeight="25.0" prefWidth="82.0" text="help" />
+      <TabPane fx:id="tutorialPane" layoutX="323.0" layoutY="65.0" prefHeight="703.0" prefWidth="634.0" tabClosingPolicy="UNAVAILABLE" visible="false">
+        <tabs>
+          <Tab text="Movement">
+            <content>
+              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="674.0" prefWidth="829.0">
+                     <children>
+                        <ImageView fitHeight="669.0" fitWidth="667.0" layoutX="1.0" layoutY="5.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../../../../../Downloads/sand_white.png" />
+                           </image>
+                        </ImageView>
+                        <TextField alignment="TOP_RIGHT" layoutX="1.0" layoutY="-9.0" prefHeight="696.0" prefWidth="667.0" text="Need help brooo reeeeeee">
+                           <font>
+                              <Font name="Comic Sans MS" size="12.0" />
+                           </font>
+                        </TextField>
+                     </children>
+                  </AnchorPane>
+            </content>
+          </Tab>
+            <Tab text="HQ">
+               <content>
+                  <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="674.0" prefWidth="829.0">
+                     <children>
+                        <ImageView fitHeight="669.0" fitWidth="667.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../../../../../Downloads/sand_white.png" />
+                           </image>
+                        </ImageView>
+                        <TextField layoutY="-13.0" prefHeight="688.0" prefWidth="634.0" />
+                     </children>
+                  </AnchorPane>
+               </content>
+            </Tab>
+            <Tab text="Store">
+               <content>
+                  <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="674.0" prefWidth="829.0">
+                     <children>
+                        <ImageView fitHeight="684.0" fitWidth="681.0" layoutX="-4.0" layoutY="-7.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../../../../../Downloads/sand_white.png" />
+                           </image>
+                        </ImageView>
+                        <TextField layoutX="-3.0" layoutY="-3.0" prefHeight="680.0" prefWidth="647.0" />
+                     </children>
+                  </AnchorPane>
+               </content>
+            </Tab>
+            <Tab text="Garden">
+               <content>
+                  <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="674.0" prefWidth="829.0">
+                     <children>
+                        <ImageView fitHeight="681.0" fitWidth="686.0" layoutX="-9.0" layoutY="-4.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../../../../../Downloads/sand_white.png" />
+                           </image>
+                        </ImageView>
+                        <TextField layoutX="-1.0" layoutY="-1.0" prefHeight="677.0" prefWidth="634.0" />
+                     </children>
+                  </AnchorPane>
+               </content>
+            </Tab>
+            <Tab text="Field">
+               <content>
+                  <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="674.0" prefWidth="829.0">
+                     <children>
+                        <ImageView fitHeight="682.0" fitWidth="691.0" layoutX="-14.0" layoutY="-5.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../../../../../Downloads/sand_white.png" />
+                           </image>
+                        </ImageView>
+                        <TextField layoutX="-3.0" layoutY="-2.0" prefHeight="675.0" prefWidth="640.0" />
+                     </children>
+                  </AnchorPane>
+               </content>
+            </Tab>
+        </tabs>
+         <effect>
+            <Lighting>
+               <bumpInput>
+                  <Blend />
+               </bumpInput>
+               <light>
+                  <Light.Distant color="#d78c3d" />
+               </light>
+            </Lighting>
+         </effect>
+      </TabPane>
    </children>
 </AnchorPane>
