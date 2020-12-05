@@ -494,7 +494,7 @@ public class Game {
         } else if (commandWord == CommandWord.TASK) {
             //printTaskList();
         } else if (commandWord == CommandWord.MONEY) {
-            System.out.println("You have $" + player.getWallet());
+            System.out.println("You have $ " + player.getWallet());
             return false;
         } //TODO print player inventory
         else if (commandWord == CommandWord.SAVE) {
@@ -891,11 +891,12 @@ public class Game {
     public void usePesticide() {
         if (player.itemOwned(ItemName.PESTICIDES)) {
             field.usePesticides();
-            System.out.println("all pests where killed");
+            //System.out.println("all pests where killed");
             player.getPlayerInventory().put(ItemName.PESTICIDES, false);
         } else {
             System.out.println("No pesticides in inventory");
         }
+
     }
 
 

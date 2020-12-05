@@ -12,13 +12,19 @@ $$0 I'm always happy to help!
 ##0 Good luck!
 
 q00 1. Why do I need bees if I am to run a farm?
-a00 placeholder
+a00 Bees pollinate crops, the more bees you have the more yields you get
 
 q01 2. How did you get to know so much about bees?
 a10 Ah you see, this is best answered through some sick rhymes.
 a11 My name is Beekeeper Betti and bees are one of my deals
-a12 I had to choosing a living to afford my meals
+a12 I had to choose a living to afford my meals
 a13 Bees are are the coolest if not the best
 a14 If you don't believe me, put it to a test.
 a15 There is no subject cooler, because without bees we die
 a16 so skimpin' on dem bees, don't you even try.
+
+q02 3. How do i care for my bees?
+a20 Be sure to not use too many pesticides, as they kill the bees.
+a21 Planting a flower in your garden will increase the bee population
+a22
+a23

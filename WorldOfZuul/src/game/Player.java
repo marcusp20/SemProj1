@@ -10,7 +10,7 @@ import java.util.Map;
 public class Player {
     //Attributes
     private String name;
-    private double wallet = 8;
+    private double wallet = 2000;
     private HashMap<ItemName, Boolean> playerInventory;
     private boolean noCropsOwned;
 
@@ -89,7 +89,8 @@ public class Player {
         if (inventory.isEmpty()) {
             return "Nothing in inventory, go to the shop to buy items";
         }
-        return "You have " + inventory + " in your inventory";
+        return "Inventory: "
+                + inventory + "";
     }
 
     public void setPlayerSprite(Image img)   {

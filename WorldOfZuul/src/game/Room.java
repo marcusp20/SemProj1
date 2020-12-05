@@ -134,6 +134,7 @@ public class Room {
         feedbackText.setFont(new Font("Arial", 22));
         feedbackText.setStyle("-fx-border-color:darkgoldenrod; -fx-border-width:3; -fx-background-color:black;");
         feedbackText.setAlignment(Pos.CENTER);
+        feedbackText.setWrapText(true);
         feedbackText.setOpacity(0);
         return feedbackText;
     }

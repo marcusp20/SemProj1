@@ -388,6 +388,7 @@ public class Main extends Application {
                 case BACK_SPACE -> this.backSpace = true;
                 case F -> toggleTaskList();
                 case I -> {
+
                     game.getBaos().reset();
                     toggleInventoryList();
                 }
@@ -489,6 +490,7 @@ public class Main extends Application {
 
     public void toggleInventoryList() {
         game.getBaos().reset();
+        System.out.println("You have " + game.getPlayer().getWallet() + " $ in your wallet");
         System.out.println(game.getPlayer().getInventory());
     }
 
@@ -498,7 +500,6 @@ public class Main extends Application {
 
     public void saveButtonClicked(ActionEvent actionEvent) {
         System.out.println("save");
-
 
     }
 
