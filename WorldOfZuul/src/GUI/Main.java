@@ -8,7 +8,6 @@ import javafx.application.Application;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
-import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.BoundingBox;
 import javafx.scene.Node;
@@ -18,7 +17,6 @@ import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyEvent;
-import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 import javafx.util.Callback;
@@ -33,6 +31,7 @@ import java.util.HashMap;
 public class Main extends Application {
 
     public TabPane tutorialPane;
+    private static TabPane tutorialPaneInstance;
     //Create structure
     Scene scene, introScene;
 
@@ -278,7 +277,7 @@ public class Main extends Application {
     }
 
     private void removeRoomContent()    {
-        closeTutorial();
+        terminateTutorialPane();
         game.getCurrentRoom().getRoomPane().getChildren().remove(lastNode);
         game.getCurrentRoom().getRoomPane().getChildren().remove(game.getTaskList().getTaskListView());
         try {
@@ -471,15 +470,20 @@ public class Main extends Application {
         System.out.println("save");
     }
     public void toggleTutorial() {
-        if (tutorialPane.isVisible()) {
-            tutorialPane.setVisible(false);
+        if (tutorialPaneInstance == null) {
+            tutorialPaneInstance = tutorialPane;
+        }
+        if (tutorialPaneInstance.isVisible()) {
+            tutorialPaneInstance.setVisible(false);
         } else {
-            tutorialPane.setVisible(true);
+            tutorialPaneInstance.setVisible(true);
         }
     }
-    public void closeTutorial() {
-        if (tutorialPane != null) {
-            tutorialPane.setVisible(false);
+    public void terminateTutorialPane() {
+        if (tutorialPaneInstance != null) {
+            tutorialPaneInstance.setVisible(false);
+            tutorialPaneInstance = null;
+            tutorialPane = null;
         }
     }
 
