@@ -26,5 +26,3 @@ a16 so skimpin' on dem bees, don't you even try.
 q02 3. How do i care for my bees?
 a20 Be sure to not use too many pesticides, as they kill the bees.
 a21 Planting a flower in your garden will increase the bee population
-a22
-a23

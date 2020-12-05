@@ -121,7 +121,7 @@ public class Field extends Interactable implements TimeProgression {
 
 
     public void getPests() {
-        int pestRNG = random.nextInt(1); //returns a value from 0 to 4 (inclusive)
+        int pestRNG = random.nextInt(5); //returns a value from 0 to 4 (inclusive)
         if (pestRNG == 1) {
             pests = true;
         }
@@ -134,8 +134,8 @@ public class Field extends Interactable implements TimeProgression {
         if (pesticidesCounter >= 3) {
             fieldInfected = true;
             System.out.println("Chemicals from pesticides started seeping into the groundwater");
-            System.out.println("The Mayor has fined you 200 $ for groundwater contamination");
-            yields -= 200;
+            System.out.println("The Mayor has fined you 100 $ for groundwater contamination");
+            yields -= 100;
         }
     }
 
@@ -181,7 +181,7 @@ public class Field extends Interactable implements TimeProgression {
 
     public void checkPreviousHarvest() {
         if (previousHarvest.equals(currentHarvest) && harvestCounter >= 2) {
-            yields -= 20;
+            yields -= 30;
             System.out.println("The soil is too saturated, try sowing a new crop");
 
         } else if (previousHarvest.equals(currentHarvest)) {

@@ -167,8 +167,8 @@ public class Game {
 
         File beekeeperDialog = load("beekeeperBetti.txt");
         beekeeperBetti = new NPC(beekeeperDialog);
-        beekeeperBetti.getImageView().setX(950);
-        beekeeperBetti.getImageView().setY(220);
+        beekeeperBetti.getImageView().setX(200);
+        beekeeperBetti.getImageView().setY(520);
     }
 
     private void createBed() {
@@ -185,7 +185,7 @@ public class Game {
 
     private void createFlowerBed() {
         flowerBed = new FlowerBed(flowerBedCommandWords);
-        flowerBed.getImageView().setX(740);
+        flowerBed.getImageView().setX(790);
         flowerBed.getImageView().setY(620);
     }
 
@@ -542,6 +542,7 @@ public class Game {
     /////////////////////////////////////////////////////////////////////////////////////
 
     private void use(Command command) {
+        baos.reset();
         if (command.getSecondWord() != null) {           //If player is attempting to use something then...
             //Checks if player is in the right place to use intractable
             String end = " used successfully";

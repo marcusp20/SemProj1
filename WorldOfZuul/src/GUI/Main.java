@@ -57,6 +57,7 @@ public class Main extends Application {
 
     @Override
     public void start(Stage stage) {
+
         showStartScreen(stage);
     }
 
@@ -167,7 +168,7 @@ public class Main extends Application {
         //Set scene
         Pane p = game.getCurrentRoom().getRoomPane();
 
-        //FXML root OR JavaFX Code... answer: JavaFX
+        //FXML root
         try {
             Parent rootButtonLayout = FXMLLoader.load(getClass().getResource("ButtonLayout.fxml"));
         } catch (IOException ioException) {
@@ -354,7 +355,7 @@ public class Main extends Application {
     }
 
     public void updateFeedbackText(ByteArrayOutputStream b, Label l) {
-        l.setOpacity(0.59);
+        l.setOpacity(0.69);
         l.setText(b.toString());
         l.toFront();
         //game.resetStream();
