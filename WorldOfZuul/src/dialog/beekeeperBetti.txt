@@ -1,4 +1,4 @@
-.nn beekeeper betti
+.nn Beekeeper betti
 .dd guides you in your garden
 
 *0 Oh, hello there!

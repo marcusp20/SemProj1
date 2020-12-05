@@ -282,6 +282,7 @@ public class Field extends Interactable implements TimeProgression {
 
     @Override
     public String interact() {
+        System.out.println("You are interacting with field");
         return "field";
     }
 }

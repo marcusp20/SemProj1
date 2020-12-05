@@ -27,7 +27,6 @@ public class Interactable {
     }
 
      public String interact()   {
-         System.out.println("No interact command defined");
          return "No type";
     }
 

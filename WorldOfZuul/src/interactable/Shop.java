@@ -11,4 +11,10 @@ public class Shop extends Interactable {
             }
         }
     }
+    @Override
+    public String interact()  {
+        System.out.println("You are interacting with shop");
+        return "Shop";
+    }
+
 }

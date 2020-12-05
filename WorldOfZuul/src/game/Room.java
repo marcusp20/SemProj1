@@ -5,6 +5,7 @@ import interactable.Interactable;
 import interactable.NPC;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
+import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
@@ -25,9 +26,10 @@ public class Room {
     private ArrayList<Interactable> interactables = new ArrayList<>();
     private RoomCollisions roomCollisions;
 
+    //Gui
     private Label feedbackText;
-
-
+    private boolean hasBeenVisited;
+    private Scene roomIntroScene;   //https://stackoverflow.com/questions/22166610/how-to-create-a-popup-windows-in-javafx <- basic popup code
 
     public Room(String description) {
         this.description = description;
@@ -98,14 +100,11 @@ public class Room {
     public void addInteractable(Interactable i) {
         this.interactables.add(i);
         this.roomPane.getChildren().add(i.getImageView());
-
     }
 
     public Label getFeedbackText() {
         return feedbackText;
     }
-
-
 
     public Label createFeedbackLabel() {
         feedbackText = new Label(" DUMMY TEXT DATA HERE");

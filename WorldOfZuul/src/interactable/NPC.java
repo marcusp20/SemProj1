@@ -191,13 +191,15 @@ public class NPC extends Interactable{
     ///////
     @Override
     public String interact()  {
-        System.out.println("You can interact with " + this.name);
-        String text = "";
-        for(String line : getPatternLines("q0"))    {
-            text = text.concat(line + "\n");
-        }
-        System.out.println(text);
 
+//        System.out.println("You can interact with " + this.name);
+//        String text = "";
+//        for(String line : getPatternLines("q0"))    {
+//            text = text.concat(line + "\n");
+//        }
+//        System.out.println(text);
+
+        System.out.println("You are interacting with " + this.name);
         return "npc";
     }
 
