@@ -142,13 +142,14 @@ public class Room {
     public void openIntroWindow()    {
         this.hasBeenVisited = true;
 
+        introText.setWrappingWidth(380);
+
         roomIntroStage.initModality(Modality.APPLICATION_MODAL);
         VBox textVbox = new VBox(20);
         textVbox.setStyle("-fx-font: 24 arial;");
-        textVbox.setSpacing(20);
         textVbox.setBackground(new Background(new BackgroundFill(Color.PEACHPUFF, CornerRadii.EMPTY, Insets.EMPTY)));
-        introText.setWrappingWidth(360);
         textVbox.getChildren().add(introText);
+        textVbox.getChildren().add(this.npc.getImageView());
         Scene dialogScene = new Scene(textVbox, 400, 300);
         roomIntroStage.setScene(dialogScene);
         roomIntroStage.show();
