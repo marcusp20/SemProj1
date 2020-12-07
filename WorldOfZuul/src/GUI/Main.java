@@ -1,5 +1,7 @@
 package GUI;
 
+import chadChicken.ChadChicken;
+import chadChicken.GUIQuiz;
 import game.*;
 import interactable.Interactable;
 import interactable.NPC;
@@ -63,8 +65,14 @@ public class Main extends Application {
         fadeOut(stage);
         stage.close();
         game = new Game(true);
-        game.playGUI();
-        startGame(stage);
+        //startGame(stage);
+        playIntroQuiz(stage);
+    }
+
+    private void playIntroQuiz(Stage stage) {
+        GUIQuiz guiQuiz = new GUIQuiz(new ChadChicken().getPreQuestions());
+        guiQuiz.show(this, stage);
+        fadeIn(stage);
     }
 
     public void loadGame(Stage stage) {
@@ -72,7 +80,6 @@ public class Main extends Application {
         boolean saveFileExists = saveFile.exists();
         if (saveFileExists) {
             game = GameLogger.loadGameFrom(saveFile, true);
-            game.playGUI();
         } else {
             System.err.println("Could not load saveFile");
             newGame(stage);
@@ -129,7 +136,7 @@ public class Main extends Application {
     }
 
     //Must only be called through newGame or loadGame
-    private void startGame(Stage stage) {
+    public void startGame(Stage stage) {
         movementHandler = new MovementHandler(game, game.getPlayer(), game.getPlayer().getPlayerSprite());  //Don't really need to send playerSprite since its inside player
 
         //Create new objects
