@@ -1,7 +1,6 @@
 package GUI;
 
 import chadChicken.ChadChicken;
-import chadChicken.GUIQuiz;
 import chadChicken.Question;
 import chadChicken.Quiz;
 import game.*;

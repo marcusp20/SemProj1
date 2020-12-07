@@ -3,12 +3,10 @@ package game;
 import GUI.CollisionBox;
 import GUI.RoomCollisions;
 import chadChicken.ChadChicken;
-import chadChicken.GUIQuiz;
 import chadChicken.Quiz;
 import chadChicken.TextQuiz;
 
 import java.io.*;
-import java.sql.SQLOutput;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -132,11 +130,7 @@ public class Game {
 
     private void createQuiz() {
         chadChicken = new ChadChicken();
-        if (isGUI) {
-            preQuiz = new GUIQuiz(chadChicken.getPreQuestions());
-            postQuiz = new GUIQuiz(chadChicken.getPostQuestions());
-        } else {
-            //TODO change TextQuiz to GUIQuiz when QUIQuiz has been implemented
+        if (!isGUI) {//TODO change TextQuiz to GUIQuiz when QUIQuiz has been implemented
             preQuiz = new TextQuiz(chadChicken.getPreQuestions());
             postQuiz = new TextQuiz(chadChicken.getPostQuestions());
         }
