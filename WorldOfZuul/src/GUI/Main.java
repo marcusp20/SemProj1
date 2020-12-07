@@ -57,7 +57,6 @@ public class Main extends Application {
 
     @Override
     public void start(Stage stage) {
-
         showStartScreen(stage);
     }
 
@@ -109,15 +108,6 @@ public class Main extends Application {
         }
 
 
-        /*music implemented here
-        String path = "C:/Users/Emil/Software Engineering/Projekt/SemesterProjekt/SemProj1/WorldOfZuul/src/resources/media/Alarm05.wav/";
-        Media media = new Media(new File(path).toURI().toString());
-        MediaPlayer mediaPlayer = new MediaPlayer(media);
-        mediaPlayer.setAutoPlay(true);
-
-         */
-
-
         startScreen.setPreserveRatio(false);
         startScreen.setFitHeight(832);
         startScreen.setFitWidth(1280);
@@ -133,7 +123,7 @@ public class Main extends Application {
         newGameButton.setLayoutY(280);
         newGameButton.setOnAction(e -> {    //This button will close this window, and start a new game
             newGame(stage);
-            //mediaPlayer.setAutoPlay(false);
+            //
         });
 
         loadGameButton = new Button();
@@ -143,7 +133,7 @@ public class Main extends Application {
         loadGameButton.setLayoutY(410);
         loadGameButton.setOnAction(e -> {    //This button will close this window, and load a saved game
             loadGame(stage);
-            //mediaPlayer.setAutoPlay(false);
+            //
         });
 
         //Parent rootButtonLayout = FXMLLoader.load(getClass().getResource("ButtonLayout.fxml"));

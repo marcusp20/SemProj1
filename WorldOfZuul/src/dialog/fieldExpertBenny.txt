@@ -1,0 +1,33 @@
+.nn Field Expert Benny
+.dd A recently graduated field expert
+
+*0 Evenings
+*1 Fellow!
+
+$$0 What brings you today young one...
+
+##0 May the heavens bless you with rain and sun
+
+q00 1.What can you tell me about pests?
+a00 Pests are every farmers nightmare...
+a01 You can either deal with them or
+a02 let them be and get a smaller yield
+
+q01 2.How do i get rid of pests?
+a10 There are 2 ways we can keep the pests away.
+a11 Spreading pesticides will kill 'em all right away
+a12 Or you can do crop rotation
+
+
+q02 3.What is crop rotation?
+a20 Sowing different crops after each harvest
+a21 This helps keep the pests at a minimum
+
+q03 4.What can you tell me about fertilizer
+a30 Fertilizer is great for giving the soil som extra nutrients
+a31 and is most effective before sowing
+a32 But be careful not to use too much fertilizer as it will oversaturate the earth
+
+q04 4.What can you tell me about pesticides
+a40 Pesticides will kill all pests but will have a negative impact
+a41 on the surrounding eco system like the fields, your bees and even the groundwater! 

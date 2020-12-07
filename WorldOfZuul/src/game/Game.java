@@ -14,6 +14,7 @@ import java.util.Random;
 import interactable.*;
 import javafx.geometry.Insets;
 import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
@@ -36,6 +37,7 @@ public class Game {
     private NPC shopkeeperLizzy;
     private NPC farmerBob;
     private NPC beekeeperBetti;
+    private NPC fieldExpertBenny;
     private ChadChicken chadChicken;
     private Quiz preQuiz;
     private Quiz postQuiz;
@@ -155,6 +157,7 @@ public class Game {
         majorBob.getImageView().setX(250);
         majorBob.getImageView().setY(300);
 
+
         File storeNPCDialog = load("shopKeeperLizzyDialog.txt");
         shopkeeperLizzy = new NPC(storeNPCDialog);
         shopkeeperLizzy.getImageView().setX(200);
@@ -162,6 +165,7 @@ public class Game {
 
         File fieldNPCDialog = load("fieldNPCDialog.txt");
         farmerBob = new NPC(fieldNPCDialog);
+        farmerBob.getImageView().setImage();
         farmerBob.getImageView().setX(170);
         farmerBob.getImageView().setY(190);
 
@@ -169,6 +173,11 @@ public class Game {
         beekeeperBetti = new NPC(beekeeperDialog);
         beekeeperBetti.getImageView().setX(200);
         beekeeperBetti.getImageView().setY(520);
+
+        File fieldExpertDialog = load("fieldExpertBenny.txt");
+        fieldExpertBenny = new NPC(fieldExpertDialog);
+        fieldExpertBenny.getImageView().setX(100);
+        fieldExpertBenny.getImageView().setY(100);
     }
 
     private void createBed() {
@@ -356,19 +365,21 @@ public class Game {
         shed.setExit("west", headquarter);
         shed.setExit("south", field3);
 
-
         shed.setRoomPane(createPane("SHED", Color.BLANCHEDALMOND));
-        shed.getRoomPane().getChildren().addAll(shed.createInventoryList());
 
         field2.setLocked(true);
         unLockableRooms.put("field2", field2);
         field2.setExit("east", field);
         field2.setExit("north", garden);
+        field2.setRoomPane(createPane("Field2Ver1.png"));
+        field2.addInteractable(fieldExpertBenny);
 
         field3.setLocked(true);
         unLockableRooms.put("field3", field3);
         field3.setExit("west", field);
         field3.setExit("north", shed);
+        field3.setRoomPane(createPane("Field3ver1.png"));
+
 
         currentRoom = headquarter;
     }
@@ -398,6 +409,8 @@ public class Game {
 
         return pane;
     }
+
+
 
     /////////////////////////////////////////////////////////////////////////////////////
     ///////////////// play method, and the methods it is using //////////////////////////
@@ -577,8 +590,9 @@ public class Game {
             } else if (command.getSecondWord().equals("bed") && currentRoom.getShortDescription().equals("In the headquarter")) {
                 sleep();
                 logger.log(command);
+            } else if (command.getSecondWord().equals("npc") && currentRoom.getShortDescription().equals("in the 2nd field")) {
+                  fieldExpertBenny.converse();
             }
-
         } else {
             System.out.println("This command is used to interact \n" +
                     "with your injectables: npc, store, field, beehive...");

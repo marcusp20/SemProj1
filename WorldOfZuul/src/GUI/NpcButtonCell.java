@@ -10,6 +10,7 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.Priority;
 
+import java.io.ByteArrayOutputStream;
 import java.util.HashMap;
 
 public class NpcButtonCell extends ListCell<String> {

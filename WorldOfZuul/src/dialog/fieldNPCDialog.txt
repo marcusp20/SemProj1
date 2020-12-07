@@ -15,8 +15,8 @@ a01 Then make sure to water it at least once.
 a02 Finally harvest when it's ready and reap the profits!
 
 q01 2.How do i get rid of pests?
-a10 You can use pesticides
-a11 But be careful, it might contaminate the ecosystem
+a10 You can use pesticides, though there are better ways
+a11 Go ask FieldKeeper Bobby for fertilizers and pesticides
 
 q02 3.How do i get the most yield?
 a20 Sowing different crops keeps the nutrition in balance

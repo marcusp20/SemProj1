@@ -167,6 +167,7 @@ public class NPC extends Interactable{
 
     private void write(String text) {               //Used to write test one char at a time
         for (int x = 0; x < text.length(); x++) {
+
             System.out.print(text.charAt(x));         //Write one char
             waitFor(20);
         }
