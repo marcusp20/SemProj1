@@ -3,7 +3,7 @@
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Tab?>
 <?import javafx.scene.control.TabPane?>
-<?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.TextArea?>
 <?import javafx.scene.effect.Blend?>
 <?import javafx.scene.effect.Light.Distant?>
 <?import javafx.scene.effect.Lighting?>
@@ -22,7 +22,7 @@
       <Button fx:id="invButton" layoutX="1145.0" layoutY="757.0" mnemonicParsing="false" onAction="#invButtonClicked" prefWidth="82.0" text="Inventory" />
       <Button fx:id="saveGameButton" layoutX="1145.0" layoutY="723.0" mnemonicParsing="false" onAction="#saveButtonClicked" prefHeight="25.0" prefWidth="82.0" text="Savegame" />
       <Button fx:id="helpButton" layoutX="1145.0" layoutY="689.0" mnemonicParsing="false" onAction="#helpButtonClicked" prefHeight="25.0" prefWidth="82.0" text="help" />
-      <TabPane fx:id="tutorialPane" layoutX="323.0" layoutY="65.0" prefHeight="703.0" prefWidth="634.0" tabClosingPolicy="UNAVAILABLE" visible="false">
+      <TabPane fx:id="tutorialPane" layoutX="315.0" layoutY="65.0" prefHeight="703.0" prefWidth="634.0" tabClosingPolicy="UNAVAILABLE">
         <tabs>
           <Tab text="Movement">
             <content>
@@ -33,11 +33,31 @@
                               <Image url="@../../../../../Downloads/sand_white.png" />
                            </image>
                         </ImageView>
-                        <TextField alignment="TOP_RIGHT" layoutX="1.0" layoutY="-9.0" prefHeight="696.0" prefWidth="667.0" text="Need help brooo reeeeeee">
+                        <TextArea prefHeight="674.0" prefWidth="634.0" text="To walk north press W&#10;&#10;To walk south press S&#10;&#10;To walk east press D&#10;&#10;To walk west press A&#10;&#10;&#10;&#10;&#10;&#10;&#10;&#10;&#10;&#10;&#10;&#10;To open the tasklist press TAB&#10;&#10;&#10;&#10;&#10;To open inventory press I&#10;&#10;&#10;&#10;&#10;&#10;&#10;&#10;&#10;To interact with npc's and objects press E">
                            <font>
-                              <Font name="Comic Sans MS" size="12.0" />
+                              <Font name="System Bold Italic" size="12.0" />
                            </font>
-                        </TextField>
+                        </TextArea>
+                        <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="359.0" layoutY="38.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../resources/img/Walkbinds.png" />
+                           </image>
+                        </ImageView>
+                        <ImageView fitHeight="65.0" fitWidth="123.0" layoutX="398.0" layoutY="274.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../resources/img/Tab.png" />
+                           </image>
+                        </ImageView>
+                        <ImageView fitHeight="59.0" fitWidth="65.0" layoutX="430.0" layoutY="368.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../resources/img/i.png" />
+                           </image>
+                        </ImageView>
+                        <ImageView fitHeight="59.0" fitWidth="60.0" layoutX="430.0" layoutY="512.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../resources/img/Interact.png" />
+                           </image>
+                        </ImageView>
                      </children>
                   </AnchorPane>
             </content>
@@ -51,7 +71,15 @@
                               <Image url="@../../../../../Downloads/sand_white.png" />
                            </image>
                         </ImageView>
-                        <TextField layoutY="-13.0" prefHeight="688.0" prefWidth="634.0" />
+                        <TextArea prefHeight="674.0" prefWidth="634.0" text="The Headquarters (HQ) is the access point to all the other rooms.&#10;On top of this, it's a place to rest so you can bear the fruit of your hard work in the field.&#10;&#10;You interact with the bed by press E on it and afterwards select-&#10;ing what you want to do.&#10;&#10;By going North in your Headquarter you access the store&#10;By going West in your Headquarter you access the garden&#10;By going South in your Headquarter you access your field&#10;I wonder where you end up if you go East.....?&#10;">
+                           <font>
+                              <Font name="System Bold Italic" size="12.0" />
+                           </font></TextArea>
+                        <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="382.0" layoutY="47.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../resources/img/HeadQuater.png" />
+                           </image>
+                        </ImageView>
                      </children>
                   </AnchorPane>
                </content>
@@ -65,7 +93,15 @@
                               <Image url="@../../../../../Downloads/sand_white.png" />
                            </image>
                         </ImageView>
-                        <TextField layoutX="-3.0" layoutY="-3.0" prefHeight="680.0" prefWidth="647.0" />
+                        <TextArea prefHeight="674.0" prefWidth="634.0" text="The store is a place of business, here you can buy crops and other things to lessen the workload.&#10;&#10;You can interact (E) with the leftmost bookcase to buy things.&#10;The list of things you can buy will change depending on w-&#10;hat you already bought&#10;&#10;To converse with any present npc press (E) near them&#10;&#10;From the store you can access your headquarter by going south">
+                           <font>
+                              <Font name="System Bold Italic" size="12.0" />
+                           </font></TextArea>
+                        <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="382.0" layoutY="47.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../resources/img/StoreVer1.png" />
+                           </image>
+                        </ImageView>
                      </children>
                   </AnchorPane>
                </content>
@@ -79,7 +115,15 @@
                               <Image url="@../../../../../Downloads/sand_white.png" />
                            </image>
                         </ImageView>
-                        <TextField layoutX="-1.0" layoutY="-1.0" prefHeight="677.0" prefWidth="634.0" />
+                        <TextArea prefHeight="674.0" prefWidth="634.0" text="The garden is a place of peace and tranquility, here you can admire your bees&#10;&#10;The beekeeper here will help you on your way, so make sure to sp-&#10;eak with her.&#10;&#10;The bees must be good for something, I wonder what it is.&#10;&#10;By going east you can access the headquarters&#10;">
+                           <font>
+                              <Font name="System Bold Italic" size="12.0" />
+                           </font></TextArea>
+                        <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="382.0" layoutY="47.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../resources/img/GardenVer1.png" />
+                           </image>
+                        </ImageView>
                      </children>
                   </AnchorPane>
                </content>
@@ -93,7 +137,15 @@
                               <Image url="@../../../../../Downloads/sand_white.png" />
                            </image>
                         </ImageView>
-                        <TextField layoutX="-3.0" layoutY="-2.0" prefHeight="675.0" prefWidth="640.0" />
+                        <TextArea prefHeight="674.0" prefWidth="634.0" text="The field is a place of sweat, tears and most of all hard work.&#10;&#10;Perhaps speaking to the old fart here will help you on your way.&#10;&#10;To interact with your field, go near it and press E.&#10;&#10;Remember to water your field, and keep your soil healthy!&#10;&#10;&#10;&#10;&#10;&#10;By going North you access the HQ">
+                           <font>
+                              <Font name="System Bold Italic" size="12.0" />
+                           </font></TextArea>
+                        <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="382.0" layoutY="47.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../resources/img/FieldVer1.png" />
+                           </image>
+                        </ImageView>
                      </children>
                   </AnchorPane>
                </content>
