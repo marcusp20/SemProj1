@@ -319,6 +319,12 @@ public class Game {
                         800, headquarterImg.getHeight()+180));
         headquarter.setRoomCollisions(headquarterCollision);
 
+        headquarter.setIntroText(
+                "Welcome xXxweedSmoker420xXx \n" +
+                "to this humble town. My name is \n" +
+                "bob, im the mayor of this town...");
+
+
         ////////////////
         //FIELD////////
         ////////////////
@@ -339,6 +345,11 @@ public class Game {
         fieldCollision.addCollisionBox( //North East fence
                 new CollisionBox(580, -20, fieldImg.getWidth(), 40));
         field.setRoomCollisions(fieldCollision);
+
+        field.setIntroText(
+                "Welcome to the farm mister. \n" +
+                "I'v been tasked with helping you get " +
+                "started. Start by...\n");
 
         ////////////////
         //STORE////////

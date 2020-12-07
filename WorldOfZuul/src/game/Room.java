@@ -3,12 +3,12 @@ package game;
 import GUI.RoomCollisions;
 import interactable.Interactable;
 import interactable.NPC;
+import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
-import javafx.scene.layout.Pane;
-import javafx.scene.layout.VBox;
+import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
@@ -143,9 +143,11 @@ public class Room {
         this.hasBeenVisited = true;
 
         roomIntroStage.initModality(Modality.APPLICATION_MODAL);
-        VBox dialogVbox = new VBox(20);
-        dialogVbox.getChildren().add(introText);
-        Scene dialogScene = new Scene(dialogVbox, 300, 200);
+        VBox textVbox = new VBox(20);
+        textVbox.setStyle("-fx-font: 24 arial;");
+        textVbox.setBackground(new Background(new BackgroundFill(Color.PEACHPUFF, CornerRadii.EMPTY, Insets.EMPTY)));
+        textVbox.getChildren().add(introText);
+        Scene dialogScene = new Scene(textVbox, 400, 300);
         roomIntroStage.setScene(dialogScene);
         roomIntroStage.show();
     }
