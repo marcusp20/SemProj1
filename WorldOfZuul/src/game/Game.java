@@ -348,7 +348,7 @@ public class Game {
 
         field.setIntroText(
                 "Welcome to the farm mister. \n" +
-                "I'v been tasked with helping you get " +
+                "I'v been tasked with helping you get \n" +
                 "started. Start by...\n");
 
         ////////////////

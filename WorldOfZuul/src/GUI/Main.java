@@ -46,9 +46,11 @@ public class Main extends Application {
 
     //labels
     Label feedbackText;
-
     //Contains last opened menu
     Node lastNode;
+
+    //TEMP STUFF DELETE BEFORE FINISHING
+    private boolean intros = true;
 
     public static void main(String[] args) {
         launch(args);
@@ -169,6 +171,9 @@ public class Main extends Application {
         fadeIn(stage);
 
         game.getTaskList().createTaskListView();
+
+        //Show intro
+        if(intros) game.getCurrentRoom().openIntroWindow();
     }
 
     private void startTimer(Stage stage) {
@@ -317,7 +322,7 @@ public class Main extends Application {
         } catch (IOException ioException) {
             ioException.printStackTrace();
         }
-        if(!game.getCurrentRoom().hasBeenVisited()) {
+        if(!game.getCurrentRoom().hasBeenVisited() && intros) {
             movementHandler.haltPlayerMovement();
             game.getCurrentRoom().openIntroWindow();
         }
