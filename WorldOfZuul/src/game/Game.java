@@ -191,6 +191,7 @@ public class Game {
         beeHive.getImageView().setY(200);
     }
 
+
     /**
      * Used by createNPC to properly load textFiles
      *
@@ -484,6 +485,11 @@ public class Game {
         //launch preQuiz
         preQuiz.run();
         chadChicken.uploadAnswers(preQuiz.getAnswers());
+    }
+
+    private void playGUIQuiz() {
+
+
     }
 
     //Return true if no seeds, money and harvest ready.
