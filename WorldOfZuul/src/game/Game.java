@@ -152,7 +152,6 @@ public class Game {
     }
 
     private void createNPC() {
-
         File majorBobDialog = load("majorBobDialog.txt");
         majorBob = new NPC(majorBobDialog);
         try {
@@ -162,7 +161,6 @@ public class Game {
         }
         majorBob.getImageView().setX(250);
         majorBob.getImageView().setY(300);
-
 
         File storeNPCDialog = load("shopKeeperLizzyDialog.txt");
         shopkeeperLizzy = new NPC(storeNPCDialog);
@@ -193,7 +191,7 @@ public class Game {
             e.printStackTrace();
         }
         beekeeperBetti.getImageView().setX(200);
-        beekeeperBetti.getImageView().setY(520);
+        beekeeperBetti.getImageView().setY(320);
 
         File fieldExpertDialog = load("fieldExpertBenny.txt");
         fieldExpertBenny = new NPC(fieldExpertDialog);
@@ -359,7 +357,7 @@ public class Game {
 
         field.setRoomPane(createPane("FieldVer1.png"));
         field.addInteractable(farmerBob);
-        field.addInteractable(this.field);      //TODO Rename field, this is stupid
+        field.addInteractable(this.field);      //TODO Rename field, this is stupid,
 
         ////////////////
         //STORE////////

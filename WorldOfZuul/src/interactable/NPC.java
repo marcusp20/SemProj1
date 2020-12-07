@@ -197,7 +197,7 @@ public class NPC extends Interactable{
         for(String line : getPatternLines("q0"))    {
             text = text.concat(line + "\n");
         }
-        System.out.println(text);
+        //System.out.println(text);
 
         return "npc";
     }
