@@ -532,9 +532,9 @@ public class Main extends Application {
             a2.setText(q.A2);
             a2.setOnAction(e -> storeAnswer(q, q.A2));
             a3.setText(q.A3);
-            a2.setOnAction(e -> storeAnswer(q, q.A3));
+            a3.setOnAction(e -> storeAnswer(q, q.A3));
             a4.setText(q.A4);
-            a2.setOnAction(e -> storeAnswer(q, q.A4));
+            a4.setOnAction(e -> storeAnswer(q, q.A4));
 
             return null;
         }

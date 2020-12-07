@@ -3,10 +3,10 @@ package chadChicken;
 public enum Question {
     //TODO replace placeholder
     PRE_Q1("Q1", "A1", "A2", "A3", "A4"),
-    PRE_Q2("Q1", "A1", "A2", "A3", "A4"),
+    PRE_Q2("Q2", "A1", "A2", "A3", "A4"),
 
     POST_Q1("Q1", "A1", "A2", "A3", "A4"),
-    POST_Q2("Q1", "A1", "A2", "A3", "A4");
+    POST_Q2("Q2", "A1", "A2", "A3", "A4");
 
     String Q;
     public String A1;
