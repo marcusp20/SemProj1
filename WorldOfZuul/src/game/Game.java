@@ -152,30 +152,56 @@ public class Game {
     }
 
     private void createNPC() {
+
         File majorBobDialog = load("majorBobDialog.txt");
         majorBob = new NPC(majorBobDialog);
+        try {
+            majorBob.getImageView().setImage(loadImage("MayorBobSprite.png"));
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
         majorBob.getImageView().setX(250);
         majorBob.getImageView().setY(300);
 
 
         File storeNPCDialog = load("shopKeeperLizzyDialog.txt");
         shopkeeperLizzy = new NPC(storeNPCDialog);
+        try {
+            shopkeeperLizzy.getImageView().setImage(loadImage("Shopkeeperlizzysprite.png"));
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
         shopkeeperLizzy.getImageView().setX(200);
         shopkeeperLizzy.getImageView().setY(250);
 
         File fieldNPCDialog = load("fieldNPCDialog.txt");
         farmerBob = new NPC(fieldNPCDialog);
-        //farmerBob.getImageView().setImage();
+        try {
+            farmerBob.getImageView().setImage(loadImage("FarmerBob.png"));
+
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
         farmerBob.getImageView().setX(170);
         farmerBob.getImageView().setY(190);
 
         File beekeeperDialog = load("beekeeperBetti.txt");
         beekeeperBetti = new NPC(beekeeperDialog);
+        try {
+            beekeeperBetti.getImageView().setImage(loadImage("BeeKeeperBettiSprite.png"));
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
         beekeeperBetti.getImageView().setX(200);
         beekeeperBetti.getImageView().setY(520);
 
         File fieldExpertDialog = load("fieldExpertBenny.txt");
         fieldExpertBenny = new NPC(fieldExpertDialog);
+        try {
+            fieldExpertBenny.getImageView().setImage(loadImage("FieldExpertBennySprite.png"));
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
         fieldExpertBenny.getImageView().setX(100);
         fieldExpertBenny.getImageView().setY(100);
     }
@@ -228,6 +254,8 @@ public class Game {
         //Default - probably not gonna work
         return new Image(new FileInputStream(path + "\\img\\" + fileName));
     }
+
+
 
     private void createCommandWords() {
         gameCommandWords = new CommandWords();
