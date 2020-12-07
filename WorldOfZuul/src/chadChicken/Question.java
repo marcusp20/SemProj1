@@ -8,7 +8,11 @@ public enum Question {
     POST_Q1("Q1", "A1", "A2", "A3", "A4"),
     POST_Q2("Q1", "A1", "A2", "A3", "A4");
 
-    String Q, A1, A2, A3, A4;
+    String Q;
+    public String A1;
+    public String A2;
+    public String A3;
+    public String A4;
     Question(String q, String a1, String a2, String a3, String a4) {
         Q = q;
         A1 = a1;

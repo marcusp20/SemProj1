@@ -2,6 +2,8 @@ package GUI;
 
 import chadChicken.ChadChicken;
 import chadChicken.GUIQuiz;
+import chadChicken.Question;
+import chadChicken.Quiz;
 import game.*;
 import interactable.Interactable;
 import interactable.NPC;
@@ -10,24 +12,27 @@ import javafx.application.Application;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
+import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.BoundingBox;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.ListCell;
-import javafx.scene.control.ListView;
+import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyEvent;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
+import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import javafx.util.Callback;
-import javafx.scene.control.Label;
 
 import java.io.*;
+import java.util.Collections;
 import java.util.HashMap;
+import java.util.Iterator;
+import java.util.List;
 
 /*
     Learnt from https://www.youtube.com/watch?v=FVo1fm52hz0
@@ -41,6 +46,11 @@ public class Main extends Application {
     private static Game game;
     private MovementHandler movementHandler;
     private CollisionHandler collisionHandler;
+
+    @FXML
+    public static Button a1, a2, a3, a4;
+    @FXML
+    public static TextArea questionField;
 
     //Interaction keys
     private boolean e;
@@ -70,7 +80,12 @@ public class Main extends Application {
     }
 
     private void playIntroQuiz(Stage stage) {
-        GUIQuiz guiQuiz = new GUIQuiz(new ChadChicken().getPreQuestions());
+        questionField = new TextArea();
+        a1 = new Button();
+        a2 = new Button();
+        a3 = new Button();
+        a4 = new Button();
+        MainGUIQuiz guiQuiz = new MainGUIQuiz(new ChadChicken().getPreQuestions());
         guiQuiz.show(this, stage);
         fadeIn(stage);
     }
@@ -468,5 +483,96 @@ public class Main extends Application {
 
     public void helpButtonClicked(ActionEvent actionEvent) {
         System.out.println("help pls");
+    }
+
+    private class MainGUIQuiz extends Quiz {
+
+
+        private Iterator<Question> questionIterator;
+        private Stage stage;
+        private Main main;
+
+        public MainGUIQuiz(List<Question> questions) {
+            super(questions);
+        }
+
+        private void storeAnswer(Question question, String answer) {
+            getAnswers().put(question, answer);
+
+            if(questionIterator.hasNext()) {
+                getAnswerFromUser(questionIterator.next());
+            } else {
+                returnToGame();
+            }
+        }
+
+        private void returnToGame() {
+            fadeOut(stage);
+            stage.close();
+            main.startGame(stage);
+        }
+
+        public void fadeOut(Stage stage) {
+            for (double i = 1; i >= 0.01; i = i - 0.0001) {
+                stage.setOpacity(i);
+            }
+        }
+
+        @Override
+        public void run() {
+            Collections.shuffle(questions);
+            questionIterator = questions.listIterator();
+            getAnswerFromUser(questionIterator.next());
+        }
+
+        @Override
+        protected String getAnswerFromUser(Question q) {
+            questionField.setText(q.getQ());
+            a1.setText(q.A1);
+            a1.setOnAction(e -> storeAnswer(q, q.A1));
+            a2.setText(q.A2);
+            a2.setOnAction(e -> storeAnswer(q, q.A2));
+            a3.setText(q.A3);
+            a2.setOnAction(e -> storeAnswer(q, q.A3));
+            a4.setText(q.A4);
+            a2.setOnAction(e -> storeAnswer(q, q.A4));
+
+            return null;
+        }
+
+        public void show(Main main, Stage stage) {
+            this.main = main;
+            Pane p = new Pane();
+            try {
+                AnchorPane fxmlAnchorPane = FXMLLoader.load(getClass().getResource("chickenChadGUI.fxml"));
+                p.getChildren().add(fxmlAnchorPane);
+                AnchorPane innerFxmlAnchorPane = (AnchorPane) fxmlAnchorPane.getChildren().get(0);
+                VBox vBox = (VBox) innerFxmlAnchorPane.getChildren().get(0);
+                questionField = (TextArea) vBox.getChildren().get(0);
+                VBox innerVBox = (VBox) vBox.getChildren().get(1);
+                a1 = (Button) innerVBox.getChildren().get(0);
+                a2 = (Button) innerVBox.getChildren().get(1);
+                a3 = (Button) innerVBox.getChildren().get(2);
+                a4 = (Button) innerVBox.getChildren().get(3);
+            } catch (IOException ioException) {
+                ioException.printStackTrace();
+            }
+            p.setPrefSize(1280, 832);
+
+            this.stage = stage;
+            this.stage.setScene(new Scene(p));
+            this.stage.show();
+            this.stage.setTitle("FARMVILL 99 RETARDO EDITION");
+            this.stage.setOpacity(0);
+
+            a1.setOnAction(e -> run());
+            a1.setText("Continue");
+            a2.setText("");
+            a3.setText("");
+            a4.setText("");
+
+        }
+
+
     }
 }
