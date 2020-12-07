@@ -8,8 +8,12 @@ import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.layout.Pane;
+import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
+import javafx.scene.text.Text;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
 
 import java.awt.*;
 import java.util.ArrayList;
@@ -29,13 +33,16 @@ public class Room {
     //Gui
     private Label feedbackText;
     private boolean hasBeenVisited;
-    private Scene roomIntroScene;   //https://stackoverflow.com/questions/22166610/how-to-create-a-popup-windows-in-javafx <- basic popup code
+    private Text introText;
+    private Stage roomIntroStage  = new Stage();
 
     public Room(String description) {
         this.description = description;
         exits = new HashMap<String, Room>();
         isLocked = false;
         roomCollisions = new RoomCollisions();
+        this.hasBeenVisited = false;
+        this.introText = new Text("No intro text set");
     }
 
     public boolean isLocked() {
@@ -130,6 +137,25 @@ public class Room {
 
     public void setRoomCollisions(RoomCollisions roomCollisions) {
         this.roomCollisions = roomCollisions;
+    }
+
+    public void openIntroWindow()    {
+        this.hasBeenVisited = true;
+
+        roomIntroStage.initModality(Modality.APPLICATION_MODAL);
+        VBox dialogVbox = new VBox(20);
+        dialogVbox.getChildren().add(introText);
+        Scene dialogScene = new Scene(dialogVbox, 300, 200);
+        roomIntroStage.setScene(dialogScene);
+        roomIntroStage.show();
+    }
+
+    public void setIntroText(String introText)  {
+        this.introText = new Text(introText);
+    }
+
+    public boolean hasBeenVisited() {
+        return hasBeenVisited;
     }
 }
 

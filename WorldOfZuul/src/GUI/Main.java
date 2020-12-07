@@ -317,6 +317,10 @@ public class Main extends Application {
         } catch (IOException ioException) {
             ioException.printStackTrace();
         }
+        if(!game.getCurrentRoom().hasBeenVisited()) {
+            movementHandler.haltPlayerMovement();
+            game.getCurrentRoom().openIntroWindow();
+        }
 
     }
 

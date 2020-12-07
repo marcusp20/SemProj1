@@ -1,1 +1,7 @@
-6299454932870962827
+563812690220496865
+go west
+go east
+go south
+go north
+go north
+go south
