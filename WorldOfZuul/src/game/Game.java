@@ -165,7 +165,7 @@ public class Game {
 
         File fieldNPCDialog = load("fieldNPCDialog.txt");
         farmerBob = new NPC(fieldNPCDialog);
-        farmerBob.getImageView().setImage();
+        //farmerBob.getImageView().setImage();
         farmerBob.getImageView().setX(170);
         farmerBob.getImageView().setY(190);
 
