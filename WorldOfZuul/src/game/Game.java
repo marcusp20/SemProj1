@@ -8,7 +8,6 @@ import chadChicken.Quiz;
 import chadChicken.TextQuiz;
 
 import java.io.*;
-import java.sql.SQLOutput;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -462,7 +461,7 @@ public class Game {
         while (!finished) {
             Command command = parser.getCommand();
             finished = processCommand(command);
-            if (checkForDebt()) {
+            if (hasLostGame()) {
                 System.out.println("You have no more money or seeds, game over");
                 finished = true;
             }
@@ -487,8 +486,8 @@ public class Game {
     }
 
     //Return true if no seeds, money and harvest ready.
-    private Boolean checkForDebt() {
-        if (player.checkWallet() <= 0 && player.checkForNoCrops() && !field.getIsReadyToHarvest()) {
+    public Boolean hasLostGame() {
+        if (player.checkWallet() <= 0 && player.checkForNoCrops() && !field.getIsSowed()) {
             System.out.println("You have no more money or seeds, game over");
             return true;
         } else {

@@ -5,6 +5,7 @@ import interactable.Interactable;
 import interactable.NPC;
 import javafx.animation.AnimationTimer;
 import javafx.application.Application;
+import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -13,16 +14,14 @@ import javafx.geometry.BoundingBox;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.ListCell;
-import javafx.scene.control.ListView;
+import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.Pane;
+import javafx.scene.text.Font;
 import javafx.stage.Stage;
 import javafx.util.Callback;
-import javafx.scene.control.Label;
 
 import java.io.*;
 import java.util.HashMap;
@@ -39,6 +38,7 @@ public class Main extends Application {
     private static Game game;
     private MovementHandler movementHandler;
     private CollisionHandler collisionHandler;
+    private AnimationTimer timer;
 
     //Interaction keys
     private boolean e;
@@ -155,7 +155,7 @@ public class Main extends Application {
         scene = new Scene(p);
 
         //Start timer
-        startTimer();
+        startTimer(stage);
 
         //Call checkInput on keyPress/release
         scene.setOnKeyPressed(this::checkInput);
@@ -171,18 +171,18 @@ public class Main extends Application {
         game.getTaskList().createTaskListView();
     }
 
-    private void startTimer() {
-        AnimationTimer timer = new AnimationTimer() {
+    private void startTimer(Stage stage) {
+        timer = new AnimationTimer() {
             @Override
             public void handle(long now) {
-                update();
+                update(stage);
             }
         };
         timer.start();
     }
 
     //Main loop content
-    private void update() {
+    private void update(Stage stage) {
         //Moves player based on movement keys
         movementHandler.move();
         //Check and correct collision between player and object
@@ -199,6 +199,37 @@ public class Main extends Application {
             game.getCurrentRoom().getRoomPane().getChildren().remove(lastNode);
             backSpace = false;
         }
+
+        if (game.hasLostGame()) {
+            timer.stop();
+            showLostGame(stage);
+        }
+    }
+
+    private void showLostGame(Stage stage) {
+        fadeOut(stage);
+        //TODO fix positioning of textField and button
+        TextField youLostText = new TextField("You've lost the game!");
+        youLostText.setEditable(false);
+        youLostText.setFont(Font.font(Font.getDefault().getName(),40));
+
+        Button returnToMainMenu = new Button("Return to main menu");
+        returnToMainMenu.setOnAction(e -> {
+            fadeOut(stage);
+            showStartScreen(stage);
+            fadeIn(stage);
+        });
+
+        Pane pane = new Pane();
+        pane.setPrefSize(1280, 832);
+        pane.getChildren().addAll(youLostText, returnToMainMenu);
+        scene = new Scene(pane);
+
+        stage.setTitle("FARMVILL 99 RETARDO EDITION");
+        stage.setScene(scene);
+        stage.setOpacity(0);
+        stage.show();
+        fadeIn(stage);
     }
 
     private void playerRoomChangeCheck() {
