@@ -348,7 +348,7 @@ public class Game {
 
         field.setIntroText(
                 "Welcome to the farm mister. \n" +
-                "I'v been tasked with helping you get \n" +
+                "I'v been tasked with getting you\n" +
                 "started. Start by...\n");
 
         ////////////////
@@ -380,7 +380,11 @@ public class Game {
                 new CollisionBox(-20, 330, 220, 110));
         store.setRoomCollisions(storeCollision);
 
-
+        store.setIntroText(
+                "Hello darling, you must be the new\n" +
+                "kid. My name is lizzy, i'm this\n" +
+                "towns only shopkeeper...\n" +
+                "");
 
 
         ////////////////
@@ -407,6 +411,8 @@ public class Game {
                 new CollisionBox(100, -20, 535, 160));
         garden.setRoomCollisions(gardenCollision);
 
+        garden.setIntroText(
+                "Hello there good fellow...");
 
         //////////
         //SHED////
@@ -428,6 +434,8 @@ public class Game {
         field3.setExit("north", shed);
 
         currentRoom = headquarter;
+
+        shed.setIntroText("How did you get in here...");
     }
 
     private Pane createPane(String name, Color color) {
