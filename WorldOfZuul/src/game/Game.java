@@ -320,8 +320,8 @@ public class Game {
         headquarter.setRoomCollisions(headquarterCollision);
 
         headquarter.setIntroText(
-                "Welcome xXxweedSmoker420xXx \n" +
-                "to this humble town. My name is \n" +
+                "Welcome xXxweedSmoker420xXx " +
+                "to this humble town. My name is " +
                 "bob, im the mayor of this town...");
 
 
@@ -347,9 +347,9 @@ public class Game {
         field.setRoomCollisions(fieldCollision);
 
         field.setIntroText(
-                "Welcome to the farm mister. \n" +
-                "I'v been tasked with getting you\n" +
-                "started. Start by...\n");
+                "Welcome to the farm mister. " +
+                "I'v been tasked with getting you" +
+                "started. Start by...");
 
         ////////////////
         //STORE////////
@@ -381,10 +381,9 @@ public class Game {
         store.setRoomCollisions(storeCollision);
 
         store.setIntroText(
-                "Hello darling, you must be the new\n" +
-                "kid. My name is lizzy, i'm this\n" +
-                "towns only shopkeeper...\n" +
-                "");
+                "Hello darling, you must be the new" +
+                "kid. My name is lizzy, i'm this " +
+                "towns only shopkeeper...");
 
 
         ////////////////

@@ -145,7 +145,9 @@ public class Room {
         roomIntroStage.initModality(Modality.APPLICATION_MODAL);
         VBox textVbox = new VBox(20);
         textVbox.setStyle("-fx-font: 24 arial;");
+        textVbox.setSpacing(20);
         textVbox.setBackground(new Background(new BackgroundFill(Color.PEACHPUFF, CornerRadii.EMPTY, Insets.EMPTY)));
+        introText.setWrappingWidth(360);
         textVbox.getChildren().add(introText);
         Scene dialogScene = new Scene(textVbox, 400, 300);
         roomIntroStage.setScene(dialogScene);
