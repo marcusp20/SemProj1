@@ -39,13 +39,9 @@ public class TaskList {
 
         // set first tasks active
         tasks.get(0).setActive(true);
-        tasks.get(0).setVisible(true);
         tasks.get(1).setActive(true);
-        tasks.get(1).setVisible(true);
         tasks.get(2).setActive(true);
-        tasks.get(2).setVisible(true);
         tasks.get(3).setActive(true);
-        tasks.get(3).setVisible(true);
 
     }
 
@@ -68,7 +64,6 @@ public class TaskList {
                 //Task completed, grant reward
 
                 //hide the task
-                tasks.get(0).setVisible(false);
                 tasks.get(0).setActive(false);
             }
         }
@@ -77,7 +72,6 @@ public class TaskList {
                 //Task completed, grant reward
 
                 //hide the task
-                tasks.get(1).setVisible(false);
                 tasks.get(1).setActive(false);
                 //give next task
 
@@ -88,7 +82,6 @@ public class TaskList {
                 //Task completed, grant reward
 
                 //hide the task
-                tasks.get(2).setVisible(false);
                 tasks.get(2).setActive(false);
                 //give next task
 
@@ -99,7 +92,6 @@ public class TaskList {
                 //Task completed, grant reward
 
                 //hide the task
-                tasks.get(3).setVisible(false);
                 tasks.get(3).setActive(false);
                 //give next task
 
@@ -115,11 +107,9 @@ public class TaskList {
                 //Task completed, grant reward
                 game.unlock("field2");
                 //hide the task
-                tasks.get(4).setVisible(false);
                 tasks.get(4).setActive(false);
                 //give next task
                 tasks.get(5).setActive(true);
-                tasks.get(5).setVisible(true);
             }
         }
 
@@ -128,11 +118,9 @@ public class TaskList {
                 //Task completed, grant reward
                 game.unlock("field3");
                 //hide the task
-                tasks.get(5).setVisible(false);
                 tasks.get(5).setActive(false);
                 //give next task
                 tasks.get(6).setActive(true);
-                tasks.get(6).setVisible(true);
 
             }
         }
@@ -140,11 +128,9 @@ public class TaskList {
         if (tasks.get(6).isActive() && !game.getField().getIsSowed()) {
             if (player.getWallet() >= 1000) {
                 //hide the task
-                tasks.get(6).setVisible(false);
                 tasks.get(6).setActive(false);
                 //give next task
                 tasks.get(7).setActive(true);
-                tasks.get(7).setVisible(true);
 
             }
         }
@@ -154,7 +140,6 @@ public class TaskList {
                 //Task completed, grant reward;
             game.setGameFinished(true);
             tasks.get(7).setActive(false);
-            tasks.get(7).setVisible(false);
             }
         }
         taskListView.setItems(getTasks());
