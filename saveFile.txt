@@ -1,7 +1,20 @@
-563812690220496865
+-1474499356609534134
+go north
+go south
+go west
+go east
+go west
+go east
+go west
+go east
 go west
 go east
 go south
 go north
 go north
+go south
+go west
+go east
+go north
+go south
 go south
