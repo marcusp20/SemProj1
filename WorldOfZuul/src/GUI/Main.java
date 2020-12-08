@@ -101,6 +101,25 @@ public class Main extends Application {
         fadeIn(stage);
     }
 
+    private void playFinalQuiz(Stage stage) {
+        questionField = new TextArea();
+        a1 = new Button();
+        a2 = new Button();
+        a3 = new Button();
+        a4 = new Button();
+        MainGUIQuiz guiQuiz = new MainGUIQuiz(new ChadChicken().getPostQuestions());
+        guiQuiz.setResumeGameAfterQuiz(false);
+        guiQuiz.show(this, stage);
+        questionField.setText("You collect the last of your yield. Another honest days work.\n" +
+                "But the earth tremors... A heart wrenching screech fills the air!\n" +
+                "CoCk-A-dOoDlE-dOoOO!\n" +
+                "The rooster appears before you!");
+
+
+
+        fadeIn(stage);
+    }
+
     public void loadGame(Stage stage) {
         File saveFile = new File(System.getProperty("user.dir") + "\\saveFile.txt");
         boolean saveFileExists = saveFile.exists();
@@ -235,6 +254,7 @@ public class Main extends Application {
 
 
 
+
         if (backSpace) {
             game.getCurrentRoom().getRoomPane().getChildren().remove(lastNode);
             backSpace = false;
@@ -243,6 +263,11 @@ public class Main extends Application {
         if (game.hasLostGame()) {
             timer.stop();
             showLostGame(stage);
+        }
+
+        if(game.isGameFinished()) {
+            timer.stop();
+            playFinalQuiz(stage);
         }
     }
 
@@ -560,10 +585,10 @@ public class Main extends Application {
 
     private class MainGUIQuiz extends Quiz {
 
-
         private Iterator<Question> questionIterator;
         private Stage stage;
         private Main main;
+        private boolean resumeGameAfterQuiz = true;
 
         public MainGUIQuiz(List<Question> questions) {
             super(questions);
@@ -574,9 +599,13 @@ public class Main extends Application {
 
             if(questionIterator.hasNext()) {
                 getAnswerFromUser(questionIterator.next());
-            } else {
+            } else if(resumeGameAfterQuiz) {
                 returnToGame();
             }
+        }
+
+        public void setResumeGameAfterQuiz(boolean resumeGameAfterQuiz) {
+            this.resumeGameAfterQuiz = resumeGameAfterQuiz;
         }
 
         private void returnToGame() {

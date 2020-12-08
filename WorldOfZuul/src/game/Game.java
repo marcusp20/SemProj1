@@ -53,6 +53,8 @@ public class Game {
     private static final Random random = new Random();
     private long seed;
     private boolean isGUI;
+    private boolean gameFinished = false;
+
 
     //console output
     private PrintStream old = System.out;
@@ -1180,6 +1182,14 @@ public class Game {
 
     public List<Item> getStoreItemList() {
         return storeItemList;
+    }
+
+    public void setGameFinished(boolean gameFinished) {
+        this.gameFinished = gameFinished;
+    }
+
+    public boolean isGameFinished() {
+        return gameFinished;
     }
 }
 
