@@ -151,7 +151,7 @@ public class Room {
         textVbox.setStyle("-fx-font: 26 arial;");
         textVbox.setBackground(new Background(new BackgroundFill(Color.PEACHPUFF, CornerRadii.EMPTY, Insets.EMPTY)));
         textVbox.getChildren().add(introText);
-        if(this.npc.getImageView() != null) {
+        if(this.npc != null) {
             ImageView npcImage = new ImageView(this.npc.getImageView().getImage());
             textVbox.getChildren().add(npcImage);
         }
