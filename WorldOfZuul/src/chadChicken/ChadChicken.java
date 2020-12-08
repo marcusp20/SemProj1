@@ -25,6 +25,9 @@ public class ChadChicken {
         preQuestions = new ArrayList<>();
         preQuestions.add(Question.PRE_Q1);
         preQuestions.add(Question.PRE_Q2);
+        preQuestions.add(Question.PRE_Q3);
+        preQuestions.add(Question.PRE_Q4);
+        preQuestions.add(Question.PRE_Q5);
 
         postQuestions = new ArrayList<>();
         postQuestions.add(Question.POST_Q1);
