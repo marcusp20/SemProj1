@@ -67,6 +67,9 @@ public class Main extends Application {
     //Contains last opened menu
     Node lastNode;
 
+    //Button layout fxml
+    Parent rootButtonLayout;
+
     //TEMP STUFF DELETE BEFORE FINISHING
     private boolean intros = true;
 
@@ -177,17 +180,14 @@ public class Main extends Application {
 
         //FXML root
         try {
-            Parent rootButtonLayout = FXMLLoader.load(getClass().getResource("ButtonLayout.fxml"));
+            rootButtonLayout = FXMLLoader.load(getClass().getResource("ButtonLayout.fxml"));
         } catch (IOException ioException) {
             ioException.printStackTrace();
         }
 
         // Add buttonlayout+player to first scene
-        try {
-            p.getChildren().addAll(game.getPlayer().getPlayerSprite(),FXMLLoader.load(getClass().getResource("ButtonLayout.fxml")));
-        } catch (IOException ioException) {
-            ioException.printStackTrace();
-        }
+        p.getChildren().addAll(game.getPlayer().getPlayerSprite(),rootButtonLayout);
+
         //add Children
         scene = new Scene(p);
 
@@ -340,12 +340,7 @@ public class Main extends Application {
         terminateTutorialPane();
         game.getCurrentRoom().getRoomPane().getChildren().remove(lastNode);
         game.getCurrentRoom().getRoomPane().getChildren().remove(game.getTaskList().getTaskListView());
-        try {
-            game.getCurrentRoom().getRoomPane().getChildren().remove(FXMLLoader.load(getClass().getResource("ButtonLayout.fxml")));
-        } catch (IOException ioException) {
-            ioException.printStackTrace();
-        }
-
+        game.getCurrentRoom().getRoomPane().getChildren().remove(rootButtonLayout);
     }
 
 
@@ -353,11 +348,9 @@ public class Main extends Application {
         game.getCurrentRoom().getRoomPane().getChildren().add(game.getPlayer().getPlayerSprite());
         game.getCurrentRoom().getRoomPane().getChildren().add(game.getTaskList().getTaskListView());
         scene.setRoot(game.getCurrentRoom().getRoomPane());
-        try {
-            game.getCurrentRoom().getRoomPane().getChildren().add(FXMLLoader.load(getClass().getResource("ButtonLayout.fxml")));
-        } catch (IOException ioException) {
-            ioException.printStackTrace();
-        }
+
+        game.getCurrentRoom().getRoomPane().getChildren().add(rootButtonLayout);
+
         if(!game.getCurrentRoom().hasBeenVisited() && intros) {
             movementHandler.haltPlayerMovement();
             game.getCurrentRoom().openIntroWindow();
