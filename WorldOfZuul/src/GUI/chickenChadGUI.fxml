@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.effect.ColorInput?>
+<?import javafx.scene.effect.InnerShadow?>
+<?import javafx.scene.effect.Light.Distant?>
+<?import javafx.scene.effect.Lighting?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.VBox?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="832.0" prefWidth="1280.0" style="-fx-background-color: #d3923c;" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.Main">
+   <AnchorPane layoutX="13.0" layoutY="574.0" prefHeight="248.0" prefWidth="1254.0">
+      <children>
+         <VBox prefHeight="244.0" prefWidth="1254.0">
+            <TextArea fx:id="questionField" editable="false" prefHeight="98.0" prefWidth="1254.0" text="Your wandering arround the farm at night, it's dark and foggy.  You're hearing strange CoOkAliKyyYYyyyYYYs, and are looking for the source.&#10;&#10;A huge Cock appears before you and starts talking human language:&#10;&quot;Hello little Farmer, rumor has it you just brought the farm, im here to challange your knowledge on sustainability.&#10;Let me ask you a few Questions, you better answer right&quot;">
+               <effect>
+                  <InnerShadow color="#0000008d" />
+               </effect>
+            </TextArea>
+            <VBox prefHeight="150.0" prefWidth="1254.0" spacing="2.0">
+               <children>
+                  <Button fx:id="a1" mnemonicParsing="false" prefHeight="37.5" prefWidth="1254.0" text="Button">
+                     <effect>
+                        <Lighting>
+                           <bumpInput>
+                              <ColorInput />
+                           </bumpInput>
+                           <light>
+                              <Light.Distant color="#ffb451" />
+                           </light>
+                        </Lighting>
+                     </effect></Button>
+                  <Button fx:id="a2" mnemonicParsing="false" prefHeight="37.5" prefWidth="1254.0" text="Button">
+                     <effect>
+                        <Lighting>
+                           <bumpInput>
+                              <ColorInput />
+                           </bumpInput>
+                           <light>
+                              <Light.Distant color="#ffb451" />
+                           </light>
+                        </Lighting>
+                     </effect></Button>
+                  <Button fx:id="a3" mnemonicParsing="false" prefHeight="37.5" prefWidth="1254.0" text="Button">
+                     <effect>
+                        <Lighting>
+                           <bumpInput>
+                              <ColorInput />
+                           </bumpInput>
+                           <light>
+                              <Light.Distant color="#ffb451" />
+                           </light>
+                        </Lighting>
+                     </effect></Button>
+                  <Button fx:id="a4" mnemonicParsing="false" prefHeight="37.5" prefWidth="1254.0" text="Button">
+                     <effect>
+                        <Lighting>
+                           <bumpInput>
+                              <ColorInput />
+                           </bumpInput>
+                           <light>
+                              <Light.Distant color="#ffb451" />
+                           </light>
+                        </Lighting>
+                     </effect></Button>
+               </children>
+            </VBox>
+         </VBox>
+      </children>
+      <effect>
+         <InnerShadow />
+      </effect>
+   </AnchorPane>
+   <ImageView fitHeight="554.0" fitWidth="1254.0" layoutX="11.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true">
+      <image>
+         <Image url="@../resources/img/ChickenChadScene.png" />
+      </image></ImageView>
+</AnchorPane>

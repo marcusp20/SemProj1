@@ -3,7 +3,6 @@ package game;
 import GUI.CollisionBox;
 import GUI.RoomCollisions;
 import chadChicken.ChadChicken;
-import chadChicken.GUIQuiz;
 import chadChicken.Quiz;
 import chadChicken.TextQuiz;
 
@@ -131,11 +130,7 @@ public class Game {
 
     private void createQuiz() {
         chadChicken = new ChadChicken();
-        if (isGUI) {
-            preQuiz = new GUIQuiz(chadChicken.getPreQuestions());
-            postQuiz = new GUIQuiz(chadChicken.getPostQuestions());
-        } else {
-            //TODO change TextQuiz to GUIQuiz when QUIQuiz has been implemented
+        if (!isGUI) {//TODO change TextQuiz to GUIQuiz when QUIQuiz has been implemented
             preQuiz = new TextQuiz(chadChicken.getPreQuestions());
             postQuiz = new TextQuiz(chadChicken.getPostQuestions());
         }
@@ -189,6 +184,7 @@ public class Game {
         beeHive.getImageView().setX(330);
         beeHive.getImageView().setY(200);
     }
+
 
     /**
      * Used by createNPC to properly load textFiles
@@ -501,6 +497,11 @@ public class Game {
         //launch preQuiz
         preQuiz.run();
         chadChicken.uploadAnswers(preQuiz.getAnswers());
+    }
+
+    private void playGUIQuiz() {
+
+
     }
 
     //Return true if no seeds, money and harvest ready.
