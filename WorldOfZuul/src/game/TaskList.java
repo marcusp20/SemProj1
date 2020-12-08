@@ -152,17 +152,16 @@ public class TaskList {
         if (tasks.get(7).isActive()) {
             if (player.getWallet() > 1000) {
                 //Task completed, grant reward;
-            //TODO implement final approach
-                //hide the task
+            game.setGameFinished(true);
             tasks.get(7).setActive(false);
             tasks.get(7).setVisible(false);
             }
         }
-        taskListView.setItems(game.getTaskList().getTasks());
+        taskListView.setItems(getTasks());
     }
 
     public void createTaskListView()    {
-        taskListView.setItems(game.getTaskList().getTasks());
+        taskListView.setItems(getTasks());
         game.getCurrentRoom().getRoomPane().getChildren().add(this.taskListView);
         taskListView.setPrefSize(355, 107);
         taskListView.setLayoutX(911);
