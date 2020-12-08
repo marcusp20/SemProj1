@@ -10,21 +10,21 @@ $$0 Lucky for you I have a hat full of dandruff and wisdom
 
 ##0 May the heavens bless you with rain and sun
 
-q00 1.How do i run the field?
+q00 How do i run the field?
 a00 you first have to Sow the field with a crop.
 a01 Then make sure to water it at least once.
 a02 Finally harvest when it's ready and reap the profits!
 
-q01 2.How do i get rid of pests?
+q01 How do i get rid of pests?
 a10 You can use pesticides, though there are better ways
 a11 Go ask FieldKeeper Bobby for fertilizers and pesticides
 
-q02 3.How do i get the most yield?
+q02 How do i get the most yield?
 a20 Sowing different crops keeps the nutrition in balance
 a21 Don't water too little, or too much
 a22 Use big machines like tractors and harvesters for even better yield!
 
-q03 4.What crop is best?
+q03 What crop is best?
 a30 The most expensive crops are the best!
 a31 Have you tried the new hemp i've planted?
 

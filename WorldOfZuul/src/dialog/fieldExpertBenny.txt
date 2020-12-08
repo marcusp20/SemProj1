@@ -8,4 +8,5 @@ $$0 What brings you today young one...
 
 ##0 May the heavens bless you with rain and sun
 
-a
+q00 Is there anything i need to know about pesticides?
+a00 Pesticides are a great way to keep away pests, but be wary they will pollute your groundwater

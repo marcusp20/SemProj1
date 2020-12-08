@@ -12,9 +12,9 @@ $$0 What do you want to know darling?
 
 ##0 Bye dear, do come again.
 
-q00 1.How do i access the shop?
+q00 How do i access the shop?
 a00 Go to the left most bookcase and press "E"
 
-q01 2.How do I buy items?
+q01 How do I buy items?
 a10 Oh that's easy darling.
 a11 While accessing the shop you can click on what you want to buy.
