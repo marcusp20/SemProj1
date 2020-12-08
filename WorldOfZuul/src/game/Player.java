@@ -10,7 +10,7 @@ import java.util.Map;
 public class Player {
     //Attributes
     private String name;
-    private double wallet = 2000;
+    private double wallet = 8;
     private HashMap<ItemName, Boolean> playerInventory;
     private boolean noCropsOwned;
 

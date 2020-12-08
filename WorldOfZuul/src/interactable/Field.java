@@ -121,7 +121,7 @@ public class Field extends Interactable implements TimeProgression {
 
 
     public void getPests() {
-        int pestRNG = random.nextInt(1); //returns a value from 0 to 4 (inclusive)
+        int pestRNG = random.nextInt(5); //returns a value from 0 to 4 (inclusive)
         if (pestRNG == 1) {
             pests = true;
         }
@@ -254,8 +254,6 @@ public class Field extends Interactable implements TimeProgression {
                 yields = yields * 0.80;
             }
         }
-
-
 
         if (yields <= 0) {
             System.out.println("The harvested " + currentHarvest + " has cost you " + getYield() + " to produce.");
