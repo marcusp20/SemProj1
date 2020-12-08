@@ -22,7 +22,6 @@ a02 All you have to do is sow a different crop, so the soil has time to rejuvena
 q03 Why can't I harvest my crops after watering?
 a03 Why don't you come back after a nap and ask me again.
 
-q04
-a04
+
 
 
