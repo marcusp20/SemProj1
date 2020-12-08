@@ -486,6 +486,8 @@ public class Main extends Application {
         fieldCommands.put("Sow corn", new Command(CommandWord.FIELD_SOW, "corn"));
         fieldCommands.put("Sow cannabis", new Command(CommandWord.FIELD_SOW, "cannabis"));
         createListFromMap(fieldCommands, game.getField());
+        createListFromMap(fieldCommands, game.getField2());
+        createListFromMap(fieldCommands, game.getField3());
 
         HashMap<String, Command> beeHiveCommands = new HashMap<>();
         //beeHiveCommands.put("Use beehive", new Command(CommandWord.USE, "beehive"));
