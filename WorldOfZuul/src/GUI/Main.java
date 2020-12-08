@@ -602,6 +602,11 @@ public class Main extends Application {
             } else if(resumeGameAfterQuiz) {
                 returnToGame();
             }
+            else {
+                fadeOut(stage);
+                showStartScreen(stage);
+                fadeIn(stage);
+            }
         }
 
         public void setResumeGameAfterQuiz(boolean resumeGameAfterQuiz) {
