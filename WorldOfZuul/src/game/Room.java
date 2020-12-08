@@ -8,6 +8,8 @@ import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
@@ -15,7 +17,6 @@ import javafx.scene.text.Text;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
-import java.awt.*;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Set;
@@ -142,15 +143,18 @@ public class Room {
     public void openIntroWindow()    {
         this.hasBeenVisited = true;
 
-        introText.setWrappingWidth(380);
+        introText.setWrappingWidth(1070);
 
         roomIntroStage.initModality(Modality.APPLICATION_MODAL);
         VBox textVbox = new VBox(20);
-        textVbox.setStyle("-fx-font: 24 arial;");
+        textVbox.setStyle("-fx-font: 26 arial;");
         textVbox.setBackground(new Background(new BackgroundFill(Color.PEACHPUFF, CornerRadii.EMPTY, Insets.EMPTY)));
         textVbox.getChildren().add(introText);
-        textVbox.getChildren().add(this.npc.getImageView());
-        Scene dialogScene = new Scene(textVbox, 400, 300);
+        if(this.npc.getImageView() != null) {
+            ImageView npcImage = new ImageView(this.npc.getImageView().getImage());
+            textVbox.getChildren().add(npcImage);
+        }
+        Scene dialogScene = new Scene(textVbox, 1080, 632);
         roomIntroStage.setScene(dialogScene);
         roomIntroStage.show();
     }

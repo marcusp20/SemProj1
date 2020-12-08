@@ -331,6 +331,7 @@ public class Game {
         field.setRoomPane(createPane("FieldVer1.png"));
         field.addInteractable(farmerBob);
         field.addInteractable(this.field);      //TODO Rename field, this is stupid
+        field.setNpc(farmerBob);
 
         Image fieldImg = field.getRoomPane().getBackground().getImages().get(0).getImage();
         fieldCollision.addCollisionBox( //South border
