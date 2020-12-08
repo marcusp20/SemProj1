@@ -316,7 +316,6 @@ public class Game {
         field3.getImageView().setFitHeight(420);
         field3.getImageView().setFitWidth(655);
         field3.getImageView().setVisible(false);
-
     }
 
 
@@ -812,6 +811,7 @@ public class Game {
         checkField(field3);
         gameTimer++;
         eventChecker();
+        taskList.nextDay();
     }
 
 
@@ -1199,6 +1199,8 @@ public class Game {
         switch(gameTimer){
             case 2:
                 field.rainEvent();
+                field2.rainEvent();
+                field3.rainEvent();
                 baos.reset();
                 System.out.println("It's raining...");
                 break;
@@ -1211,6 +1213,8 @@ public class Game {
             case 4:
                 baos.reset();
                 field.extremeSunEvent();
+                field2.extremeSunEvent();
+                field3.extremeSunEvent();
                 System.out.println("It's very hot today, you wonder");
                 System.out.println("about how this could affect your crops.");
                 break;
@@ -1221,7 +1225,7 @@ public class Game {
             case 6:
                 baos.reset();
                 System.out.println("You see an abundance of flies today.");
-                if (field.pestEvent()) {
+                if (field.pestEvent() || field2.pestEvent() || field3.pestEvent()) {
                     System.out.println("Your plants were devoured by a swarm of pests.");
                 } else {
                     System.out.println("Your crops was unharmed because of");

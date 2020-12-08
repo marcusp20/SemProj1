@@ -134,14 +134,6 @@ public class TaskList {
 
             }
         }
-
-        if (tasks.get(7).isActive()) {
-            if (player.getWallet() > 1000) {
-                //Task completed, grant reward;
-            game.setGameFinished(true);
-            tasks.get(7).setActive(false);
-            }
-        }
         taskListView.setItems(getTasks());
     }
 
@@ -156,5 +148,16 @@ public class TaskList {
 
     public ListView<String> getTaskListView()   {
         return taskListView;
+    }
+
+    public void nextDay() {
+        if (tasks.get(7).isActive()) {
+            if (player.getWallet() > 1000) {
+                //Task completed, grant reward;
+                game.setGameFinished(true);
+                tasks.get(7).setActive(false);
+            }
+        }
+        taskListView.setItems(getTasks());
     }
 }
