@@ -697,6 +697,7 @@ public class Game {
         else if (commandWord == CommandWord.GARDEN_CHECK_BEES) {
             checkBees(field.getPesticidesCounter());
         } else if (commandWord == CommandWord.GARDEN_PLANT_FLOWER) {
+            logger.log(command);
             plantFlower();
         }
 
