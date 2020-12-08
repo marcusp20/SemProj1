@@ -340,6 +340,8 @@ public class Game {
         RoomCollisions gardenCollision = new RoomCollisions();
         RoomCollisions storeCollision = new RoomCollisions();
         RoomCollisions fieldCollision = new RoomCollisions();
+        RoomCollisions field2Collision = new RoomCollisions();
+        RoomCollisions field3Collision = new RoomCollisions();
 
         ////////////////
         //HEADQUARTERS//
@@ -367,7 +369,7 @@ public class Game {
 
 
         ////////////////
-        //FIELD////////
+        //FIELDS////////
         ////////////////
         field.setExit("north", headquarter);
         field.setExit("west", field2);
@@ -392,6 +394,47 @@ public class Game {
                 "Welcome to the farm mister. " +
                 "I'v been tasked with getting you" +
                 "started. Start by...");
+
+        ///// FIELD 2 /////
+        field2.setLocked(true);
+        unLockableRooms.put("field2", field2);
+        field2.setExit("east", field);
+        field2.setExit("north", garden);
+        field2.setRoomPane(createPane("Field2Ver1.png"));
+        field2.addInteractable(fieldExpertBenny);
+
+        Image field2Img = field2.getRoomPane().getBackground().getImages().get(0).getImage();
+        field2Collision.addCollisionBox(//West wall
+                new CollisionBox(-20, -80,
+                        10, field2Img.getHeight()+200));
+        field2Collision.addCollisionBox( //North West fence
+                new CollisionBox(-20, -20, 500, 40));
+        field2Collision.addCollisionBox( //North East fence
+                new CollisionBox(580, -20, field2Img.getWidth(), 40));
+        field2Collision.addCollisionBox( //South border
+                new CollisionBox(-20, field2Img.getHeight()-190,
+                        field2Img.getWidth()+100, 200));
+        field2.setRoomCollisions(field2Collision);
+
+
+        ///// FIELD 3 /////
+        field3.setLocked(true);
+        unLockableRooms.put("field3", field3);
+        field3.setExit("west", field);
+        field3.setExit("north", shed);
+        field3.setRoomPane(createPane("Field3ver1.png"));
+
+        Image field3Img = field3.getRoomPane().getBackground().getImages().get(0).getImage();
+        field3Collision.addCollisionBox( //South border
+                new CollisionBox(-20, field3Img.getHeight()-190,
+                        field3Img.getWidth()+100, 200));
+        field3Collision.addCollisionBox( //North border
+                new CollisionBox(-20, -80,
+                        field3Img.getWidth()+200, 85));
+        field3Collision.addCollisionBox( //East border
+                new CollisionBox(field3Img.getWidth()-140, -40,
+                        200, field3Img.getHeight()+180));
+        field3.setRoomCollisions(field3Collision);
 
         ////////////////
         //STORE////////
@@ -466,18 +509,7 @@ public class Game {
         shed.setRoomPane(createPane("SHED", Color.BLANCHEDALMOND));
 
 
-        field2.setLocked(true);
-        unLockableRooms.put("field2", field2);
-        field2.setExit("east", field);
-        field2.setExit("north", garden);
-        field2.setRoomPane(createPane("Field2Ver1.png"));
-        field2.addInteractable(fieldExpertBenny);
 
-        field3.setLocked(true);
-        unLockableRooms.put("field3", field3);
-        field3.setExit("west", field);
-        field3.setExit("north", shed);
-        field3.setRoomPane(createPane("Field3ver1.png"));
 
 
         currentRoom = headquarter;
