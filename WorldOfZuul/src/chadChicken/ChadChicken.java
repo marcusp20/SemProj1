@@ -32,6 +32,9 @@ public class ChadChicken {
         postQuestions = new ArrayList<>();
         postQuestions.add(Question.POST_Q1);
         postQuestions.add(Question.POST_Q2);
+        postQuestions.add(Question.POST_Q3);
+        postQuestions.add(Question.POST_Q4);
+        postQuestions.add(Question.POST_Q5);
 
     }
 
