@@ -33,7 +33,7 @@
                               <Image url="@../../../../../Downloads/sand_white.png" />
                            </image>
                         </ImageView>
-                        <TextArea prefHeight="674.0" prefWidth="634.0" text="To walk north press W&#10;&#10;To walk south press S&#10;&#10;To walk east press D&#10;&#10;To walk west press A&#10;&#10;&#10;&#10;&#10;&#10;&#10;&#10;&#10;&#10;&#10;&#10;To open the tasklist press TAB&#10;&#10;&#10;&#10;&#10;To open inventory press I&#10;&#10;&#10;&#10;&#10;&#10;&#10;&#10;&#10;To interact with npc's and objects press E">
+                        <TextArea editable="false" prefHeight="674.0" prefWidth="634.0" text="To walk north press W&#10;&#10;To walk south press S&#10;&#10;To walk east press D&#10;&#10;To walk west press A&#10;&#10;&#10;&#10;&#10;&#10;&#10;&#10;&#10;&#10;&#10;&#10;To open the tasklist press TAB&#10;&#10;&#10;&#10;&#10;To open inventory press I&#10;&#10;&#10;&#10;&#10;&#10;&#10;&#10;&#10;To interact with npc's and objects press E">
                            <font>
                               <Font name="System Bold Italic" size="12.0" />
                            </font>
@@ -71,7 +71,7 @@
                               <Image url="@../../../../../Downloads/sand_white.png" />
                            </image>
                         </ImageView>
-                        <TextArea prefHeight="674.0" prefWidth="634.0" text="The Headquarters (HQ) is the access point to all the other rooms.&#10;On top of this, it's a place to rest so you can bear the fruit of your hard work in the field.&#10;&#10;You interact with the bed by press E on it and afterwards select-&#10;ing what you want to do.&#10;&#10;By going North in your Headquarter you access the store&#10;By going West in your Headquarter you access the garden&#10;By going South in your Headquarter you access your field&#10;I wonder where you end up if you go East.....?&#10;">
+                        <TextArea editable="false" prefHeight="674.0" prefWidth="634.0" text="The Headquarters (HQ) is the access point to all the other rooms.&#10;On top of this, it's a place to rest so you can bear the fruit of your hard work in the field.&#10;&#10;You interact with the bed by press E on it and afterwards select-&#10;ing what you want to do.&#10;&#10;By going North in your Headquarter you access the store&#10;By going West in your Headquarter you access the garden&#10;By going South in your Headquarter you access your field&#10;I wonder where you end up if you go East.....?&#10;">
                            <font>
                               <Font name="System Bold Italic" size="12.0" />
                            </font></TextArea>
@@ -93,7 +93,7 @@
                               <Image url="@../../../../../Downloads/sand_white.png" />
                            </image>
                         </ImageView>
-                        <TextArea prefHeight="674.0" prefWidth="634.0" text="The store is a place of business, here you can buy crops and other things to lessen the workload.&#10;&#10;You can interact (E) with the leftmost bookcase to buy things.&#10;The list of things you can buy will change depending on w-&#10;hat you already bought&#10;&#10;To converse with any present npc press (E) near them&#10;&#10;From the store you can access your headquarter by going south">
+                        <TextArea editable="false" prefHeight="674.0" prefWidth="634.0" text="The store is a place of business, here you can buy crops and other things to lessen the workload.&#10;&#10;You can interact (E) with the leftmost bookcase to buy things.&#10;The list of things you can buy will change depending on w-&#10;hat you already bought&#10;&#10;To converse with any present npc press (E) near them&#10;&#10;From the store you can access your headquarter by going south">
                            <font>
                               <Font name="System Bold Italic" size="12.0" />
                            </font></TextArea>
@@ -115,7 +115,7 @@
                               <Image url="@../../../../../Downloads/sand_white.png" />
                            </image>
                         </ImageView>
-                        <TextArea prefHeight="674.0" prefWidth="634.0" text="The garden is a place of peace and tranquility, here you can admire your bees&#10;&#10;The beekeeper here will help you on your way, so make sure to sp-&#10;eak with her.&#10;&#10;The bees must be good for something, I wonder what it is.&#10;&#10;By going east you can access the headquarters&#10;">
+                        <TextArea editable="false" prefHeight="674.0" prefWidth="634.0" text="The garden is a place of peace and tranquility, here you can admire your bees&#10;&#10;The beekeeper here will help you on your way, so make sure to sp-&#10;eak with her.&#10;&#10;The bees must be good for something, I wonder what it is.&#10;&#10;By going east you can access the headquarters&#10;">
                            <font>
                               <Font name="System Bold Italic" size="12.0" />
                            </font></TextArea>
@@ -137,7 +137,7 @@
                               <Image url="@../../../../../Downloads/sand_white.png" />
                            </image>
                         </ImageView>
-                        <TextArea prefHeight="674.0" prefWidth="634.0" text="The field is a place of sweat, tears and most of all hard work.&#10;&#10;Perhaps speaking to the old fart here will help you on your way.&#10;&#10;To interact with your field, go near it and press E.&#10;&#10;Remember to water your field, and keep your soil healthy!&#10;&#10;&#10;&#10;&#10;&#10;By going North you access the HQ">
+                        <TextArea editable="false" prefHeight="674.0" prefWidth="634.0" text="The field is a place of sweat, tears and most of all hard work.&#10;&#10;Perhaps speaking to the old fart here will help you on your way.&#10;&#10;To interact with your field, go near it and press E.&#10;&#10;Remember to water your field, and keep your soil healthy!&#10;&#10;&#10;&#10;&#10;&#10;By going North you access the HQ">
                            <font>
                               <Font name="System Bold Italic" size="12.0" />
                            </font></TextArea>
