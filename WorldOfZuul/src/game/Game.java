@@ -823,7 +823,7 @@ public class Game {
     public void plantFlower() {
         if (player.itemOwned(ItemName.BAG_OF_FLOWER_SEEDS)) {
             flowerBed.plantFlower();
-            player.getPlayerInventory().put(ItemName.BAG_OF_FLOWER_SEEDS, false);
+            player.removeOne(ItemName.BAG_OF_FLOWER_SEEDS);
         } else {
             System.out.println("No flower in inventory");
         }
@@ -878,7 +878,7 @@ public class Game {
                 storeItemList.remove(item);                             // remove item from StoreItemList.
                 shop.removeItem(command.getSecondWord());
             }
-            player.getPlayerInventory().put(item.getEnum(), true);  // change item hashmap value to true.
+            player.addOne(item.getEnum());  // change item hashmap value to true.
             System.out.println("you bought a " + item.getName());
 
             //Successfully bought an item, update tasks list, to see if purchase fulfilled a task requirement
@@ -919,24 +919,24 @@ public class Game {
         if (choice.equals("wheat") && player.itemOwned(ItemName.BAG_OF_WHEAT)) {
             field.setCurrentHarvest("wheat");
             System.out.println("Wheat was used.");
-            player.getPlayerInventory().put(ItemName.BAG_OF_WHEAT, false);
+            player.removeOne(ItemName.BAG_OF_WHEAT);
 
             //break;
         } else if (choice.equals("clover") && player.itemOwned(ItemName.BAG_OF_CLOVER)) {
             field.setCurrentHarvest("clover");
             System.out.println("Clover was used.");
-            player.getPlayerInventory().put(ItemName.BAG_OF_CLOVER, false);
+            player.removeOne(ItemName.BAG_OF_CLOVER);
             //break;
         } else if (choice.equals("corn") && player.itemOwned(ItemName.BAG_OF_CORN)) {
             field.setCurrentHarvest("corn");
             System.out.println("Corn was used.");
-            player.getPlayerInventory().put(ItemName.BAG_OF_CORN, false);
+            player.removeOne(ItemName.BAG_OF_CORN);
 
             //break;
         } else if (choice.equals("cannabis") && player.itemOwned(ItemName.BAG_OF_CANNABIS)) {
             field.setCurrentHarvest("cannabis");
             System.out.println("cannabis was sowed.");
-            player.getPlayerInventory().put(ItemName.BAG_OF_CANNABIS, false);
+            player.removeOne(ItemName.BAG_OF_CANNABIS);
 
             //break;
         } else if (choice.equals("?")) {
@@ -1062,7 +1062,7 @@ public class Game {
             } else {
                 currentField.useFertilizerBeforeSow();
             }
-            player.getPlayerInventory().put(ItemName.BAG_OF_FERTILIZER, false);
+            player.removeOne(ItemName.BAG_OF_FERTILIZER);
         } else {
             System.out.println("No fertilizer in inventory.");
         }
@@ -1106,7 +1106,7 @@ public class Game {
         if (player.itemOwned(ItemName.PESTICIDES)) {
             currentField.usePesticides();
             //System.out.println("all pests where killed");
-            player.getPlayerInventory().put(ItemName.PESTICIDES, false);
+            player.removeOne(ItemName.PESTICIDES);
         } else {
             System.out.println("No pesticides in inventory");
         }

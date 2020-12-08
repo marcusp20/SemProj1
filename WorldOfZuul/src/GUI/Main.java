@@ -25,8 +25,6 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.text.Font;
 import javafx.scene.layout.VBox;
-import javafx.scene.media.Media;
-import javafx.scene.media.MediaPlayer;
 import javafx.stage.Stage;
 import javafx.util.Callback;
 
@@ -550,14 +548,14 @@ public class Main extends Application {
         }
     }
 
-    public void toggleInventoryList() {
+    public void printInventoryList() {
         game.getBaos().reset();
         System.out.println("You have " + game.getPlayer().getWallet() + " $ in your wallet");
         System.out.println(game.getPlayer().getInventory());
     }
 
     public void invButtonClicked(ActionEvent actionEvent) {
-        toggleInventoryList();
+        printInventoryList();
     }
 
     public void saveButtonClicked(ActionEvent actionEvent) {
