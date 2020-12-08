@@ -1,28 +1,31 @@
 .nn Farmer Bill
 .dd An farmer so old, not even the mountains know when he was born.
 
-*0 Greetings, young farmer
-*1 I assume that you are here to learn how to manage a farm sustainably :-)
-
-$$0 Lucky for you I have a hat full of dandruff and wisdom
+*0 Hello
+*1 There
+*2 Soyboi
 
 ##0 Is there anything in particular you would like to know?
 
-q00 How do I manage a farm?
-a00 Oh that will take more than a few questions to get the hang of, but a good place to start is
-a00 always remembering to water your crops after they have been sown, and giving your crops time to blossom.
+##0 May the heavens bless you with rain and sun
 
-q01 Why do I need to manage my farm properly?
-a01 Otherwise the rooster will get ya.
+q00 1.How do i run the field?
+a00 you first have to Sow the field with a crop.
+a01 Then make sure to water it at least once.
+a02 Finally harvest when it's ready and reap the profits!
 
-q02 Why does my field-yield decrease after sowing the same crop several times?
-a02 To keep the soil healthy you want to do a crop-rotation young one, it is simpler than it sounds.
-a02 All you have to do is sow a different crop, so the soil has time to rejuvenate.
+q01 2.How do i get rid of pests?
+a10 You can use pesticides, though there are better ways
+a11 Go ask FieldKeeper Bobby for fertilizers and pesticides
 
-q03 Why can't I harvest my crops after watering?
-a03 Why don't you come back after a nap and ask me again.
+q02 3.How do i get the most yield?
+a20 Sowing different crops keeps the nutrition in balance
+a21 Don't water too little, or too much
+a22 Use big machines like tractors and harvesters for even better yield!
 
-q04
-a04
+q03 4.What crop is best?
+a30 The most expensive crops are the best!
+a31 Have you tried the new hemp i've planted?
 
-
+q04 Why do I need to manage my farm properly?
+a40 Otherwise the rooster will get ya.

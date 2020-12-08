@@ -29,6 +29,7 @@ public class ChadChicken {
         postQuestions = new ArrayList<>();
         postQuestions.add(Question.POST_Q1);
         postQuestions.add(Question.POST_Q2);
+
     }
 
     public void uploadAnswers(HashMap<Question, String> answers) {

@@ -5,6 +5,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 
 import java.util.HashMap;
+import java.util.Map;
 
 public class Player {
     //Attributes
@@ -76,6 +77,20 @@ public class Player {
 
     public void sellYields(double yields) {
         wallet += yields;
+    }
+
+    public String getInventory() {
+        String inventory = "";
+        for (Map.Entry<ItemName, Boolean> entry : playerInventory.entrySet()) {
+            if (entry.getValue()) {
+                inventory += entry.getKey().toString() + ", ";
+            }
+        }
+        if (inventory.isEmpty()) {
+            return "Nothing in inventory, go to the shop to buy items";
+        }
+        return "Inventory: "
+                + inventory + "";
     }
 
     public void setPlayerSprite(Image img)   {

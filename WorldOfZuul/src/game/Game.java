@@ -15,6 +15,7 @@ import java.util.Random;
 import interactable.*;
 import javafx.geometry.Insets;
 import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
@@ -37,15 +38,16 @@ public class Game {
     private NPC shopkeeperLizzy;
     private NPC farmerBob;
     private NPC beekeeperBetti;
+    private NPC fieldExpertBenny;
     private ChadChicken chadChicken;
     private Quiz preQuiz;
     private Quiz postQuiz;
     private GameLogger logger;
-    private FlowerBed flowerbed;
     private boolean isCreatedFromSaveFile;
     private HashMap<String, Room> unLockableRooms;
     private TaskList taskList;
     private Bed hqBed;
+    private FlowerBed flowerBed;
     private BeeHive beeHive;
     private int gameTimer = 0;
     private static final Random random = new Random();
@@ -154,23 +156,54 @@ public class Game {
     private void createNPC() {
         File majorBobDialog = load("majorBobDialog.txt");
         majorBob = new NPC(majorBobDialog);
+        try {
+            majorBob.getImageView().setImage(loadImage("MayorBobSprite.png"));
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
         majorBob.getImageView().setX(250);
         majorBob.getImageView().setY(300);
 
         File storeNPCDialog = load("shopKeeperLizzyDialog.txt");
         shopkeeperLizzy = new NPC(storeNPCDialog);
+        try {
+            shopkeeperLizzy.getImageView().setImage(loadImage("Shopkeeperlizzysprite.png"));
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
         shopkeeperLizzy.getImageView().setX(200);
         shopkeeperLizzy.getImageView().setY(250);
 
         File fieldNPCDialog = load("fieldNPCDialog.txt");
         farmerBob = new NPC(fieldNPCDialog);
+        try {
+            farmerBob.getImageView().setImage(loadImage("FarmerBob.png"));
+
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
         farmerBob.getImageView().setX(170);
         farmerBob.getImageView().setY(190);
 
         File beekeeperDialog = load("beekeeperBetti.txt");
         beekeeperBetti = new NPC(beekeeperDialog);
-        beekeeperBetti.getImageView().setX(950);
-        beekeeperBetti.getImageView().setY(250);
+        try {
+            beekeeperBetti.getImageView().setImage(loadImage("BeeKeeperBettiSprite.png"));
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+        beekeeperBetti.getImageView().setX(200);
+        beekeeperBetti.getImageView().setY(320);
+
+        File fieldExpertDialog = load("fieldExpertBenny.txt");
+        fieldExpertBenny = new NPC(fieldExpertDialog);
+        try {
+            fieldExpertBenny.getImageView().setImage(loadImage("FieldExpertBennySprite.png"));
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+        fieldExpertBenny.getImageView().setX(100);
+        fieldExpertBenny.getImageView().setY(100);
     }
 
     private void createBed() {
@@ -184,6 +217,13 @@ public class Game {
         beeHive.getImageView().setX(330);
         beeHive.getImageView().setY(200);
     }
+
+    private void createFlowerBed() {
+        flowerBed = new FlowerBed(flowerBedCommandWords);
+        flowerBed.getImageView().setX(790);
+        flowerBed.getImageView().setY(620);
+    }
+
 
 
     /**
@@ -243,7 +283,8 @@ public class Game {
 
         beeHiveCommandWords = new CommandWords();
         beeHiveCommandWords.addCommandWord(CommandWord.GARDEN_CHECK_BEES);
-        beeHiveCommandWords.addCommandWord(CommandWord.LEAVE);
+        //beeHiveCommandWords.addCommandWord(CommandWord.GARDEN_PLANT_FLOWER);
+        //beeHiveCommandWords.addCommandWord(CommandWord.LEAVE);
 
         flowerBedCommandWords = new CommandWords();
         flowerBedCommandWords.addCommandWord(CommandWord.GARDEN_PLANT_FLOWER);
@@ -258,7 +299,8 @@ public class Game {
         field.getImageView().setFitWidth(712);
         field.getImageView().setFitHeight(463);
         field.getImageView().setVisible(false);
-    }
+
+        }
 
 
 
@@ -277,9 +319,10 @@ public class Game {
         return player;
     }
 
-    private void createFlowerBed() {
-        flowerbed = new FlowerBed(flowerBedCommandWords);
-    }
+
+       // private void createFlowerBed() {
+       //     flowerbed = new FlowerBed(flowerBedCommandWords);
+       // }
 
     private void createRooms() {
         Room headquarter, shed, field, field2, field3, garden, store;
@@ -395,6 +438,8 @@ public class Game {
         garden.setRoomPane(createPane("GardenVer1.png"));
         garden.addInteractable(beekeeperBetti);
         garden.addInteractable(beeHive);
+        garden.addInteractable(flowerBed);
+
 
         Image gardenImg = garden.getRoomPane().getBackground().getImages().get(0).getImage();
         gardenCollision.addCollisionBox(//West wall
@@ -423,11 +468,15 @@ public class Game {
         unLockableRooms.put("field2", field2);
         field2.setExit("east", field);
         field2.setExit("north", garden);
+        field2.setRoomPane(createPane("Field2Ver1.png"));
+        field2.addInteractable(fieldExpertBenny);
 
         field3.setLocked(true);
         unLockableRooms.put("field3", field3);
         field3.setExit("west", field);
         field3.setExit("north", shed);
+        field3.setRoomPane(createPane("Field3ver1.png"));
+
 
         currentRoom = headquarter;
 
@@ -560,7 +609,7 @@ public class Game {
         } else if (commandWord == CommandWord.TASK) {
             //printTaskList();
         } else if (commandWord == CommandWord.MONEY) {
-            System.out.println("You have $" + player.getWallet());
+            System.out.println("You have $ " + player.getWallet());
             return false;
         } //TODO print player inventory
         else if (commandWord == CommandWord.SAVE) {
@@ -608,6 +657,7 @@ public class Game {
     /////////////////////////////////////////////////////////////////////////////////////
 
     private void use(Command command) {
+        baos.reset();
         if (command.getSecondWord() != null) {           //If player is attempting to use something then...
             //Checks if player is in the right place to use intractable
             String end = " used successfully";
@@ -621,11 +671,12 @@ public class Game {
                 System.out.println("Store" + end);
                 parser.setCommands(storeCommandWords);
                 parser.showCommands();
-            } else if (command.getSecondWord().equals("beehive") && currentRoom.getShortDescription().equals("in the beautiful garden")) {
+            } /*else if (command.getSecondWord().equals("beehive") && currentRoom.getShortDescription().equals("in the beautiful garden")) {
                 System.out.println("Beehive" + end);
                 parser.setCommands(beeHiveCommandWords);
                 parser.showCommands();
-            } else if (command.getSecondWord().equals("flowers") && currentRoom.getShortDescription().equals("in the beautiful garden")) {
+            }*/
+              else if (command.getSecondWord().equals("flowers") && currentRoom.getShortDescription().equals("in the beautiful garden")) {
                 System.out.println("Flower bed" + end);
                 parser.setCommands(flowerBedCommandWords);
                 parser.showCommands();
@@ -641,6 +692,8 @@ public class Game {
             } else if (command.getSecondWord().equals("bed") && currentRoom.getShortDescription().equals("In the headquarter")) {
                 sleep();
                 logger.log(command);
+            } else if (command.getSecondWord().equals("npc") && currentRoom.getShortDescription().equals("in the 2nd field")) {
+                  fieldExpertBenny.converse();
             }
 
         } else {
@@ -694,16 +747,14 @@ public class Game {
             }
         }
     }
-    */
+     */
 
     //Prob not a game command, room command? or something...
     public void sleep() {
         hqBed.sleep();            //Used in 2d implementation
         field.nextDay();
         checkField();
-
         gameTimer++;
-
         eventChecker();
     }
 
@@ -714,7 +765,7 @@ public class Game {
 
     public void plantFlower() {
         if (player.itemOwned(ItemName.BAG_OF_FLOWER_SEEDS)) {
-            flowerbed.plantFlower();
+            flowerBed.plantFlower();
             player.getPlayerInventory().put(ItemName.BAG_OF_FLOWER_SEEDS, false);
         } else {
             System.out.println("No flower in inventory");
@@ -722,7 +773,7 @@ public class Game {
     }
 
     public void checkBees(int pestCounter) {
-        flowerbed.calcBees(pestCounter);
+        flowerBed.calcBees(pestCounter);
     }
 
 
@@ -860,7 +911,6 @@ public class Game {
 
         boolean isValidCropChoice = chooseCrop(command);
         if (!isValidCropChoice) {
-            System.out.println("Specify what to sow please.");
             return;
         }
 
@@ -906,7 +956,7 @@ public class Game {
             return;
         }
 
-        field.calcBeeYield(flowerbed.getBees());  //Bees impact on field
+        field.calcBeeYield(flowerBed.getBees());  //Bees impact on field
         field.checkPreviousHarvest();             //Crop rotations impact on field
         field.harvestDone();                      //calc rest of yield
         player.sellYields(field.getYield());      //yields sold to money.
@@ -943,6 +993,7 @@ public class Game {
     //Check for isSowed
     //See moistField method for further explanation.
     public void waterField() {
+
         if (player.itemOwned(ItemName.WATER_CAN)) {
             if (field.getIsSowed()) {
                 field.moistField();
@@ -959,7 +1010,7 @@ public class Game {
     public void usePesticide() {
         if (player.itemOwned(ItemName.PESTICIDES)) {
             field.usePesticides();
-            System.out.println("all pests where killed");
+            //System.out.println("all pests where killed");
             player.getPlayerInventory().put(ItemName.PESTICIDES, false);
         } else {
             System.out.println("No pesticides in inventory");
@@ -970,15 +1021,19 @@ public class Game {
     //getFieldSample method
     //shows condition of field based on yield.
     public void getFieldSample() {
-        if (field.getYield() > 64) {
-            System.out.println("Your soil is in excellent condition!");
-        } else if (field.getYield() > 33) {
-            System.out.println("your soil is in good condition.");
-        } else if (field.getYield() > 15) {
-            System.out.println("Your soil could be worse.");
+        if (player.itemOwned(ItemName.SOIL_SAMPLE_COLLECTOR)) {
+            if (field.getYield() > 64) {
+                System.out.println("Your soil is in excellent condition!");
+            } else if (field.getYield() > 33) {
+                System.out.println("your soil is in good condition.");
+            } else if (field.getYield() > 15) {
+                System.out.println("Your soil could be worse.");
+            } else {
+                System.out.println("Your soil is not too great.");
+                System.out.println("Have you tried fertilizing the soil?");
+            }
         } else {
-            System.out.println("Your soil is not too great.");
-            System.out.println("Have you tried fertilizing the soil?");
+            System.out.println("You don't have a soil sample collector");
         }
     }
 
@@ -1101,6 +1156,10 @@ public class Game {
 
     public Bed getHqBed() {
         return this.hqBed;
+    }
+
+    public FlowerBed getFlowerBed() {
+        return this.flowerBed;
     }
 
     public Field getField() {

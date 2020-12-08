@@ -72,7 +72,7 @@ public class Room {
     }
 
     public String getLongDescription() {
-        return "You are " + description + ".\n" + getExitString();
+        return "You are " + description + ".\n";
     }
 
     private String getExitString() {
@@ -116,14 +116,15 @@ public class Room {
 
     public Label createFeedbackLabel() {
         feedbackText = new Label(" DUMMY TEXT DATA HERE");
-        feedbackText.setLayoutX(353);
-        feedbackText.setLayoutY(720);
+        feedbackText.setLayoutX(263);
+        feedbackText.setLayoutY(690);
         feedbackText.setTextFill(Color.web("#f0ffff"));
         feedbackText.setOpacity(0.92);
-        feedbackText.setPrefSize(550, 110);
+        feedbackText.setPrefSize(750, 140);
         feedbackText.setFont(new Font("Arial", 22));
         feedbackText.setStyle("-fx-border-color:darkgoldenrod; -fx-border-width:3; -fx-background-color:black;");
         feedbackText.setAlignment(Pos.CENTER);
+        feedbackText.setWrapText(true);
         feedbackText.setOpacity(0);
         return feedbackText;
     }

@@ -25,6 +25,8 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.text.Font;
 import javafx.scene.layout.VBox;
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
 import javafx.stage.Stage;
 import javafx.util.Callback;
 
@@ -59,7 +61,6 @@ public class Main extends Application {
     //Interaction keys
     private boolean e;
     private boolean backSpace;
-
 
     //labels
     Label feedbackText;
@@ -137,14 +138,20 @@ public class Main extends Application {
         newGameButton.setOpacity(0);
         newGameButton.setLayoutX(480);
         newGameButton.setLayoutY(280);
-        newGameButton.setOnAction(e -> newGame(stage)); //This button will close this window, and start a new game
+        newGameButton.setOnAction(e -> {    //This button will close this window, and start a new game
+            newGame(stage);
+            //
+        });
 
         loadGameButton = new Button();
         loadGameButton.setPrefSize(420, 69);
         loadGameButton.setOpacity(0);
         loadGameButton.setLayoutX(480);
         loadGameButton.setLayoutY(410);
-        loadGameButton.setOnAction(e -> loadGame(stage)); //This button will close this window, and load a saved game
+        loadGameButton.setOnAction(e -> {    //This button will close this window, and load a saved game
+            loadGame(stage);
+            //
+        });
 
         //Parent rootButtonLayout = FXMLLoader.load(getClass().getResource("ButtonLayout.fxml"));
         //Parent rootStartScreen = FXMLLoader.load(getClass().getResource("StartScreen.fxml"));
@@ -168,7 +175,7 @@ public class Main extends Application {
         //Set scene
         Pane p = game.getCurrentRoom().getRoomPane();
 
-        //FXML root OR JavaFX Code... answer: JavaFX
+        //FXML root
         try {
             Parent rootButtonLayout = FXMLLoader.load(getClass().getResource("ButtonLayout.fxml"));
         } catch (IOException ioException) {
@@ -372,7 +379,7 @@ public class Main extends Application {
                 BoundingBox interactionBounds = new BoundingBox(minX - offSet, minY - offSet, width + offSet * 2, height + offSet * 2);
 
                 if (interactionBounds.intersects(game.getPlayer().getPlayerSprite().getLayoutBounds())) {
-                    game.getBaos().reset(); //  not sure if placed correct
+                    game.getBaos().reset(); //Resets Buffer before interacting
                     game.getCurrentRoom().getRoomPane().getChildren().remove(lastNode);
                     //TODO make abstract method for getting gui visuals (replace getCommandList & getNpcWindow)
                     if (i.interact().equals("npc")) {
@@ -393,24 +400,23 @@ public class Main extends Application {
     }
 
     public void updateFeedbackText(ByteArrayOutputStream b, Label l) {
-        l.setOpacity(0.54);
+        l.setOpacity(0.69);
         l.setText(b.toString());
         l.toFront();
         //game.resetStream();
     }
 
     public void fadeOut(Stage stage) {
-        for (double i = 1; i >= 0.01; i = i - 0.0001) {
+        for (double i = 1; i >= 0.01; i = i - 0.001) {
             stage.setOpacity(i);
         }
     }
 
     public void fadeIn(Stage stage) {
-        for (double i = 0; i <= 0.999; i = i + 0.0001) {
+        for (double i = 0; i <= 0.999; i = i + 0.001) {
             stage.setOpacity(i);
         }
     }
-
 
 
     //Check pressed key and react accordingly
@@ -427,6 +433,7 @@ public class Main extends Application {
                 case E -> e = true;
                 case BACK_SPACE -> this.backSpace = true;
                 case F -> toggleTaskList();
+                case I -> game.getBaos().reset();
             }
         }
 
@@ -463,9 +470,14 @@ public class Main extends Application {
         createListFromMap(fieldCommands, game.getField());
 
         HashMap<String, Command> beeHiveCommands = new HashMap<>();
-        beeHiveCommands.put("Use beehive", new Command(CommandWord.USE, "beehive"));
-        beeHiveCommands.put("Bees?", new Command(CommandWord.GARDEN_CHECK_BEES, ""));
+        //beeHiveCommands.put("Use beehive", new Command(CommandWord.USE, "beehive"));
+        beeHiveCommands.put("Check bee population", new Command(CommandWord.GARDEN_CHECK_BEES, ""));
         createListFromMap(beeHiveCommands, game.getBeeHive());
+
+        HashMap<String, Command> flowerBedCommands = new HashMap<>();
+        flowerBedCommands.put("Plant flower", new Command(CommandWord.GARDEN_PLANT_FLOWER, ""));
+        createListFromMap(flowerBedCommands, game.getFlowerBed());
+
 
         HashMap<String, Command> shopCommands = new HashMap<>();
         for (Item i : game.getStoreItemList()) {
@@ -518,9 +530,14 @@ public class Main extends Application {
         }
     }
 
-    public void invButtonClicked(ActionEvent actionEvent) {
-        System.out.println("inv");
+    public void toggleInventoryList() {
+        game.getBaos().reset();
+        System.out.println("You have " + game.getPlayer().getWallet() + " $ in your wallet");
+        System.out.println(game.getPlayer().getInventory());
+    }
 
+    public void invButtonClicked(ActionEvent actionEvent) {
+        toggleInventoryList();
     }
 
     public void saveButtonClicked(ActionEvent actionEvent) {
