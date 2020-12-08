@@ -1,18 +1,28 @@
 .nn Farmer Bill
 .dd An farmer so old, not even the mountains know when he was born.
 
-*0 Hello
-*1 There
-*2 General
-*3 Kenobi
+*0 Greetings, young farmer
+*1 I assume that you are here to learn how to manage a farm sustainably :-)
 
-$$0 What brings you today young one...
+$$0 Lucky for you I have a hat full of dandruff and wisdom
 
-##0 May the heavens bless you with rain and sun
+##0 Is there anything in particular you would like to know?
 
-q00 1.What do?!?!?!
-a00 DO FARM!!!
+q00 How do I manage a farm?
+a00 Oh that will take more than a few questions to get the hang of, but a good place to start is
+a00 always remembering to water your crops after they have been sown, and giving your crops time to blossom.
 
-q01 2.HOW MAKE FARM
-a01 JUST MAKE FARM
-a01 AM MONKE
+q01 Why do I need to manage my farm properly?
+a01 Otherwise the rooster will get ya.
+
+q02 Why does my field-yield decrease after sowing the same crop several times?
+a02 To keep the soil healthy you want to do a crop-rotation young one, it is simpler than it sounds.
+a02 All you have to do is sow a different crop, so the soil has time to rejuvenate.
+
+q03 Why can't I harvest my crops after watering?
+a03 Why don't you come back after a nap and ask me again.
+
+q04
+a04
+
+

@@ -40,6 +40,8 @@ import java.util.List;
 
 public class Main extends Application {
 
+    public TabPane tutorialPane;
+    private static TabPane tutorialPaneInstance;
     //Create structure
     Scene scene, introScene;
 
@@ -57,6 +59,7 @@ public class Main extends Application {
     //Interaction keys
     private boolean e;
     private boolean backSpace;
+
 
     //labels
     Label feedbackText;
@@ -327,6 +330,7 @@ public class Main extends Application {
     }
 
     private void removeRoomContent()    {
+        terminateTutorialPane();
         game.getCurrentRoom().getRoomPane().getChildren().remove(lastNode);
         game.getCurrentRoom().getRoomPane().getChildren().remove(game.getTaskList().getTaskListView());
         try {
@@ -522,10 +526,26 @@ public class Main extends Application {
     public void saveButtonClicked(ActionEvent actionEvent) {
         game.processCommand(new Command(CommandWord.SAVE, null));
     }
-
+    public void toggleTutorial() {
+        if (tutorialPaneInstance == null) {
+            tutorialPaneInstance = tutorialPane;
+        }
+        if (tutorialPaneInstance.isVisible()) {
+            tutorialPaneInstance.setVisible(false);
+        } else {
+            tutorialPaneInstance.setVisible(true);
+        }
+    }
+    public void terminateTutorialPane() {
+        if (tutorialPaneInstance != null) {
+            tutorialPaneInstance.setVisible(false);
+            tutorialPaneInstance = null;
+            tutorialPane = null;
+        }
+    }
 
     public void helpButtonClicked(ActionEvent actionEvent) {
-        System.out.println("help pls");
+        toggleTutorial();
     }
 
     private class MainGUIQuiz extends Quiz {
