@@ -151,10 +151,10 @@ public class Game {
 
     public void createStore() {
         shop = new Shop();
-        shop.getImageView().setX(546);
-        shop.getImageView().setY(23);
-        shop.getImageView().setFitWidth(202);
-        shop.getImageView().setFitHeight(204);
+        shop.getImageView().setX(568);
+        shop.getImageView().setY(51);
+        shop.getImageView().setFitWidth(152);
+        shop.getImageView().setFitHeight(150);
         shop.getImageView().setVisible(false);
     }
 
