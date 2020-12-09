@@ -11,10 +11,10 @@ q00 What can you tell me about pests?
 a00 Pests are a farmers nightmare!
 a01 They eat your crop and steal the profits!
 
-q01 How do i handle pests the best?
+q01 How do I handle pests the best?
 a10 There are 2 ways to deal with pests on your farm
-a11 You can use crop rotation to minimize the pests
-a12 Or you can use some pesticides and eradicate all
+a11 You can use crop rotation to minimize the pests,
+a12 or you can use some pesticides and eradicate all
 
 q02 Tell me more about pesticides
 a20 Pesticides are very effective!
