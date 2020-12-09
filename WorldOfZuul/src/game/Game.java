@@ -392,9 +392,9 @@ public class Game {
         headquarter.setRoomCollisions(headquarterCollision);
 
         headquarter.setIntroText(
-                "Welcome xXxweedSmoker420xXx " +
+                "Welcome Sir, " +
                 "to this humble town. My name is " +
-                "bob, im the mayor of this town...");
+                "bob, im the mayor of this town.");
 
 
         ////////////////
@@ -422,7 +422,7 @@ public class Game {
         field.setIntroText(
                 "Welcome to the farm mister. " +
                 "I've been tasked with getting you " +
-                "started. Start by coming to talk to me");
+                "started. Feel free to ask me any questions anytime.");
 
         ///// FIELD 2 /////
         field2.setLocked(true);
@@ -448,9 +448,9 @@ public class Game {
         field2.setRoomCollisions(field2Collision);
 
         field2.setIntroText(
-                "Now that you have your tractor" +
-                "you have more time, so another field " +
-                " is more yield!"
+                "Now that you have bought a new tractor and field, " +
+                "you can have double the yeilds! " +
+                "Feel free to ask me any questions about pesticides or fertilizers"
                 );
 
 
@@ -511,8 +511,8 @@ public class Game {
 
         store.setIntroText(
                 "Hello darling, you must be the new " +
-                "kid. My name is lizzy, i'm this " +
-                "towns only shopkeeper...");
+                "farmer. My name is lizzy, i'm the " +
+                "only shopkeeper in this small town...");
 
 
         ////////////////
@@ -542,7 +542,8 @@ public class Game {
         garden.setRoomCollisions(gardenCollision);
 
         garden.setIntroText(
-                "Hello there good fellow...");
+                "Hello there good Farmer! " + "My name is BeeKeeper betti " +
+                        " And i love bees!" + " Come talk to me about bees and flowers anyday!");
 
         //////////
         //SHED////
@@ -558,7 +559,7 @@ public class Game {
 
         currentRoom = headquarter;
 
-        shed.setIntroText("How did you get in here...");
+        shed.setIntroText("Hey! How did you get in here? Sneaky bastard");
     }
 
     private Pane createPane(String name, Color color) {
