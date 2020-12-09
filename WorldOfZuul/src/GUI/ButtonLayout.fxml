@@ -22,7 +22,7 @@
       <Button fx:id="invButton" layoutX="1145.0" layoutY="757.0" mnemonicParsing="false" onAction="#invButtonClicked" prefWidth="82.0" text="Inventory" />
       <Button fx:id="saveGameButton" layoutX="1145.0" layoutY="723.0" mnemonicParsing="false" onAction="#saveButtonClicked" prefHeight="25.0" prefWidth="82.0" text="Savegame" />
       <Button fx:id="helpButton" layoutX="1145.0" layoutY="689.0" mnemonicParsing="false" onAction="#helpButtonClicked" prefHeight="25.0" prefWidth="82.0" text="help" />
-      <TabPane fx:id="tutorialPane" layoutX="315.0" layoutY="65.0" prefHeight="703.0" prefWidth="634.0" tabClosingPolicy="UNAVAILABLE" visible="false">
+      <TabPane fx:id="tutorialPane" layoutX="315.0" layoutY="65.0" prefHeight="703.0" prefWidth="634.0" tabClosingPolicy="UNAVAILABLE">
         <tabs>
           <Tab text="Movement">
             <content>
@@ -33,7 +33,7 @@
                               <Image url="@../../../../../Downloads/sand_white.png" />
                            </image>
                         </ImageView>
-                        <TextArea editable="false" prefHeight="674.0" prefWidth="634.0" text="To walk north press W&#10;&#10;To walk south press S&#10;&#10;To walk east press D&#10;&#10;To walk west press A&#10;&#10;&#10;&#10;&#10;&#10;&#10;&#10;&#10;&#10;&#10;&#10;To open the tasklist press TAB&#10;&#10;&#10;&#10;&#10;To open inventory press I&#10;&#10;&#10;&#10;&#10;&#10;&#10;&#10;&#10;To interact with npc's and objects press E">
+                        <TextArea editable="false" prefHeight="674.0" prefWidth="634.0" text="To walk north press W&#10;&#10;To walk south press S&#10;&#10;To walk east press D&#10;&#10;To walk west press A&#10;&#10;&#10;&#10;&#10;&#10;&#10;&#10;&#10;&#10;&#10;&#10;To open the tasklist press F&#10;&#10;&#10;&#10;&#10;&#10;&#10;To interact with objects and people press E&#10;&#10;&#10;&#10;To open inventory press Inventory in the bottom right corner&#10;To save your game press Savegame in the bottom right corner">
                            <font>
                               <Font name="System Bold Italic" size="12.0" />
                            </font>
@@ -45,15 +45,10 @@
                         </ImageView>
                         <ImageView fitHeight="65.0" fitWidth="123.0" layoutX="398.0" layoutY="274.0" pickOnBounds="true" preserveRatio="true">
                            <image>
-                              <Image url="@../resources/img/Tab.png" />
+                              <Image url="@../resources/img/fbuttonpic.png" />
                            </image>
                         </ImageView>
-                        <ImageView fitHeight="59.0" fitWidth="65.0" layoutX="430.0" layoutY="368.0" pickOnBounds="true" preserveRatio="true">
-                           <image>
-                              <Image url="@../resources/img/i.png" />
-                           </image>
-                        </ImageView>
-                        <ImageView fitHeight="59.0" fitWidth="60.0" layoutX="430.0" layoutY="512.0" pickOnBounds="true" preserveRatio="true">
+                        <ImageView fitHeight="59.0" fitWidth="60.0" layoutX="401.0" layoutY="411.0" pickOnBounds="true" preserveRatio="true">
                            <image>
                               <Image url="@../resources/img/Interact.png" />
                            </image>
