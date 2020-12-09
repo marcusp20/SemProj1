@@ -983,16 +983,7 @@ public class Game {
     //Checks for tractor in inventory, if not, shovel is used. If no shovel, nothing happens.
     public void sowField(Command command) {
         //Check conditions
-        Field currentField;
-        if(currentRoom.getShortDescription().endsWith("3rd field")) {
-            currentField = field3;
-        } else if(currentRoom.getShortDescription().endsWith("2nd field")) {
-            currentField = field2;
-        } else {
-            currentField = field;
-        }
-
-
+        Field currentField = setCurrentField();
         if (currentField.getIsSowed()) {
             System.out.println("Field already sowed with " + currentField.getCurrentHarvest() + ".");
             return;
@@ -1025,14 +1016,7 @@ public class Game {
     //Calculates value yield, after scythe or harvester is used, and adds money to player wallet.
     //Resets field.
     public void harvestField() {
-        Field currentField;
-        if(currentRoom.getShortDescription().endsWith("3rd field")) {
-            currentField = field3;
-        } else if(currentRoom.getShortDescription().endsWith("2nd field")) {
-            currentField = field2;
-        } else {
-            currentField = field;
-        }
+        Field currentField = setCurrentField();
         checkField(currentField);
         if (!currentField.getIsReadyToHarvest()) {
             if (currentField.isWatered() && currentField.getIsSowed()) {
@@ -1074,15 +1058,7 @@ public class Game {
     //Checks for fertilizer and isSowed.
     //Fertilizer strength depends on isSowed condition.
     public void fertilizeField() {
-        Field currentField;
-        if(currentRoom.getShortDescription().endsWith("3rd field")) {
-            currentField = field3;
-        } else if(currentRoom.getShortDescription().endsWith("2nd field")) {
-            currentField = field2;
-        } else {
-            currentField = field;
-        }
-
+        Field currentField = setCurrentField();
         if (player.itemOwned(ItemName.BAG_OF_FERTILIZER)) {
             if (currentField.getIsSowed()) {
                 currentField.useFertilizerAfterSow();
@@ -1100,14 +1076,7 @@ public class Game {
     //Check for isSowed
     //See moistField method for further explanation.
     public void waterField() {
-        Field currentField;
-        if(currentRoom.getShortDescription().endsWith("3rd field")) {
-            currentField = field3;
-        } else if(currentRoom.getShortDescription().endsWith("2nd field")) {
-            currentField = field2;
-        } else {
-            currentField = field;
-        }
+        Field currentField = setCurrentField();
         if (player.itemOwned(ItemName.WATER_CAN)) {
             if (currentField.getIsSowed()) {
                 currentField.moistField();
@@ -1122,14 +1091,7 @@ public class Game {
 
 
     public void usePesticide() {
-        Field currentField;
-        if(currentRoom.getShortDescription().endsWith("3rd field")) {
-            currentField = field3;
-        } else if(currentRoom.getShortDescription().endsWith("2nd field")) {
-            currentField = field2;
-        } else {
-            currentField = field;
-        }
+        Field currentField = setCurrentField();
         if (player.itemOwned(ItemName.PESTICIDES)) {
             currentField.usePesticides();
             //System.out.println("all pests where killed");
@@ -1143,14 +1105,7 @@ public class Game {
     //getFieldSample method
     //shows condition of field based on yield.
     public void getFieldSample() {
-        Field currentField;
-        if(currentRoom.getShortDescription().endsWith("3rd field")) {
-            currentField = field3;
-        } else if(currentRoom.getShortDescription().endsWith("2nd field")) {
-            currentField = field2;
-        } else {
-            currentField = field;
-        }
+        Field currentField = setCurrentField();
         if (player.itemOwned(ItemName.SOIL_SAMPLE_COLLECTOR)) {
             if (currentField.getYield() > 64) {
                 System.out.println("Your soil is in excellent condition!");
@@ -1192,6 +1147,18 @@ public class Game {
         } else {
             field.getImageView().setVisible(false);
         }
+    }
+
+    public Field setCurrentField() {
+        Field currentField;
+        if(currentRoom.getShortDescription().endsWith("in the 3rd field")) {
+            currentField = field3;
+        } else if(currentRoom.getShortDescription().endsWith("in the 2nd field")) {
+            currentField = field2;
+        } else {
+            currentField = field;
+        }
+        return currentField;
     }
 
 

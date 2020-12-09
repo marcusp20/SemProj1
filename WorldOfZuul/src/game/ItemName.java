@@ -8,12 +8,12 @@ public enum ItemName {
     HARVESTER("Harvester", "Used for harvesting", 500),
     PESTICIDES("Pesticides", "used for destroying water-collection", 50),
     SOIL_SAMPLE_COLLECTOR("Soil Sampler", "to collects soil samples, and test it.", 150),
-    BAG_OF_FERTILIZER("Bag of fertilizer", "used for fertilizing", 50),
+    BAG_OF_FERTILIZER("Bag of Fertilizer", "used for fertilizing", 50),
     BAG_OF_CANNABIS("Bag of Cannabis", "holds seeds for planting 420", 100),
     BAG_OF_WHEAT("Bag of Wheat", "holds seeds for planting", 10),
     BAG_OF_CORN("Bag of Corn", "holds seeds for planting", 50),
     BAG_OF_CLOVER("Bag of Clover", "holds seeds for planting", 5),
-    BAG_OF_FLOWER_SEEDS("Bag of 1 flower", "Used for planting in garden", 25);
+    BAG_OF_FLOWER_SEEDS("Bag of 1 Flower", "Used for planting in garden", 25);
 
 
 
