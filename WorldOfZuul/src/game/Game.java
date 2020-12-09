@@ -438,6 +438,12 @@ public class Game {
                         field2Img.getWidth()+100, 200));
         field2.setRoomCollisions(field2Collision);
 
+        field2.setIntroText(
+                "Now that you have your tractor" +
+                "you have more time, so another field " +
+                " is more yield!"
+                );
+
 
         ///// FIELD 3 /////
         field3.setLocked(true);
@@ -458,6 +464,12 @@ public class Game {
                 new CollisionBox(field3Img.getWidth()-140, -40,
                         200, field3Img.getHeight()+180));
         field3.setRoomCollisions(field3Collision);
+
+        field3.setIntroText(
+                "After entering your third and final field " +
+                "you can feel the overwhelming joy due to " +
+                "the mad money you're about to make "
+        );
 
         ////////////////
         //STORE////////
@@ -489,7 +501,7 @@ public class Game {
         store.setRoomCollisions(storeCollision);
 
         store.setIntroText(
-                "Hello darling, you must be the new" +
+                "Hello darling, you must be the new " +
                 "kid. My name is lizzy, i'm this " +
                 "towns only shopkeeper...");
 
