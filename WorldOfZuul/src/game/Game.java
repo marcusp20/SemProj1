@@ -55,17 +55,14 @@ public class Game {
     private boolean isGUI;
     private boolean gameFinished = false;
 
-
     //console output
     private PrintStream old = System.out;
     ByteArrayOutputStream baos;
-
 
     public Game(long seed, boolean isGUI) {
         this.seed = seed;
         this.isGUI = isGUI;
         random.setSeed(seed);
-        //System.out.println(seed);
         unLockableRooms = new HashMap<>();
 
         //Create command words
@@ -138,7 +135,6 @@ public class Game {
             preQuiz = new TextQuiz(chadChicken.getPreQuestions());
             postQuiz = new TextQuiz(chadChicken.getPostQuestions());
         }
-
     }
 
     public void createStoreItemList() {
@@ -240,7 +236,6 @@ public class Game {
     }
 
 
-
     /**
      * Used by createNPC to properly load textFiles
      *
@@ -298,8 +293,6 @@ public class Game {
 
         beeHiveCommandWords = new CommandWords();
         beeHiveCommandWords.addCommandWord(CommandWord.GARDEN_CHECK_BEES);
-        //beeHiveCommandWords.addCommandWord(CommandWord.GARDEN_PLANT_FLOWER);
-        //beeHiveCommandWords.addCommandWord(CommandWord.LEAVE);
 
         flowerBedCommandWords = new CommandWords();
         flowerBedCommandWords.addCommandWord(CommandWord.GARDEN_PLANT_FLOWER);
@@ -337,23 +330,11 @@ public class Game {
 
     private void createPlayer() {
         player = new Player("Lars Tyndskid");
-
-//        try {
-//            Image sprite = loadImage("FarmerSprite.png");
-//            player.setPlayerSprite(sprite);
-//        } catch (FileNotFoundException e) {
-//            System.out.println("Player image not found");
-//        }
     }
 
     public Player getPlayer() {
         return player;
     }
-
-
-       // private void createFlowerBed() {
-       //     flowerbed = new FlowerBed(flowerBedCommandWords);
-       // }
 
     private void createRooms() {
         Room headquarter, shed, field, field2, field3, garden, store;
@@ -548,7 +529,6 @@ public class Game {
         garden.addInteractable(beeHive);
         garden.addInteractable(flowerBed);
 
-
         Image gardenImg = garden.getRoomPane().getBackground().getImages().get(0).getImage();
         gardenCollision.addCollisionBox(//West wall
                 new CollisionBox(-20, -80,
@@ -575,14 +555,9 @@ public class Game {
         shed.setExit("south", field3);
 
         shed.setRoomPane(createPane("SHED", Color.BLANCHEDALMOND));
-
-
-
-
+        shed.setIntroText("Hey! How did you get in here? Sneaky bastard");
 
         currentRoom = headquarter;
-
-        shed.setIntroText("Hey! How did you get in here? Sneaky bastard");
     }
 
     private Pane createPane(String name, Color color) {
