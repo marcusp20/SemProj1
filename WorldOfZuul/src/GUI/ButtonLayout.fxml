@@ -22,7 +22,7 @@
       <Button fx:id="invButton" layoutX="1145.0" layoutY="757.0" mnemonicParsing="false" onAction="#invButtonClicked" prefWidth="82.0" text="Inventory" />
       <Button fx:id="saveGameButton" layoutX="1145.0" layoutY="723.0" mnemonicParsing="false" onAction="#saveButtonClicked" prefHeight="25.0" prefWidth="82.0" text="Savegame" />
       <Button fx:id="helpButton" layoutX="1145.0" layoutY="689.0" mnemonicParsing="false" onAction="#helpButtonClicked" prefHeight="25.0" prefWidth="82.0" text="help" />
-      <TabPane fx:id="tutorialPane" layoutX="315.0" layoutY="65.0" prefHeight="703.0" prefWidth="634.0" tabClosingPolicy="UNAVAILABLE">
+      <TabPane fx:id="tutorialPane" layoutX="315.0" layoutY="65.0" prefHeight="703.0" prefWidth="634.0" tabClosingPolicy="UNAVAILABLE" visible="false">
         <tabs>
           <Tab text="Movement">
             <content>
