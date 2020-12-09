@@ -28,9 +28,15 @@ public enum Question {
             "An increase in crop yield"),   //Answer
     PRE_Q6("What happens if you use Plenty of fertilizer?",
             "The crops will grow faster ",
-            "An increase in ",
-            "A reduction in crop yield",
-            "An increase in crop yield"),
+            "The soil will get oversaturated", //Answer
+            "The soil will be undersaturated",
+            "The bees will die"),
+    PRE_Q7("What effects does crop rotation have on pests?",
+            "Chance of pests will increase due to more crop variation",
+            "Chance of pests will decrease due to more crop variation", //Answer
+            "Chance of pests isn’t impacted by crop rotation",
+            "Chance of pests will dramatically increase to the point of human extinction."),
+
 
     POST_Q1("Why might your yield get lower, when using pesticides",
             "Because pesticides poison the crops",
@@ -57,11 +63,16 @@ public enum Question {
             "An increase in pests",
             "A reduction in crop yield",
             "An increase in crop yield"),//Answer
-    POST_Q6("What effect does bees have on your farm?",
-            "A reduction of pests",
-            "An increase in pests",
-            "A reduction in crop yield",
-            "An increase in crop yield");//Answer
+    POST_Q6("What happens if you use Plenty of fertilizer?",
+            "The crops will grow faster ",
+            "The soil will get oversaturated", //answer
+            "The soil will be undersaturated",
+            "The bees will die"),
+    POST_Q7("What effects does crop rotation have on pests?",
+            "Chance of pests will increase due to more crop variation",
+            "Chance of pests will decrease due to more crop variation", //Answer
+            "Chance of pests isn’t impacted by crop rotation",
+            "Chance of pests will dramatically increase to the point of human extinction.");
 
 
 
