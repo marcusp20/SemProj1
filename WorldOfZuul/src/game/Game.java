@@ -483,7 +483,7 @@ public class Game {
         store.setRoomCollisions(storeCollision);
 
         store.setIntroText(
-                "Hello darling, you must be the new" +
+                "Hello darling, you must be the new " +
                 "kid. My name is lizzy, i'm this " +
                 "towns only shopkeeper...");
 
