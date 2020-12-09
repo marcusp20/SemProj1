@@ -409,7 +409,7 @@ public class Game {
         headquarter.setIntroText(
                 "Welcome Sir, " +
                 "to this humble town. My name is " +
-                "bob, im the mayor of this town.");
+                "bob, i'm the mayor of this town.");
 
 
         ////////////////
@@ -530,7 +530,7 @@ public class Game {
 
         store.setIntroText(
                 "Hello darling, you must be the new " +
-                "farmer. My name is lizzy, i'm the " +
+                "farmer. My name is Lizzy, I'm the " +
                 "only shopkeeper in this small town...");
 
 
