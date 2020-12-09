@@ -29,7 +29,7 @@ public class ChadChicken {
         preQuestions.add(Question.PRE_Q4);
         preQuestions.add(Question.PRE_Q5);
         preQuestions.add(Question.PRE_Q6);
-        //preQuestions.add(Question.PRE_Q7);
+        preQuestions.add(Question.PRE_Q7);
 
 
         postQuestions = new ArrayList<>();
@@ -38,6 +38,8 @@ public class ChadChicken {
         postQuestions.add(Question.POST_Q3);
         postQuestions.add(Question.POST_Q4);
         postQuestions.add(Question.POST_Q5);
+        postQuestions.add(Question.POST_Q6);
+        postQuestions.add(Question.POST_Q7);
 
     }
 
