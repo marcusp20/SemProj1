@@ -3,14 +3,14 @@ package chadChicken;
 public enum Question {
     PRE_Q1("Why might your yield get lower, when using pesticides",
             "Because pesticides poison the crops",
-            "Because pesticides affects the sorrounding ", //Answer
+            "Because pesticides negatively affects the bees", //Answer
             "Because pesticides poison the water",
             "Because pesticides reduce the dirt's nutrients"),
     PRE_Q2("How does crop rotation affect your plants",
             "It has no effect",
             "It helps keep the right amount of nutrients in the soil",  //Answer
             "It drains the soil from nutrients",
-            "It makes the soil dry."),
+            "It makes the soil easier to harvest."),
     PRE_Q3("Why are pesticides good/bad?",
             "It helps combat pests, but can contaminate the ecosystem", //Answer
             "It helps combat pests, and helps the ecosystem",
@@ -26,6 +26,11 @@ public enum Question {
             "An increase in pests",
             "A reduction in crop yield",
             "An increase in crop yield"),   //Answer
+    PRE_Q6("What happens if you use Plenty of fertilizer?",
+            "The crops will grow faster ",
+            "An increase in ",
+            "A reduction in crop yield",
+            "An increase in crop yield"),
 
     POST_Q1("Why might your yield get lower, when using pesticides",
             "Because pesticides poison the crops",
@@ -51,7 +56,14 @@ public enum Question {
             "A reduction of pests",
             "An increase in pests",
             "A reduction in crop yield",
-            "An increase in crop yield");   //Answer
+            "An increase in crop yield"),//Answer
+    POST_Q6("What effect does bees have on your farm?",
+            "A reduction of pests",
+            "An increase in pests",
+            "A reduction in crop yield",
+            "An increase in crop yield");//Answer
+
+
 
     String Q;
     public String A1;
