@@ -173,8 +173,8 @@ public class Game {
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
-        shopkeeperLizzy.getImageView().setX(200);
-        shopkeeperLizzy.getImageView().setY(250);
+        shopkeeperLizzy.getImageView().setX(360);
+        shopkeeperLizzy.getImageView().setY(150);
 
         File fieldNPCDialog = load("fieldNPCDialog.txt");
         farmerBob = new NPC(fieldNPCDialog);
