@@ -13,12 +13,14 @@ import java.util.Map;
 public class Player {
     //Attributes
     private String name;
-    private double wallet = 8;
+    private double wallet = 4000;
     private HashMap<ItemName, Integer> playerInventory;
     private boolean noCropsOwned;
 
     //Gui attributes
     ImageView playerSprite;
+
+    private int walkingTimer = 0;
 
     //Up
     Image standUpImage;
@@ -140,7 +142,7 @@ public class Player {
         try {
             //Up
             standUpImage = loadImage("FarmerSpriteBackStanding.png");
-            walkUpImage = loadImage("FarmerSpriteBackStanding.png");
+            walkUpImage = loadImage("FarmerSpriteBackWalk.png");
             //Left
             standLeftImage = loadImage("FarmerSpriteLeftStanding.png");
             walkLeftImage = loadImage("FarmerSpriteLeftWalking.png");
@@ -168,19 +170,39 @@ public class Player {
     }
 
     public void checkDirection() {
+
         if(Math.max(westSpeed, eastSpeed) > Math.max(northSpeed, southSpeed))   {
             if (westSpeed > eastSpeed) {
-                playerSprite.setImage(standRightImage);
+                if(walkingTimer < 20) {
+                    playerSprite.setImage(standRightImage);
+                } else  {
+                    playerSprite.setImage(walkRightImage);
+                }
             } else if (westSpeed < eastSpeed) {
-                playerSprite.setImage(standLeftImage);
+                if(walkingTimer < 20) {
+                    playerSprite.setImage(standLeftImage);
+                } else  {
+                    playerSprite.setImage(walkLeftImage);
+                }
             }
-        } else  {
+            walkingTimer++;
+        } else if(Math.max(westSpeed, eastSpeed) < Math.max(northSpeed, southSpeed))  {
             if (southSpeed > northSpeed) {
-                playerSprite.setImage(standDownImage);
+                if(walkingTimer < 20) {
+                    playerSprite.setImage(standDownImage);
+                } else  {
+                    playerSprite.setImage(walkDownImage);
+                }
             } else if (southSpeed < northSpeed) {
-                playerSprite.setImage(standUpImage);
+                if(walkingTimer < 20) {
+                    playerSprite.setImage(standUpImage);
+                } else  {
+                    playerSprite.setImage(walkUpImage);
+                }
             }
+            walkingTimer++;
         }
+        if(walkingTimer > 40) walkingTimer = 0;
     }
 
     public ImageView getPlayerSprite() {
