@@ -465,7 +465,7 @@ public class Game {
         field2.setIntroText(
                 "Now that you have bought a new tractor and field, " +
                 "you can have double the yeilds! " +
-                "Feel free to ask me any questions about pesticides or fertilizers"
+                "Feel free to ask me questions about pesticides or fertilizers"
                 );
 
 
