@@ -1,7 +1,7 @@
 .nn Field Expert Benny
 .dd A recently graduated field expert
 
-*0 Evenings good sir, can i offer you some advice?
+*0 Evenings good sir, can I offer you some advice?
 
 $$0 What brings you today young one...
 
