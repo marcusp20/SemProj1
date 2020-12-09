@@ -315,6 +315,8 @@ public class Game {
         field.getImageView().setFitHeight(463);
         field.getImageView().setVisible(false);
 
+
+
         field2 = new Field(fieldCommandWords);
         field2.getImageView().setX(360);
         field2.getImageView().setY(360);
@@ -1170,6 +1172,13 @@ public class Game {
             try {
                 field.getImageView().setVisible(true);
                 field.getImageView().setImage((loadImage("FieldHarvest.png")));
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
+            }
+        } else if (field.getIsSowed() && field.isWatered()) {
+            try {
+                field.getImageView().setVisible(true);
+                field.getImageView().setImage((loadImage("FieldSowRain.png")));
             } catch (FileNotFoundException e) {
                 e.printStackTrace();
             }
