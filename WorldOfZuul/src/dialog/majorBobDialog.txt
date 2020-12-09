@@ -7,9 +7,9 @@
 *3 I'm the mayor of this town.
 *4 Is there anything you would like to know?
 
-$$0 If you need anything, just ask. :)
+$$0 If you need anything, just ask.
 
-##0 Safe travels friend :)
+##0 Safe travels friend
 
 q00 How do i get a shovel?
 a00 An age old question.
@@ -18,12 +18,12 @@ a02 Lizzy keeps a shop north of here.
 a03 She owes me a favor.
 a04 Ask her out, she'll help you
 a05 with all the things you need
-a06 to get settled :)
+a06 to get settled
 
 q01 Where is the farm?
 a10 To the south my good boy.
 
 q02 What is my goal?
-a20 To run a magnificent farm my good boy.
+a20 To run a magnificently sustainable farm my good boy.
 a21 There is no greater goal in life.
 
