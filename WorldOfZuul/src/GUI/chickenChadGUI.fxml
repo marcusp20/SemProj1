@@ -15,7 +15,7 @@
    <AnchorPane layoutX="13.0" layoutY="574.0" prefHeight="248.0" prefWidth="1254.0">
       <children>
          <VBox prefHeight="244.0" prefWidth="1254.0">
-            <TextArea fx:id="questionField" editable="false" prefHeight="98.0" prefWidth="1254.0" text="Your wandering arround the farm at night, it's dark and foggy.  You're hearing strange CoOkAliKyyYYyyyYYYs, and are looking for the source.&#10;&#10;A huge Cock appears before you and starts talking human language:&#10;&quot;Hello little Farmer, rumor has it you just brought the farm, im here to challange your knowledge on sustainability.&#10;Let me ask you a few Questions, you better answer right&quot;">
+            <TextArea fx:id="questionField" editable="false" prefHeight="98.0" prefWidth="1254.0" text="Your wandering arround the farm at night, it's dark and foggy.  You're hearing strange CoOkAliKyyYYyyyYYYs, and are looking for the source.&#10;&#10;A huge Cock appears before you and starts speaking human language:&#10;&quot;Hello little Farmer, rumor has it you just bought the farm, im here to challenge your knowledge on sustainability.&#10;Let me ask you a few Questions, you better answer right&quot;">
                <effect>
                   <InnerShadow color="#0000008d" />
                </effect>
