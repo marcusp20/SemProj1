@@ -1153,10 +1153,8 @@ public class Game {
         Field currentField;
         if(currentRoom.getShortDescription().endsWith("in the 3rd field")) {
             currentField = field3;
-            System.out.println("3rd field ");
         } else if(currentRoom.getShortDescription().endsWith("in the 2nd field")) {
             currentField = field2;
-            System.out.println("2nd field");
         } else {
             currentField = field;
         }
