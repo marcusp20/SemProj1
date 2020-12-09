@@ -26,7 +26,7 @@ public enum Question {
             "An increase in pests",
             "A reduction in crop yield",
             "An increase in crop yield"),   //Answer
-    PRE_Q6("What happens if you use Plenty of fertilizer?",
+    PRE_Q6("What happens if you use plenty of fertilizer?",
             "The crops will grow faster ",
             "The soil will get oversaturated", //Answer
             "The soil will be undersaturated",
