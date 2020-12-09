@@ -314,13 +314,13 @@ public class Main extends Application {
             }
         }
         //EAST
-        if (playerSprite.getX() > scene.getWidth() - 120) {
+        if (playerSprite.getX() > scene.getWidth() - 120+55) {
             removeRoomContent();
             Pane oldPane = game.getCurrentRoom().getRoomPane();
             game.processCommand(new Command(CommandWord.GO, "east"));
 
             if (game.getCurrentRoom().getRoomPane() == oldPane) {
-                playerSprite.setX(scene.getWidth() - 120);
+                playerSprite.setX(scene.getWidth() - 120+55);
                 movementHandler.haltPlayerMovement(); // stop the player, to stop calling "go north" every frame"
                 //System.out.println("HELP");
             } else {
