@@ -216,14 +216,20 @@ public class Game {
 
     private void createBeeHive() {
         beeHive = new BeeHive(beeHiveCommandWords);
-        beeHive.getImageView().setX(330);
-        beeHive.getImageView().setY(200);
+        beeHive.getImageView().setX(221);
+        beeHive.getImageView().setY(190);
+        beeHive.getImageView().setFitHeight(129);
+        beeHive.getImageView().setFitWidth(430);
+        beeHive.getImageView().setVisible(false);
     }
 
     private void createFlowerBed() {
         flowerBed = new FlowerBed(flowerBedCommandWords);
-        flowerBed.getImageView().setX(790);
-        flowerBed.getImageView().setY(620);
+        flowerBed.getImageView().setX(742);
+        flowerBed.getImageView().setY(525);
+        flowerBed.getImageView().setFitWidth(339);
+        flowerBed.getImageView().setFitHeight(232);
+        flowerBed.getImageView().setVisible(false);
     }
 
 
