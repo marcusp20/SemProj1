@@ -15,7 +15,6 @@ import java.util.Random;
 import interactable.*;
 import javafx.geometry.Insets;
 import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
@@ -56,7 +55,7 @@ public class Game {
     private boolean gameFinished = false;
 
     //console output
-    private PrintStream old = System.out;
+    private final PrintStream old = System.out;
     ByteArrayOutputStream baos;
 
     public Game(long seed, boolean isGUI) {
@@ -138,7 +137,7 @@ public class Game {
     }
 
     public void createStoreItemList() {
-        storeItemList = new ArrayList<Item>();
+        storeItemList = new ArrayList<>();
 
         for (ItemName itemName : ItemName.values()) {
             storeItemList.add(new Item(itemName));
@@ -610,25 +609,12 @@ public class Game {
         System.out.println("Thank you for playing. Good bye.");
     }
 
-    public void playGUI() {
-        if (!isCreatedFromSaveFile) {
-            //only if new game
-            playIntro();
-
-        }
-    }
-
     private void playIntro() {
         //print intro of ChadChicken
 
         //launch preQuiz
         preQuiz.run();
         chadChicken.uploadAnswers(preQuiz.getAnswers());
-    }
-
-    private void playGUIQuiz() {
-
-
     }
 
     //Return true if no seeds, money and harvest ready.
@@ -817,17 +803,6 @@ public class Game {
         parser.showCommands();
     }
 
-    /*
-    private void printTaskList() {
-        for (Task t : taskList.getTasks()) {
-            if (t.isActive()) {
-                System.out.println(t.getDescription() + "->" + t.getReward());
-            }
-        }
-    }
-     */
-
-    //Prob not a game command, room command? or something...
     public void sleep() {
         hqBed.sleep();            //Used in 2d implementation
         field.nextDay();
@@ -858,7 +833,6 @@ public class Game {
     public void checkBees(int pestCounter) {
         flowerBed.calcBees(pestCounter);
     }
-
 
     /////////////////////////////////////////////////////////////////////////////////////
     ///////////////////////////////// Store Commands  ///////////////////////////////////
@@ -1246,11 +1220,6 @@ public class Game {
         PrintStream ps = new PrintStream(baos);
         System.setOut(ps);
         return baos;
-    }
-
-    public void resetStream() {
-        System.out.flush();
-        System.setOut(old);
     }
 
     public ByteArrayOutputStream getBaos() {
