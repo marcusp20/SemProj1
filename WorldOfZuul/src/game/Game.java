@@ -545,7 +545,7 @@ public class Game {
         garden.setRoomCollisions(gardenCollision);
 
         garden.setIntroText(
-                "Hello there good Farmer! " + "My name is BeeKeeper betti " +
+                "Hello there good Farmer! " + "My name is BeeKeeper Betti " +
                         " And I love bees!" + " Come talk to me about bees and flowers any day!");
 
         //////////
