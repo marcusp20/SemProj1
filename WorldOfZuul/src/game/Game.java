@@ -151,8 +151,11 @@ public class Game {
 
     public void createStore() {
         shop = new Shop();
-        shop.getImageView().setX(650);
-        shop.getImageView().setY(100);
+        shop.getImageView().setX(546);
+        shop.getImageView().setY(23);
+        shop.getImageView().setFitWidth(202);
+        shop.getImageView().setFitHeight(204);
+        shop.getImageView().setVisible(false);
     }
 
     private void createNPC() {
@@ -210,8 +213,12 @@ public class Game {
 
     private void createBed() {
         hqBed = new Bed();
-        hqBed.getImageView().setX(900);
-        hqBed.getImageView().setY(400);
+        hqBed.getImageView().setX(822);
+        hqBed.getImageView().setY(396);
+        hqBed.getImageView().setFitHeight(317);
+        hqBed.getImageView().setFitWidth(246);
+        hqBed.getImageView().setVisible(false);
+
     }
 
     private void createBeeHive() {
@@ -412,8 +419,8 @@ public class Game {
 
         field.setIntroText(
                 "Welcome to the farm mister. " +
-                "I'v been tasked with getting you" +
-                "started. Start by...");
+                "I've been tasked with getting you " +
+                "started. Start by coming to talk to me");
 
         ///// FIELD 2 /////
         field2.setLocked(true);
