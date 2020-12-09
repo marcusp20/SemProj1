@@ -412,8 +412,8 @@ public class Game {
 
         field.setIntroText(
                 "Welcome to the farm mister. " +
-                "I'v been tasked with getting you" +
-                "started. Start by...");
+                "I've been tasked with getting you " +
+                "started. Start by coming to talk to me");
 
         ///// FIELD 2 /////
         field2.setLocked(true);
