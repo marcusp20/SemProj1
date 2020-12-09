@@ -566,7 +566,7 @@ public class Game {
 
         garden.setIntroText(
                 "Hello there good Farmer! " + "My name is BeeKeeper betti " +
-                        " And i love bees!" + " Come talk to me about bees and flowers anyday!");
+                        " And I love bees!" + " Come talk to me about bees and flowers any day!");
 
         //////////
         //SHED////
