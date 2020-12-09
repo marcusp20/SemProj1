@@ -485,7 +485,7 @@ public class Game {
                 new CollisionBox(-20, -80,
                         field3Img.getWidth()+200, 85));
         field3Collision.addCollisionBox( //East border
-                new CollisionBox(field3Img.getWidth()-140+110, -40,
+                new CollisionBox(field3Img.getWidth()-30, -40,
                         200, field3Img.getHeight()+180));
         field3.setRoomCollisions(field3Collision);
 
@@ -511,7 +511,7 @@ public class Game {
                 new CollisionBox(-20, -80,
                         storeImg.getWidth()+200, 140));
         storeCollision.addCollisionBox( //East wall
-                new CollisionBox(storeImg.getWidth()-140+55, -40,
+                new CollisionBox(storeImg.getWidth()-85, -40,
                         200, storeImg.getHeight()+180));
         storeCollision.addCollisionBox( //West wall
                 new CollisionBox(-20, -80,
@@ -558,6 +558,10 @@ public class Game {
                         gardenImg.getWidth()+200, 105));
         gardenCollision.addCollisionBox(//BeeHive
                 new CollisionBox(155, -20, 535-55, 205));
+        gardenCollision.addCollisionBox( // right wall top part
+                new CollisionBox(gardenImg.getWidth()-85, -20, 190, 320));
+        gardenCollision.addCollisionBox( // right wall bottom part
+                new CollisionBox(gardenImg.getWidth()-85, 385, 190, 800));
         garden.setRoomCollisions(gardenCollision);
 
         garden.setIntroText(
