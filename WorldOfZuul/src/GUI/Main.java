@@ -47,7 +47,6 @@ public class Main extends Application {
 
     private static Game game;
     private MovementHandler movementHandler;
-    private CollisionHandler collisionHandler;
     private AnimationTimer timer;
 
 
