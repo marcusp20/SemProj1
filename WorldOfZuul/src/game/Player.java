@@ -4,6 +4,8 @@ import game.ItemName;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
@@ -17,6 +19,20 @@ public class Player {
 
     //Gui attributes
     ImageView playerSprite;
+
+    //Up
+    Image standUpImage;
+    Image walkUpImage;
+    //Left
+    Image standLeftImage;
+    Image walkLeftImage;
+    //Right
+    Image standRightImage;
+    Image walkRightImage;
+    //Down
+    Image standDownImage;
+    Image walkDownImage;
+
     private double prevX = 0;
     private double prevY = 0;
 
@@ -34,7 +50,8 @@ public class Player {
         for (ItemName itemName : ItemName.values()) {
             playerInventory.put(itemName, 0);
         }
-
+        addPlayerImages();
+        setPlayerSprite();
     }
 
     //Method to return value of hashmap.
@@ -119,8 +136,31 @@ public class Player {
                 + inventory + ".";
     }
 
-    public void setPlayerSprite(Image img) {
-        this.playerSprite = new ImageView(img);
+    private void addPlayerImages()  {
+        try {
+            //Up
+            standUpImage = loadImage("FarmerSpriteBackStanding.png");
+            walkUpImage = loadImage("FarmerSpriteBackStanding.png");
+            //Left
+            standLeftImage = loadImage("FarmerSpriteLeftStanding.png");
+            walkLeftImage = loadImage("FarmerSpriteLeftWalking.png");
+            //Right
+            standRightImage = loadImage("FarmerSpriteRightStanding.png");
+            walkRightImage = loadImage("FarmerSpriteRightWalk.png");
+            //Down
+            standDownImage = loadImage("FarmerSpriteFrontStanding.png");
+            walkDownImage = loadImage("FarmerSpriteFrontWalk.png");
+
+        } catch (FileNotFoundException e)  {
+            System.out.println("Error creating player image" + e);
+        }
+    }
+
+    private void setPlayerSprite() {
+        this.playerSprite = new ImageView(standDownImage);
+
+        this.playerSprite.setFitHeight(180);
+        this.playerSprite.setPreserveRatio(true);
 
         this.playerSprite.setX(600);
         this.playerSprite.setY(400);
@@ -128,10 +168,18 @@ public class Player {
     }
 
     public void checkDirection() {
-        if (this.getWestSpeed() > this.getEastSpeed()) {
-            playerSprite.setScaleX(1);
-        } else if (this.getWestSpeed() < this.getEastSpeed()) {
-            playerSprite.setScaleX(-1);
+        if(Math.max(westSpeed, eastSpeed) > Math.max(northSpeed, southSpeed))   {
+            if (westSpeed > eastSpeed) {
+                playerSprite.setImage(standRightImage);
+            } else if (westSpeed < eastSpeed) {
+                playerSprite.setImage(standLeftImage);
+            }
+        } else  {
+            if (southSpeed > northSpeed) {
+                playerSprite.setImage(standDownImage);
+            } else if (southSpeed < northSpeed) {
+                playerSprite.setImage(standUpImage);
+            }
         }
     }
 
@@ -186,5 +234,16 @@ public class Player {
 
     public void setWestSpeed(int westSpeed) {
         this.westSpeed = westSpeed;
+    }
+
+    private Image loadImage(String fileName) throws FileNotFoundException {
+        String path = System.getProperty("user.dir");
+        if (path.endsWith("SemProj1")) {
+            return new Image(new FileInputStream(path + "\\WorldOfZuul\\src\\resources\\img\\" + fileName));    //Add remaining path to dialog text file
+        } else if (path.endsWith("WorldOfZuul")) {
+            return new Image(new FileInputStream(path + "\\src\\resources\\img\\" + fileName));
+        }
+        //Default - probably not gonna work
+        return new Image(new FileInputStream(path + "\\img\\" + fileName));
     }
 }

@@ -1,7 +1,6 @@
 package chadChicken;
 
 public enum Question {
-    //TODO replace placeholder
     PRE_Q1("Why might your yield get lower, when using pesticides",
             "Because pesticides poison the crops",
             "Because pesticides kill bees", //Answer
@@ -22,7 +21,7 @@ public enum Question {
             "Use less pesticides",  //Answer
             "Use more pesticides",
             "Doesn't matter, the rain will clean the groundwater"),
-    PRE_Q5("What effect does bees have on your farm?",
+    PRE_Q5("What effect do bees have on your farm?",
             "A reduction of pests",
             "An increase in pests",
             "A reduction in crop yield",
