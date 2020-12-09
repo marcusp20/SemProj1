@@ -3,7 +3,7 @@ package chadChicken;
 public enum Question {
     PRE_Q1("Why might your yield get lower, when using pesticides",
             "Because pesticides poison the crops",
-            "Because pesticides kill bees", //Answer
+            "Because pesticides affects the sorrounding ", //Answer
             "Because pesticides poison the water",
             "Because pesticides reduce the dirt's nutrients"),
     PRE_Q2("How does crop rotation affect your plants",

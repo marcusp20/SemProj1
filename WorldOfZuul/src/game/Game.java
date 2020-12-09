@@ -151,8 +151,11 @@ public class Game {
 
     public void createStore() {
         shop = new Shop();
-        shop.getImageView().setX(650);
-        shop.getImageView().setY(100);
+        shop.getImageView().setX(568);
+        shop.getImageView().setY(51);
+        shop.getImageView().setFitWidth(152);
+        shop.getImageView().setFitHeight(150);
+        shop.getImageView().setVisible(false);
     }
 
     private void createNPC() {
@@ -173,8 +176,8 @@ public class Game {
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
-        shopkeeperLizzy.getImageView().setX(200);
-        shopkeeperLizzy.getImageView().setY(250);
+        shopkeeperLizzy.getImageView().setX(360);
+        shopkeeperLizzy.getImageView().setY(150);
 
         File fieldNPCDialog = load("fieldNPCDialog.txt");
         farmerBob = new NPC(fieldNPCDialog);
@@ -210,20 +213,30 @@ public class Game {
 
     private void createBed() {
         hqBed = new Bed();
-        hqBed.getImageView().setX(900);
-        hqBed.getImageView().setY(400);
+        hqBed.getImageView().setX(822);
+        hqBed.getImageView().setY(396);
+        hqBed.getImageView().setFitHeight(317);
+        hqBed.getImageView().setFitWidth(246);
+        hqBed.getImageView().setVisible(false);
+
     }
 
     private void createBeeHive() {
         beeHive = new BeeHive(beeHiveCommandWords);
-        beeHive.getImageView().setX(330);
-        beeHive.getImageView().setY(200);
+        beeHive.getImageView().setX(221);
+        beeHive.getImageView().setY(190);
+        beeHive.getImageView().setFitHeight(129);
+        beeHive.getImageView().setFitWidth(430);
+        beeHive.getImageView().setVisible(false);
     }
 
     private void createFlowerBed() {
         flowerBed = new FlowerBed(flowerBedCommandWords);
-        flowerBed.getImageView().setX(790);
-        flowerBed.getImageView().setY(620);
+        flowerBed.getImageView().setX(742);
+        flowerBed.getImageView().setY(525);
+        flowerBed.getImageView().setFitWidth(339);
+        flowerBed.getImageView().setFitHeight(232);
+        flowerBed.getImageView().setVisible(false);
     }
 
 
@@ -406,8 +419,8 @@ public class Game {
 
         field.setIntroText(
                 "Welcome to the farm mister. " +
-                "I'v been tasked with getting you" +
-                "started. Start by...");
+                "I've been tasked with getting you " +
+                "started. Start by coming to talk to me");
 
         ///// FIELD 2 /////
         field2.setLocked(true);
@@ -432,6 +445,12 @@ public class Game {
                         field2Img.getWidth()+100, 200));
         field2.setRoomCollisions(field2Collision);
 
+        field2.setIntroText(
+                "Now that you have your tractor" +
+                "you have more time, so another field " +
+                " is more yield!"
+                );
+
 
         ///// FIELD 3 /////
         field3.setLocked(true);
@@ -452,6 +471,12 @@ public class Game {
                 new CollisionBox(field3Img.getWidth()-140, -40,
                         200, field3Img.getHeight()+180));
         field3.setRoomCollisions(field3Collision);
+
+        field3.setIntroText(
+                "After entering your third and final field " +
+                "you can feel the overwhelming joy due to " +
+                "the mad money you're about to make "
+        );
 
         ////////////////
         //STORE////////
@@ -483,7 +508,7 @@ public class Game {
         store.setRoomCollisions(storeCollision);
 
         store.setIntroText(
-                "Hello darling, you must be the new" +
+                "Hello darling, you must be the new " +
                 "kid. My name is lizzy, i'm this " +
                 "towns only shopkeeper...");
 

@@ -1,12 +1,32 @@
 .nn Field Expert Benny
 .dd A recently graduated field expert
 
-*0 Evenings
-*1 Fellow!
+*0 Evenings good sir, can i offer you some advice?
 
 $$0 What brings you today young one...
 
-##0 May the heavens bless you with rain and sun
+##0 So long Farmer!
 
-q00 Is there anything i need to know about pesticides?
-a00 Pesticides are a great way to keep away pests, but be wary they will pollute your groundwater
+q00 What can you tell me about pests?
+a00 Pests are a farmers nightmare!
+a01 they eat your crop and steal the profits!
+
+q01 How do i handle pests the best?
+a10 There are 2 ways to deal with pests on your farm
+a11 You can use crop rotation to minimize the pests
+a12 Or you can use some pesticides and eradicate all
+
+q02 Tell me more about pesticides
+a20 Pesticides are very effective!
+a21 But be aware, pesticides can damage both your bees and the groundwater
+a22 think twice before spreading it everywhere
+
+q03 Tell me more about crop rotation
+a30 Crop rotation is the art of sowing different crops after harvest
+a31 this makes it a lot harder for pests to thrive and keeps the field nutrition in balance
+
+q04 How is fertilizer used?
+a40 Fertilizer is best used before sowing your crop
+a41 but don't use too much fertilizer, it will over saturate the soil
+a42 fertilize once before each sow and you're good to go
+
