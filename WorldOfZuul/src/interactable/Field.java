@@ -75,7 +75,7 @@ public class Field extends Interactable implements TimeProgression {
 
     public void useFertilizerBeforeSow() {
         if (fertilizerCounter <= 2) {
-            yields += 19;
+            yields += 100;
             fertilizerCounter += 1;
             System.out.println("Used fertilizer, soil condition is increasing");
 
@@ -92,7 +92,7 @@ public class Field extends Interactable implements TimeProgression {
             fertilizerCounter += 1;
             yields += 7;
         } else {
-            yields -= 10;
+            yields -= 30;
             fertilizerCounter += 1;
             System.out.println("Too much fertilizer used, try sowing other crops after harvest");
         }

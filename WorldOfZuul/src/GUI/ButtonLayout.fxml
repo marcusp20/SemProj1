@@ -88,7 +88,7 @@
                               <Image url="@../../../../../Downloads/sand_white.png" />
                            </image>
                         </ImageView>
-                        <TextArea editable="false" prefHeight="674.0" prefWidth="634.0" text="The store is a place of business, here you can buy crops and other things to lessen the workload.&#10;&#10;You can interact (E) with the leftmost bookcase to buy things.&#10;The list of things you can buy will change depending on w-&#10;hat you already bought&#10;&#10;To converse with any present npc press (E) near them&#10;&#10;From the store you can access your headquarter by going south">
+                        <TextArea editable="false" prefHeight="674.0" prefWidth="634.0" text="The store is a place of business, here you can buy crops and other things to lessen the workload.&#10;&#10;You can interact (E) with the leftmost storeshelves to buy things.&#10;The list of things you can buy will change depending on w-&#10;hat you already bought&#10;&#10;To converse with any present npc press (E) near them&#10;&#10;From the store you can access your headquarter by going south">
                            <font>
                               <Font name="System Bold Italic" size="12.0" />
                            </font></TextArea>
@@ -110,7 +110,7 @@
                               <Image url="@../../../../../Downloads/sand_white.png" />
                            </image>
                         </ImageView>
-                        <TextArea editable="false" prefHeight="674.0" prefWidth="634.0" text="The garden is a place of peace and tranquility, here you can admire your bees&#10;&#10;The beekeeper here will help you on your way, so make sure to sp-&#10;eak with her.&#10;&#10;The bees must be good for something, I wonder what it is.&#10;&#10;By going east you can access the headquarters&#10;">
+                        <TextArea editable="false" prefHeight="674.0" prefWidth="634.0" text="The garden is a place of peace and tranquility, here you can admire your bees.&#10;&#10;The beekeeper here will help you on your way, so make sure to sp-&#10;eak with her.&#10;&#10;The bees must be good for something, I wonder what it is.&#10;&#10;By going east you can access the headquarters.&#10;&#10;In this room you can interact with the flowerbed(bottomright),&#10;you can also interact with the beehive (topleft).&#10;&#10;">
                            <font>
                               <Font name="System Bold Italic" size="12.0" />
                            </font></TextArea>

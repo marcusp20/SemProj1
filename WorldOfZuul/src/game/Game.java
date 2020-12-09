@@ -407,9 +407,9 @@ public class Game {
         headquarter.setRoomCollisions(headquarterCollision);
 
         headquarter.setIntroText(
-                "Welcome xXxweedSmoker420xXx " +
+                "Welcome Sir, " +
                 "to this humble town. My name is " +
-                "bob, im the mayor of this town...");
+                "bob, im the mayor of this town.");
 
 
         ////////////////
@@ -437,7 +437,7 @@ public class Game {
         field.setIntroText(
                 "Welcome to the farm mister. " +
                 "I've been tasked with getting you " +
-                "started. Start by coming to talk to me");
+                "started. Feel free to ask me any questions anytime.");
 
         ///// FIELD 2 /////
         field2.setLocked(true);
@@ -463,9 +463,9 @@ public class Game {
         field2.setRoomCollisions(field2Collision);
 
         field2.setIntroText(
-                "Now that you have your tractor" +
-                "you have more time, so another field " +
-                " is more yield!"
+                "Now that you have bought a new tractor and field, " +
+                "you can have double the yeilds! " +
+                "Feel free to ask me any questions about pesticides or fertilizers"
                 );
 
 
@@ -530,8 +530,8 @@ public class Game {
 
         store.setIntroText(
                 "Hello darling, you must be the new " +
-                "kid. My name is lizzy, i'm this " +
-                "towns only shopkeeper...");
+                "farmer. My name is lizzy, i'm the " +
+                "only shopkeeper in this small town...");
 
 
         ////////////////
@@ -561,7 +561,8 @@ public class Game {
         garden.setRoomCollisions(gardenCollision);
 
         garden.setIntroText(
-                "Hello there good fellow...");
+                "Hello there good Farmer! " + "My name is BeeKeeper betti " +
+                        " And i love bees!" + " Come talk to me about bees and flowers anyday!");
 
         //////////
         //SHED////
@@ -577,7 +578,7 @@ public class Game {
 
         currentRoom = headquarter;
 
-        shed.setIntroText("How did you get in here...");
+        shed.setIntroText("Hey! How did you get in here? Sneaky bastard");
     }
 
     private Pane createPane(String name, Color color) {
@@ -1002,16 +1003,7 @@ public class Game {
     //Checks for tractor in inventory, if not, shovel is used. If no shovel, nothing happens.
     public void sowField(Command command) {
         //Check conditions
-        Field currentField;
-        if(currentRoom.getShortDescription().endsWith("3rd field")) {
-            currentField = field3;
-        } else if(currentRoom.getShortDescription().endsWith("2nd field")) {
-            currentField = field2;
-        } else {
-            currentField = field;
-        }
-
-
+        Field currentField = setCurrentField();
         if (currentField.getIsSowed()) {
             System.out.println("Field already sowed with " + currentField.getCurrentHarvest() + ".");
             return;
@@ -1044,14 +1036,7 @@ public class Game {
     //Calculates value yield, after scythe or harvester is used, and adds money to player wallet.
     //Resets field.
     public void harvestField() {
-        Field currentField;
-        if(currentRoom.getShortDescription().endsWith("3rd field")) {
-            currentField = field3;
-        } else if(currentRoom.getShortDescription().endsWith("2nd field")) {
-            currentField = field2;
-        } else {
-            currentField = field;
-        }
+        Field currentField = setCurrentField();
         checkField(currentField);
         if (!currentField.getIsReadyToHarvest()) {
             if (currentField.isWatered() && currentField.getIsSowed()) {
@@ -1093,15 +1078,7 @@ public class Game {
     //Checks for fertilizer and isSowed.
     //Fertilizer strength depends on isSowed condition.
     public void fertilizeField() {
-        Field currentField;
-        if(currentRoom.getShortDescription().endsWith("3rd field")) {
-            currentField = field3;
-        } else if(currentRoom.getShortDescription().endsWith("2nd field")) {
-            currentField = field2;
-        } else {
-            currentField = field;
-        }
-
+        Field currentField = setCurrentField();
         if (player.itemOwned(ItemName.BAG_OF_FERTILIZER)) {
             if (currentField.getIsSowed()) {
                 currentField.useFertilizerAfterSow();
@@ -1119,14 +1096,7 @@ public class Game {
     //Check for isSowed
     //See moistField method for further explanation.
     public void waterField() {
-        Field currentField;
-        if(currentRoom.getShortDescription().endsWith("3rd field")) {
-            currentField = field3;
-        } else if(currentRoom.getShortDescription().endsWith("2nd field")) {
-            currentField = field2;
-        } else {
-            currentField = field;
-        }
+        Field currentField = setCurrentField();
         if (player.itemOwned(ItemName.WATER_CAN)) {
             if (currentField.getIsSowed()) {
                 currentField.moistField();
@@ -1141,14 +1111,7 @@ public class Game {
 
 
     public void usePesticide() {
-        Field currentField;
-        if(currentRoom.getShortDescription().endsWith("3rd field")) {
-            currentField = field3;
-        } else if(currentRoom.getShortDescription().endsWith("2nd field")) {
-            currentField = field2;
-        } else {
-            currentField = field;
-        }
+        Field currentField = setCurrentField();
         if (player.itemOwned(ItemName.PESTICIDES)) {
             currentField.usePesticides();
             //System.out.println("all pests where killed");
@@ -1162,14 +1125,7 @@ public class Game {
     //getFieldSample method
     //shows condition of field based on yield.
     public void getFieldSample() {
-        Field currentField;
-        if(currentRoom.getShortDescription().endsWith("3rd field")) {
-            currentField = field3;
-        } else if(currentRoom.getShortDescription().endsWith("2nd field")) {
-            currentField = field2;
-        } else {
-            currentField = field;
-        }
+        Field currentField = setCurrentField();
         if (player.itemOwned(ItemName.SOIL_SAMPLE_COLLECTOR)) {
             if (currentField.getYield() > 64) {
                 System.out.println("Your soil is in excellent condition!");
@@ -1211,6 +1167,18 @@ public class Game {
         } else {
             field.getImageView().setVisible(false);
         }
+    }
+
+    public Field setCurrentField() {
+        Field currentField;
+        if(currentRoom.getShortDescription().endsWith("in the 3rd field")) {
+            currentField = field3;
+        } else if(currentRoom.getShortDescription().endsWith("in the 2nd field")) {
+            currentField = field2;
+        } else {
+            currentField = field;
+        }
+        return currentField;
     }
 
 
