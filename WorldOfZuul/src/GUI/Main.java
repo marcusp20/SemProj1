@@ -29,10 +29,7 @@ import javafx.stage.Stage;
 import javafx.util.Callback;
 
 import java.io.*;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.List;
+import java.util.*;
 
 /*
     Learnt from https://www.youtube.com/watch?v=FVo1fm52hz0
@@ -599,13 +596,37 @@ public class Main extends Application {
             if(questionIterator.hasNext()) {
                 getAnswerFromUser(questionIterator.next());
             } else if(resumeGameAfterQuiz) {
+                saveAnswersToFile("PreQuestionsAnswers.txt");
                 returnToGame();
             }
             else {
+                saveAnswersToFile("PostQuestionsAnswers.txt");
                 fadeOut(stage);
                 showStartScreen(stage);
                 fadeIn(stage);
             }
+        }
+
+        private void saveAnswersToFile(String fileName) {
+            try {
+                PrintWriter myWriter = new PrintWriter(fileName);
+                myWriter.write(hashMapAnswers());
+                myWriter.close();
+            } catch (IOException e) {
+                System.out.println("An error occurred: Could not save Quiz Answers - " + fileName);
+                e.printStackTrace();
+            }
+        }
+
+        private String hashMapAnswers() {
+            StringBuilder stringBuilder = new StringBuilder();
+            for (Map.Entry<Question, String> entry : getAnswers().entrySet()) {
+                stringBuilder.append(entry.getKey().getQ());
+                stringBuilder.append(" -> ");
+                stringBuilder.append(entry.getValue());
+                stringBuilder.append("\n");
+            }
+            return stringBuilder.toString();
         }
 
         public void setResumeGameAfterQuiz(boolean resumeGameAfterQuiz) {
