@@ -620,10 +620,12 @@ public class Main extends Application {
 
         private String hashMapAnswers() {
             StringBuilder stringBuilder = new StringBuilder();
-            for (Map.Entry<Question, String> entry : getAnswers().entrySet()) {
-                stringBuilder.append(entry.getKey().getQ());
+            ChadChicken chadChicken = new ChadChicken(); //TODO this only works when Pre and Post questions are exactly the same.
+            Map<Question, String> answers = getAnswers();
+            for (Question question : chadChicken.getPreQuestions()) {
+                stringBuilder.append(question);
                 stringBuilder.append(" -> ");
-                stringBuilder.append(entry.getValue());
+                stringBuilder.append(answers.get(question));
                 stringBuilder.append("\n");
             }
             return stringBuilder.toString();
