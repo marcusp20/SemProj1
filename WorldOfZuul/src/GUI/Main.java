@@ -109,8 +109,6 @@ public class Main extends Application {
                 "CoCk-A-dOoDlE-dOoOO!\n" +
                 "The rooster appears before you!");
 
-
-
         fadeIn(stage);
     }
 
@@ -610,7 +608,7 @@ public class Main extends Application {
         private void saveAnswersToFile(String fileName) {
             try {
                 PrintWriter myWriter = new PrintWriter(fileName);
-                myWriter.write(hashMapAnswers());
+                myWriter.write(hashMapAnswers(fileName));
                 myWriter.close();
             } catch (IOException e) {
                 System.out.println("An error occurred: Could not save Quiz Answers - " + fileName);
@@ -618,11 +616,17 @@ public class Main extends Application {
             }
         }
 
-        private String hashMapAnswers() {
+        private String hashMapAnswers(String fileName) {
             StringBuilder stringBuilder = new StringBuilder();
-            ChadChicken chadChicken = new ChadChicken(); //TODO this only works when Pre and Post questions are exactly the same.
+            ChadChicken chadChicken = new ChadChicken();
             Map<Question, String> answers = getAnswers();
-            for (Question question : chadChicken.getPreQuestions()) {
+            List<Question> questionList = null;
+            if (fileName.equals("PreQuestionsAnswers.txt")) {
+                questionList = chadChicken.getPreQuestions();
+            } else if (fileName.equals("PostQuestionsAnswers.txt")) {
+                questionList = chadChicken.getPostQuestions();
+            }
+            for (Question question : questionList) {
                 stringBuilder.append(question);
                 stringBuilder.append(" -> ");
                 stringBuilder.append(answers.get(question));
