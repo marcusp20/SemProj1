@@ -962,7 +962,7 @@ public class Game {
         currentField.calcBeeYield(flowerBed.getBees());  //Bees impact on field
         currentField.checkPreviousHarvest();             //Crop rotations impact on field
         currentField.harvestDone();                      //calc rest of yield
-        player.addWallet(currentField.getYield());      //yields sold to money.
+        player.forceAddWallet(currentField.getYield());      //yields sold to money.
         currentField.resetYield();
 
         System.out.println("Wallet is now " + player.checkWallet());

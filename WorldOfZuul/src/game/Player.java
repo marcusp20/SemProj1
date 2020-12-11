@@ -104,16 +104,20 @@ public class Player {
     }
 
     /**
-     * @param input Adds money to input (Use negative for subtraction)
+     * @param amount Adds money to input (Use negative for subtraction)
      * @return false if balance would become negative.
      */
-    public boolean addWallet(double input) {
-        if (this.wallet + input < 0) { // This does not allow a large negative
+    public boolean addWallet(double amount) {
+        if (this.wallet + amount < 0) { // This does not allow a large negative
             // balance to have a small positive input added
             return false;
         }
-        this.wallet += input;
+        this.wallet += amount;
         return true;
+    }
+
+    public void forceAddWallet(double amount) {
+        this.wallet += amount;
     }
 
     public String getInventoryToString() {
