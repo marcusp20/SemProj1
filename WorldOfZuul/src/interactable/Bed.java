@@ -2,6 +2,7 @@ package interactable;
 
 public class Bed extends Interactable {
 
+    //Bed object is used to display bed in gui, and contain its commands (sleep)
     public Bed()   {
         super();
     }

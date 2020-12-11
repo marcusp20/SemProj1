@@ -1,6 +1,7 @@
 package interactable;
 
 import game.CommandWords;
+import game.FileLoader;
 import javafx.scene.control.ListView;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -30,7 +31,7 @@ public class Interactable {
 
     private void setDefaultImage()   {
         try {
-            Image img = loadImage("placeHolder.png");
+            Image img = FileLoader.loadImage("placeHolder.png");
             image = new ImageView(img);
             image.setX(500);
             image.setY(400);
@@ -45,17 +46,6 @@ public class Interactable {
 
     public ImageView getImageView() {
         return image;
-    }
-
-    private Image loadImage(String fileName) throws FileNotFoundException {
-        String path = System.getProperty("user.dir");
-        if (path.endsWith("SemProj1")) {
-            return new Image(new FileInputStream(path + "\\WorldOfZuul\\src\\resources\\img\\" + fileName));    //Add remaining path to dialog text file
-        } else if (path.endsWith("WorldOfZuul")) {
-            return new Image(new FileInputStream(path + "\\src\\resources\\img\\" + fileName));
-        }
-        //Default - probably not gonna work
-        return new Image(new FileInputStream(path + "\\img\\" + fileName));
     }
 
     public void setCommandList(ListView<String> commandList)    {

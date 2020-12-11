@@ -37,6 +37,7 @@ public class FlowerBed extends Interactable implements TimeProgression {
         return flowerQuality;
     }
 
+    //Used to plant flowers
     public void plantFlower() {
         //Check if bed is full
         boolean bedFull = false;
@@ -66,6 +67,7 @@ public class FlowerBed extends Interactable implements TimeProgression {
         }
     }
 
+    //Calculate current bees
     public void calcBees(int pestCounter) {
         double pestMultiplier;
         switch (pestCounter) {

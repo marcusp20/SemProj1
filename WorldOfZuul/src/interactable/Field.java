@@ -266,6 +266,7 @@ public class Field extends Interactable implements TimeProgression {
         yields = 0;
     }
 
+    //Water field twice
     public void rainEvent() {
         moistField();
         moistField();
@@ -277,6 +278,7 @@ public class Field extends Interactable implements TimeProgression {
         yields = -26;
     }
 
+    //If no pesticides are used then reduce yield
     public boolean pestEvent() {
         if (pesticidesCounter > 2) {
             return false;

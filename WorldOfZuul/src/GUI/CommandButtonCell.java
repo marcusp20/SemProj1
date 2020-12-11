@@ -20,6 +20,7 @@ class CommandButtonCell extends ListCell<String> {
     Button button = new Button("->");
     String lastItem;
 
+    //Create new cell with a label and button based on hashmap.
     public CommandButtonCell(Game game, HashMap<String, Command> commandHashMap) {
         super();
         hbox.getChildren().addAll(label, pane, button);
@@ -40,7 +41,8 @@ class CommandButtonCell extends ListCell<String> {
             setGraphic(null);
         } else {
             lastItem = item;
-            label.setText(item != null ? item : "<null>");
+            //Check for null
+            label.setText(item != null ? item : "null");
             setGraphic(hbox);
         }
     }

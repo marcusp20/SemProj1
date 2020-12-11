@@ -137,6 +137,7 @@ public class Room {
         this.roomCollisions = roomCollisions;
     }
 
+    //Create and open intro window, based on introText
     public void openIntroWindow()    {
         this.hasBeenVisited = true;
 
