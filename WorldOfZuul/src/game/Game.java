@@ -953,7 +953,7 @@ public class Game {
             currentField.useHarvester(currentField.getYield());
         } else if (player.itemOwned(ItemName.SCYTHE)) {
             System.out.println("Used scythe to harvest field.");
-            currentField.useScythe(field.getYield());
+            currentField.useScythe(currentField.getYield());
         } else {
             System.out.println("You don't have a scythe, or a harvester yet, better go shopping");
             return;
@@ -1146,7 +1146,7 @@ public class Game {
             case 6:
                 baos.reset();
                 System.out.println("You see an abundance of flies today.");
-                if (field.pestEvent() || field2.pestEvent() || field3.pestEvent()) {
+                if (field.pestEvent() | field2.pestEvent() | field3.pestEvent()) { //Use bitwise or to prevent short circuit - to ensure all pestEvents are called.
                     System.out.println("Your plants were devoured by a swarm of pests.");
                 } else {
                     System.out.println("Your crops was unharmed because of");

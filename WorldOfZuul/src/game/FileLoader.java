@@ -20,7 +20,7 @@ public class FileLoader {
             return new File(path + "\\src\\dialog\\" + fileName);
         }
         //Default - probably not gonna work
-        return new File(path + "\\WorldOfZuul\\dialog\\" + fileName);
+        return new File(path + "\\WorldOfZuul.jar\\dialog\\" + fileName);
 
     }
 
@@ -32,6 +32,6 @@ public class FileLoader {
             return new Image(new FileInputStream(path + "\\src\\resources\\img\\" + fileName));
         }
         //Default - probably not gonna work
-        return new Image(new FileInputStream(path + "\\WorldOfZuul\\img\\" + fileName));
+        return new Image(new FileInputStream(path + "\\WorldOfZuul.jar\\img\\" + fileName));
     }
 }
