@@ -63,7 +63,6 @@ public class Room {
         exits.put(direction, neighbor);
     }
 
-    //Method could be deleted.
     public String getShortDescription() {
         return description;
     }
