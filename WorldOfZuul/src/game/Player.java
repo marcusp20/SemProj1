@@ -18,7 +18,7 @@ public class Player {
             ItemName.SCYTHE.getPrice() +
             ItemName.SHOVEL.getPrice() +
             ItemName.WATER_CAN.getPrice() +
-            ItemName.BAG_OF_CLOVER.getPrice();
+            ItemName.BAG_OF_CLOVER.getPrice() + 1000;
 
     //Gui attributes
     ImageView playerSprite;
