@@ -15,6 +15,10 @@ import game.*;
 public class SustainableFarmer {
     private static File saveFile;
 
+    /**
+     * Deprecated - use the GUI/Main.main() method instead.
+     * @param args not used.
+     */
     public static void main(String[] args) {
         Game game;
 

@@ -369,6 +369,7 @@ public class Game {
         headquarter.addInteractable(hqBed);
 
         Image headquarterImg = headquarter.getRoomPane().getBackground().getImages().get(0).getImage();
+        //Manually add all collision boxes in the room
         headquarterCollision.addCollisionBox( //East wall
                 new CollisionBox(headquarterImg.getWidth()-300, -40,
                         800, headquarterImg.getHeight()+180));
@@ -576,7 +577,6 @@ public class Game {
         Pane pane = new Pane();
         try {
             Image img = loadImage(fileName);
-
             BackgroundImage back = new BackgroundImage(img, BackgroundRepeat.REPEAT, BackgroundRepeat.NO_REPEAT,
                     BackgroundPosition.DEFAULT, BackgroundSize.DEFAULT);
 
@@ -592,14 +592,16 @@ public class Game {
     ///////////////// play method, and the methods it is using //////////////////////////
     /////////////////////////////////////////////////////////////////////////////////////
 
+    /**
+     * Called to start a textBased game
+     * The 2D-implementation is run by calling the main method in GUI/Main
+     */
     public void play() {
         if (!isCreatedFromSaveFile) {
             //only if new game
             playIntro();
             printWelcome();
-
         }
-
         boolean finished = false;
         while (!finished) {
             Command command = parser.getCommand();
@@ -674,8 +676,7 @@ public class Game {
         } else if (commandWord == CommandWord.MONEY) {
             System.out.println("You have $ " + player.getWallet());
             return false;
-        }
-        else if (commandWord == CommandWord.SAVE) {
+        } else if (commandWord == CommandWord.SAVE) {
             if (logger.save()) {
                 System.out.println("Game saved successfully");
             } // else the save method prints an error and a stacktrace
@@ -713,7 +714,7 @@ public class Game {
             plantFlower();
         }
 
-        return wantToQuit;
+        return wantToQuit; //only used in the text version
     }
 
     /////////////////////////////////////////////////////////////////////////////////////
@@ -739,6 +740,9 @@ public class Game {
                 System.out.println("Flower bed" + end);
                 parser.setCommands(flowerBedCommandWords);
                 parser.showCommands();
+            } else if (command.getSecondWord().equals("bed") && currentRoom.getShortDescription().equals("In the headquarter")) {
+                sleep();
+                logger.log(command);
             } else if (command.getSecondWord().equals("npc") && currentRoom.getShortDescription().equals("In the headquarter")) {
                 majorBob.converse();
             } else if (command.getSecondWord().equals("npc") && currentRoom.getShortDescription().equals("in the store, smells like flower seeds in here")) {
@@ -748,13 +752,9 @@ public class Game {
             } else if (command.getSecondWord().equals("npc") && currentRoom.getShortDescription().equals("in the beautiful garden")) {
                 // System.out.println("Beekeeper Betti" + end);
                 beekeeperBetti.converse();
-            } else if (command.getSecondWord().equals("bed") && currentRoom.getShortDescription().equals("In the headquarter")) {
-                sleep();
-                logger.log(command);
             } else if (command.getSecondWord().equals("npc") && currentRoom.getShortDescription().equals("in the 2nd field")) {
                   fieldExpertBenny.converse();
             }
-
         } else {
             System.out.println("This command is used to interact \n" +
                     "with your injectables: npc, store, field, beehive...");
@@ -800,15 +800,15 @@ public class Game {
 
     public void sleep() {
         hqBed.sleep();            //Used in Gui implementation
-        field.nextDay();
+        field.nextDay();          //nextDay makes the crops grow if watered.
         field2.nextDay();
         field3.nextDay();
-        checkField(field);
+        checkField(field);        //update GUI component
         checkField(field2);
         checkField(field3);
-        gameTimer++;
+        gameTimer++;              //used for event timing
         eventChecker();
-        taskList.nextDay();
+        taskList.nextDay();       //Final task required user to sleep.
     }
 
     /////////////////////////////////////////////////////////////////////////////////////
@@ -833,7 +833,6 @@ public class Game {
     /////////////////////////////////////////////////////////////////////////////////////
 
     private boolean buyStore(Command command) {
-        // 1. check if you can afford it.
         Item item = null;
         if (!isGUI) {
             if (!command.hasSecondWord()) {
@@ -900,10 +899,11 @@ public class Game {
         String choice = "";
 
         if (!command.hasSecondWord()) {
-            choice = "?";
+            System.out.println("Sow what?");
+            return false;
         }
         if (command.hasSecondWord()) {
-            choice = command.getSecondWord();//s.nextLine();
+            choice = command.getSecondWord();
         }
         if (choice.equals("wheat") && player.itemOwned(ItemName.BAG_OF_WHEAT)) {
             field.setCurrentHarvest("wheat");
@@ -921,9 +921,6 @@ public class Game {
             field.setCurrentHarvest("cannabis");
             System.out.println("cannabis was sowed.");
             player.removeOne(ItemName.BAG_OF_CANNABIS);
-        } else if (choice.equals("?")) {
-            System.out.println("Sow what?");
-            return false;
         } else {
             System.out.println("You don't have \"" + choice + "\" in inventory...");
             return false;
@@ -937,7 +934,7 @@ public class Game {
     //Checks for tractor in inventory, if not, shovel is used. If no shovel, nothing happens.
     public void sowField(Command command) {
         //Check conditions
-        Field currentField = setCurrentField();
+        Field currentField = getCurrentField();
         if (currentField.getIsSowed()) {
             System.out.println("Field already sowed with " + currentField.getCurrentHarvest() + ".");
             return;
@@ -968,7 +965,7 @@ public class Game {
     //Calculates value yield, after scythe or harvester is used, and adds money to player wallet.
     //Resets field.
     public void harvestField() {
-        Field currentField = setCurrentField();
+        Field currentField = getCurrentField();
         checkField(currentField);
         if (!currentField.getIsReadyToHarvest()) {
             if (currentField.isWatered() && currentField.getIsSowed()) {
@@ -1008,7 +1005,7 @@ public class Game {
     //Checks for fertilizer and isSowed.
     //Fertilizer strength depends on isSowed condition.
     public void fertilizeField() {
-        Field currentField = setCurrentField();
+        Field currentField = getCurrentField();
         if (player.itemOwned(ItemName.BAG_OF_FERTILIZER)) {
             if (currentField.getIsSowed()) {
                 currentField.useFertilizerAfterSow();
@@ -1026,7 +1023,7 @@ public class Game {
     //Check for isSowed
     //See moistField method for further explanation.
     public void waterField() {
-        Field currentField = setCurrentField();
+        Field currentField = getCurrentField();
         if (player.itemOwned(ItemName.WATER_CAN)) {
             if (currentField.getIsSowed()) {
                 currentField.moistField();
@@ -1041,7 +1038,7 @@ public class Game {
 
 
     public void usePesticide() {
-        Field currentField = setCurrentField();
+        Field currentField = getCurrentField();
         if (player.itemOwned(ItemName.PESTICIDES)) {
             currentField.usePesticides();
             player.removeOne(ItemName.PESTICIDES);
@@ -1054,7 +1051,7 @@ public class Game {
     //getFieldSample method
     //shows condition of field based on yield.
     public void getFieldSample() {
-        Field currentField = setCurrentField();
+        Field currentField = getCurrentField();
         if (player.itemOwned(ItemName.SOIL_SAMPLE_COLLECTOR)) {
             if (currentField.getYield() > 64) {
                 System.out.println("Your soil is in excellent condition!");
@@ -1071,6 +1068,7 @@ public class Game {
         }
     }
 
+    //Updates GUI Image based on field state: ready to harvest, sowed, sowed and wet, barren.
     public void checkField(Field field) {
         if (field.getIsReadyToHarvest()) {
             try {
@@ -1098,7 +1096,8 @@ public class Game {
         }
     }
 
-    public Field setCurrentField() {
+
+    public Field getCurrentField() {
         Field currentField;
         if(currentRoom.getShortDescription().endsWith("in the 3rd field")) {
             currentField = field3;
@@ -1192,10 +1191,10 @@ public class Game {
 
     //returns object used for displaying console output to GUIlabel
     public ByteArrayOutputStream getOutputStream() {
-        ByteArrayOutputStream baos = new ByteArrayOutputStream();
-        PrintStream ps = new PrintStream(baos);
+        ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+        PrintStream ps = new PrintStream(byteArrayOutputStream);
         System.setOut(ps);
-        return baos;
+        return byteArrayOutputStream;
     }
 
     //Misc getters

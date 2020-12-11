@@ -2,11 +2,12 @@ package game;
 
 import java.util.HashMap;
 
+/**
+ * CommandWords contains a hashmap from String to CommandWord.
+ */
 public class CommandWords {
     private HashMap<String, CommandWord> validCommands;
 
-    // I don't see the use, of calling this constructor more than once...
-    // Consider the use of a singleton pattern. - Marcus
     public CommandWords() {
         validCommands = new HashMap<>();
     }
@@ -15,6 +16,11 @@ public class CommandWords {
         this.validCommands.put(commandWord.toString(), commandWord);
     }
 
+    /**
+     *
+     * @param commandWord a String
+     * @return the CommandWord matching the param-String - or CommandWord.UNKNOWN if no CommandWord matches
+     */
     public CommandWord getCommandWord(String commandWord) {
         CommandWord command = validCommands.get(commandWord);
         if (command != null) {
