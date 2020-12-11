@@ -56,7 +56,6 @@ public class NPC extends Interactable{
         createNpcWindow();
     }
 
-
     public String getName() {
         return name;
     }

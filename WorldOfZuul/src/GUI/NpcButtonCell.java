@@ -17,6 +17,7 @@ public class NpcButtonCell extends ListCell<String> {
     Button button = new Button("->");
     String lastItem;
 
+    //Create new cell with a label and button based on hashmap. Buttons action is different for npc buttonCell
     public NpcButtonCell(NPC npc, HashMap<String, Integer> answerMap) {
         super();
         hbox.getChildren().addAll(label, pane, button);
@@ -37,6 +38,7 @@ public class NpcButtonCell extends ListCell<String> {
             setGraphic(null);
         } else {
             lastItem = item;
+            //Check if item is null
             label.setText(item != null ? item : "null");
             setGraphic(hbox);
         }

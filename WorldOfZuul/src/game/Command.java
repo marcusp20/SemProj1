@@ -52,7 +52,6 @@ public class Command
     @Override
     public String toString() {
         return commandWord + " " + secondWord;
-
     }
 }
 
