@@ -42,7 +42,6 @@ public class Main extends Application {
     private MovementHandler movementHandler;
     private AnimationTimer timer;
 
-
     @FXML
     public static Button a1, a2, a3, a4;
     @FXML
@@ -194,7 +193,7 @@ public class Main extends Application {
         scene.setOnKeyReleased(this::checkInput);
 
         //Set stage (window) tile and scene (scene includes root)
-        stage.setTitle("FARMVILL 99 RETARDO EDITION");
+        stage.setTitle("The Sustainable Farmer");
         stage.setScene(scene);
         stage.setOpacity(0);
         stage.show();
@@ -262,7 +261,7 @@ public class Main extends Application {
         pane.getChildren().addAll(youLostText, returnToMainMenu);
         scene = new Scene(pane);
 
-        stage.setTitle("FARMVILL 99 RETARDO EDITION");
+        stage.setTitle("The Sustainable Farmer");
         stage.setScene(scene);
         stage.setOpacity(0);
         stage.show();
@@ -369,7 +368,6 @@ public class Main extends Application {
                 if (interactionBounds.intersects(game.getPlayer().getPlayerSprite().getLayoutBounds())) {
                     game.getBaos().reset(); //Resets Buffer before interacting
                     game.getCurrentRoom().getRoomPane().getChildren().remove(lastNode);
-                    //TODO make abstract method for getting gui visuals (replace getCommandList & getNpcWindow)
                     if (i.interact().equals("npc")) {
                         NPC npc = (NPC) i;
                         if(!npc.isFirstMeeting())    {
@@ -669,7 +667,7 @@ public class Main extends Application {
             this.stage = stage;
             this.stage.setScene(new Scene(p));
             this.stage.show();
-            this.stage.setTitle("FARMVILL 99 RETARDO EDITION");
+            this.stage.setTitle("The Sustainable Farmer");
             this.stage.setOpacity(0);
 
             a1.setOnAction(e -> run());
