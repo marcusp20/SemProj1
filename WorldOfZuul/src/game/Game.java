@@ -601,7 +601,7 @@ public class Game {
                 ItemName.BAG_OF_CORN.getPrice()),
                 ItemName.BAG_OF_CLOVER.getPrice()),
                 ItemName.BAG_OF_WHEAT.getPrice());
-        if (player.checkWallet() <= minSeedPrice && player.checkForNoCrops() && !field.getIsSowed()) {
+        if (player.checkWallet() <= minSeedPrice && player.checkForNoCrops() && !field.getIsSowed() && !field2.getIsSowed() && field3.getIsSowed()) {
             System.out.println("You have no more money or seeds, game over");
             return true;
         } else {
@@ -684,7 +684,8 @@ public class Game {
         }
         //Garden CommandWords
         else if (commandWord == CommandWord.GARDEN_CHECK_BEES) {
-            checkBees(field.getPesticidesCounter());
+            int worstCasePesticideCounter = Math.max(Math.max(field.getPesticidesCounter(), field2.getPesticidesCounter()), field3.getPesticidesCounter());
+            checkBees(worstCasePesticideCounter);
         } else if (commandWord == CommandWord.GARDEN_PLANT_FLOWER) {
             logger.log(command);
             plantFlower();
