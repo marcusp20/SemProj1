@@ -143,7 +143,7 @@ public class Room {
 
         introText.setWrappingWidth(1070);
 
-        roomIntroStage.initModality(Modality.APPLICATION_MODAL);
+        roomIntroStage.initModality(Modality.NONE);
         VBox textVbox = new VBox(20);
         textVbox.setStyle("-fx-font: 26 arial;");
         textVbox.setBackground(new Background(new BackgroundFill(Color.PEACHPUFF, CornerRadii.EMPTY, Insets.EMPTY)));
