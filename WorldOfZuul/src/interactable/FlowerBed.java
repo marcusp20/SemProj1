@@ -1,6 +1,5 @@
 package interactable;
 
-import game.CommandWords;
 import game.Game;
 import java.util.Random;
 
@@ -10,8 +9,8 @@ public class FlowerBed extends Interactable implements TimeProgression {
     private Random random = Game.getRandom();
 
 
-    public FlowerBed(CommandWords commandWords)    {
-        super(commandWords);
+    public FlowerBed()    {
+        super();
     }
 
     @Override

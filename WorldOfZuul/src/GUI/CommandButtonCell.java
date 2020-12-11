@@ -13,21 +13,12 @@ import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
 import java.util.HashMap;
 
-/*
-AHHHHHHHH
-https://stackoverflow.com/questions/15661500/javafx-listview-item-with-an-image-button
-
-http://fxexperience.com/2012/05/listview-custom-cell-factories-and-context-menus/
- */
-
 class CommandButtonCell extends ListCell<String> {
     HBox hbox = new HBox();
     Label label = new Label("(empty)");
     Pane pane = new Pane();
     Button button = new Button("->");
     String lastItem;
-
-
 
     public CommandButtonCell(Game game, HashMap<String, Command> commandHashMap) {
         super();
@@ -63,7 +54,7 @@ class CommandButtonCell extends ListCell<String> {
         // Tell Java to use your special stream
         System.setOut(ps);
         // Print some output: goes to your special stream
-        System.out.println("lol");
+        System.out.println("...");
         // Put things back
         System.out.flush();
         System.setOut(old);

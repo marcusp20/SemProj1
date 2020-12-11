@@ -1,5 +1,6 @@
 package interactable;
 
+//Shop is the interactable version of store, it allows for buying items through Gui
 public class Shop extends Interactable {
     public void removeItem(String word)    {
         if(this.getCommandList() != null) {
@@ -11,10 +12,10 @@ public class Shop extends Interactable {
             }
         }
     }
+
     @Override
     public String interact()  {
         System.out.println("You are interacting with shop");
         return "Shop";
     }
-
 }

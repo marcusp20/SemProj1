@@ -15,7 +15,6 @@ public enum CommandWord
     //Garden
     GARDEN_CHECK_BEES("bees"), GARDEN_PLANT_FLOWER("plant");
 
-
     private String commandString;
     
     CommandWord(String commandString)

@@ -1,12 +1,9 @@
 package interactable;
 
-import game.Command;
-import game.CommandWord;
-
 public class Bed extends Interactable {
 
     public Bed()   {
-        super();    //Will contain location
+        super();
     }
 
     public void sleep() {

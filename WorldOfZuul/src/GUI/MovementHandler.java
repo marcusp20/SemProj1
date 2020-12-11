@@ -2,7 +2,6 @@ package GUI;
 
 import game.Game;
 import game.Player;
-import interactable.Interactable;
 import javafx.scene.image.ImageView;
 
 public class MovementHandler {
@@ -64,9 +63,6 @@ public class MovementHandler {
     }
 
     public void checkCollision() {
-    //for (Interactable i : game.getCurrentRoom().getInteractables()) {
-        //Code for intractable collision
-        //boolean playerIntersectsInteractable = i.getImageView().intersects(playerSprite.getLayoutBounds());
         RoomCollisions collisionsBoxes = game.getCurrentRoom().getRoomCollisions();
         if (collisionsBoxes.intersectsWith(playerSprite.getX(), playerSprite.getY())) {
 
@@ -93,38 +89,6 @@ public class MovementHandler {
                 }
             }
         }
-       // }
-         //copy of old collision detection - detects colission with the ImageViews of the Interactable objects
-        /*for (Interactable i : game.getCurrentRoom().getInteractables()) {
-            //Code for intractable collision
-            if (i.getImageView().intersects(playerSprite.getLayoutBounds())) {
-
-                //Moves player to previous position if intersecting with intractable, still allows other movement
-                boolean isMovingHorizontal = player.getWestSpeed() > 0 || player.getEastSpeed() > 0;
-                if (isMovingHorizontal) {
-                    double curX = playerSprite.getX();
-
-                    playerSprite.setX(game.getPlayer().getPrevX());
-                    if (i.getImageView().intersects(playerSprite.getLayoutBounds())) {
-                        playerSprite.setX(curX);
-                        if (game.getPlayer().getNorthSpeed() > 0 || game.getPlayer().getSouthSpeed() > 0) {
-                            playerSprite.setY(game.getPlayer().getPrevY());
-                        }
-                    }
-                }
-                if (i.getImageView().intersects(playerSprite.getLayoutBounds())) {  //Always true?
-                    if (game.getPlayer().getNorthSpeed() > 0 || game.getPlayer().getSouthSpeed() > 0) {
-                        playerSprite.setY(game.getPlayer().getPrevY());
-                        if (i.getImageView().intersects(playerSprite.getLayoutBounds())) {
-                            if (game.getPlayer().getWestSpeed() > 0 || game.getPlayer().getEastSpeed() > 0) {
-                                playerSprite.setX(game.getPlayer().getPrevX());
-                            }
-                        }
-                    }
-                }
-            }
-        }*/
-
     }
 
     public void haltPlayerMovement() {

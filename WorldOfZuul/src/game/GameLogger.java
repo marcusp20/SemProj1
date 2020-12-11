@@ -59,7 +59,6 @@ public class GameLogger {
             Scanner log = new Scanner(file);
             String inputLine;
 
-
             long seed = log.nextLong(); //This only reads the first line
             game = new Game(seed, isGUI);
             game.setCreatedFromSaveFile(true);
@@ -83,7 +82,6 @@ public class GameLogger {
                     }
                 }
                 Command command = new Command(commands.getCommandWord(word1), word2.toString());
-                //System.err.println(command.toString());
                 game.processCommand(command);
             }
 

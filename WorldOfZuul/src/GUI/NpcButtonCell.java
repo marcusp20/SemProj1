@@ -1,7 +1,5 @@
 package GUI;
 
-import game.Command;
-import game.Game;
 import interactable.NPC;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -10,12 +8,11 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.Priority;
 
-import java.io.ByteArrayOutputStream;
 import java.util.HashMap;
 
 public class NpcButtonCell extends ListCell<String> {
     HBox hbox = new HBox();
-    Label label = new Label("(empty)");
+    Label label = new Label("empty");
     Pane pane = new Pane();
     Button button = new Button("->");
     String lastItem;
@@ -30,6 +27,7 @@ public class NpcButtonCell extends ListCell<String> {
         });
     }
 
+    //Update item in cell
     @Override
     protected void updateItem(String item, boolean empty) {
         super.updateItem(item, empty);
@@ -39,7 +37,7 @@ public class NpcButtonCell extends ListCell<String> {
             setGraphic(null);
         } else {
             lastItem = item;
-            label.setText(item != null ? item : "<null>");
+            label.setText(item != null ? item : "null");
             setGraphic(hbox);
         }
     }

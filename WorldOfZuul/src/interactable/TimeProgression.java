@@ -1,5 +1,6 @@
 package interactable;
 
 public interface TimeProgression {
-    public void nextDay();  //
+    //run code for progressing time, ie. allow harvesting field
+    void nextDay();
 }

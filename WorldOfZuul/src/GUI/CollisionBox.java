@@ -9,7 +9,6 @@ public class CollisionBox {
         this.y = y;
         this.width = width;
         this.height = height;
-        //System.out.println(this);
     }
 
     public void setSolid(boolean solid) {

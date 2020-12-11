@@ -1,8 +1,11 @@
--7070257422934926870
+9080895112001991472
 go north
-buy Bag of Clover
-buy Watering can
-buy Shovel
-buy Scythe
 go south
 go north
+go south
+go west
+go east
+go south
+harvest 
+fertilize 
+water 

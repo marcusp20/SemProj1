@@ -21,33 +21,43 @@ import javafx.scene.text.Text;
 
 
 public class Game {
-    //TODO Sort variables
-    private Parser parser;
-    private Room currentRoom;
+    //CommandWords
     private CommandWords gameCommandWords;
     private CommandWords storeCommandWords;
     private CommandWords fieldCommandWords;
     private CommandWords flowerBedCommandWords;
     private CommandWords beeHiveCommandWords;
-    private Field field, field2, field3;
-    private Player player;
-    private List<Item> storeItemList;
+
+    //Interactables
     private Shop shop;
     private NPC majorBob;
     private NPC shopkeeperLizzy;
     private NPC farmerBob;
     private NPC beekeeperBetti;
     private NPC fieldExpertBenny;
-    private ChadChicken chadChicken;
-    private Quiz preQuiz;
-    private Quiz postQuiz;
-    private GameLogger logger;
-    private boolean isCreatedFromSaveFile;
-    private HashMap<String, Room> unLockableRooms;
-    private TaskList taskList;
     private Bed hqBed;
     private FlowerBed flowerBed;
     private BeeHive beeHive;
+    private Field field, field2, field3;
+
+    //Rooms
+    private HashMap<String, Room> unLockableRooms;
+    private Room currentRoom;
+
+    //Player
+    private Player player;
+    private List<Item> storeItemList;
+
+    //Quiz
+    private ChadChicken chadChicken;
+    private Quiz preQuiz;
+    private Quiz postQuiz;
+
+    //Game
+    private Parser parser;
+    private GameLogger logger;
+    private boolean isCreatedFromSaveFile;
+    private TaskList taskList;
     private int gameTimer = 0;
     private static final Random random = new Random();
     private long seed;
@@ -130,7 +140,7 @@ public class Game {
 
     private void createQuiz() {
         chadChicken = new ChadChicken();
-        if (!isGUI) {//TODO change TextQuiz to GUIQuiz when QUIQuiz has been implemented
+        if (!isGUI) {
             preQuiz = new TextQuiz(chadChicken.getPreQuestions());
             postQuiz = new TextQuiz(chadChicken.getPostQuestions());
         }
@@ -217,7 +227,7 @@ public class Game {
     }
 
     private void createBeeHive() {
-        beeHive = new BeeHive(beeHiveCommandWords);
+        beeHive = new BeeHive();
         beeHive.getImageView().setX(221);
         beeHive.getImageView().setY(190);
         beeHive.getImageView().setFitHeight(129);
@@ -226,14 +236,13 @@ public class Game {
     }
 
     private void createFlowerBed() {
-        flowerBed = new FlowerBed(flowerBedCommandWords);
+        flowerBed = new FlowerBed();
         flowerBed.getImageView().setX(742);
         flowerBed.getImageView().setY(525);
         flowerBed.getImageView().setFitWidth(339);
         flowerBed.getImageView().setFitHeight(232);
         flowerBed.getImageView().setVisible(false);
     }
-
 
     /**
      * Used by createNPC to properly load textFiles
@@ -296,7 +305,6 @@ public class Game {
         flowerBedCommandWords = new CommandWords();
         flowerBedCommandWords.addCommandWord(CommandWord.GARDEN_PLANT_FLOWER);
         flowerBedCommandWords.addCommandWord(CommandWord.LEAVE);
-
     }
 
     private void createField() {
@@ -307,15 +315,12 @@ public class Game {
         field.getImageView().setFitHeight(463);
         field.getImageView().setVisible(false);
 
-
-
         field2 = new Field(fieldCommandWords);
         field2.getImageView().setX(360);
         field2.getImageView().setY(360);
         field2.getImageView().setFitHeight(440);
         field2.getImageView().setFitWidth(600);
         field2.getImageView().setVisible(false);
-
 
         field3 = new Field(fieldCommandWords);
         field3.getImageView().setX(540);
@@ -324,8 +329,6 @@ public class Game {
         field3.getImageView().setFitWidth(655);
         field3.getImageView().setVisible(false);
     }
-
-
 
     private void createPlayer() {
         player = new Player("Lars Tyndskid");
@@ -391,7 +394,6 @@ public class Game {
                 "to this humble town. My name is " +
                 "bob, i'm the mayor of this town.");
 
-
         ////////////////
         //FIELDS////////
         ////////////////
@@ -401,7 +403,7 @@ public class Game {
 
         field.setRoomPane(createPane("FieldVer1.png"));
         field.addInteractable(farmerBob);
-        field.addInteractable(this.field);      //TODO Rename field, this is stupid
+        field.addInteractable(this.field);
         field.setNpc(farmerBob);
 
         Image fieldImg = field.getRoomPane().getBackground().getImages().get(0).getImage();
@@ -478,7 +480,6 @@ public class Game {
         ////////////////
         //STORE////////
         ///////////////
-
         store.setExit("south", headquarter);
         store.setNpc(shopkeeperLizzy);
 
@@ -512,7 +513,6 @@ public class Game {
                 "Hello darling, you must be the new " +
                 "farmer. My name is Lizzy, I'm the " +
                 "only shopkeeper in this small town...");
-
 
         ////////////////
         //GARDEN////////
@@ -556,9 +556,11 @@ public class Game {
         shed.setRoomPane(createPane("SHED", Color.BLANCHEDALMOND));
         shed.setIntroText("Hey! How did you get in here? Sneaky bastard");
 
+        //Start in headquarter
         currentRoom = headquarter;
     }
 
+    //Create pane with color background
     private Pane createPane(String name, Color color) {
         Pane pane = new Pane();
         pane.setBackground(new Background(new BackgroundFill(color, CornerRadii.EMPTY, Insets.EMPTY)));
@@ -569,6 +571,7 @@ public class Game {
         return pane;
     }
 
+    //Create pane with image background
     private Pane createPane(String fileName) {
         Pane pane = new Pane();
         try {
@@ -611,7 +614,6 @@ public class Game {
 
     private void playIntro() {
         //print intro of ChadChicken
-
         //launch preQuiz
         preQuiz.run();
         chadChicken.uploadAnswers(preQuiz.getAnswers());
@@ -647,9 +649,7 @@ public class Game {
     public boolean processCommand(Command command) {
 
         baos.reset();
-
         boolean wantToQuit = false;
-
         CommandWord commandWord = command.getCommandWord();
 
         if (commandWord == CommandWord.UNKNOWN) {
@@ -674,7 +674,7 @@ public class Game {
         } else if (commandWord == CommandWord.MONEY) {
             System.out.println("You have $ " + player.getWallet());
             return false;
-        } //TODO print player inventory
+        }
         else if (commandWord == CommandWord.SAVE) {
             if (logger.save()) {
                 System.out.println("Game saved successfully");
@@ -735,12 +735,7 @@ public class Game {
                 System.out.println("Store" + end);
                 parser.setCommands(storeCommandWords);
                 parser.showCommands();
-            } /*else if (command.getSecondWord().equals("beehive") && currentRoom.getShortDescription().equals("in the beautiful garden")) {
-                System.out.println("Beehive" + end);
-                parser.setCommands(beeHiveCommandWords);
-                parser.showCommands();
-            }*/
-              else if (command.getSecondWord().equals("flowers") && currentRoom.getShortDescription().equals("in the beautiful garden")) {
+            } else if (command.getSecondWord().equals("flowers") && currentRoom.getShortDescription().equals("in the beautiful garden")) {
                 System.out.println("Flower bed" + end);
                 parser.setCommands(flowerBedCommandWords);
                 parser.showCommands();
@@ -804,7 +799,7 @@ public class Game {
     }
 
     public void sleep() {
-        hqBed.sleep();            //Used in 2d implementation
+        hqBed.sleep();            //Used in Gui implementation
         field.nextDay();
         field2.nextDay();
         field3.nextDay();
@@ -815,7 +810,6 @@ public class Game {
         eventChecker();
         taskList.nextDay();
     }
-
 
     /////////////////////////////////////////////////////////////////////////////////////
     ///////////////////////////////// Garden Commands  ///////////////////////////////////
@@ -884,8 +878,6 @@ public class Game {
             //Successfully bought an item, update tasks list, to see if purchase fulfilled a task requirement
             taskList.update();
         }
-
-
         return false;
     }
 
@@ -905,9 +897,6 @@ public class Game {
     //Updates currentHarvest to choice.
     //Loops until a valid crop has been chosen
     public boolean chooseCrop(Command command) {
-        //while (true) {
-        //Scanner s = new Scanner(System.in);
-        //System.out.println("Which crop would you like to use? Last used crop was " + field.getPreviousHarvest() +  ". Type 'options' for choices.");
         String choice = "";
 
         if (!command.hasSecondWord()) {
@@ -920,25 +909,18 @@ public class Game {
             field.setCurrentHarvest("wheat");
             System.out.println("Wheat was used.");
             player.removeOne(ItemName.BAG_OF_WHEAT);
-
-            //break;
         } else if (choice.equals("clover") && player.itemOwned(ItemName.BAG_OF_CLOVER)) {
             field.setCurrentHarvest("clover");
             System.out.println("Clover was used.");
             player.removeOne(ItemName.BAG_OF_CLOVER);
-            //break;
         } else if (choice.equals("corn") && player.itemOwned(ItemName.BAG_OF_CORN)) {
             field.setCurrentHarvest("corn");
             System.out.println("Corn was used.");
             player.removeOne(ItemName.BAG_OF_CORN);
-
-            //break;
         } else if (choice.equals("cannabis") && player.itemOwned(ItemName.BAG_OF_CANNABIS)) {
             field.setCurrentHarvest("cannabis");
             System.out.println("cannabis was sowed.");
             player.removeOne(ItemName.BAG_OF_CANNABIS);
-
-            //break;
         } else if (choice.equals("?")) {
             System.out.println("Sow what?");
             return false;
@@ -947,7 +929,6 @@ public class Game {
             return false;
         }
         return true;
-        //}
     }
 
 
@@ -965,12 +946,10 @@ public class Game {
             System.out.println("Nothing to sow in inventory.");
             return;
         }
-
         boolean isValidCropChoice = chooseCrop(command);
         if (!isValidCropChoice) {
             return;
         }
-
         if (player.itemOwned(ItemName.TRACTOR)) {
             currentField.sowFieldTractor();
             logger.log(command);
@@ -999,10 +978,8 @@ public class Game {
             } else {
                 System.out.println("There is nothing to harvest, try planting something");
             }
-            //System.out.println("Field not ready to harvest, try watering or sowing...");
             return;
         }
-
         if (player.itemOwned(ItemName.HARVESTER)) {
             System.out.println("Used harvester on field.");
             currentField.useHarvester(currentField.getYield());
@@ -1067,7 +1044,6 @@ public class Game {
         Field currentField = setCurrentField();
         if (player.itemOwned(ItemName.PESTICIDES)) {
             currentField.usePesticides();
-            //System.out.println("all pests where killed");
             player.removeOne(ItemName.PESTICIDES);
         } else {
             System.out.println("No pesticides in inventory");
@@ -1134,7 +1110,6 @@ public class Game {
         return currentField;
     }
 
-
     //This is used by the TaskList class,
     //to unlock rewards from completed tasks
     public void unlock(String roomName) {
@@ -1160,6 +1135,7 @@ public class Game {
         room.setLocked(false);
     }
 
+    //For running in text based, not used in Gui
     public void startEndEvent() {
         System.out.println("You collect the last of your yield.");
         System.out.println("Another honest days work.");
@@ -1222,6 +1198,7 @@ public class Game {
         return baos;
     }
 
+    //Misc getters
     public ByteArrayOutputStream getBaos() {
         return baos;
     }

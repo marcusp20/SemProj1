@@ -1,9 +1,6 @@
 package interactable;
 
 import GUI.NpcButtonCell;
-import game.Command;
-import game.CommandWord;
-import game.CommandWords;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
@@ -17,7 +14,6 @@ import javafx.scene.text.Text;
 import javafx.scene.paint.Color;
 import javafx.util.Callback;
 
-import java.awt.*;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
@@ -191,14 +187,6 @@ public class NPC extends Interactable{
     ///////
     @Override
     public String interact()  {
-
-//        System.out.println("You can interact with " + this.name);
-//        String text = "";
-//        for(String line : getPatternLines("q0"))    {
-//            text = text.concat(line + "\n");
-//        }
-//        System.out.println(text);
-
         System.out.println("You are interacting with " + this.name);
         return "npc";
     }

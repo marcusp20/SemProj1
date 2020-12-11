@@ -1,7 +1,5 @@
 package interactable;
 
-import game.Command;
-import game.CommandWord;
 import game.CommandWords;
 import javafx.scene.control.ListView;
 import javafx.scene.image.Image;
@@ -22,12 +20,11 @@ public class Interactable {
         setDefaultImage();
     }
 
-    public Interactable()   {   //interactable wo command words
+    public Interactable()   {   //interactable w.o command words
         setDefaultImage();
     }
 
      public String interact()   {
-         //System.out.println("No interact command defined");
          return "No type";
     }
 
@@ -42,7 +39,7 @@ public class Interactable {
         }
     }
 
-    public void setImage(ImageView imageView)  {
+    public void setImageView(ImageView imageView)  {
         this.image = imageView;
     }
 

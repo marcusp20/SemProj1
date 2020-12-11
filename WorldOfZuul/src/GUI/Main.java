@@ -31,10 +31,6 @@ import javafx.util.Callback;
 import java.io.*;
 import java.util.*;
 
-/*
-    Learnt from https://www.youtube.com/watch?v=FVo1fm52hz0
- */
-
 public class Main extends Application {
 
     public TabPane tutorialPane;
@@ -56,16 +52,11 @@ public class Main extends Application {
     private boolean e;
     private boolean backSpace;
 
-    //labels
-    Label feedbackText;
     //Contains last opened menu
     Node lastNode;
 
     //Button layout fxml
     Parent rootButtonLayout;
-
-    //TEMP STUFF DELETE BEFORE FINISHING
-    private boolean intros = true;
 
     public static void main(String[] args) {
         launch(args);
@@ -80,7 +71,6 @@ public class Main extends Application {
         fadeOut(stage);
         stage.close();
         game = new Game(true);
-        //startGame(stage);
         playIntroQuiz(stage);
     }
 
@@ -117,7 +107,6 @@ public class Main extends Application {
         boolean saveFileExists = saveFile.exists();
         if (saveFileExists) {
             game = GameLogger.loadGameFrom(saveFile, true);
-            //game.playGUI(); //TODO..
         } else {
             System.err.println("Could not load saveFile");
             newGame(stage);
@@ -154,7 +143,6 @@ public class Main extends Application {
         newGameButton.setLayoutY(280);
         newGameButton.setOnAction(e -> {    //This button will close this window, and start a new game
             newGame(stage);
-            //
         });
 
         loadGameButton = new Button();
@@ -164,11 +152,7 @@ public class Main extends Application {
         loadGameButton.setLayoutY(410);
         loadGameButton.setOnAction(e -> {    //This button will close this window, and load a saved game
             loadGame(stage);
-            //
         });
-
-        //Parent rootButtonLayout = FXMLLoader.load(getClass().getResource("ButtonLayout.fxml"));
-        //Parent rootStartScreen = FXMLLoader.load(getClass().getResource("StartScreen.fxml"));
 
         Pane startPane = new Pane();
         startPane.setPrefSize(1280, 832);
@@ -219,7 +203,7 @@ public class Main extends Application {
         game.getTaskList().createTaskListView();
 
         //Show intro
-        if(intros) game.getCurrentRoom().openIntroWindow();
+        game.getCurrentRoom().openIntroWindow();
     }
 
     private void startTimer(Stage stage) {
@@ -244,9 +228,6 @@ public class Main extends Application {
         //check if text label should output console
         updateFeedbackText(game.getBaos(), game.getCurrentRoom().getFeedbackText());
 
-
-
-
         if (backSpace) {
             game.getCurrentRoom().getRoomPane().getChildren().remove(lastNode);
             backSpace = false;
@@ -265,7 +246,6 @@ public class Main extends Application {
 
     private void showLostGame(Stage stage) {
         fadeOut(stage);
-        //TODO fix positioning of textField and button
         TextField youLostText = new TextField("You've lost the game!");
         youLostText.setEditable(false);
         youLostText.setFont(Font.font(Font.getDefault().getName(),40));
@@ -316,7 +296,6 @@ public class Main extends Application {
             if (game.getCurrentRoom().getRoomPane() == oldPane) {
                 playerSprite.setX(scene.getWidth() - 120+55);
                 movementHandler.haltPlayerMovement(); // stop the player, to stop calling "go north" every frame"
-                //System.out.println("HELP");
             } else {
                 playerSprite.setX(10);
                 addRoomContent();
@@ -331,7 +310,6 @@ public class Main extends Application {
             if (game.getCurrentRoom().getRoomPane() == oldPane) {
                 playerSprite.setY(scene.getHeight() - 180);
                 movementHandler.haltPlayerMovement(); // stop the player, to stop calling "go north" every frame"
-                //System.out.println("HELP");
             } else {
                 playerSprite.setY(20);
                 addRoomContent();
@@ -368,7 +346,7 @@ public class Main extends Application {
 
         game.getCurrentRoom().getRoomPane().getChildren().add(rootButtonLayout);
 
-        if(!game.getCurrentRoom().hasBeenVisited() && intros) {
+        if(!game.getCurrentRoom().hasBeenVisited()) {
             movementHandler.haltPlayerMovement();
             game.getCurrentRoom().openIntroWindow();
         }
@@ -413,7 +391,6 @@ public class Main extends Application {
         l.setOpacity(0.69);
         l.setText(b.toString());
         l.toFront();
-        //game.resetStream();
     }
 
     public void fadeOut(Stage stage) {
@@ -427,7 +404,6 @@ public class Main extends Application {
             stage.setOpacity(i);
         }
     }
-
 
     //Check pressed key and react accordingly
     private void checkInput(KeyEvent keyEvent) {
@@ -482,7 +458,7 @@ public class Main extends Application {
         createListFromMap(fieldCommands, game.getField3());
 
         HashMap<String, Command> beeHiveCommands = new HashMap<>();
-        //beeHiveCommands.put("Use beehive", new Command(CommandWord.USE, "beehive"));
+
         beeHiveCommands.put("Check bee population", new Command(CommandWord.GARDEN_CHECK_BEES, ""));
         createListFromMap(beeHiveCommands, game.getBeeHive());
 
@@ -523,8 +499,6 @@ public class Main extends Application {
 
     private Image load(String fileName) throws FileNotFoundException {
         String path = System.getProperty("user.dir");
-        //System.out.println("Path: " + path);
-        //System.out.println("Should be: " + "C:\\Users\\Marcus\\IdeaProjects\\OOP\\SemProj1\\WorldOfZuul\\src\\resources\\img\\backG1.png");
         if (path.endsWith("SemProj1")) {
             return new Image(new FileInputStream(path + "\\WorldOfZuul\\src\\resources\\img\\" + fileName));    //Add remaining path to dialog text file
         } else if (path.endsWith("WorldOfZuul")) {
@@ -703,9 +677,6 @@ public class Main extends Application {
             a2.setText("");
             a3.setText("");
             a4.setText("");
-
         }
-
-
     }
 }

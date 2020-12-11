@@ -16,8 +16,6 @@ package interactable;
     Use the same strain of crop every new harvest.
 */
 
-import game.Command;
-import game.CommandWord;
 import game.CommandWords;
 import game.Game;
 
@@ -118,7 +116,6 @@ public class Field extends Interactable implements TimeProgression {
             }
         }
     }
-
 
     public void getPests() {
         int pestRNG = random.nextInt(5); //returns a value from 0 to 4 (inclusive)
@@ -235,7 +232,6 @@ public class Field extends Interactable implements TimeProgression {
 
     }
 
-
     public void harvestDone() {
         isReadyToHarvest = false;
         isSowed = false;
@@ -275,9 +271,10 @@ public class Field extends Interactable implements TimeProgression {
         moistField();
     }
 
+    //Removes water and yield
     public void extremeSunEvent() {
         waterCounter = -2;
-        yields = -26; //TODO Separate yields from waterCounter
+        yields = -26;
     }
 
     public boolean pestEvent() {
