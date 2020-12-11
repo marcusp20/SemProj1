@@ -17,7 +17,7 @@ a02 Finally harvest when it's ready and reap the profits!
 
 q01 How do I get rid of pests?
 a10 You can use pesticides, though there are better ways
-a11 Go ask FieldKeeper Benny for fertilizers and pesticides
+a11 Go ask FieldKeeper Benny about fertilizers and pesticides
 
 q02 How do I get the most yield?
 a20 Sowing different crops keeps the nutrition in balance
