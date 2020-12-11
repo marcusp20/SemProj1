@@ -596,7 +596,12 @@ public class Game {
 
     //Return true if no seeds, money and harvest ready.
     public Boolean hasLostGame() {
-        if (player.checkWallet() <= 0 && player.checkForNoCrops() && !field.getIsSowed()) {
+        int minSeedPrice = Math.min(Math.min(Math.min(
+                ItemName.BAG_OF_CANNABIS.getPrice(),
+                ItemName.BAG_OF_CORN.getPrice()),
+                ItemName.BAG_OF_CLOVER.getPrice()),
+                ItemName.BAG_OF_WHEAT.getPrice());
+        if (player.checkWallet() <= minSeedPrice && player.checkForNoCrops() && !field.getIsSowed()) {
             System.out.println("You have no more money or seeds, game over");
             return true;
         } else {
