@@ -21,6 +21,7 @@ public class Player {
 
     private int walkingTimer = 0;
 
+    //Animated Images
     //Up
     Image standUpImage;
     Image walkUpImage;
@@ -111,11 +112,7 @@ public class Player {
         return true;
     }
 
-    public void sellYields(double yields) {
-        wallet += yields;
-    }
-
-    public String getInventory() {
+    public String getInventoryToString() {
         StringBuilder inventory = new StringBuilder();
         Iterator<Map.Entry<ItemName, Integer>> entry = playerInventory.entrySet().iterator();
         boolean isFirstItem = true;
@@ -149,17 +146,17 @@ public class Player {
     private void addPlayerImages()  {
         try {
             //Up
-            standUpImage = loadImage("FarmerSpriteBackStanding.png");
-            walkUpImage = loadImage("FarmerSpriteBackWalk.png");
+            standUpImage = FileLoader.loadImage("FarmerSpriteBackStanding.png");
+            walkUpImage = FileLoader.loadImage("FarmerSpriteBackWalk.png");
             //Left
-            standLeftImage = loadImage("FarmerSpriteLeftStanding.png");
-            walkLeftImage = loadImage("FarmerSpriteLeftWalking.png");
+            standLeftImage = FileLoader.loadImage("FarmerSpriteLeftStanding.png");
+            walkLeftImage = FileLoader.loadImage("FarmerSpriteLeftWalking.png");
             //Right
-            standRightImage = loadImage("FarmerSpriteRightStanding.png");
-            walkRightImage = loadImage("FarmerSpriteRightWalk.png");
+            standRightImage = FileLoader.loadImage("FarmerSpriteRightStanding.png");
+            walkRightImage = FileLoader.loadImage("FarmerSpriteRightWalk.png");
             //Down
-            standDownImage = loadImage("FarmerSpriteFrontStanding.png");
-            walkDownImage = loadImage("FarmerSpriteFrontWalk.png");
+            standDownImage = FileLoader.loadImage("FarmerSpriteFrontStanding.png");
+            walkDownImage = FileLoader.loadImage("FarmerSpriteFrontWalk.png");
 
         } catch (FileNotFoundException e)  {
             System.out.println("Error creating player image" + e);
@@ -265,16 +262,5 @@ public class Player {
 
     public void setWestSpeed(int westSpeed) {
         this.westSpeed = westSpeed;
-    }
-
-    private Image loadImage(String fileName) throws FileNotFoundException {
-        String path = System.getProperty("user.dir");
-        if (path.endsWith("SemProj1")) {
-            return new Image(new FileInputStream(path + "\\WorldOfZuul\\src\\resources\\img\\" + fileName));    //Add remaining path to dialog text file
-        } else if (path.endsWith("WorldOfZuul")) {
-            return new Image(new FileInputStream(path + "\\src\\resources\\img\\" + fileName));
-        }
-        //Default - probably not gonna work
-        return new Image(new FileInputStream(path + "\\img\\" + fileName));
     }
 }

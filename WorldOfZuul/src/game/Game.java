@@ -164,30 +164,30 @@ public class Game {
     }
 
     private void createNPC() {
-        File majorBobDialog = load("majorBobDialog.txt");
+        File majorBobDialog = FileLoader.loadFile("majorBobDialog.txt");
         majorBob = new NPC(majorBobDialog);
         try {
-            majorBob.getImageView().setImage(loadImage("MayorBobSprite.png"));
+            majorBob.getImageView().setImage(FileLoader.loadImage("MayorBobSprite.png"));
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
         majorBob.getImageView().setX(250);
         majorBob.getImageView().setY(300);
 
-        File storeNPCDialog = load("shopKeeperLizzyDialog.txt");
+        File storeNPCDialog = FileLoader.loadFile("shopKeeperLizzyDialog.txt");
         shopkeeperLizzy = new NPC(storeNPCDialog);
         try {
-            shopkeeperLizzy.getImageView().setImage(loadImage("Shopkeeperlizzysprite.png"));
+            shopkeeperLizzy.getImageView().setImage(FileLoader.loadImage("Shopkeeperlizzysprite.png"));
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
         shopkeeperLizzy.getImageView().setX(360);
         shopkeeperLizzy.getImageView().setY(150);
 
-        File fieldNPCDialog = load("fieldNPCDialog.txt");
+        File fieldNPCDialog = FileLoader.loadFile("fieldNPCDialog.txt");
         farmerBob = new NPC(fieldNPCDialog);
         try {
-            farmerBob.getImageView().setImage(loadImage("FarmerBob.png"));
+            farmerBob.getImageView().setImage(FileLoader.loadImage("FarmerBob.png"));
 
         } catch (FileNotFoundException e) {
             e.printStackTrace();
@@ -195,20 +195,20 @@ public class Game {
         farmerBob.getImageView().setX(170);
         farmerBob.getImageView().setY(190);
 
-        File beekeeperDialog = load("beekeeperBetti.txt");
+        File beekeeperDialog = FileLoader.loadFile("beekeeperBetti.txt");
         beekeeperBetti = new NPC(beekeeperDialog);
         try {
-            beekeeperBetti.getImageView().setImage(loadImage("BeeKeeperBettiSprite.png"));
+            beekeeperBetti.getImageView().setImage(FileLoader.loadImage("BeeKeeperBettiSprite.png"));
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
         beekeeperBetti.getImageView().setX(200);
         beekeeperBetti.getImageView().setY(320);
 
-        File fieldExpertDialog = load("fieldExpertBenny.txt");
+        File fieldExpertDialog = FileLoader.loadFile("fieldExpertBenny.txt");
         fieldExpertBenny = new NPC(fieldExpertDialog);
         try {
-            fieldExpertBenny.getImageView().setImage(loadImage("FieldExpertBennySprite.png"));
+            fieldExpertBenny.getImageView().setImage(FileLoader.loadImage("FieldExpertBennySprite.png"));
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
@@ -244,34 +244,7 @@ public class Game {
         flowerBed.getImageView().setVisible(false);
     }
 
-    /**
-     * Used by createNPC to properly load textFiles
-     *
-     * @param fileName name of the text file (including the .txt)
-     * @return the file path of the given fileName
-     */
-    private File load(String fileName) {
-        String path = System.getProperty("user.dir");
-        if (path.endsWith("SemProj1")) {
-            return new File(path + "\\WorldOfZuul\\src\\dialog\\" + fileName);    //Add remaining path to dialog text file
-        } else if (path.endsWith("WorldOfZuul")) {
-            return new File(path + "\\src\\dialog\\" + fileName);
-        }
-        //Default - probably not gonna work
-        return new File(path + "\\dialog\\" + fileName);
 
-    }
-
-    private Image loadImage(String fileName) throws FileNotFoundException {
-        String path = System.getProperty("user.dir");
-        if (path.endsWith("SemProj1")) {
-            return new Image(new FileInputStream(path + "\\WorldOfZuul\\src\\resources\\img\\" + fileName));    //Add remaining path to dialog text file
-        } else if (path.endsWith("WorldOfZuul")) {
-            return new Image(new FileInputStream(path + "\\src\\resources\\img\\" + fileName));
-        }
-        //Default - probably not gonna work
-        return new Image(new FileInputStream(path + "\\img\\" + fileName));
-    }
 
     private void createCommandWords() {
         gameCommandWords = new CommandWords();
@@ -576,7 +549,7 @@ public class Game {
     private Pane createPane(String fileName) {
         Pane pane = new Pane();
         try {
-            Image img = loadImage(fileName);
+            Image img = FileLoader.loadImage(fileName);
             BackgroundImage back = new BackgroundImage(img, BackgroundRepeat.REPEAT, BackgroundRepeat.NO_REPEAT,
                     BackgroundPosition.DEFAULT, BackgroundSize.DEFAULT);
 
@@ -657,13 +630,11 @@ public class Game {
         if (commandWord == CommandWord.UNKNOWN) {
             System.out.println("I don't know what you mean...");
             return false;
-        }
-        if (commandWord == CommandWord.LEAVE) {
+        } else if (commandWord == CommandWord.LEAVE) {
             logger.log(command);
             System.out.println("You leave...");
             parser.setCommands(gameCommandWords);
-        }
-        if (commandWord == CommandWord.HELP) {
+        } else if (commandWord == CommandWord.HELP) {
             printHelp();
         } else if (commandWord == CommandWord.GO) {
             goRoom(command);
@@ -991,7 +962,7 @@ public class Game {
         currentField.calcBeeYield(flowerBed.getBees());  //Bees impact on field
         currentField.checkPreviousHarvest();             //Crop rotations impact on field
         currentField.harvestDone();                      //calc rest of yield
-        player.sellYields(currentField.getYield());      //yields sold to money.
+        player.addWallet(currentField.getYield());      //yields sold to money.
         currentField.resetYield();
 
         System.out.println("Wallet is now " + player.checkWallet());
@@ -1073,21 +1044,21 @@ public class Game {
         if (field.getIsReadyToHarvest()) {
             try {
                 field.getImageView().setVisible(true);
-                field.getImageView().setImage((loadImage("FieldHarvest.png")));
+                field.getImageView().setImage((FileLoader.loadImage("FieldHarvest.png")));
             } catch (FileNotFoundException e) {
                 e.printStackTrace();
             }
         } else if (field.getIsSowed() && field.isWatered()) {
             try {
                 field.getImageView().setVisible(true);
-                field.getImageView().setImage((loadImage("FieldSowRain.png")));
+                field.getImageView().setImage((FileLoader.loadImage("FieldSowRain.png")));
             } catch (FileNotFoundException e) {
                 e.printStackTrace();
             }
         } else if (field.getIsSowed()) {
             try {
                 field.getImageView().setVisible(true);
-                field.getImageView().setImage(loadImage("FieldSow.png"));
+                field.getImageView().setImage(FileLoader.loadImage("FieldSow.png"));
             } catch (FileNotFoundException e) {
                 e.printStackTrace();
             }

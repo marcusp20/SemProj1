@@ -121,7 +121,7 @@ public class Main extends Application {
         //StartScreen
         ImageView startScreen = null;
         try {
-            startScreen = new ImageView(load("IntroScreenVer1.png"));
+            startScreen = new ImageView(FileLoader.loadImage("IntroScreenVer1.png"));
         } catch (IOException ioException) {
             System.err.println("'IntroScreenVer1.png' not found");
             ioException.printStackTrace();
@@ -495,17 +495,6 @@ public class Main extends Application {
         interactable.setCommandList(listView);
     }
 
-    private Image load(String fileName) throws FileNotFoundException {
-        String path = System.getProperty("user.dir");
-        if (path.endsWith("SemProj1")) {
-            return new Image(new FileInputStream(path + "\\WorldOfZuul\\src\\resources\\img\\" + fileName));    //Add remaining path to dialog text file
-        } else if (path.endsWith("WorldOfZuul")) {
-            return new Image(new FileInputStream(path + "\\src\\resources\\img\\" + fileName));
-        }
-        //Default - probably not gonna work
-        return new Image(new FileInputStream(path + "\\img\\" + fileName));
-    }
-
     public void toggleTaskList() {
         if (game.getTaskList().getTaskListView().isVisible()) {
             game.getTaskList().getTaskListView().setVisible(false);
@@ -517,7 +506,7 @@ public class Main extends Application {
     public void printInventoryList() {
         game.getBaos().reset();
         System.out.println("You have " + game.getPlayer().getWallet() + " $ in your wallet");
-        System.out.println(game.getPlayer().getInventory());
+        System.out.println(game.getPlayer().getInventoryToString());
     }
 
     public void invButtonClicked(ActionEvent actionEvent) {
