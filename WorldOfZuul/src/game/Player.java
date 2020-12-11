@@ -118,15 +118,24 @@ public class Player {
     public String getInventory() {
         StringBuilder inventory = new StringBuilder();
         Iterator<Map.Entry<ItemName, Integer>> entry = playerInventory.entrySet().iterator();
+        boolean isFirstItem = true;
         while (entry.hasNext()) {
             Map.Entry<ItemName, Integer> curEntry = entry.next();
+
             if (curEntry.getValue() == 1) {
+                if(isFirstItem) {
+                    isFirstItem = false;
+                } else {
+                    inventory.append(", ");
+                }
                 inventory.append(curEntry.getKey().toString());
             } else if (curEntry.getValue() > 1) {
+                if(isFirstItem) {
+                    isFirstItem = false;
+                } else {
+                    inventory.append(", ");
+                }
                 inventory.append(curEntry.getValue() + "X " + curEntry.getKey().toString());
-            }
-            if (entry.hasNext() && curEntry.getValue() > 0) {
-                inventory.append(", ");
             }
         }
 
