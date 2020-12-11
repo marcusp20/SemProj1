@@ -15,6 +15,7 @@ import javafx.scene.text.Text;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
+import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 import java.util.Set;
 import java.util.HashMap;
@@ -154,8 +155,10 @@ public class Room {
             textVbox.getChildren().add(npcImage);
         }
         Scene dialogScene = new Scene(textVbox, 1080, 632);
+
         roomIntroStage.setScene(dialogScene);
         roomIntroStage.show();
+        dialogScene.setOnMouseClicked(e -> roomIntroStage.close());
     }
 
     public void setIntroText(String introText)  {
