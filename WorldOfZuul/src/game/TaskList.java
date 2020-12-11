@@ -3,12 +3,7 @@ package game;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
-import javafx.beans.Observable;
-import javafx.collections.ObservableList;
 import javafx.scene.control.ListView;
-
-import java.util.ArrayList;
-import java.util.List;
 
 public class TaskList {
     private ObservableList<Task> tasks = FXCollections.observableArrayList();
@@ -36,15 +31,12 @@ public class TaskList {
         tasks.add(new Task("Get $1000", "The grand finale!"));
         tasks.add(new Task("Go bed", "After a good days harvest, you feel tired"));
 
-
         // set first tasks active
         tasks.get(0).setActive(true);
         tasks.get(1).setActive(true);
         tasks.get(2).setActive(true);
         tasks.get(3).setActive(true);
-
     }
-
 
     public ObservableList<String> getTasks() {
         ObservableList<String> tempList = FXCollections.observableArrayList();

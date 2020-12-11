@@ -1,8 +1,5 @@
 package game;
 
-import game.Command;
-import game.CommandWords;
-
 import java.util.Scanner;
 
 public class Parser 

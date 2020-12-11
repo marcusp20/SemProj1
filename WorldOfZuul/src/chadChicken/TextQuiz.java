@@ -26,7 +26,6 @@ public class TextQuiz extends Quiz {
             System.out.println(i + ": " + answers.get(i));
         }
 
-
         String answer = null;
 
         while (answer == null) {

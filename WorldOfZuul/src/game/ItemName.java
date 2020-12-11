@@ -15,8 +15,6 @@ public enum ItemName {
     BAG_OF_CLOVER("Bag of Clover", "holds seeds for planting", 5),
     BAG_OF_FLOWER_SEEDS("Bag of 1 Flower", "Used for planting in garden", 25);
 
-
-
     private String itemNameString;
     private String description;
     private int price;

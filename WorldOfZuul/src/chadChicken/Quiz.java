@@ -1,7 +1,5 @@
 package chadChicken;
 
-import javafx.stage.Stage;
-
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
@@ -24,7 +22,6 @@ public abstract class Quiz {
     }
 
     protected abstract String getAnswerFromUser(Question q);
-
 
     public HashMap<Question, String> getAnswers(){
         return this.answers;

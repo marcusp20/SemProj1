@@ -1,6 +1,5 @@
 package game;
 
-import game.ItemName;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 
@@ -169,6 +168,7 @@ public class Player {
         this.playerSprite.setCache(true); //Add moving images to cache - improves performance
     }
 
+    //Change image based on movement
     public void checkDirection() {
 
         if(Math.max(westSpeed, eastSpeed) > Math.max(northSpeed, southSpeed))   {
