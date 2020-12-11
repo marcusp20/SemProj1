@@ -867,6 +867,8 @@ public class Game {
     //Updates currentHarvest to choice.
     //Loops until a valid crop has been chosen
     public boolean chooseCrop(Command command) {
+
+        Field currentField = getCurrentField();
         String choice = "";
 
         if (!command.hasSecondWord()) {
@@ -877,19 +879,19 @@ public class Game {
             choice = command.getSecondWord();
         }
         if (choice.equals("wheat") && player.itemOwned(ItemName.BAG_OF_WHEAT)) {
-            field.setCurrentHarvest("wheat");
+            currentField.setCurrentHarvest("wheat");
             System.out.println("Wheat was used.");
             player.removeOne(ItemName.BAG_OF_WHEAT);
         } else if (choice.equals("clover") && player.itemOwned(ItemName.BAG_OF_CLOVER)) {
-            field.setCurrentHarvest("clover");
+            currentField.setCurrentHarvest("clover");
             System.out.println("Clover was used.");
             player.removeOne(ItemName.BAG_OF_CLOVER);
         } else if (choice.equals("corn") && player.itemOwned(ItemName.BAG_OF_CORN)) {
-            field.setCurrentHarvest("corn");
+            currentField.setCurrentHarvest("corn");
             System.out.println("Corn was used.");
             player.removeOne(ItemName.BAG_OF_CORN);
         } else if (choice.equals("cannabis") && player.itemOwned(ItemName.BAG_OF_CANNABIS)) {
-            field.setCurrentHarvest("cannabis");
+            currentField.setCurrentHarvest("cannabis");
             System.out.println("cannabis was sowed.");
             player.removeOne(ItemName.BAG_OF_CANNABIS);
         } else {
