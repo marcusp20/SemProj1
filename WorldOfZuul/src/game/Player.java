@@ -12,9 +12,13 @@ import java.util.Map;
 public class Player {
     //Attributes
     private String name;
-    private double wallet = 8;
     private HashMap<ItemName, Integer> playerInventory;
     private boolean noCropsOwned;
+    private double wallet = //The player have to afford these 4 items at the start of the game.
+            ItemName.SCYTHE.getPrice() +
+            ItemName.SHOVEL.getPrice() +
+            ItemName.WATER_CAN.getPrice() +
+            ItemName.BAG_OF_CLOVER.getPrice();
 
     //Gui attributes
     ImageView playerSprite;
